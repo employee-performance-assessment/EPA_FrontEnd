@@ -3,25 +3,25 @@
 
 /* Flex-блок */
 @mixin flex(
-  $direction: row,
-  $justify-content: false,
-  $align-items: false,
-  $gap: false
+	$direction: row,
+	$justify-content: false,
+	$align-items: false,
+	$gap: false
 ) {
-  display: flex;
-  flex-direction: $direction;
+	display: flex;
+	flex-direction: $direction;
 
-  @if $justify-content {
-    justify-content: $justify-content;
-  }
+	@if $justify-content {
+		justify-content: $justify-content;
+	}
 
-  @if $align-items {
-    align-items: $align-items;
-  }
+	@if $align-items {
+		align-items: $align-items;
+	}
 
-  @if $gap {
-    gap: $gap;
-  }
+	@if $gap {
+		gap: $gap;
+	}
 }
 
 @keyframes rotation {
@@ -48,7 +48,6 @@
 	// flex-direction: row;
 	// justify-content: center;
 	// align-items: center;
-
 
 	&_opened {
 		visibility: visible;

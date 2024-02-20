@@ -17,10 +17,11 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"lint": "eslint . --ext .js,.jsx .",
-		"lint:fix": "npm run lint -- --fix",
+		"lint": "eslint . --ext .js,.jsx .  --color",
+		"lint:fix": "npm run lint -- --fix --color",
 		"format": "prettier . --write",
-		"prepare": "husky install"
+		"prepare": "npx husky init",
+		"cm": "cz"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -48,6 +49,8 @@
 		]
 	},
 	"devDependencies": {
+		"commitizen": "^4.3.0",
+		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "^8.2.0",
 		"eslint-config-airbnb": "^19.0.4",
 		"eslint-config-prettier": "^9.1.0",
@@ -62,5 +65,10 @@
 	"lint-staged": {
 		"*.{js,jsx}": "npm run lint",
 		"*.{js,jsx,css,scss,md,html,json}": "npm run format"
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
 	}
 }

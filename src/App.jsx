@@ -1,7 +1,7 @@
 // import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Loader from "./loader/loader"
+import Loader from './loader/loader';
 
 function App() {
 	return (
@@ -24,9 +24,5 @@ function App() {
 		</div>
 	);
 }
-
-
-lo
-
 
 export default App;
