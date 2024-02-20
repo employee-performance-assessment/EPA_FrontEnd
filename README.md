@@ -1,72 +1,70 @@
-# Getting Started with Create React App
+# EPA_FrontEnd
 
-TEST
+### Описание проекта
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Будет добавленно по мере проработки
 
-## Available Scripts
+### Стек технологий:
 
-In the project directory, you can run:
+- React
+- HTML5
+- SCSS
+- Redux Toolkit
 
-### `npm start`
+### Функционал:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Будет добавленно по мере проработки
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Установка и запуск проекта:
 
-### `npm test`
+Клонировать репозиторий:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    git clone
 
-### `npm run build`
+Установить зависимости:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    npm install
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Инициализировать husky (это пре коммиты):
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    	npx husky init
 
-### `npm run eject`
+Собрать проект:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    npm run build
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Запустить проект:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    npm run start
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Запустить eslint:
 
-## Learn More
+    npm run lint
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Запустить eslint и пофиксить то чот фозможно автоматом:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    npm run lint:fix
 
-### Code Splitting
+Запустить форматирование prettier:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+    npm run format
 
-### Analyzing the Bundle Size
+Коммитим через commitizen:
+Делаем: git add -A
+Затем запускаем commitizen командой:
+npm run cm
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+** Подсказка для commitizen**
+? Выберите тип изменения, которое вы вносите:
+Выдаёт список типов коммитов.
+? Какова область действия этого изменения (например, имя компонента или файла): (нажмите enter, чтобы пропустить)
+? Напишите краткое описание изменения в повелительном наклонении (не более 82 символов):
+? Предоставьте более подробное описание изменения: (нажмите enter, чтобы пропустить)
+? Есть ли какие-либо существенные изменения? (y/N)
+? Влияет ли это изменение на какие-либо нерешенные проблемы? (y/N)
 
-### Making a Progressive Web App
+** Коммитим в отдельную ветку в которой работали, потом в GitHub создаём Pull request в ветку develop **
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+#### Создано в соавторстве
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Соучастники будут указаны позже

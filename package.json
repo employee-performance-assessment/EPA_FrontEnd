@@ -20,7 +20,6 @@
 		"lint": "eslint . --ext .js,.jsx .  --color",
 		"lint:fix": "npm run lint -- --fix --color",
 		"format": "prettier . --write",
-		"prepare": "npx husky init",
 		"cm": "cz"
 	},
 	"eslintConfig": {
