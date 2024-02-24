@@ -1,4 +1,5 @@
 {
+	"jest": "jest",
 	"*.{js,jsx}": "npm run lint",
 	"*.{js,jsx,css,scss,md,html,json}": "npm run format"
 }
