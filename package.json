@@ -29,7 +29,8 @@
 		"format": "prettier . --write",
 		"cm": "cz",
 		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
+		"build-storybook": "storybook build",
+		"lint-stage": "npx lint-staged"
 	},
 	"eslintConfig": {
 		"extends": [
