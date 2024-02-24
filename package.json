@@ -88,10 +88,10 @@
 		"storybook": "^7.6.17",
 		"webpack": "^5.90.3"
 	},
-	"lint-stage": {
-		"*.test.{js,jsx}": "npm jest",
+	"lint-staged": {
 		"*.{js,jsx}": "npm run lint",
-		"*.{js,jsx,css,scss,md,html,json}": "npm run format"
+		"*.{js,jsx,css,scss,md,html,json}": "npm run format",
+		"*.test.{js,jsx}": "npm test"
 	},
 	"config": {
 		"commitizen": {
