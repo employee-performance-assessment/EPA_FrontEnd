@@ -88,6 +88,11 @@
 		"storybook": "^7.6.17",
 		"webpack": "^5.90.3"
 	},
+	"lint-stage": {
+		"*.test.{js,jsx}": "npm jest",
+		"*.{js,jsx}": "npm run lint",
+		"*.{js,jsx,css,scss,md,html,json}": "npm run format"
+	},
 	"config": {
 		"commitizen": {
 			"path": "./node_modules/cz-conventional-changelog"
