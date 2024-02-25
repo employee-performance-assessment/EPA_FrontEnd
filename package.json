@@ -89,9 +89,9 @@
 		"webpack": "^5.90.3"
 	},
 	"lint-staged": {
-		"*.{js,jsx}": "npm run lint",
 		"*.{js,jsx,css,scss,md,html,json}": "npm run format",
-		"*.test.{js,jsx}": "npm test"
+		"*.{js,jsx}": "npm run lint",		
+		"*.test.{js,jsx}": "npm run test"
 	},
 	"config": {
 		"commitizen": {

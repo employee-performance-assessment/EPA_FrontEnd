@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import Button from './Button';
 import './header.css';
 
-function Header({ user, onLogin, onLogout, onCreateAccount }) {
-	return (
+function Header({
+  user, onLogin, onLogout, onCreateAccount,
+}) {
+  return (
 		<header>
 			<div className="storybook-header">
 				<div>
@@ -54,20 +56,20 @@ function Header({ user, onLogin, onLogout, onCreateAccount }) {
 				</div>
 			</div>
 		</header>
-	);
+  );
 }
 
 export default Header;
 
 Header.propTypes = {
-	user: PropTypes.shape({
-		name: PropTypes.string.isRequired,
-	}),
-	onLogin: PropTypes.func.isRequired,
-	onLogout: PropTypes.func.isRequired,
-	onCreateAccount: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+  }),
+  onLogin: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
+  onCreateAccount: PropTypes.func.isRequired,
 };
 
 Header.defaultProps = {
-	user: null,
+  user: null,
 };

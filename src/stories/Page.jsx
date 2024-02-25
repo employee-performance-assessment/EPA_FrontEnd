@@ -4,9 +4,9 @@ import Header from './Header';
 import './page.css';
 
 function Page() {
-	const [user, setUser] = React.useState();
+  const [user, setUser] = React.useState();
 
-	return (
+  return (
 		<article>
 			<Header
 				user={user}
@@ -83,7 +83,7 @@ function Page() {
 				</div>
 			</section>
 		</article>
-	);
+  );
 }
 
 export default Page;
