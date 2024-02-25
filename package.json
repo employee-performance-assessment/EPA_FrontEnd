@@ -30,7 +30,8 @@
 		"cm": "cz",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build",
-		"lint-stage": "npx lint-staged --concurrent false"
+		"lint-stage": "npx lint-staged --concurrent false",
+		"prepare": "husky"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -90,7 +91,7 @@
 	},
 	"lint-staged": {
 		"*.{js,jsx,css,scss,md,html,json}": "npm run format",
-		"*.{js,jsx}": "npm run lint",		
+		"*.{js,jsx}": "npm run lint",
 		"*.test.{js,jsx}": "npm run test"
 	},
 	"config": {
