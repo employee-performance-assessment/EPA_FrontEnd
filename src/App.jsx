@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 import Link from './Link/Link.jsx';
 
 function App() {

@@ -1,9 +1,10 @@
+import React from 'react';
 import renderer from 'react-test-renderer';
-import Link from '../Link/Link';
+import Link from './Link.jsx';
 
 it('changes the class when hovered', () => {
   const component = renderer.create(
-		<Link page="http://www.facebook.com">Facebook</Link>,
+    <Link page="http://www.facebook.com">Facebook</Link>,
   );
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();

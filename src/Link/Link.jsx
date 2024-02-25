@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 const STATUS = {
   HOVERED: 'hovered',
@@ -17,13 +17,13 @@ export default function Link({ page, title }) {
   };
 
   return (
-		<a
-			className={status}
-			href={page || '#'}
-			onMouseEnter={onMouseEnter}
-			onMouseLeave={onMouseLeave}
-		>
-			{title}
-		</a>
+    <a
+      className={status}
+      href={page || '#'}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
+      {title}
+    </a>
   );
 }
