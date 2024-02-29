@@ -11,7 +11,16 @@
   "parser": "@babel/eslint-parser",
   "rules": {
     "react/prop-types": "off",
-    "disableEslintIgnore": 0
+    "disableEslintIgnore": 0,
+    "linebreak-style": 0,
+    "import/extensions": 0,
+    "prefer-promise-reject-errors": 0,
+    "import/prefer-default-export": 0,
+    "no-nested-ternary": 0,
+    "no-return-assign": 0,
+    "no-shadow": 0,
+    "no-param-reassign": 0,
+    "no-unused-expressions": 0
   },
   "extends": ["airbnb-base", "plugin:react/recommended"]
 }
