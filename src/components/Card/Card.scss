@@ -1,5 +1,11 @@
+$background-color: #000;
+$color: #fff;
+$border-radius: 15px;
+
 .card {
-  color: rgb(#14a9ff);
+  background-color: $background-color;
+  color: $color;
+  border-radius: $border-radius;
   width: 300px;
   height: min-content;
   border: 2px solid #131313;

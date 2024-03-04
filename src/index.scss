@@ -11,3 +11,58 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+$accent-color: #ffffff;
+$background-color: #f5f5f5;
+$accent-background-color: #000;
+//1500 balls
+$heigh-ball-color: #3367fb;
+//на ревью
+$on_review-color: #396bf9;
+
+$font-family-main: 'Inter', sans-serif;
+$font-family-headings: 'Inter', sans-serif;
+$font-family-buttons: 'Roboto', sans-serif;
+$main-color: rgb(0, 0, 0);
+
+$font-size-main: 18px;
+$font-size-headings: 22px;
+$font-size-buttons: 14px;
+
+$font-weight-main: medium;
+$font-weight-headings: Bold;
+$margin-base: 10px;
+$margin-headings: 20px;
+$margin-buttons: 5px;
+
+$container-width: 1200px;
+$content-width: 960px;
+$navigation-width: 240px;
+
+$animation-hover: all 0.3s ease-in-out;
+$animation-click: all 0.5s ease-in-out;
+
+$transition-hover: all 0.3s ease-in-out;
+$transition-click: all 0.5s ease-in-out;
+
+//миксины:
+@mixin main-text() {
+  font-family: $font-family-main;
+  font-weight: $font-weight-main;
+  color: $main-color;
+  font-size: $font-size-main;
+}
+
+@mixin heading-text() {
+  font-family: $font-family-headings;
+  font-weight: $font-weight-headings;
+  font-size: $font-size-main;
+}
+
+.main_text {
+  @include main-text;
+}
+
+.main_heading {
+  @include heading-text;
+}

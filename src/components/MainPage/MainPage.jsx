@@ -4,7 +4,7 @@ import PersonalArea from '../PersonalArea/PersonalArea.jsx';
 import AdminPanel from '../AdminPanel/AdminPanel.jsx';
 
 function MainPage() {
-  const status = true;
+  const status = !true;
   /* заменить на статус пользователя */
   return (
     <>
