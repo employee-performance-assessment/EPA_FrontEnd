@@ -4,9 +4,7 @@ import deleteButton from '../../images/delete_button.svg';
 import editButton from '../../images/edit_button.svg';
 import saveButton from '../../images/save_button.svg';
 
-function Card({
-  title, key, onEdit, onDelete,
-}) {
+function Card({ title, key, onEdit, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
   const [containerContent, setContainerContent] = useState(title);
 

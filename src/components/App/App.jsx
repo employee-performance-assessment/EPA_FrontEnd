@@ -52,7 +52,7 @@ function App() {
 
   const [isFormAuthBlock, setIsFormAuthBlock] = useState(false);
 
-  const clearCards = () => { };
+  const clearCards = () => {};
 
   return (
     <div className="page">

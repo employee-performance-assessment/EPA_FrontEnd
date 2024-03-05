@@ -1,9 +1,7 @@
 import React from 'react';
 import './Form.css';
 
-function Form({
-  fields, buttonText, onSubmit, isValid, modifierCSS,
-}) {
+function Form({ fields, buttonText, onSubmit, isValid, modifierCSS }) {
   const valuesForm = {};
 
   fields.forEach((item) => (valuesForm[item.name] = item.valueInput));

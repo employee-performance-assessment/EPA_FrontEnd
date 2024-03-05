@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 import Button from './Button.jsx';
 import './header.css';
 
-function Header({
-  user, onLogin, onLogout, onCreateAccount,
-}) {
+function Header({ user, onLogin, onLogout, onCreateAccount }) {
   return (
     <header>
       <div className="storybook-header">
