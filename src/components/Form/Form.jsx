@@ -1,7 +1,17 @@
 import React from 'react';
 import './Form.css';
 
+<<<<<<< HEAD
 function Form({ fields, buttonText, onSubmit, isValid, modifierCSS }) {
+=======
+function Form({
+  fields,
+  buttonText,
+  onSubmit,
+  isValid,
+  modifierCSS,
+}) {
+>>>>>>> 6e720b665f0eb5abdcfb4386ee404cf291466178
   const valuesForm = {};
 
   fields.forEach((item) => (valuesForm[item.name] = item.valueInput));
@@ -38,8 +48,12 @@ function Form({ fields, buttonText, onSubmit, isValid, modifierCSS }) {
         </span>
         <button
           type="submit"
+<<<<<<< HEAD
           className={`form__button-save ${
             isValid ? '' : 'form__button-save_inactive'
+=======
+          className={`form__button-save ${isValid ? '' : 'form__button-save_inactive'
+>>>>>>> 6e720b665f0eb5abdcfb4386ee404cf291466178
           }`}
           disabled={!isValid}
         >

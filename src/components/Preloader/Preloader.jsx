@@ -1,8 +1,12 @@
 import React from 'react';
 import './Preloader.css';
 
+<<<<<<< HEAD
 function Preloader({ text, classNameMod }) {
   return (
+=======
+const Preloader = ({ text, classNameMod }) => (
+>>>>>>> 6e720b665f0eb5abdcfb4386ee404cf291466178
     <div
       className={`preloader ${classNameMod ? `preloader_${classNameMod}` : ''}`}
     >
@@ -20,7 +24,11 @@ function Preloader({ text, classNameMod }) {
         </span>
       </div>
     </div>
+<<<<<<< HEAD
   );
 }
+=======
+);
+>>>>>>> 6e720b665f0eb5abdcfb4386ee404cf291466178
 
 export default Preloader;
