@@ -20,10 +20,17 @@ function Auth({
   const [emailDitry, setEmailDitry] = React.useState(false);
   const [passwordDitry, setPasswordDitry] = React.useState(false);
   const [emailError, setEmailError] = React.useState(
+<<<<<<< HEAD
     'Поле не может быть пустым'
   );
   const [passwordError, setPasswordError] = React.useState(
     'Поле не может быть пустым'
+=======
+    'Поле не может быть пустым',
+  );
+  const [passwordError, setPasswordError] = React.useState(
+    'Поле не может быть пустым',
+>>>>>>> 6e720b665f0eb5abdcfb4386ee404cf291466178
   );
   const [formValid, setFormValid] = React.useState(false);
 
@@ -85,7 +92,11 @@ function Auth({
             inputError: passwordError,
           },
         ]}
+<<<<<<< HEAD
         buttonText="Войти"
+=======
+        buttonText={'Войти'}
+>>>>>>> 6e720b665f0eb5abdcfb4386ee404cf291466178
         onSubmit={onSubmit}
         isValid={formValid}
         requestError={requestError}

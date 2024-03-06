@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import './button.css';
 
 /* Primary UI component for user interaction */
+<<<<<<< HEAD
 function Button({ primary, backgroundColor, size, label, onClick }) {
+=======
+function Button({
+  primary, backgroundColor, size, label, onClick,
+}) {
+>>>>>>> 6e720b665f0eb5abdcfb4386ee404cf291466178
   const mode = primary
     ? 'storybook-button--primary'
     : 'storybook-button--secondary';
@@ -11,7 +17,11 @@ function Button({ primary, backgroundColor, size, label, onClick }) {
     <button
       type="button"
       className={['storybook-button', `storybook-button--${size}`, mode].join(
+<<<<<<< HEAD
         ' '
+=======
+        ' ',
+>>>>>>> 6e720b665f0eb5abdcfb4386ee404cf291466178
       )}
       style={backgroundColor && { backgroundColor }}
       onClick={onClick}

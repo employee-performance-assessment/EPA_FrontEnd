@@ -4,7 +4,13 @@ import PropTypes from 'prop-types';
 import Button from './Button.jsx';
 import './header.css';
 
+<<<<<<< HEAD
 function Header({ user, onLogin, onLogout, onCreateAccount }) {
+=======
+function Header({
+  user, onLogin, onLogout, onCreateAccount,
+}) {
+>>>>>>> 6e720b665f0eb5abdcfb4386ee404cf291466178
   return (
     <header>
       <div className="storybook-header">
