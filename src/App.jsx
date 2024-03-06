@@ -2,11 +2,11 @@
 import Link from './Link/Link';
 
 function App() {
-	return (
-		<div>
-			<Link title={'learn react'} />
-		</div>
-	);
+  return (
+    <div>
+      <Link title={'learn react'} />
+    </div>
+  );
 }
 
 export default App;

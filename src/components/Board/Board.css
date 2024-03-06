@@ -1,0 +1,56 @@
+.boardDnD {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25vh;
+  border-radius: 12px;
+  border: 3px solid;
+}
+
+.boardDnD__card {
+  width: 200px;
+  height: 100px;
+  padding: 5px;
+  border-radius: 12px;
+  border: 5px solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  cursor: grab;
+}
+
+.boardDnD__card:first-child {
+  margin-top: 20px;
+}
+
+.boardDnD__card_OverHandler {
+  background: rgba(172, 172, 172, 0.356);
+  box-shadow: 4px 4px 3px rgb(20, 20, 20);
+}
+
+.boardDnD__card-title {
+  width: 100px;
+  height: 40px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.boardDnD__column {
+  flex: 1;
+}
+.boardDnD__column_center {
+  border-left: 1px solid #a9d5dd;
+  border-right: 1px solid #a9d5dd;
+}
+
+.boardDnD__column:first-child {
+  flex: 20%;
+}
+
+.boardDnD__column:nth-child(2) {
+  flex: 40%;
+}
+
+.boardDnD__column:nth-child(3) {
+  flex: 40%;
+}
