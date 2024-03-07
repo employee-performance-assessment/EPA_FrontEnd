@@ -1,11 +1,7 @@
 import React from 'react';
 import './Board.css';
 
-<<<<<<< HEAD
 function Board({
-=======
-const Board = ({
->>>>>>> 6e720b665f0eb5abdcfb4386ee404cf291466178
   currentBoard,
   setCurrentBoard,
   setCardsLists,
@@ -16,11 +12,7 @@ const Board = ({
   setDropCard,
   startBoard,
   setStartBoard,
-<<<<<<< HEAD
 }) {
-=======
-}) => {
->>>>>>> 6e720b665f0eb5abdcfb4386ee404cf291466178
   const title = 'hay! wold!';
   // События, возникающие в перемещаемом объекте (исходный элемент):
   // ondragstart – возникает, когда пользователь начинает перемещать элемент
@@ -87,14 +79,13 @@ const Board = ({
     }
     return -1;
   };
-<<<<<<< HEAD
   return (
     <div className="boardDnD">
       <h1>{title}</h1>
       {board.items.sort(sortCard).map((card) => (
         <div
-          className="boardDnD__card " // сначала сортируем карты по порядку (order), затем перебираем массив для отрисовки карточек
-          draggable
+          className={'boardDnD__card '} // сначала сортируем карты по порядку (order), затем перебираем массив для отрисовки карточек
+          draggable={true}
           onDragEnd={(e) => dragEndHandler(e)}
           onDragLeave={(e) => dragEndHandler(e)}
           onDragOver={(e) => dragOverHandler(e, board)}
@@ -107,22 +98,6 @@ const Board = ({
       ))}
     </div>
   );
-=======
-  return (<div className='boardDnD'>
-    <h1>{title}</h1>
-    {board.items.sort(sortCard).map((card) => <div className={'boardDnD__card '} // сначала сортируем карты по порядку (order), затем перебираем массив для отрисовки карточек
-      draggable={true}
-      onDragEnd={(e) => dragEndHandler(e)}
-      onDragLeave={(e) => dragEndHandler(e)}
-      onDragOver={(e) => dragOverHandler(e, board)}
-      onDragStart={(e) => dragStartHandler(e, board, card)}
-      onDrop={(e) => dropHandler(e, board, card)}
-      key={card.id}
-    >
-      <h3 className='boardDnD__card-title'>{card.title}</h3>
-    </div>)}
-  </div>);
->>>>>>> 6e720b665f0eb5abdcfb4386ee404cf291466178
 
   // на потом!!!
   //   return (
@@ -144,10 +119,6 @@ const Board = ({
   //       </div>
   //     </div>
   //   );
-<<<<<<< HEAD
 }
-=======
-};
->>>>>>> 6e720b665f0eb5abdcfb4386ee404cf291466178
 
 export default Board;

@@ -1,11 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
-
-function AdminPanel() {
-  return (
-    <div className="AdminPanel">
-      <h1>Admin panel</h1>
-=======
 import './AdminPanel.scss';
 import Card from '../Card/Card.jsx';
 
@@ -34,7 +27,6 @@ function AdminPanel() {
         </ul>
       </div>
       <div className="AdminPanel__main"></div>
->>>>>>> 6e720b665f0eb5abdcfb4386ee404cf291466178
     </div>
   );
 }

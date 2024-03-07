@@ -1,20 +1,10 @@
 import React, { useState } from 'react';
-<<<<<<< HEAD
-import './Card.css';
-=======
 import './Card.scss';
->>>>>>> 6e720b665f0eb5abdcfb4386ee404cf291466178
 import deleteButton from '../../images/delete_button.svg';
 import editButton from '../../images/edit_button.svg';
 import saveButton from '../../images/save_button.svg';
 
-<<<<<<< HEAD
 function Card({ title, key, onEdit, onDelete }) {
-=======
-function Card({
-  title, key, onEdit, onDelete,
-}) {
->>>>>>> 6e720b665f0eb5abdcfb4386ee404cf291466178
   const [isEditing, setIsEditing] = useState(false);
   const [containerContent, setContainerContent] = useState(title);
 
@@ -51,21 +41,13 @@ function Card({
           {isEditing ? (
             <img
               className="card__button-image"
-<<<<<<< HEAD
-              src={saveButton}
-=======
               src={editButton}
->>>>>>> 6e720b665f0eb5abdcfb4386ee404cf291466178
               alt="логотип"
             />
           ) : (
             <img
               className="card__button-image"
-<<<<<<< HEAD
-              src={editButton}
-=======
               src={saveButton}
->>>>>>> 6e720b665f0eb5abdcfb4386ee404cf291466178
               alt="логотип"
             />
           )}
