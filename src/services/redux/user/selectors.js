@@ -1,3 +1,3 @@
 export default function selectUserModule(state) {
-	return state.user.user;
+  return state.user.user;
 }
