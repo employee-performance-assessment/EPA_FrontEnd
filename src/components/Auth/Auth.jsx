@@ -3,7 +3,7 @@ import './Auth.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import Form from '../Form/Form.jsx';
 import logo from '../../images/logo.svg';
-import { EMAIL_REGEXP } from '../../constants/regexp';
+import { EMAIL_REGEXP } from '../../constants/regexp.js';
 import Preloader from '../Preloader/Preloader.jsx';
 
 function Auth({
@@ -20,10 +20,10 @@ function Auth({
   const [emailDitry, setEmailDitry] = React.useState(false);
   const [passwordDitry, setPasswordDitry] = React.useState(false);
   const [emailError, setEmailError] = React.useState(
-    'Поле не может быть пустым'
+    'Поле не может быть пустым',
   );
   const [passwordError, setPasswordError] = React.useState(
-    'Поле не может быть пустым'
+    'Поле не может быть пустым',
   );
   const [formValid, setFormValid] = React.useState(false);
 

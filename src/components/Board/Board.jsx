@@ -84,8 +84,8 @@ function Board({
       <h1>{title}</h1>
       {board.items.sort(sortCard).map((card) => (
         <div
-          className="boardDnD__card " // сначала сортируем карты по порядку (order), затем перебираем массив для отрисовки карточек
-          draggable
+          className={'boardDnD__card '} // сначала сортируем карты по порядку (order), затем перебираем массив для отрисовки карточек
+          draggable={true}
           onDragEnd={(e) => dragEndHandler(e)}
           onDragLeave={(e) => dragEndHandler(e)}
           onDragOver={(e) => dragOverHandler(e, board)}

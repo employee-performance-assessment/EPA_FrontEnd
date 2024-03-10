@@ -1,0 +1,25 @@
+$background-color-main: #fff;
+$background-color-accent: #f5f5f5;
+$border-radius: 5px;
+
+.AdminPanel__conainer {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+}
+
+.AdminPanel__list {
+  list-style: none;
+}
+
+.AdminPanel__item {
+  text-decoration: none;
+}
+
+.AdminPanel__sidebar {
+  background-color: $background-color-main;
+}
+.AdminPanel__main {
+  background-color: $background-color-accent;
+  border-radius: $border-radius;
+}

@@ -68,7 +68,7 @@ function App() {
               true ? (
                 <ProtectedRoute
                   element={MainPage}
-                  isLoggedIn
+                  isLoggedIn={true}
                   isLoading={false}
                 />
               ) : (
@@ -86,7 +86,7 @@ function App() {
             element={
               <ProtectedRoute
                 element={Boards}
-                isLoggedIn
+                isLoggedIn={true}
                 currentBoard={currentBoard}
                 setCurrentBoard={setCurrentBoard}
                 dropCard={dropCard}

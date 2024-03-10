@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Card.css';
+import './Card.scss';
 import deleteButton from '../../images/delete_button.svg';
 import editButton from '../../images/edit_button.svg';
 import saveButton from '../../images/save_button.svg';
@@ -41,13 +41,13 @@ function Card({ title, key, onEdit, onDelete }) {
           {isEditing ? (
             <img
               className="card__button-image"
-              src={saveButton}
+              src={editButton}
               alt="логотип"
             />
           ) : (
             <img
               className="card__button-image"
-              src={editButton}
+              src={saveButton}
               alt="логотип"
             />
           )}
