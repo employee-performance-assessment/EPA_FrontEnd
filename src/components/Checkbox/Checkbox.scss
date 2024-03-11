@@ -1,0 +1,50 @@
+.switch-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 20px;
+  overflow: hidden;
+  font-size: 18px;
+  width: 350px;
+  height: 54px;
+  background-color: black;
+  box-sizing: border-box;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.switch-checkbox .left-side,
+.switch-checkbox .right-side {
+  flex: 1;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, color 0.3s;
+  height: 100%;
+}
+
+.switch-checkbox .left-side {
+  background-color: #C5B6F1;
+  color: black;
+  border-radius: 20px;
+  height: 48px;
+}
+
+.switch-checkbox .right-side {
+  background-color: black;
+  color: white;
+  border-radius: 20px;
+  height: 48px;
+}
+
+.switch-checkbox.checked .left-side {
+  background-color: black;
+  color: white;
+}
+
+.switch-checkbox.checked .right-side {
+  background-color: #C5B6F1;
+  color: black;
+  height: 48px;
+}
