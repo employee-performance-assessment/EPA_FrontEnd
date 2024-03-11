@@ -2,7 +2,6 @@
   color: rgb(#14a9ff);
   width: 300px;
   height: min-content;
-  border: 2px solid #131313;
   border-radius: 8px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

@@ -21,7 +21,12 @@
     "no-shadow": 0,
     "no-param-reassign": 0,
     "no-unused-expressions": 0,
-    "object-curly-newline": "off"
+    "object-curly-newline": "off",
+    "comma-dangle": "off",
+    "operator-linebreak": "off",
+    "implicit-arrow-linebreak": "off",
+    "no-confusing-arrow": "off",
+    "consistent-return": "off"
   },
   "extends": ["airbnb-base", "plugin:react/recommended"]
 }

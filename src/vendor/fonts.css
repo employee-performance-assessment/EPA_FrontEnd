@@ -2,8 +2,7 @@
   font-family: 'Montserrat Black';
   font-style: normal;
   font-weight: normal;
-  src:
-    url('./fonts/Montserrat-Black.woff') format('woff');
+  src: url('./fonts/Montserrat-Black.woff') format('woff');
 }
 
 @font-face {
