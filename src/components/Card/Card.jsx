@@ -65,17 +65,3 @@ function Card({ title, key, onEdit, onDelete }) {
 }
 
 export default Card;
-//   return (
-//     <div className="card">
-//       <h2 className="card-title">Organizer Card</h2>
-//       <p className="card-content">
-//         This is a demo organizer card. You can use it to organize your tasks and
-//         notes.
-//       </p>
-//       <div className="card-footer">
-//         <button className="button">Edit</button>
-//         <button className="button">Delete</button>
-//       </div>
-//     </div>
-//   );
-// export default Card;
