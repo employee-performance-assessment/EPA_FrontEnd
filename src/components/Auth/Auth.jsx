@@ -19,8 +19,12 @@ function Auth({
   const [password, setPassword] = React.useState('');
   const [emailDitry, setEmailDitry] = React.useState(false);
   const [passwordDitry, setPasswordDitry] = React.useState(false);
-  const [emailError, setEmailError] = React.useState('Поле не может быть пустым');
-  const [passwordError, setPasswordError] = React.useState('Поле не может быть пустым');
+  const [emailError, setEmailError] = React.useState(
+    'Поле не может быть пустым'
+  );
+  const [passwordError, setPasswordError] = React.useState(
+    'Поле не может быть пустым'
+  );
   const [formValid, setFormValid] = React.useState(false);
 
   useEffect(() => {

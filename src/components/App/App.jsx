@@ -52,7 +52,7 @@ function App() {
 
   const [isFormAuthBlock, setIsFormAuthBlock] = useState(false);
 
-  const clearCards = () => { };
+  const clearCards = () => {};
 
   return (
     <div className="page">
@@ -65,7 +65,6 @@ function App() {
           <Route
             path={main}
             element={
-              // eslint-disable-next-line no-constant-condition
               true ? (
                 <ProtectedRoute
                   element={MainPage}
