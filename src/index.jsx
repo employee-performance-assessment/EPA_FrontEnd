@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.scss';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './components/App/App.jsx';
+import './styles/index.scss';
 
 import reportWebVitals from './reportWebVitals';
 import store from './services/redux';

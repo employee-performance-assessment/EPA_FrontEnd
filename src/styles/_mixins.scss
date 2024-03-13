@@ -1,0 +1,14 @@
+@import './vars';
+
+@mixin main-text() {
+  font-family: $font-family-main;
+  font-weight: $font-weight-main;
+  color: $main-color;
+  font-size: $font-size-main;
+}
+
+@mixin heading-text() {
+  font-family: $font-family-headings;
+  font-weight: $font-weight-headings;
+  font-size: $font-size-main;
+}

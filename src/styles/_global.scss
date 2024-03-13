@@ -1,0 +1,26 @@
+@import './mixins';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: 'Inter', 'Montserrat', 'Arial', sans-serif;
+  font-style: normal;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.main_text {
+  @include main-text;
+}
+
+.main_heading {
+  @include heading-text;
+}
