@@ -1,4 +1,3 @@
-import React from 'react';
 import './Form.css';
 
 function Form({ fields, buttonText, onSubmit, isValid, modifierCSS }) {
