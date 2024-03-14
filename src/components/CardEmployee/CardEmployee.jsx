@@ -1,4 +1,3 @@
-import React from 'react';
 import cards from './CardEmployee.json';
 import styles from './CardEmployee.module.scss';
 import Checkbox from '../Checkbox/Checkbox.jsx';
