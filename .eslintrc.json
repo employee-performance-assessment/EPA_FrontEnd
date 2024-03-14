@@ -31,5 +31,9 @@
     "default-case": "off",
     "no-use-before-define": "off"
   },
-  "extends": ["airbnb-base", "plugin:react/recommended", "plugin:react/jsx-runtime"]
+  "extends": [
+    "airbnb-base",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime"
+  ]
 }

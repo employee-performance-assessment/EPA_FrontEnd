@@ -14,9 +14,10 @@ export const chekTokenUser = (token) =>
     },
   }).then((res) => checkResponse(res));
 
-export const register = (name, email, password) =>
+export const register = ({ name, email, password }) =>
   fetch(`${auth}/signup`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -27,6 +28,7 @@ export const register = (name, email, password) =>
 export const authorize = (email, password) =>
   fetch(`${auth}/signin`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',

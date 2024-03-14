@@ -3,10 +3,10 @@ import { Route, Routes } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
 import MainPage from '../MainPage/MainPage.jsx';
-import Auth from '../Auth/Auth.jsx';
 import Boards from '../Boards/Boards.jsx';
-import Header from '../Header/Header.jsx';
 import { endpoint } from '../../constants/constantsEndpointRoute.js';
+import Auth from '../Auth/Auth.jsx';
+import Register from '../Register/Register.jsx';
 
 function App() {
   // в cardsList записываем ответ на запрос get от API, задания со всеми параметрами
@@ -56,53 +56,53 @@ function App() {
 
   return (
     <div className="page">
-      <div className="page__content">
-        <Header />
-        <Routes>
-          {/* проверяем, если залогинин, прогоняем через ProtectedRoute */}
-          {/* ,если нет, то открывается страница авторизации */}
-          {/* true заменить на loggedIn */}
-          <Route
-            path={main}
-            element={
-              true ? (
-                <ProtectedRoute
-                  element={MainPage}
-                  isLoggedIn={true}
-                  isLoading={false}
-                />
-              ) : (
-                <Auth
-                  isLoggedIn={loggedIn}
-                  isFormAuthBlock={isFormAuthBlock}
-                  setIsFormAuthBlock={setIsFormAuthBlock}
-                />
-              )
-            }
-          />
-          {/* канбан доска */}
-          <Route
-            path={board}
-            element={
+      {/* <div className="page__content"> */}
+      <Routes>
+        {/* проверяем, если залогинин, прогоняем через ProtectedRoute */}
+        {/* ,если нет, то открывается страница авторизации */}
+        {/* true заменить на loggedIn */}
+        <Route
+          path={main}
+          element={
+            !true ? (
               <ProtectedRoute
-                element={Boards}
+                element={MainPage}
                 isLoggedIn={true}
-                currentBoard={currentBoard}
-                setCurrentBoard={setCurrentBoard}
-                dropCard={dropCard}
-                setDropCard={setDropCard}
-                startBoard={startBoard}
-                setStartBoard={setStartBoard}
-                clearCards={clearCards}
-                cardsLists={cardsLists}
-                setCardsLists={setCardsLists}
+                isLoading={false}
               />
-            }
-          />
-          {/* страница без роута */}
-          <Route path={anyPage} element={<NotFound />} />
-        </Routes>
-      </div>
+            ) : (
+              <Auth
+                isLoggedIn={loggedIn}
+                isFormAuthBlock={isFormAuthBlock}
+                setIsFormAuthBlock={setIsFormAuthBlock}
+              />
+            )
+          }
+        />
+        <Route path="/signup" element={<Register isLoggedIn={loggedIn} />} />
+        {/* канбан доска */}
+        <Route
+          path={board}
+          element={
+            <ProtectedRoute
+              element={Boards}
+              isLoggedIn={true}
+              currentBoard={currentBoard}
+              setCurrentBoard={setCurrentBoard}
+              dropCard={dropCard}
+              setDropCard={setDropCard}
+              startBoard={startBoard}
+              setStartBoard={setStartBoard}
+              clearCards={clearCards}
+              cardsLists={cardsLists}
+              setCardsLists={setCardsLists}
+            />
+          }
+        />
+        {/* страница без роута */}
+        <Route path={anyPage} element={<NotFound />} />
+      </Routes>
+      {/* </div> */}
     </div>
   );
 }
