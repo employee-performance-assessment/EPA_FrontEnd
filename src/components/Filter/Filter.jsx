@@ -1,26 +1,27 @@
-import React from 'react';
+import { useState } from 'react';
 import Select from 'react-select';
 import CustomArrow from '../CustomArrow/CustomArrow.jsx';
 
-const Filter = ({ options, onChange, value, placeholder }) => {
+const Filter = () => {
+  // props: { options, onChange, value, placeholder }
   // в качестве options timeFrames или years, onChange: handleChangeTimeframe или handleChangeYear
   // value: один из стейтов, placeholder: "Год" или "Фильтры"
-  // const [selectedTimeframe, setSelectedTimeframe] = useState('');
+  const [selectedTimeframe, setSelectedTimeframe] = useState('');
   // const [selectedYear, setSelectedYear] = useState('');
 
   // const handleChangeYear = (selectedValue) => {
   //   setSelectedYear(selectedValue);
   // };
 
-  // const handleChangeTimeframe = (selectedValue) => {
-  //   setSelectedTimeframe(selectedValue);
-  // };
+  const handleChangeTimeframe = (selectedValue) => {
+    setSelectedTimeframe(selectedValue);
+  };
 
-  // const timeFrames = [
-  //   { value: 'week', label: 'Неделя' },
-  //   { value: 'month', label: 'Месяц' },
-  //   { value: 'halfYear', label: 'Полгода' },
-  // ];
+  const timeFrames = [
+    { value: 'week', label: 'Неделя' },
+    { value: 'month', label: 'Месяц' },
+    { value: 'halfYear', label: 'Полгода' },
+  ];
 
   // const years = [
   //   {value: '2024', label: "2024"},
@@ -29,14 +30,17 @@ const Filter = ({ options, onChange, value, placeholder }) => {
   //   {value: '2021', label: "2021"},
   // ];
 
+  const placeholder = 'Фильтры'; // или 'Год'
+  const options = timeFrames; // или years
+
   const customStyles = {
     control: (provided) => {
       const customWidth = placeholder === 'Год' ? '121px' : '176px';
 
       return {
         ...provided,
-        backgroundColor: 'black',
-        color: 'white',
+        backgroundColor: '#333232',
+        color: '#fff',
         width: customWidth,
         height: '52px',
         borderRadius: '40px',
@@ -51,9 +55,11 @@ const Filter = ({ options, onChange, value, placeholder }) => {
     },
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isFocused ? '#00D37F' : 'black',
-      color: 'white',
+      backgroundColor: state.isFocused ? '#00D37F' : '#333232',
+      color: '#fff',
       height: '38px',
+      fontSize: '16px',
+      paddingLeft: '20px',
     }),
     valueContainer: (provided) => ({
       ...provided,
@@ -61,7 +67,7 @@ const Filter = ({ options, onChange, value, placeholder }) => {
     }),
     placeholder: (provided) => ({
       ...provided,
-      color: 'white',
+      color: '#fff',
       fontSize: '20px',
       margin: '0px',
     }),
@@ -71,7 +77,7 @@ const Filter = ({ options, onChange, value, placeholder }) => {
       return {
         ...provided,
         width: customWidth,
-        backgroundColor: 'black',
+        backgroundColor: '#333232',
         borderRadius: '18px',
         paddingTop: '12px',
         paddingBottom: '12px',
@@ -89,7 +95,7 @@ const Filter = ({ options, onChange, value, placeholder }) => {
     dropdownIndicator: () => null,
     singleValue: (provided) => ({
       ...provided,
-      color: 'white',
+      color: '#fff',
       fontSize: '20px',
     }),
   };
@@ -100,8 +106,8 @@ const Filter = ({ options, onChange, value, placeholder }) => {
 
   return (
     <Select
-      value={options.find((option) => option.value === value)}
-      onChange={(selectedOption) => onChange(selectedOption.value)}
+      value={options.find((option) => option.value === selectedTimeframe)} // value вместо state
+      onChange={(selectedOption) => handleChangeTimeframe(selectedOption.value)} // onChange func
       options={options}
       placeholder={placeholder}
       styles={customStyles}

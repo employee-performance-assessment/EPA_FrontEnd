@@ -1,4 +1,3 @@
-import React from 'react';
 import './MainPage.scss';
 import PersonalArea from '../PersonalArea/PersonalArea.jsx';
 import AdminPanel from '../AdminPanel/AdminPanel.jsx';

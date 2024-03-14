@@ -7,7 +7,8 @@
   font-size: 18px;
   width: 350px;
   height: 54px;
-  background-color: black;
+  background-color: #333232;
+  color: #fff;
   box-sizing: border-box;
   padding-left: 3px;
   padding-right: 3px;
@@ -20,31 +21,30 @@
   text-align: center;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
   height: 100%;
 }
 
 .switch-checkbox .left-side {
-  background-color: #C5B6F1;
-  color: black;
+  // background-color: #C5B6F1;
   border-radius: 20px;
   height: 48px;
 }
 
 .switch-checkbox .right-side {
-  background-color: black;
-  color: white;
+  background-color: #333232;
   border-radius: 20px;
   height: 48px;
 }
 
 .switch-checkbox.checked .left-side {
-  background-color: black;
-  color: white;
+  background-color: #333232;
+  color: #fff;
 }
 
 .switch-checkbox.checked .right-side {
-  background-color: #C5B6F1;
-  color: black;
+  // background-color: #C5B6F1;
   height: 48px;
 }
