@@ -1,13 +1,13 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import styles from './Auth.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 import Logo from '../Logo/Logo.jsx';
 import { useFormValidation } from '../../utils/hooks/useFormValidation.js';
 
+import styles from './Register.module.scss';
 import registerImg from '../../images/register-img.png';
 
-function Auth({ isLoggedIn }) {
+function Register({ isLoggedIn }) {
   const navigate = useNavigate();
   const { errors, values, isValid, handleChange } = useFormValidation();
 
@@ -21,6 +21,21 @@ function Auth({ isLoggedIn }) {
         <form id="register" onSubmit={handleSubmit}>
           <Logo />
           <h1>Сервис для оценки сотрудников</h1>
+          <label>
+            <input
+              type="text"
+              id="user-name"
+              minLength="2"
+              maxLength="30"
+              name="name"
+              value={values.name || ''}
+              onChange={handleChange}
+              placeholder="Имя Фамилия"
+              pattern="^[а-яА-Яa-zA-Z\s\-]+$"
+              required
+            />
+            <span>{errors.name}</span>
+          </label>
           <label>
             <input
               type="email"
@@ -49,11 +64,8 @@ function Auth({ isLoggedIn }) {
             <span>{errors.password}</span>
           </label>
           <button type="submit" disabled={!isValid}>
-            Войти
+            Подтвердить
           </button>
-          <Link to="signup" className={styles.link}>
-            Зарегистрироваться
-          </Link>
         </form>
         <img
           src={registerImg}
@@ -66,4 +78,4 @@ function Auth({ isLoggedIn }) {
   );
 }
 
-export default Auth;
+export default Register;
