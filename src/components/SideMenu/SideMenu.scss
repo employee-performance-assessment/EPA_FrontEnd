@@ -1,0 +1,44 @@
+$main-color: black;
+$font-weight: 500;
+$font-size: 18px;
+
+.SideMenu {
+  margin: 0px 33px 123px 24px;
+  width: 200px;
+}
+
+.SideMenu__list {
+  padding: 80px 0 0 0;
+  display: flex;
+  flex-direction: column;
+}
+.SideMenu__item {
+  color: $main-color;
+  display: flex;
+  text-decoration: none;
+  flex-direction: row;
+  margin-bottom: 40px;
+  font-weight: $font-weight;
+  font-size: $font-size;
+}
+
+.SideMenu__text {
+  align-self: center;
+  padding-left: 8px;
+}
+
+.SideMenu__buttonExit {
+  box-sizing: border-box;
+  margin-top: 192px;
+  background-color: #f5f5f5;
+  border-radius: 20px;
+  border: none;
+  color: $main-color;
+  padding: 20px 0px;
+  font-size: 20px;
+  font-weight: 600;
+  width: 180px;
+  background-image: url(../../images/exit_button.svg);
+  background-repeat: no-repeat;
+  background-position: 26px center;
+}

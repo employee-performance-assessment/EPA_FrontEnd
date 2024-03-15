@@ -3,9 +3,9 @@ $background-color-accent: #f5f5f5;
 $border-radius: 5px;
 
 .AdminPanel__conainer {
-  display: flex;
-  flex-direction: row;
+  margin: 60px 20px 12px 24px;
   box-sizing: border-box;
+  display: flex;
 }
 
 .AdminPanel__list {
@@ -18,8 +18,10 @@ $border-radius: 5px;
 
 .AdminPanel__sidebar {
   background-color: $background-color-main;
+  flex-grow: 0;
 }
 .AdminPanel__main {
   background-color: $background-color-accent;
   border-radius: $border-radius;
+  flex-grow: 4;
 }

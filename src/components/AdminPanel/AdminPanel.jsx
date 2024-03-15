@@ -1,12 +1,12 @@
 import './AdminPanel.scss';
 import Card from '../Card/Card.jsx';
+import SideMenu from '../SideMenu/SideMenu.jsx';
 
 function AdminPanel() {
   return (
     <div className="AdminPanel__conainer">
       <div className="AdminPanel__sidebar">
-        <h1>Admin panel</h1>
-
+      <SideMenu />
         <ul className="AdminPanel__list">
           <li className="AdminPanel__item">
             <Card />
