@@ -8,7 +8,7 @@ import Boards from '../Boards/Boards.jsx';
 import Header from '../Header/Header.jsx';
 import { endpoint } from '../../constants/constantsEndpointRoute.js';
 import { boardsList } from '../../constants/boardsList.js';
-import { register /* , authorize */ } from '../../utils/resistr.js';
+import { register /* , authorize */ } from '../../utils/registration.js';
 
 function App() {
   // для тестирования АПИ 
