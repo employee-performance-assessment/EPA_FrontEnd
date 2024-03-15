@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './Card.scss';
 import deleteButton from '../../images/delete_button.svg';
 import editButton from '../../images/edit_button.svg';
