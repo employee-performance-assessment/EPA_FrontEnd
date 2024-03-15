@@ -1,4 +1,3 @@
-import React from 'react';
 import './Board.css';
 import TimerDeadline from '../TimerDeadline/TimerDeadline.jsx';
 

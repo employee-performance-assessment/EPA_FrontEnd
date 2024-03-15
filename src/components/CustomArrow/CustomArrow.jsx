@@ -1,4 +1,3 @@
-import React from 'react';
 import customDropdownIndicator from '../../images/CaretDown.svg';
 
 function CustomArrow({ selectProps }) {

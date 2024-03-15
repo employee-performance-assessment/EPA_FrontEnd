@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './CriterionInput.module.scss';
 
 function CriterionInput({ text }) {
