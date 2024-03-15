@@ -11,6 +11,7 @@ import { boardsList } from '../../constants/boardsList.js';
 import { register /* , authorize */ } from '../../utils/resistr.js';
 
 function App() {
+  // для тестирования АПИ 
   const dataReg = {
     email: 'ppp@ppppp.ru',
     fullName: 'pppp',
@@ -19,6 +20,8 @@ function App() {
   register(dataReg)
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
+  // конец тестирования апи
+
   // в cardsList записываем ответ на запрос get от API, задания со всеми параметрами
   const [cardsLists, setCardsLists] = useState(boardsList);
 
@@ -31,7 +34,7 @@ function App() {
 
   const [isFormAuthBlock, setIsFormAuthBlock] = useState(false);
 
-  const clearCards = () => {};
+  const clearCards = () => { };
 
   return (
     <div className="page">
