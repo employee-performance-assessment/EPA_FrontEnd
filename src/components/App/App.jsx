@@ -1,47 +1,29 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
 import MainPage from '../MainPage/MainPage.jsx';
-import Auth from '../Auth/Auth.jsx';
 import Boards from '../Boards/Boards.jsx';
-import Header from '../Header/Header.jsx';
 import { endpoint } from '../../constants/constantsEndpointRoute.js';
+import Auth from '../Auth/Auth.jsx';
+import Register from '../Register/Register.jsx';
+import { boardsList } from '../../constants/boardsList.js';
+import { register /* , authorize */ } from '../../utils/registration.js';
 
 function App() {
+  // для тестирования АПИ 
+  const dataReg = {
+    email: 'ppp@ppppp.ru',
+    fullName: 'pppp',
+    password: 'pppppppp',
+  };
+  register(dataReg)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
+  // конец тестирования апи
+
   // в cardsList записываем ответ на запрос get от API, задания со всеми параметрами
-  const [cardsLists, setCardsLists] = useState([
-    {
-      id: 1,
-      title: 'Сделать',
-      items: [
-        { title: 'задание 1 доска 1', id: 111, order: 1 },
-        { title: 'задание 2 доска 1', id: 212, order: 2 },
-        { title: 'задание 3 доска 1', id: 313, order: 3 },
-        { title: 'задание 4 доска 1', id: 414, order: 4 },
-      ],
-    },
-    {
-      id: 2,
-      title: 'В работе',
-      items: [
-        { title: 'задание 1 доска 2', id: 121, order: 1 },
-        { title: 'задание 2 доска 2', id: 222, order: 2 },
-        { title: 'задание 3 доска 2', id: 323, order: 3 },
-        { title: 'задание 4 доска 2', id: 424, order: 4 },
-      ],
-    },
-    {
-      id: 3,
-      title: 'Готово',
-      items: [
-        { title: 'задание 1 доска 3', id: 131, order: 1 },
-        { title: 'задание 2 доска 3', id: 232, order: 2 },
-        { title: 'задание 3 доска 3', id: 333, order: 3 },
-        { title: 'задание 4 доска 3', id: 434, order: 3 },
-      ],
-    },
-  ]);
+  const [cardsLists, setCardsLists] = useState(boardsList);
 
   const [dropCard, setDropCard] = useState(null);
   const [startBoard, setStartBoard] = useState(null);
@@ -52,57 +34,57 @@ function App() {
 
   const [isFormAuthBlock, setIsFormAuthBlock] = useState(false);
 
-  const clearCards = () => {};
+  const clearCards = () => { };
 
   return (
     <div className="page">
-      <div className="page__content">
-        <Header />
-        <Routes>
-          {/* проверяем, если залогинин, прогоняем через ProtectedRoute */}
-          {/* ,если нет, то открывается страница авторизации */}
-          {/* true заменить на loggedIn */}
-          <Route
-            path={main}
-            element={
-              true ? (
-                <ProtectedRoute
-                  element={MainPage}
-                  isLoggedIn={true}
-                  isLoading={false}
-                />
-              ) : (
-                <Auth
-                  isLoggedIn={loggedIn}
-                  isFormAuthBlock={isFormAuthBlock}
-                  setIsFormAuthBlock={setIsFormAuthBlock}
-                />
-              )
-            }
-          />
-          {/* канбан доска */}
-          <Route
-            path={board}
-            element={
+      {/* <div className="page__content"> */}
+      <Routes>
+        {/* проверяем, если залогинин, прогоняем через ProtectedRoute */}
+        {/* ,если нет, то открывается страница авторизации */}
+        {/* true заменить на loggedIn */}
+        <Route
+          path={main}
+          element={
+            !true ? (
               <ProtectedRoute
-                element={Boards}
+                element={MainPage}
                 isLoggedIn={true}
-                currentBoard={currentBoard}
-                setCurrentBoard={setCurrentBoard}
-                dropCard={dropCard}
-                setDropCard={setDropCard}
-                startBoard={startBoard}
-                setStartBoard={setStartBoard}
-                clearCards={clearCards}
-                cardsLists={cardsLists}
-                setCardsLists={setCardsLists}
+                isLoading={false}
               />
-            }
-          />
-          {/* страница без роута */}
-          <Route path={anyPage} element={<NotFound />} />
-        </Routes>
-      </div>
+            ) : (
+              <Auth
+                isLoggedIn={loggedIn}
+                isFormAuthBlock={isFormAuthBlock}
+                setIsFormAuthBlock={setIsFormAuthBlock}
+              />
+            )
+          }
+        />
+        <Route path="/signup" element={<Register isLoggedIn={loggedIn} />} />
+        {/* канбан доска */}
+        <Route
+          path={board}
+          element={
+            <ProtectedRoute
+              element={Boards}
+              isLoggedIn={true}
+              currentBoard={currentBoard}
+              setCurrentBoard={setCurrentBoard}
+              dropCard={dropCard}
+              setDropCard={setDropCard}
+              startBoard={startBoard}
+              setStartBoard={setStartBoard}
+              clearCards={clearCards}
+              cardsLists={cardsLists}
+              setCardsLists={setCardsLists}
+            />
+          }
+        />
+        {/* страница без роута */}
+        <Route path={anyPage} element={<NotFound />} />
+      </Routes>
+      {/* </div> */}
     </div>
   );
 }

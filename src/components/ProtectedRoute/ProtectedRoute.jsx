@@ -1,4 +1,3 @@
-import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { endpoint } from '../../constants/constantsEndpointRoute.js';
 import Preloader from '../Preloader/Preloader.jsx';

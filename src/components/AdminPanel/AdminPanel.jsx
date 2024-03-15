@@ -1,4 +1,3 @@
-import React from 'react';
 import './AdminPanel.scss';
 import Card from '../Card/Card.jsx';
 import SideMenu from '../SideMenu/SideMenu.jsx';

@@ -1,5 +1,5 @@
-import React from 'react';
 import './Board.css';
+import TimerDeadline from '../TimerDeadline/TimerDeadline.jsx';
 
 function Board({
   currentBoard,
@@ -7,13 +7,13 @@ function Board({
   setCardsLists,
   cardsLists,
   board,
-  /* idBoard, title, */
+  /* idBoard,  */
   dropCard,
   setDropCard,
   startBoard,
   setStartBoard,
+  title,
 }) {
-  const title = 'hay! wold!';
   // События, возникающие в перемещаемом объекте (исходный элемент):
   // ondragstart – возникает, когда пользователь начинает перемещать элемент
   // ondrag – возникает во время перемещения элемента
@@ -79,12 +79,36 @@ function Board({
     }
     return -1;
   };
+
+  // функция установки цвета поля баллов
+  function getCollor(bord, deadline) {
+    // console.log(deadline - new Date().getTime());
+    if (deadline - new Date().getTime() <= 0) {
+      return 'boardDnD__card-points_red';
+    } else if (bord === 'К выполнению') {
+      return 'boardDnD__card-points_grey';
+    } else if (bord === 'В работе') {
+      return 'boardDnD__card-points_light-green';
+    } else if (bord === 'На ревью') {
+      return 'boardDnD__card-points_violet';
+    } else if (bord === 'Выполнено') {
+      return 'boardDnD__card-points_green';
+    } else {
+      return '';
+    }
+  }
+
+  function settingDateDeadline(unixData) {
+    const date = new Date(unixData); // Преобразуем Unix-время в миллисекунды
+    return date.toLocaleDateString(); // Форматируем дату
+  }
+
   return (
     <div className="boardDnD">
-      <h1>{title}</h1>
+      <h1 className="boardDnD__title">{title}</h1>
       {board.items.sort(sortCard).map((card) => (
         <div
-          className={'boardDnD__card '} // сначала сортируем карты по порядку (order), затем перебираем массив для отрисовки карточек
+          className={'boardDnD__card'} // сначала сортируем карты по порядку (order), затем перебираем массив для отрисовки карточек
           draggable={true}
           onDragEnd={(e) => dragEndHandler(e)}
           onDragLeave={(e) => dragEndHandler(e)}
@@ -93,7 +117,22 @@ function Board({
           onDrop={(e) => dropHandler(e, board, card)}
           key={card.id}
         >
+          <p className="boardDnD__card-number">{card.id}</p>
+          <p
+            className={`boardDnD__card-points ${getCollor(title, card.deadline)}`}
+          >
+            {card.points} баллов
+          </p>
           <h3 className="boardDnD__card-title">{card.title}</h3>
+          <p className="boardDnD__card-deadline">
+            Дедлайн: {settingDateDeadline(card.deadline)}
+          </p>
+          <p className="boardDnD__card-forfeit">
+            {card.forfeit} за просрочку дедлайна
+          </p>
+          <div className="boardDnD__card-deadline-timer">
+            <TimerDeadline deadline={card.deadline} />
+          </div>
         </div>
       ))}
     </div>
