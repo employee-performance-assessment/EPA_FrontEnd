@@ -5,6 +5,8 @@ import NotFound from '../NotFound/NotFound.jsx';
 import MainPage from '../MainPage/MainPage.jsx';
 import Boards from '../Boards/Boards.jsx';
 import { endpoint } from '../../constants/constantsEndpointRoute.js';
+import Auth from '../Auth/Auth.jsx';
+import Register from '../Register/Register.jsx';
 import { boardsList } from '../../constants/boardsList.js';
 
 function App() {
