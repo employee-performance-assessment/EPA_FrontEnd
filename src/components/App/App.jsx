@@ -8,8 +8,17 @@ import Boards from '../Boards/Boards.jsx';
 import Header from '../Header/Header.jsx';
 import { endpoint } from '../../constants/constantsEndpointRoute.js';
 import { boardsList } from '../../constants/boardsList.js';
+import { register /* , authorize */ } from '../../utils/resistr.js';
 
 function App() {
+  const dataReg = {
+    email: 'ppp@ppppp.ru',
+    fullName: 'pppp',
+    password: 'pppppppp',
+  };
+  register(dataReg)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
   // в cardsList записываем ответ на запрос get от API, задания со всеми параметрами
   const [cardsLists, setCardsLists] = useState(boardsList);
 
