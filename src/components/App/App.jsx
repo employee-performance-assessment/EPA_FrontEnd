@@ -8,8 +8,20 @@ import { endpoint } from '../../constants/constantsEndpointRoute.js';
 import Auth from '../Auth/Auth.jsx';
 import Register from '../Register/Register.jsx';
 import { boardsList } from '../../constants/boardsList.js';
+import { register /* , authorize */ } from '../../utils/registration.js';
 
 function App() {
+  // для тестирования АПИ 
+  const dataReg = {
+    email: 'ppp@ppppp.ru',
+    fullName: 'pppp',
+    password: 'pppppppp',
+  };
+  register(dataReg)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
+  // конец тестирования апи
+
   // в cardsList записываем ответ на запрос get от API, задания со всеми параметрами
   const [cardsLists, setCardsLists] = useState(boardsList);
 
