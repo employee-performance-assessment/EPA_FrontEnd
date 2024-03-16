@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './SideMenu.scss';
 import logo from '../../images/logo.svg';
@@ -12,34 +11,34 @@ function SideMenu() {
   const location = useLocation();
 
   return (
-    <div className="SideMenu">
-      <div className="SideMenu__logo">
+    <div className="side-menu">
+      <div className="side-menu__logo">
         <img src={logo} alt="логотип бокового меню" />
       </div>
-      <ul className="SideMenu__list">
-        <Link to="/#" target="_blank" className="SideMenu__item">
+      <ul className="side-menu__list">
+        <Link to="/#" target="_blank" className="side-menu__item">
           <img
             src={location !== '/perconalArea' ? UserCircle : UserCircleActive}
             //  src={UserCircle}
             alt=""
-            className="SideMenu__logo"
+            className="side-menu__logo"
           />
-          <p className="SideMenu__text">Личный кабинет</p>
+          <p className="side-menu__text">Личный кабинет</p>
         </Link>
-        <Link to="/#" target="_blank" className="SideMenu__item">
-          <img src={kanbanboard} alt="" className="SideMenu__logo" />
-          <p className="SideMenu__text">Канбан доска</p>
+        <Link to="/#" target="_blank" className="side-menu__item">
+          <img src={kanbanboard} alt="" className="side-menu__logo" />
+          <p className="side-menu__text">Канбан доска</p>
         </Link>
-        <Link to="/#" target="_blank" className="SideMenu__item">
-          <img src={assessment} alt="" className="SideMenu__logo" />
-          <p className="SideMenu__text">Оценить коллегу</p>
+        <Link to="/#" target="_blank" className="side-menu__item">
+          <img src={assessment} alt="" className="side-menu__logo" />
+          <p className="side-menu__text">Оценить коллегу</p>
         </Link>
-        <Link to="/#" target="_blank" className="SideMenu__item">
-          <img src={analytics} alt="" className="SideMenu__logo" />
-          <p className="SideMenu__text"> Аналитика</p>
+        <Link to="/#" target="_blank" className="side-menu__item">
+          <img src={analytics} alt="" className="side-menu__logo" />
+          <p className="side-menu__text"> Аналитика</p>
         </Link>
       </ul>
-      <button className="SideMenu__buttonExit">Выйти</button>
+      <button className="side-menu__button-exit">Выйти</button>
     </div>
   );
 }
