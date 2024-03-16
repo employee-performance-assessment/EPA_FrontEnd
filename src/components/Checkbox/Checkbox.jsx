@@ -2,17 +2,18 @@ import { useState } from 'react';
 import './Checkbox.scss';
 
 const Checkbox = () => {
-  // props { label1, label2, color }
-  // label1 и label2 - текстб color - фон для кнопки при состоянии isChecked
+  // props { labelLeft, labelRight, colorAccent }
+  // labelLeft и labelRight - текст, colorAccent - фон для кнопки при состоянии isChecked
   const [isChecked, setIsChecked] = useState(false);
 
   const handleToggle = () => {
     setIsChecked(!isChecked);
   };
 
-  const label1 = 'Руководителя'; // 'Общий рейтинг'
-  const label2 = 'Всей команды'; // 'Баллы за задачу'
-  const color = '#C5B6F1'; // '#00D37F'
+  const labelLeft = 'Руководителя'; // 'Общий рейтинг'
+  const labelRight = 'Всей команды'; // 'Баллы за задачу'
+  const colorChecked = '#C5B6F1'; // '#00D37F'
+  const colorMain = '#333232';
 
   return (
     <label
@@ -21,15 +22,15 @@ const Checkbox = () => {
     >
       <div
         className="left-side"
-        style={{ backgroundColor: isChecked ? '#333232' : color }}
+        style={{ backgroundColor: isChecked ? colorMain : colorChecked }}
       >
-        <span className="">{label1}</span>
+        <span>{labelLeft}</span>
       </div>
       <div
         className="right-side"
-        style={{ backgroundColor: isChecked ? color : '#333232' }}
+        style={{ backgroundColor: isChecked ? colorChecked : colorMain }}
       >
-        <span cl>{label2}</span>
+        <span>{labelRight}</span>
       </div>
     </label>
   );
