@@ -1,0 +1,184 @@
+.admin-card {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 60px 80px 90px;
+  gap: 40px;
+  background-color: #F5F5F5;
+}
+
+.admin-card__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-card__title {
+  font-size: 24px;
+  line-height: 29px;
+  font-weight: 500;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+
+.admin-card__input {
+  height: 64px;
+  width: 530px;
+  border: 2px solid #DAD6D6;
+  border-radius: 20px;
+  padding-left: 24px;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+.admin-card__input_type-error {
+  border: 2px solid #E56E53;
+}
+
+.admin-card__input_type-error:focus {
+  outline: none;
+  border: 3px solid #E56E53;
+}
+
+.admin-card__input_type-disable {
+  pointer-events: none;
+}
+
+.admin-card__password-eye {
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  align-self: flex-end;
+  margin-right: 27px;
+  margin-top: -43px;
+  margin-bottom: 19px;
+  cursor: pointer;
+}
+
+.admin-card__password-eye_open {
+  background-image: url(../../images/eye-open.svg);
+}
+
+.admin-card__password-eye_close {
+  background-image: url(../../images/eye-close.svg);
+}
+
+.admin-card__input-error {
+  min-height: 30px;
+  margin-left: 24px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  color: #E56E53;
+  max-width: calc(530px - 24px);
+  letter-spacing: 0.5px;
+}
+
+.admin-card__button {
+  margin-top: 8px;
+  width: 276px;
+  height: 56px;
+  background-color: #C5B6F1;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  border-radius: 20px;
+  border: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-card__button:hover {
+  cursor: pointer;
+  background: linear-gradient(90deg, #C5B6F1 10.6%, #C6B7F2 37.1%, #F6F17B 71.6%, #F5F07A 89.1%, #F5F07A 100%);
+}
+
+.admin-card__button:active {
+  cursor: pointer;
+  background: #F5F07A;
+}
+
+.admin-card__button_inactive {
+  pointer-events: none;
+}
+
+.admin-card__button-icon {
+  width: 32px;
+  height: 32px;
+  background-image: url(../../images/edit-button-icon.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 10px;
+}
+
+.admin-card__button-icon_inactive {
+  opacity: 0.3;
+}
+
+.admin-card__questionnaire-title {
+  font-size: 24px;
+  line-height: 29px;
+  font-weight: 500;
+  margin-bottom: 30px;
+  letter-spacing: 0.8px;
+}
+
+.admin-card__questionnaire-link {
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 39px;
+  text-decoration: none;
+  color: #333232;
+  margin-top: 20px;
+}
+
+.admin-card__questionnaire-container {
+  width: 432px;
+  min-height: 440px;
+  padding: 40px 30px 32px;
+  background-color: #FFF;
+  border-radius: 40px;
+  box-shadow:  0px 0px 20px #A6A6A6;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.admin-card__questionnaire-container:hover {
+  transform: rotate(1deg);
+}
+
+.admin-card__questionnaire-text {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  white-space: pre-line;
+  letter-spacing: 0.8px;
+}
+
+.admin-card__questionnaire-text:first-of-type {
+  margin-bottom: 27px;
+}
+
+.admin-card__questionnaire-text:last-of-type {
+  margin-top: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 27px;
+  margin-bottom: 12px;
+}
+
+.admin-card__questionnaire-link-icon {
+  width: 40px;
+  height: 15px;
+  background-image: url(../../images/link-arrow.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
