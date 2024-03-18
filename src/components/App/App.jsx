@@ -46,7 +46,7 @@ function App() {
         <Route
           path={main}
           element={
-            !true ? (
+            true ? (
               <ProtectedRoute
                 element={MainPage}
                 isLoggedIn={true}
