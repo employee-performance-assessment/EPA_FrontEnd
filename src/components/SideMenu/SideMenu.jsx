@@ -1,7 +1,7 @@
-import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import Logo from '../Logo/Logo.jsx';
 import './SideMenu.scss';
-import logo from '../../images/logo.svg';
+// import logo from '../../images/logo.svg';
 import UserCircle from '../../images/UserCircle.svg';
 import UserCircleActive from '../../images/UserCircle_active.svg';
 import kanbanboard from '../../images/KanbanBoard.svg';
@@ -14,7 +14,7 @@ function SideMenu() {
   return (
     <div className="SideMenu">
       <div className="SideMenu__logo">
-        <img src={logo} alt="логотип бокового меню" />
+        <Logo />
       </div>
       <ul className="SideMenu__list">
         <Link to="/#" target="_blank" className="SideMenu__item">

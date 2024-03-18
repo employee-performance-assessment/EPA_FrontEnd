@@ -11,7 +11,7 @@ import { boardsList } from '../../constants/boardsList.js';
 import { register /* , authorize */ } from '../../utils/registration.js';
 
 function App() {
-  // для тестирования АПИ 
+  // для тестирования АПИ
   const dataReg = {
     email: 'ppp@ppppp.ru',
     fullName: 'pppp',
@@ -46,7 +46,7 @@ function App() {
         <Route
           path={main}
           element={
-            !true ? (
+            true ? (
               <ProtectedRoute
                 element={MainPage}
                 isLoggedIn={true}

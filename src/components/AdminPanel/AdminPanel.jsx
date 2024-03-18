@@ -6,7 +6,9 @@ function AdminPanel() {
   return (
     <div className="AdminPanel__conainer">
       <div className="AdminPanel__sidebar">
-      <SideMenu />
+        <SideMenu />
+      </div>
+      <div className="AdminPanel__main">
         <ul className="AdminPanel__list">
           <li className="AdminPanel__item">
             <Card />
@@ -25,7 +27,6 @@ function AdminPanel() {
           </li>
         </ul>
       </div>
-      <div className="AdminPanel__main"></div>
     </div>
   );
 }
