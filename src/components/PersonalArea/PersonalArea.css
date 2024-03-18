@@ -1,5 +1,5 @@
-.admin-card {
-  width: 100%;
+.personal-area {
+  width: calc(100% - 257px);
   display: flex;
   flex-direction: row;
   padding: 60px 80px 90px;
@@ -7,12 +7,12 @@
   background-color: #F5F5F5;
 }
 
-.admin-card__form {
+.personal-area__form {
   display: flex;
   flex-direction: column;
 }
 
-.admin-card__title {
+.personal-area__title {
   font-size: 24px;
   line-height: 29px;
   font-weight: 500;
@@ -20,7 +20,7 @@
   letter-spacing: 1px;
 }
 
-.admin-card__input {
+.personal-area__input {
   height: 64px;
   width: 530px;
   border: 2px solid #DAD6D6;
@@ -31,20 +31,20 @@
   font-weight: 500;
 }
 
-.admin-card__input_type-error {
+.personal-area__input_type-error {
   border: 2px solid #E56E53;
 }
 
-.admin-card__input_type-error:focus {
+.personal-area__input_type-error:focus {
   outline: none;
   border: 3px solid #E56E53;
 }
 
-.admin-card__input_type-disable {
+.personal-area__input_type-disable {
   pointer-events: none;
 }
 
-.admin-card__password-eye {
+.personal-area__password-eye {
   width: 24px;
   height: 24px;
   background-size: contain;
@@ -56,15 +56,15 @@
   cursor: pointer;
 }
 
-.admin-card__password-eye_open {
+.personal-area__password-eye_open {
   background-image: url(../../images/eye-open.svg);
 }
 
-.admin-card__password-eye_close {
+.personal-area__password-eye_close {
   background-image: url(../../images/eye-close.svg);
 }
 
-.admin-card__input-error {
+.personal-area__input-error {
   min-height: 30px;
   margin-left: 24px;
   font-size: 12px;
@@ -75,7 +75,7 @@
   letter-spacing: 0.5px;
 }
 
-.admin-card__button {
+.personal-area__button {
   margin-top: 8px;
   width: 276px;
   height: 56px;
@@ -91,21 +91,21 @@
   justify-content: center;
 }
 
-.admin-card__button:hover {
+.personal-area__button:hover {
   cursor: pointer;
   background: linear-gradient(90deg, #C5B6F1 10.6%, #C6B7F2 37.1%, #F6F17B 71.6%, #F5F07A 89.1%, #F5F07A 100%);
 }
 
-.admin-card__button:active {
+.personal-area__button:active {
   cursor: pointer;
   background: #F5F07A;
 }
 
-.admin-card__button_inactive {
+.personal-area__button_inactive {
   pointer-events: none;
 }
 
-.admin-card__button-icon {
+.personal-area__button-icon {
   width: 32px;
   height: 32px;
   background-image: url(../../images/edit-button-icon.svg);
@@ -114,11 +114,11 @@
   margin-left: 10px;
 }
 
-.admin-card__button-icon_inactive {
+.personal-area__button-icon_inactive {
   opacity: 0.3;
 }
 
-.admin-card__questionnaire-title {
+.personal-area__questionnaire-title {
   font-size: 24px;
   line-height: 29px;
   font-weight: 500;
@@ -126,7 +126,7 @@
   letter-spacing: 0.8px;
 }
 
-.admin-card__questionnaire-link {
+.personal-area__questionnaire-link {
   font-size: 32px;
   font-weight: 500;
   line-height: 39px;
@@ -135,7 +135,7 @@
   margin-top: 20px;
 }
 
-.admin-card__questionnaire-container {
+.personal-area__questionnaire-container {
   width: 432px;
   min-height: 440px;
   padding: 40px 30px 32px;
@@ -147,11 +147,11 @@
   justify-content: space-between;
 }
 
-.admin-card__questionnaire-container:hover {
+.personal-area__questionnaire-container:hover {
   transform: rotate(1deg);
 }
 
-.admin-card__questionnaire-text {
+.personal-area__questionnaire-text {
   font-size: 20px;
   font-weight: 400;
   line-height: 24px;
@@ -159,11 +159,11 @@
   letter-spacing: 0.8px;
 }
 
-.admin-card__questionnaire-text:first-of-type {
+.personal-area__questionnaire-text:first-of-type {
   margin-bottom: 27px;
 }
 
-.admin-card__questionnaire-text:last-of-type {
+.personal-area__questionnaire-text:last-of-type {
   margin-top: auto;
   display: flex;
   flex-direction: row;
@@ -175,7 +175,7 @@
   margin-bottom: 12px;
 }
 
-.admin-card__questionnaire-link-icon {
+.personal-area__questionnaire-link-icon {
   width: 40px;
   height: 15px;
   background-image: url(../../images/link-arrow.svg);
