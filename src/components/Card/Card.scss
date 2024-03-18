@@ -6,12 +6,13 @@ $border-radius: 15px;
   background-color: $background-color;
   color: $color;
   border-radius: $border-radius;
-  width: 300px;
+  // width: 300px;
   height: min-content;
   border-radius: 8px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-template-areas: 'first' 'second' 'third';
+  margin-bottom: 12px;
 }
 .card__title {
   word-wrap: break-word;
