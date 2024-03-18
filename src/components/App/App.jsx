@@ -1,38 +1,26 @@
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
-import MainPage from '../MainPage/MainPage.jsx';
 import Boards from '../Boards/Boards.jsx';
 import { endpoint } from '../../constants/constantsEndpointRoute.js';
 import Auth from '../Auth/Auth.jsx';
 import Register from '../Register/Register.jsx';
 import { boardsList } from '../../constants/boardsList.js';
-import { register /* , authorize */ } from '../../utils/registration.js';
+import PersonalArea from '../PersonalArea/PersonalArea.jsx';
+import AdminPanel from '../AdminPanel/AdminPanel.jsx';
 
 function App() {
-  // для тестирования АПИ
-  const dataReg = {
-    email: 'ppp@ppppp.ru',
-    fullName: 'pppp',
-    password: 'pppppppp',
-  };
-  register(dataReg)
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
-  // конец тестирования апи
-
   // в cardsList записываем ответ на запрос get от API, задания со всеми параметрами
   const [cardsLists, setCardsLists] = useState(boardsList);
-
   const [dropCard, setDropCard] = useState(null);
   const [startBoard, setStartBoard] = useState(null);
   const [currentBoard, setCurrentBoard] = useState(null);
-  const loggedIn = true;
-  // const [loggedIn, setLoggedIn] = useState(false);
-  const { main, board, anyPage } = endpoint;
-
+  const { board, anyPage } = endpoint;
   const [isFormAuthBlock, setIsFormAuthBlock] = useState(false);
+  const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
+  // const navigate = useNavigate();
 
   const clearCards = () => { };
 
@@ -40,35 +28,30 @@ function App() {
     <div className="page">
       {/* <div className="page__content"> */}
       <Routes>
-        {/* проверяем, если залогинин, прогоняем через ProtectedRoute */}
-        {/* ,если нет, то открывается страница авторизации */}
-        {/* true заменить на loggedIn */}
-        <Route
-          path={main}
-          element={
-            !true ? (
-              <ProtectedRoute
-                element={MainPage}
-                isLoggedIn={true}
-                isLoading={false}
-              />
-            ) : (
-              <Auth
-                isLoggedIn={loggedIn}
-                isFormAuthBlock={isFormAuthBlock}
-                setIsFormAuthBlock={setIsFormAuthBlock}
-              />
-            )
-          }
+        <Route path="/signup" element={<Register />} />
+        <Route path="/login" element={
+          <Auth
+            isFormAuthBlock={isFormAuthBlock}
+            setIsFormAuthBlock={setIsFormAuthBlock}
+          />}
         />
-        <Route path="/signup" element={<Register isLoggedIn={loggedIn} />} />
+        <Route path="/admin-person-area" element={
+          <ProtectedRoute
+            element={AdminPanel}
+            //* * надо найти правильный способ передать разные страницы */
+            // eslint-disable-next-line react/no-children-prop
+            children={<PersonalArea />}
+            isLoggedIn={isLoggedIn}
+            isLoading={false}
+          />}
+        />
         {/* канбан доска */}
         <Route
           path={board}
           element={
             <ProtectedRoute
               element={Boards}
-              isLoggedIn={true}
+              isLoggedIn={isLoggedIn}
               currentBoard={currentBoard}
               setCurrentBoard={setCurrentBoard}
               dropCard={dropCard}

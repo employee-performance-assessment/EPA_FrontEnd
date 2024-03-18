@@ -1,20 +1,36 @@
-import { useNavigate, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import styles from './Auth.module.scss';
 
-import Logo from '../Logo/Logo.jsx';
 import { useFormValidation } from '../../utils/hooks/useFormValidation.js';
+import { authorize } from '../../utils/registration.js';
+import { setToken } from '../../store/slices/tokenSlices.js';
+import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 
+import Logo from '../Logo/Logo.jsx';
 import registerImg from '../../images/register-img.png';
 
-function Auth({ isLoggedIn }) {
-  const navigate = useNavigate();
+function Auth() {
   const { errors, values, isValid, handleChange } = useFormValidation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    authorize({
+      email: values.email,
+      password: values.password
+    })
+      .then((res) => {
+        navigate('/admin-person-area');
+        dispatch(setToken(res));
+        dispatch(setIsLoggedIn(true));
+      })
+      .catch((err) => console.log(err)); //* * добавить показ ошибки в модалке */
   };
 
-  return isLoggedIn ? (
+  return (
     <section className={styles.wrapper}>
       <div className={styles.container}>
         <form id="register" onSubmit={handleSubmit}>
@@ -50,7 +66,7 @@ function Auth({ isLoggedIn }) {
           <button type="submit" disabled={!isValid}>
             Войти
           </button>
-          <Link to="signup" className={styles.link}>
+          <Link to="/signup" className={styles.link}>
             Зарегистрироваться
           </Link>
         </form>
@@ -60,8 +76,6 @@ function Auth({ isLoggedIn }) {
         />
       </div>
     </section>
-  ) : (
-    navigate('/', { replace: true })
   );
 }
 

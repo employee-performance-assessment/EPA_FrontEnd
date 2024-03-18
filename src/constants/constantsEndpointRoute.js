@@ -1,1 +1,1 @@
-export const endpoint = { main: '/', board: '/board', anyPage: '/*' };
+export const endpoint = { main: '/', board: '/board', anyPage: '/*', login: '/login' };

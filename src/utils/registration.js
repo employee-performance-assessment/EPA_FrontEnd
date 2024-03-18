@@ -16,18 +16,15 @@ export const register = ({ fullName, email, password }) =>
   fetch(endpointRegister, {
     method: 'POST',
     headers: {
-      Accept: 'application/json',
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
     },
     body: JSON.stringify({ fullName, email, password }),
   }).then((res) => checkResponse(res));
 
-export const authorize = (email, password) =>
+export const authorize = ({ email, password }) =>
   fetch(endpointAuth, {
     method: 'POST',
     headers: {
-      Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
