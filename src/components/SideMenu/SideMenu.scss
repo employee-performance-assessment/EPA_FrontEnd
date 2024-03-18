@@ -7,12 +7,12 @@ $font-size: 18px;
   width: 200px;
 }
 
-.SideMenu__list {
+.side-menu__list {
   padding: 80px 0 0 0;
   display: flex;
   flex-direction: column;
 }
-.SideMenu__item {
+.side-menu__item {
   color: $main-color;
   display: flex;
   text-decoration: none;
@@ -22,12 +22,12 @@ $font-size: 18px;
   font-size: $font-size;
 }
 
-.SideMenu__text {
+.side-menu__text {
   align-self: center;
   padding-left: 8px;
 }
 
-.SideMenu__buttonExit {
+.side-menu__button-exit {
   box-sizing: border-box;
   margin-top: 192px;
   background-color: #f5f5f5;
