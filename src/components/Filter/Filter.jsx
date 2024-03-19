@@ -1,65 +1,43 @@
+import { placeholder } from '@babel/types';
 import { useState } from 'react';
 import Select from 'react-select';
-import CustomArrow from '../CustomArrow/CustomArrow.jsx';
 
-const Filter = () => {
-  // props: { options, onChange, value, placeholder }
-  // в качестве options timeFrames или years, onChange: handleChangeTimeframe или handleChangeYear
-  // value: один из стейтов, placeholder: "Год" или "Фильтры"
-  const [selectedTimeframe, setSelectedTimeframe] = useState('');
-  // const [selectedYear, setSelectedYear] = useState('');
+const CustomSelect = () => {
+  const [selectedOption, setSelectedOption] = useState(null);
 
-  // const handleChangeYear = (selectedValue) => {
-  //   setSelectedYear(selectedValue);
-  // };
-
-  const handleChangeTimeframe = (selectedValue) => {
-    setSelectedTimeframe(selectedValue);
-  };
-
-  const timeFrames = [
-    { value: 'week', label: 'Неделя' },
-    { value: 'month', label: 'Месяц' },
-    { value: 'halfYear', label: 'Полгода' },
+  const options = [
+    { value: 'inWork', label: 'В работе' },
+    { value: 'inReview', label: 'На ревью' },
+    { value: 'done', label: 'Выполнено' },
   ];
 
-  // const years = [
-  //   {value: '2024', label: "2024"},
-  //   {value: '2023', label: "2023"},
-  //   {value: '2022', label: "2022"},
-  //   {value: '2021', label: "2021"},
-  // ];
-
-  const placeholder = 'Фильтры'; // или 'Год'
-  const options = timeFrames; // или years
+  const placeholder = 'К выполнению';
 
   const customStyles = {
-    control: (provided) => {
-      const customWidth = placeholder === 'Год' ? '121px' : '176px';
-
-      return {
-        ...provided,
-        backgroundColor: '#333232',
-        color: '#fff',
-        width: customWidth,
-        height: '52px',
-        borderRadius: '40px',
-        boxShadow: 'none',
-        border: 'none',
-        outline: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '0px 26px',
-      };
-    },
-    option: (provided, state) => ({
+    control: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isFocused ? '#00D37F' : '#333232',
-      color: '#fff',
-      height: '38px',
+      backgroundColor: '#fff',
+      color: '#333232',
+      width: '196px',
+      height: '40px',
+      borderRadius: '10px',
+      border: 'none',
+      outline: 'none',
+      boxShadow: state.isFocused ? 'none' : 'none',
+    }),
+    option: (provided) => ({
+      ...provided,
+      backgroundColor: '#fff',
+      height: '40px',
+      lineheight: '150%',
       fontSize: '16px',
-      paddingLeft: '20px',
+      fontWeight: '500',
+      textAlign: 'left',
+      padding: '9px 16px',
+      color: '#333232',
+      '&:hover': {
+        backgroundColor: '#C5B6F1',
+      },
     }),
     valueContainer: (provided) => ({
       ...provided,
@@ -67,54 +45,61 @@ const Filter = () => {
     }),
     placeholder: (provided) => ({
       ...provided,
-      color: '#fff',
-      fontSize: '20px',
+      color: '#333232',
+      fontSize: '16px',
+      fontWeight: '500',
       margin: '0px',
+      padding: '9px 20px',
     }),
-    menu: (provided) => {
-      const customWidth = placeholder === 'Год' ? '121px' : '176px';
-
-      return {
-        ...provided,
-        width: customWidth,
-        backgroundColor: '#333232',
-        borderRadius: '18px',
-        paddingTop: '12px',
-        paddingBottom: '12px',
-      };
-    },
+    menu: (provided) => ({
+      ...provided,
+      marginTop: '4px',
+      width: '196px',
+      backgroundColor: '#fff',
+      borderRadius: '10px',
+      paddingTop: '8px',
+      paddingBottom: '8px',
+    }),
     menuList: (provided) => ({
       ...provided,
-      padding: '0',
-      overflow: 'hidden',
+      padding: 0,
     }),
     indicatorSeparator: (provided) => ({
       ...provided,
       display: 'none',
     }),
-    dropdownIndicator: () => null,
+    dropdownIndicator: (provided, state) => ({
+      ...provided,
+      color: '#333232',
+      padding: '10px',
+      transform: state.selectProps.menuIsOpen ? 'rotate(180deg)' : 'rotate(0)',
+      transition: 'transform 0.3s ease',
+    }),
     singleValue: (provided) => ({
       ...provided,
-      color: '#fff',
-      fontSize: '20px',
+      color: '#333232',
+      fontSize: '16px',
+      fontWeight: '500',
+      margin: '0px',
+      padding: '9px 20px',
+      textAlign: 'left',
     }),
   };
 
-  const components = {
-    DropdownIndicator: (props) => <CustomArrow {...props} />,
+  const handleChange = (selectedOption) => {
+    setSelectedOption(selectedOption);
   };
 
   return (
     <Select
-      value={options.find((option) => option.value === selectedTimeframe)} // value вместо state
-      onChange={(selectedOption) => handleChangeTimeframe(selectedOption.value)} // onChange func
+      value={selectedOption}
+      onChange={handleChange}
       options={options}
-      placeholder={placeholder}
       styles={customStyles}
+      placeholder={placeholder}
       isSearchable={false}
-      components={components}
     />
   );
 };
 
-export default Filter;
+export default CustomSelect;
