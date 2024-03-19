@@ -19,7 +19,7 @@ function CardRating({ rating, startDate, endDate }) {
     let widthStar = rating;
     const arrStars = [];
     for (let i = 0; i < 5; i += 1) {
-      //console.log(widthStar);
+      // console.log(widthStar);
       arrStars.push(
         <div className="card-rating__star card-rating__star_out" key={i}>
           <div
