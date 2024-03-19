@@ -8,7 +8,7 @@ import { authorize } from '../../utils/registration.js';
 import { setToken } from '../../store/slices/tokenSlices.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 
-import Logo from '../Logo/Logo.jsx';
+import Logo from '../../components/Logo/Logo.jsx';
 import registerImg from '../../images/register-img.png';
 
 import eyelash from '../../images/eye-close.svg';

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setAdminData } from '../../store/slices/adminDataSlices.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 
-import Logo from '../Logo/Logo.jsx';
+import Logo from '../../components/Logo/Logo.jsx';
 import { useFormValidation } from '../../utils/hooks/useFormValidation.js';
 
 import styles from './Register.module.scss';
