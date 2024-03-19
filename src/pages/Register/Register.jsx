@@ -58,8 +58,8 @@ function Register() {
             <input
               type="data"
               id="user-name"
-              minLength="2"
-              maxLength="30"
+              minLength="3"
+              maxLength="255"
               name="name"
               value={values.name || ''}
               onChange={handleChange}

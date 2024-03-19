@@ -1,5 +1,3 @@
-@import './mixins';
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -15,14 +13,6 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-.main_text {
-  @include main-text;
-}
-
-.main_heading {
-  @include heading-text;
 }
 
 input:-webkit-autofill,

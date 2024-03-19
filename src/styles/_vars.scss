@@ -1,19 +1,14 @@
 // основные цвета
-$accent-color: #ffffff;
-$background-color: #f5f5f5;
-$accent-background-color: #000;
-
-// палитра проекта
-$white-base-color: #fff;
-$green-base-color: #00d37f;
-$light-green-base-color: #c6f221;
-$dark-grey-base-color: #3a3838;
+$white-base-color: #ffffff;
 $black-base-color: #000;
-$dark-green-base-color: #014751;
-$purple-base-color: #c5b6f1;
-$light-green-base-color: #d3ffb4;
-$grey-base-color: #f5f5f5;
+$light-gray-base-color: #f5f5f5;
+$grey-base-color: #DAD6D6;
 $dark-grey-base-color: #a6a6a6;
+$green-base-color: #8ADA5A;
+$dark-green-base-color: #5BB264;
+$purple-base-color: #c5b6f1;
+$red-base-color: #E56E53;
+$yellow-base-color: #F5F07A;
 $wrapper: linear-gradient(
   90deg,
   rgb(197, 182, 241) 10.6%,
@@ -23,44 +18,11 @@ $wrapper: linear-gradient(
   rgb(245, 240, 122) 100%
 );
 
-// цвета валидации
-$red-validation-color: #f24822;
-$green-validation-color: #00d37f;
+/* font */
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semibold: 600;
 
-//1500 balls
-$heigh-ball-color: #3367fb;
-
-//на ревью
-$on_review-color: #396bf9;
-
-// семейства шрифтов
-$font-family-main: 'Inter', sans-serif;
-$font-family-headings: 'Inter', sans-serif;
-$font-family-buttons: 'Roboto', sans-serif;
-$main-color: rgb(0, 0, 0);
-
-// размеры шрифтов
-$font-size-main: 18px;
-$font-size-headings: 22px;
-$font-size-buttons: 14px;
-
-$font-weight-main: medium;
-$font-weight-headings: Bold;
-
-// отступы
-$margin-base: 10px;
-$margin-headings: 20px;
-$margin-buttons: 5px;
-
-// размеры контейнеров
-$container-width: 1200px;
-$content-width: 960px;
-$navigation-width: 240px;
-
-// настройки анимаций
-$animation-hover: all 0.3s ease-in-out;
-$animation-click: all 0.5s ease-in-out;
-
-// настройки трансформаций
+// настройки трансформаций // есть вопросы, нет ответа
 $transition-hover: all 0.3s ease-in-out;
 $transition-click: all 0.5s ease-in-out;
