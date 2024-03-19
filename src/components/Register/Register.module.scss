@@ -1,14 +1,10 @@
+@import '../../styles/vars';
+
 .wrapper {
   display: flex;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(
-    90deg,
-    rgb(197, 182, 241) 24.6%,
-    rgb(8, 200, 131) 52.1%,
-    rgb(198, 242, 33) 80.6%,
-    rgb(245, 240, 122) 100%
-  );
+  background: $wrapper;
   align-items: center;
   justify-content: center;
 
@@ -39,8 +35,19 @@
       label {
         display: flex;
         flex-direction: column;
+        position: relative;
         height: 88px;
         width: 100%;
+
+        .eye {
+          position: absolute;
+          display: inline-block;
+          top: 12px;
+          right: 20px;
+          width: 28px;
+          height: 28px;
+          background-repeat: no-repeat;
+        }
 
         input {
           width: 100%;
@@ -63,16 +70,10 @@
           color: rgb(51, 50, 50);
         }
 
-        input[type='password']::-webkit-input-placeholder {
-          background-image: url(../../images/eye-icon.svg);
-          background-repeat: no-repeat;
-          background-position: right;
-        }
-
         span {
           width: 308px;
           align-self: center;
-          color: #ff4062;
+          color: $red-validation-color;
           font-weight: 400;
           font-size: 12px;
           line-height: 15px;
@@ -92,6 +93,16 @@
           line-height: 24px;
           margin-top: 20px;
           text-align: center;
+          cursor: pointer;
+          transition: opacity .5s;
+
+          &:hover {
+            opacity: .5;
+          }
+
+          &:disabled {
+            opacity: .8;
+          }
         }
     }
 

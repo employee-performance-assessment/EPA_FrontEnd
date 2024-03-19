@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import styles from './Auth.module.scss';
@@ -10,24 +11,40 @@ import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 import Logo from '../Logo/Logo.jsx';
 import registerImg from '../../images/register-img.png';
 
+import eyelash from '../../images/eye-close.svg';
+import eyeOpen from '../../images/eye-open.svg';
+
 function Auth() {
+  const [isOpen, setIsOpen] = useState(false);
   const { errors, values, isValid, handleChange } = useFormValidation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     authorize({
       email: values.email,
       password: values.password
     })
       .then((res) => {
+        localStorage.setItem('token', JSON.stringify(res));
         navigate('/admin-person-area');
         dispatch(setToken(res));
         dispatch(setIsLoggedIn(true));
       })
       .catch((err) => console.log(err)); //* * добавить показ ошибки в модалке */
+  };
+
+  const togglePassword = () => {
+    const input = document.getElementById('authPassword');
+    if (input.getAttribute('type') === 'password') {
+      setIsOpen(true);
+      input.setAttribute('type', 'text');
+    } else {
+      setIsOpen(false);
+      input.setAttribute('type', 'password');
+    }
+    return false;
   };
 
   return (
@@ -55,6 +72,7 @@ function Auth() {
               minLength="4"
               maxLength="12"
               name="password"
+              id='authPassword'
               value={values.password || ''}
               onChange={handleChange}
               placeholder="Пароль"
@@ -62,6 +80,19 @@ function Auth() {
               required
             />
             <span>{errors.password}</span>
+            {isOpen ? (
+              <span
+                className={styles.eye}
+                onClick={togglePassword}
+                style={{ backgroundImage: `url(${eyeOpen})` }}
+              ></span>
+            ) : (
+              <span
+                className={styles.eye}
+                onClick={togglePassword}
+                style={{ backgroundImage: `url(${eyelash})` }}
+              ></span>
+            )}
           </label>
           <button type="submit" disabled={!isValid}>
             Войти

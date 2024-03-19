@@ -1,3 +1,5 @@
+@import '../../styles/vars';
+
 .container {
   display: flex;
   align-items: center;
@@ -5,9 +7,8 @@
   gap: 18px;
   width: 200px;
   height: 56px;
-  border: 2px solid black;
+  border: 2px solid $accent-background-color;
   border-radius: 20px;
-  //background: rgb(255, 255, 255);
 
   .well_block {
     display: flex;
@@ -16,13 +17,7 @@
     width: 94px;
     height: 44px;
     border-radius: 15px;
-    background: linear-gradient(
-      90deg,
-      rgb(197, 182, 241) 24.6%,
-      rgb(8, 200, 131) 52.1%,
-      rgb(198, 242, 33) 80.6%,
-      rgb(245, 240, 122) 100%
-    );
+    background: $wrapper;
   }
   span {
     text-transform: uppercase;

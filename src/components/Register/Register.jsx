@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setAdminData } from '../../store/slices/adminDataSlices.js';
@@ -8,9 +9,12 @@ import { useFormValidation } from '../../utils/hooks/useFormValidation.js';
 
 import styles from './Register.module.scss';
 import registerImg from '../../images/register-img.png';
+import eyelash from '../../images/eye-close.svg';
+import eyeOpen from '../../images/eye-open.svg';
 import { register } from '../../utils/registration.js';
 
 function Register() {
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { errors, values, isValid, handleChange } = useFormValidation();
   const dispatch = useDispatch();
@@ -21,14 +25,27 @@ function Register() {
     register({
       fullName: values.name,
       email: values.email,
-      password: values.password
+      password: values.password,
     })
       .then((res) => {
+        console.log(res);
         navigate('/login');
         dispatch(setAdminData(res));
         dispatch(setIsLoggedIn(true));
       })
-      .catch((err) => console.log(err)); //* * добавить показ ошибки в модалке */
+      .catch((err) => alert(err)); //* * добавить показ ошибки в модалке */
+  };
+
+  const togglePassword = () => {
+    const input = document.getElementById('password');
+    if (input.getAttribute('type') === 'password') {
+      setIsOpen(true);
+      input.setAttribute('type', 'text');
+    } else {
+      setIsOpen(false);
+      input.setAttribute('type', 'password');
+    }
+    return false;
   };
 
   return (
@@ -39,7 +56,7 @@ function Register() {
           <h1>Сервис для оценки сотрудников</h1>
           <label>
             <input
-              type="text"
+              type="data"
               id="user-name"
               minLength="2"
               maxLength="30"
@@ -68,9 +85,10 @@ function Register() {
           <label>
             <input
               type="password"
-              minLength="4"
-              maxLength="12"
+              minLength="8"
+              maxLength="14"
               name="password"
+              id="password"
               value={values.password || ''}
               onChange={handleChange}
               placeholder="Пароль"
@@ -78,6 +96,11 @@ function Register() {
               required
             />
             <span>{errors.password}</span>
+              <span
+                className={styles.eye}
+                onClick={togglePassword}
+                style={{ backgroundImage: `url(${isOpen ? eyeOpen : eyelash})` }}
+              ></span>
           </label>
           <button type="submit" disabled={!isValid}>
             Подтвердить

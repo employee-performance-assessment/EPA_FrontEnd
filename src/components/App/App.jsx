@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
@@ -28,6 +28,7 @@ function App() {
     <div className="page">
       {/* <div className="page__content"> */}
       <Routes>
+        <Route path='/' element={<Navigate to="/login" />}/>
         <Route path="/signup" element={<Register />} />
         <Route path="/login" element={
           <Auth

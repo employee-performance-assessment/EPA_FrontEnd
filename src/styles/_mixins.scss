@@ -12,3 +12,16 @@
   font-weight: $font-weight-headings;
   font-size: $font-size-main;
 }
+
+@mixin text(
+  $color: $main-black-1,
+  $font-size: 16px,
+  $font-weight: $fw-regular,
+  $line-height: normal
+) {
+  margin: 0;
+  color: $color;
+  font-size: $font-size;
+  font-weight: $font-weight; //400
+  line-height: $line-height;
+}
