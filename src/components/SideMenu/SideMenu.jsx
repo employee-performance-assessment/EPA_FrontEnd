@@ -12,8 +12,8 @@ function SideMenu() {
   const location = useLocation();
 
   return (
-    <div className="SideMenu">
-      <div className="SideMenu__logo">
+    <div className="side-menu">
+      <div className="side-menu__logo">
         <Logo />
       </div>
       <ul className="side-menu__list">

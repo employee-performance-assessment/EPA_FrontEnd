@@ -29,7 +29,7 @@ function Auth() {
       .then((res) => {
         localStorage.setItem('token', JSON.stringify(res));
         navigate('/admin-person-area');
-        dispatch(setToken(res));
+        dispatch(setToken(res.token));
         dispatch(setIsLoggedIn(true));
       })
       .catch((err) => console.log(err)); //* * добавить показ ошибки в модалке */
