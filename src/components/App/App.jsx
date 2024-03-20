@@ -8,7 +8,6 @@ import { endpoint } from '../../constants/constantsEndpointRoute.js';
 import Auth from '../../pages/Auth/Auth.jsx';
 import Register from '../../pages/Register/Register.jsx';
 import { boardsList } from '../../constants/boardsList.js';
-import PersonalArea from '../../pages/PersonalArea/PersonalArea.jsx';
 import AdminPanel from '../AdminPanel/AdminPanel.jsx';
 
 function App() {
