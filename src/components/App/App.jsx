@@ -8,7 +8,6 @@ import { endpoint } from '../../constants/constantsEndpointRoute.js';
 import Auth from '../Auth/Auth.jsx';
 import Register from '../Register/Register.jsx';
 import { boardsList } from '../../constants/boardsList.js';
-import PersonalArea from '../PersonalArea/PersonalArea.jsx';
 import AdminPanel from '../AdminPanel/AdminPanel.jsx';
 
 function App() {
@@ -20,7 +19,6 @@ function App() {
   const { board, anyPage } = endpoint;
   const [isFormAuthBlock, setIsFormAuthBlock] = useState(false);
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
-  // const navigate = useNavigate();
 
   const clearCards = () => { };
 
@@ -38,9 +36,6 @@ function App() {
         <Route path="/admin-person-area" element={
           <ProtectedRoute
             element={AdminPanel}
-            //* * надо найти правильный способ передать разные страницы */
-            // eslint-disable-next-line react/no-children-prop
-            children={<PersonalArea />}
             isLoggedIn={isLoggedIn}
             isLoading={false}
           />}

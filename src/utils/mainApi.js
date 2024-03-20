@@ -1,37 +1,27 @@
 import checkResponse from './checkResponse.js';
-import {
-  /* main, */ auth /* , board, personalArea, adminPanel, anyPage, */,
-} from '../constants/constantAPI.js';
+import { endpointUpdateUserData, endpointUserData } from '../constants/constantAPI.js';
 
 // проверка токена
-export const chekTokenUser = (token) =>
-  fetch(`${auth}/users/me`, {
+export const getUserData = (token) =>
+  fetch(endpointUserData, {
     method: 'GET',
     headers: {
-      Accept: 'application/json',
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
   }).then((res) => checkResponse(res));
 
-export const register = ({ name, email, password }) =>
-  fetch(`${auth}/signup`, {
-    method: 'POST',
-    credentials: 'include',
+export const updateUserData = (id, token, data) =>
+  fetch(`${endpointUpdateUserData}${id}`, {
+    method: 'PATCH',
     headers: {
-      Accept: 'application/json',
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ name, email, password }),
-  }).then((res) => checkResponse(res));
-
-export const authorize = (email, password) =>
-  fetch(`${auth}/signin`, {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({
+      fullName: data.fullName,
+      position: data.position,
+      email: data.email,
+      password: data.password,
+    })
   }).then((res) => checkResponse(res));
