@@ -1,15 +1,36 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation/* , useNavigate */ } from 'react-router-dom';
+/* import { useDispatch } from 'react-redux';
+import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
+import { setAdminData } from '../../store/slices/adminDataSlices.js';
+import { setToken } from '../../store/slices/tokenSlices.js';
+import { logout } from '../../utils/registration.js'; */
+
 import Logo from '../Logo/Logo.jsx';
 import './SideMenu.scss';
 // import logo from '../../images/logo.svg';
 import UserCircle from '../../images/UserCircle.svg';
 import UserCircleActive from '../../images/UserCircle_active.svg';
-import kanbanboard from '../../images/KanbanBoard.svg';
+import kanbanBoard from '../../images/KanbanBoard.svg';
 import assessment from '../../images/assessment.svg';
 import analytics from '../../images/analytics.svg';
 
 function SideMenu() {
   const location = useLocation();
+  /* const navigate = useNavigate();
+  const dispatch = useDispatch(); */
+
+  /* const handleLogout = (e) => {
+    e.preventDefault();
+    logout()
+      .then(() => {
+        localStorage.clear();
+        dispatch(setToken(''));
+        dispatch(setIsLoggedIn(false));
+        dispatch(setAdminData({}));
+        navigate('/');
+      })
+      .catch((err) => console.log(`Ошибка: ${err}`));
+  }; */
 
   return (
     <div className="side-menu">
@@ -27,7 +48,7 @@ function SideMenu() {
           <p className="side-menu__text">Личный кабинет</p>
         </Link>
         <Link to="/#" target="_blank" className="side-menu__item">
-          <img src={kanbanboard} alt="" className="side-menu__logo" />
+          <img src={kanbanBoard} alt="" className="side-menu__logo" />
           <p className="side-menu__text">Канбан доска</p>
         </Link>
         <Link to="/#" target="_blank" className="side-menu__item">
@@ -39,7 +60,9 @@ function SideMenu() {
           <p className="side-menu__text"> Аналитика</p>
         </Link>
       </ul>
-      <button className="side-menu__button-exit">Выйти</button>
+      <button /* onClick={handleLogout} */ className="side-menu__button-exit">
+        Выйти
+      </button>
     </div>
   );
 }

@@ -66,12 +66,6 @@
           color: rgb(51, 50, 50);
         }
 
-        input[type='password']::-webkit-input-placeholder {
-          background-image: url(../../images/eye-icon.svg);
-          background-repeat: no-repeat;
-          background-position: right;
-        }
-
         span {
           @include text($font-weight: 400, $line-height: 1.25, $font-size: 12px);
           width: 308px;

@@ -1,8 +1,12 @@
 import checkResponse from './checkResponse';
-import { endpointAuth, endpointRegister } from '../constants/constantAPI.js';
+import {
+  endpointAuth,
+  endpointRegister,
+  endpointLogout,
+} from '../constants/constantAPI.js';
 
 // проверка токена
-export const chekTokenUser = (token) =>
+export const cheсkTokenUser = (token) =>
   fetch(endpointAuth, {
     method: 'GET',
     headers: {
@@ -29,3 +33,13 @@ export const authorize = ({ email, password }) =>
     },
     body: JSON.stringify({ email, password }),
   }).then((res) => checkResponse(res));
+
+export const logout = () => {
+  fetch(endpointLogout, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  }).then(checkResponse);
+};

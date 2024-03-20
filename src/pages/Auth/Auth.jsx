@@ -5,8 +5,11 @@ import styles from './Auth.module.scss';
 
 import { useFormValidation } from '../../utils/hooks/useFormValidation.js';
 import { authorize } from '../../utils/registration.js';
+import { getUserData } from '../../utils/mainApi.js';
+
 import { setToken } from '../../store/slices/tokenSlices.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
+import { setAdminData } from '../../store/slices/adminDataSlices.js';
 
 import Logo from '../../components/Logo/Logo.jsx';
 import registerImg from '../../images/register-img.png';
@@ -24,15 +27,18 @@ function Auth() {
     e.preventDefault();
     authorize({
       email: values.email,
-      password: values.password
+      password: values.password,
     })
       .then((res) => {
         localStorage.setItem('token', JSON.stringify(res));
-        navigate('/admin-person-area');
         dispatch(setToken(res.token));
         dispatch(setIsLoggedIn(true));
+        getUserData(res.token).then((res) => {
+          dispatch(setAdminData(res));
+          navigate('/admin-person-area');
+        });
       })
-      .catch((err) => console.log(err)); //* * добавить показ ошибки в модалке */
+      .catch((err) => (err === 'Error: 500') ? alert('Не корректный логин или пароль') : console.log(err)); //* * добавить показ ошибки в модалке */
   };
 
   const togglePassword = () => {
@@ -72,7 +78,7 @@ function Auth() {
               minLength="4"
               maxLength="12"
               name="password"
-              id='authPassword'
+              id="authPassword"
               value={values.password || ''}
               onChange={handleChange}
               placeholder="Пароль"
@@ -80,19 +86,11 @@ function Auth() {
               required
             />
             <span>{errors.password}</span>
-            {isOpen ? (
-              <span
-                className={styles.eye}
-                onClick={togglePassword}
-                style={{ backgroundImage: `url(${eyeOpen})` }}
-              ></span>
-            ) : (
-              <span
-                className={styles.eye}
-                onClick={togglePassword}
-                style={{ backgroundImage: `url(${eyelash})` }}
-              ></span>
-            )}
+            <span
+              className={styles.eye}
+              onClick={togglePassword}
+              style={{ backgroundImage: `url(${isOpen ? eyeOpen : eyelash})` }}
+            ></span>
           </label>
           <button type="submit" disabled={!isValid}>
             Войти
