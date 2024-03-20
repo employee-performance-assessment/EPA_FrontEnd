@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
 import Boards from '../Boards/Boards.jsx';
 import { endpoint } from '../../constants/constantsEndpointRoute.js';
-import Auth from '../Auth/Auth.jsx';
-import Register from '../Register/Register.jsx';
+import Auth from '../../pages/Auth/Auth.jsx';
+import Register from '../../pages/Register/Register.jsx';
 import { boardsList } from '../../constants/boardsList.js';
+import PersonalArea from '../../pages/PersonalArea/PersonalArea.jsx';
 import AdminPanel from '../AdminPanel/AdminPanel.jsx';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
     <div className="page">
       {/* <div className="page__content"> */}
       <Routes>
+        <Route path='/' element={<Navigate to="/login" />}/>
         <Route path="/signup" element={<Register />} />
         <Route path="/login" element={
           <Auth

@@ -1,8 +1,7 @@
 import './MainPage.scss';
-import PersonalArea from '../PersonalArea/PersonalArea.jsx';
+import PersonalArea from '../../pages/PersonalArea/PersonalArea.jsx';
 import AdminPanel from '../AdminPanel/AdminPanel.jsx';
-// import TimerDeadline from '../TimerDeadline/TimerDeadline.jsx';
-import Register from '../Register/Register.jsx';
+import Register from '../../pages/Register/Register.jsx';
 
 function MainPage() {
   const status = !true;
@@ -10,7 +9,6 @@ function MainPage() {
   return (
     <>
       <main>{status ? <PersonalArea /> : <><AdminPanel /> <Register /></>}</main>
-      {/* <Footer /> */}
     </>
   );
 }

@@ -1,3 +1,6 @@
+@import '../../styles/vars';
+@import '../../styles/mixins';
+
 .container {
   display: flex;
   align-items: center;
@@ -5,9 +8,8 @@
   gap: 18px;
   width: 200px;
   height: 56px;
-  border: 2px solid black;
+  border: 2px solid $black-base-color;
   border-radius: 20px;
-  //background: rgb(255, 255, 255);
 
   .well_block {
     display: flex;
@@ -16,23 +18,15 @@
     width: 94px;
     height: 44px;
     border-radius: 15px;
-    background: linear-gradient(
-      90deg,
-      rgb(197, 182, 241) 24.6%,
-      rgb(8, 200, 131) 52.1%,
-      rgb(198, 242, 33) 80.6%,
-      rgb(245, 240, 122) 100%
-    );
+    background: $wrapper;
   }
   span {
+    @include text($font-weight: 600);
     text-transform: uppercase;
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 24px;
-    margin: 0;
 
-    &:last-of-type {
-      font-weight: 900;
+    &:nth-child(2) {
+      @include text($font-weight: 900);
     }
   }
+
 }

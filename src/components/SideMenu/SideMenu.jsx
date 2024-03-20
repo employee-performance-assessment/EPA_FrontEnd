@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
+import Logo from '../Logo/Logo.jsx';
 import './SideMenu.scss';
-import logo from '../../images/logo.svg';
+// import logo from '../../images/logo.svg';
 import UserCircle from '../../images/UserCircle.svg';
 import UserCircleActive from '../../images/UserCircle_active.svg';
 import kanbanboard from '../../images/KanbanBoard.svg';
@@ -11,9 +12,9 @@ function SideMenu() {
   const location = useLocation();
 
   return (
-    <div className="side-menu">
-      <div className="side-menu__logo">
-        <img src={logo} alt="логотип бокового меню" />
+    <div className="SideMenu">
+      <div className="SideMenu__logo">
+        <Logo />
       </div>
       <ul className="side-menu__list">
         <Link to="/#" target="_blank" className="side-menu__item">
