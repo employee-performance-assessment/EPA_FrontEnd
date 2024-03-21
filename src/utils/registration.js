@@ -2,7 +2,6 @@ import checkResponse from './checkResponse';
 import {
   endpointAuth,
   endpointRegister,
-  endpointLogout,
 } from '../constants/constantAPI.js';
 
 // проверка токена
@@ -33,13 +32,3 @@ export const authorize = ({ email, password }) =>
     },
     body: JSON.stringify({ email, password }),
   }).then((res) => checkResponse(res));
-
-export const logout = () => {
-  fetch(endpointLogout, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  }).then(checkResponse);
-};

@@ -35,8 +35,8 @@ function Auth() {
         dispatch(setIsLoggedIn(true));
         getUserData(res.token).then((res) => {
           dispatch(setAdminData(res));
-          navigate('/admin-person-area');
         });
+        navigate('/admin-person-area');
       })
       .catch((err) => (err === 'Error: 500') ? alert('Не корректный логин или пароль') : console.log(err)); //* * добавить показ ошибки в модалке */
   };

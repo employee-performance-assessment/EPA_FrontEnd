@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
@@ -27,7 +33,7 @@ function App() {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const clearCards = () => { };
+  const clearCards = () => {};
 
   const tokenCheck = () => {
     if (localStorage.getItem('token')) {
@@ -55,20 +61,26 @@ function App() {
   return (
     <div className="page">
       <Routes>
-        <Route path='/' element={<Navigate to="/login" />}/>
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/signup" element={<Register />} />
-        <Route path="/login" element={
-          <Auth
-            isFormAuthBlock={isFormAuthBlock}
-            setIsFormAuthBlock={setIsFormAuthBlock}
-          />}
+        <Route
+          path="/login"
+          element={
+            <Auth
+              isFormAuthBlock={isFormAuthBlock}
+              setIsFormAuthBlock={setIsFormAuthBlock}
+            />
+          }
         />
-        <Route path="/admin-person-area" element={
-          <ProtectedRoute
-            element={AdminPanel}
-            isLoggedIn={isLoggedIn}
-            isLoading={false}
-          />}
+        <Route
+          path="/admin-person-area"
+          element={
+            <ProtectedRoute
+              element={AdminPanel}
+              isLoggedIn={isLoggedIn}
+              isLoading={false}
+            />
+          }
         />
         {/* канбан доска */}
         <Route

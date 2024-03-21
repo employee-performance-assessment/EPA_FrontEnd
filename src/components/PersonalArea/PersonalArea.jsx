@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormValidation } from '../../utils/hooks/useFormValidation.js';
-import { /* getUserData, */ updateUserData } from '../../utils/mainApi.js';
+import { updateUserData } from '../../utils/mainApi.js';
 import { setAdminData } from '../../store/slices/adminDataSlices.js';
 import './PersonalArea.css';
 
@@ -14,16 +14,6 @@ function PersonalArea() {
   const adminData = useSelector((state) => state.adminData.adminData);
   const dispatch = useDispatch();
   const [isDisabledButton, setIsDisabledButton] = useState(false);
-
-  /* useEffect(() => {
-    console.log(token);
-    getUserData(token)
-      .then((res) => {
-        console.log(res);
-        dispatch(setAdminData(res));
-      })
-      .catch((err) => console.log(err));
-  }, []); */
 
   useEffect(() => {
     values.name = adminData.fullName;
@@ -79,7 +69,9 @@ function PersonalArea() {
   return (
     <div className="personal-area">
       <form className="personal-area__form" onSubmit={handleSubmit}>
-        <h2 className="personal-area__title">{editing ? 'Редактирование' : 'Личные данные'}</h2>
+        <h2 className="personal-area__title">
+          {editing ? 'Редактирование' : 'Личные данные'}
+        </h2>
         <input
           className={`personal-area__input ${!editing ? 'personal-area__input_type-disable' : ''} ${errors.name ? 'personal-area__input_type-error' : ''}`}
           type="text"
@@ -87,7 +79,7 @@ function PersonalArea() {
           minLength="1"
           maxLength="255"
           name="name"
-          value={values.name || ''}
+          value={values.name || adminData.fullName || ''}
           onChange={handleChange}
           placeholder="Имя Фамилия"
         />
@@ -99,7 +91,7 @@ function PersonalArea() {
           minLength="2"
           maxLength="30"
           name="job"
-          value={values.job || ''}
+          value={values.job || adminData.position || ''}
           onChange={handleChange}
           placeholder="Должность"
         />
@@ -111,12 +103,12 @@ function PersonalArea() {
           minLength="2"
           maxLength="30"
           name="email"
-          value={values.email || ''}
+          value={values.email || adminData.email || ''}
           onChange={handleChange}
           placeholder="Email"
         />
         <span className="personal-area__input-error">{errors.email}</span>
-        {editing &&
+        {editing && (
           <>
             <input
               className={`personal-area__input ${!editing ? 'personal-area__input_type-disable' : ''} ${errors.newPassword ? 'personal-area__input_type-error' : ''}`}
@@ -131,12 +123,16 @@ function PersonalArea() {
               autoComplete="new-password"
             />
             <span
-              className={`personal-area__password-eye ${passwordVisible ?
-                'personal-area__password-eye_open' :
-                'personal-area__password-eye_close'}`}
+              className={`personal-area__password-eye ${
+                passwordVisible
+                  ? 'personal-area__password-eye_open'
+                  : 'personal-area__password-eye_close'
+              }`}
               onClick={handlePasswordVisibility}
             />
-            <span className="personal-area__input-error">{errors.newPassword}</span>
+            <span className="personal-area__input-error">
+              {errors.newPassword}
+            </span>
             <input
               className={`personal-area__input ${!editing ? 'personal-area__input_type-disable' : ''} ${errors.repeatPassword ? 'personal-area__input_type-error' : ''}`}
               type={passwordVisible ? 'text' : 'password'}
@@ -150,23 +146,31 @@ function PersonalArea() {
               autoComplete="new-password"
             />
             <span
-              className={`personal-area__password-eye ${passwordVisible ?
-                'personal-area__password-eye_open' :
-                'personal-area__password-eye_close'}`}
+              className={`personal-area__password-eye ${
+                passwordVisible
+                  ? 'personal-area__password-eye_open'
+                  : 'personal-area__password-eye_close'
+              }`}
               onClick={handlePasswordVisibility}
             />
-            <span className="personal-area__input-error">{errors.repeatPassword}</span>
-          </>}
-        {editing &&
+            <span className="personal-area__input-error">
+              {errors.repeatPassword}
+            </span>
+          </>
+        )}
+        {editing && (
           <button
             type="submit"
             className={`personal-area__button ${isValid && !isDisabledButton ? '' : 'personal-area__button_inactive'}`}
             disabled={!isValid || isDisabledButton}
           >
             {'Подтвердить'}
-            <div className={`personal-area__button-icon ${isValid && !isDisabledButton ? '' : 'personal-area__button-icon_inactive'}`} />
-          </button>}
-        {!editing &&
+            <div
+              className={`personal-area__button-icon ${isValid && !isDisabledButton ? '' : 'personal-area__button-icon_inactive'}`}
+            />
+          </button>
+        )}
+        {!editing && (
           <button
             type="button"
             className="personal-area__button"
@@ -174,32 +178,40 @@ function PersonalArea() {
           >
             {'Редактировать'}
             <div className="personal-area__button-icon" />
-          </button>}
+          </button>
+        )}
       </form>
-      {!editing && <div className="personal-area__questionnaire">
-        <h3 className="personal-area__questionnaire-title">{'Анкета оценки соотрудников'}</h3>
-        <Link to={'/setting-questionnaire'} className="personal-area__questionnaire-link">
-          <div className="personal-area__questionnaire-container">
-            <p className="personal-area__questionnaire-text">
-              {`Вы можете редактировать анкету
+      {!editing && (
+        <div className="personal-area__questionnaire">
+          <h3 className="personal-area__questionnaire-title">
+            {'Анкета оценки соотрудников'}
+          </h3>
+          <Link
+            to={'/setting-questionnaire'}
+            className="personal-area__questionnaire-link"
+          >
+            <div className="personal-area__questionnaire-container">
+              <p className="personal-area__questionnaire-text">
+                {`Вы можете редактировать анкету
               для оценки сотрудника.
               Добавлять новые критерии
               и менять заданные.`}
-            </p>
-            <p className="personal-area__questionnaire-text">
-              {`У вас есть возможность выбрать,
+              </p>
+              <p className="personal-area__questionnaire-text">
+                {`У вас есть возможность выбрать,
               что будет влиять на рейтинг
               сотрудника, только Ваши оценки или
               оценки всей команды.`}
-            </p>
-            <p className="personal-area__questionnaire-text">
-              {'Перейти к анкете'}
-              <span className="personal-area__questionnaire-link-icon" />
-            </p>
-          </div>
-        </Link>
-      </div>}
-    </div >
+              </p>
+              <p className="personal-area__questionnaire-text">
+                {'Перейти к анкете'}
+                <span className="personal-area__questionnaire-link-icon" />
+              </p>
+            </div>
+          </Link>
+        </div>
+      )}
+    </div>
   );
 }
 

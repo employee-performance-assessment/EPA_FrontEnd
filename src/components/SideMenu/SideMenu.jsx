@@ -1,9 +1,8 @@
-import { Link, useLocation/* , useNavigate */ } from 'react-router-dom';
-/* import { useDispatch } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 import { setAdminData } from '../../store/slices/adminDataSlices.js';
 import { setToken } from '../../store/slices/tokenSlices.js';
-import { logout } from '../../utils/registration.js'; */
 
 import Logo from '../Logo/Logo.jsx';
 import './SideMenu.scss';
@@ -16,21 +15,17 @@ import analytics from '../../images/analytics.svg';
 
 function SideMenu() {
   const location = useLocation();
-  /* const navigate = useNavigate();
-  const dispatch = useDispatch(); */
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  /* const handleLogout = (e) => {
+  const handleLogout = (e) => {
     e.preventDefault();
-    logout()
-      .then(() => {
-        localStorage.clear();
-        dispatch(setToken(''));
-        dispatch(setIsLoggedIn(false));
-        dispatch(setAdminData({}));
-        navigate('/');
-      })
-      .catch((err) => console.log(`Ошибка: ${err}`));
-  }; */
+    localStorage.clear();
+    dispatch(setToken(''));
+    dispatch(setIsLoggedIn(false));
+    dispatch(setAdminData({}));
+    navigate('/');
+  };
 
   return (
     <div className="side-menu">
@@ -60,7 +55,7 @@ function SideMenu() {
           <p className="side-menu__text"> Аналитика</p>
         </Link>
       </ul>
-      <button /* onClick={handleLogout} */ className="side-menu__button-exit">
+      <button onClick={handleLogout} className="side-menu__button-exit">
         Выйти
       </button>
     </div>
