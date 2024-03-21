@@ -16,10 +16,10 @@ function CardRating({ rating, startDate, endDate }) {
 
   // создаем звездочки рейтинга
   function setStars() {
-    let widthStar = rating;
-    const arrStars = [];
-    for (let i = 0; i < 5; i += 1) {
-      arrStars.push(
+    let widthStar = rating + 1;
+    return [1, 2, 3, 4, 5].map((i) => {
+      widthStar -= 1;
+      return (
         <div className="card-rating__star card-rating__star_out" key={i}>
           <div
             className="card-rating__star card-rating__star_in"
@@ -27,9 +27,7 @@ function CardRating({ rating, startDate, endDate }) {
           />
         </div>
       );
-      widthStar -= 1;
-    }
-    return arrStars;
+    });
   }
 
   // форматируем текст из формата "дд.мм.гггг" в "дд месяц гггг"

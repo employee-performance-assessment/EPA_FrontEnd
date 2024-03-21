@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useFormValidation } from '../../utils/hooks/useFormValidation.js';
+import { useFormValidation } from '../../hooks/useFormValidation.js';
 import { updateUserData } from '../../utils/mainApi.js';
 import { setAdminData } from '../../store/slices/adminDataSlices.js';
 import './PersonalArea.scss';
@@ -12,14 +12,20 @@ function PersonalArea() {
   const { errors, values, isValid, handleChange } = useFormValidation();
   const token = useSelector((state) => state.token.token);
   const adminData = useSelector((state) => state.adminData.adminData);
-  const dispatch = useDispatch();
   const [isDisabledButton, setIsDisabledButton] = useState(false);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    values.name = adminData.fullName;
-    values.email = adminData.email;
-    values.job = adminData.position || '';
-  }, [adminData]);
+  function setVisibleInputData() {
+    if (!values.name && !editing) {
+      values.name = adminData.fullName;
+      values.email = adminData.email;
+      values.job = adminData.position || '';
+      values.repeatPassword = '';
+      values.newPassword = '';
+    }
+  }
+
+  setVisibleInputData();
 
   useEffect(() => {
     if (checkPassword()) {
@@ -28,8 +34,6 @@ function PersonalArea() {
       setIsDisabledButton(true);
     }
   }, [values.newPassword, values.repeatPassword]);
-
-  console.log(isValid, isDisabledButton);
 
   function checkPassword() {
     return values.repeatPassword === values.newPassword;
@@ -56,7 +60,7 @@ function PersonalArea() {
         values.repeatPassword = '';
         values.newPassword = '';
       })
-      .catch((err) => console.log(err)); //* * добавить показ ошибки в модалке */
+      .catch((err) => alert(err)); //* * добавить показ ошибки в модалке */
   }
 
   function handleEditing() {
@@ -72,7 +76,7 @@ function PersonalArea() {
       <div className="personal-area__header">
         <div className="personal-area__header-icon" />
         <h2 className="personal-area__header-title">{adminData.fullName}</h2>
-        <div className="personal-area__header-job">{adminData.position}</div>
+        <div className="personal-area__header-job">{adminData.position || 'Должность'}</div>
       </div>
       <div className="personal-area__container">
         <form className="personal-area__form" onSubmit={handleSubmit}>
