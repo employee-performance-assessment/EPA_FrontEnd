@@ -1,12 +1,9 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Logo from '../Logo/Logo.jsx';
 import './SideMenu.scss';
-// import logo from '../../images/logo.svg';
-import UserCircle from '../../images/UserCircle.svg';
-import UserCircleActive from '../../images/UserCircle_active.svg';
-import kanbanboard from '../../images/KanbanBoard.svg';
-import assessment from '../../images/assessment.svg';
-import analytics from '../../images/analytics.svg';
+import MenuAdmin from './MenuAdmin/MenuAdmin.jsx';
+import MenuEmployee from './MenuEmployee/MenuEmployee.jsx';
+import exitIcon from '../../images/exit_button.svg';
 
 function SideMenu() {
   const location = useLocation();
@@ -16,30 +13,15 @@ function SideMenu() {
       <div className="side-menu__logo">
         <Logo />
       </div>
-      <ul className="side-menu__list">
-        <Link to="/#" target="_blank" className="side-menu__item">
-          <img
-            src={location !== '/perconalArea' ? UserCircle : UserCircleActive}
-            //  src={UserCircle}
-            alt=""
-            className="side-menu__logo"
-          />
-          <p className="side-menu__text">Личный кабинет</p>
-        </Link>
-        <Link to="/#" target="_blank" className="side-menu__item">
-          <img src={kanbanboard} alt="" className="side-menu__logo" />
-          <p className="side-menu__text">Канбан доска</p>
-        </Link>
-        <Link to="/#" target="_blank" className="side-menu__item">
-          <img src={assessment} alt="" className="side-menu__logo" />
-          <p className="side-menu__text">Оценить коллегу</p>
-        </Link>
-        <Link to="/#" target="_blank" className="side-menu__item">
-          <img src={analytics} alt="" className="side-menu__logo" />
-          <p className="side-menu__text"> Аналитика</p>
-        </Link>
-      </ul>
-      <button className="side-menu__button-exit">Выйти</button>
+      {location.pathname === '/admin-person-area' ? (
+        <MenuAdmin />
+      ) : (
+        <MenuEmployee />
+      )}
+      <button className="sideMenu__button">
+        <img src={exitIcon} alt="иконка кнопки выхода из приложения" className="sideMenu__button_icon" />
+        <p className="sideMenu__button_text">Выйти</p>
+      </button>
     </div>
   );
 }
