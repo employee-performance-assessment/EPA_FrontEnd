@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormValidation } from '../../utils/hooks/useFormValidation.js';
-import { getUserData, updateUserData } from '../../utils/mainApi.js';
+import { updateUserData } from '../../utils/mainApi.js';
 import { setAdminData } from '../../store/slices/adminDataSlices.js';
 import './PersonalArea.scss';
 
@@ -14,14 +14,6 @@ function PersonalArea() {
   const adminData = useSelector((state) => state.adminData.adminData);
   const dispatch = useDispatch();
   const [isDisabledButton, setIsDisabledButton] = useState(false);
-
-  useEffect(() => {
-    getUserData(token)
-      .then((res) => {
-        dispatch(setAdminData(res));
-      })
-      .catch((err) => console.log(err)); //* * добавить показ ошибки в модалке */
-  }, []);
 
   useEffect(() => {
     values.name = adminData.fullName;

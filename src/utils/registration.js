@@ -1,8 +1,11 @@
 import checkResponse from './checkResponse';
-import { endpointAuth, endpointRegister } from '../constants/constantAPI.js';
+import {
+  endpointAuth,
+  endpointRegister,
+} from '../constants/constantAPI.js';
 
 // проверка токена
-export const chekTokenUser = (token) =>
+export const cheсkTokenUser = (token) =>
   fetch(endpointAuth, {
     method: 'GET',
     headers: {

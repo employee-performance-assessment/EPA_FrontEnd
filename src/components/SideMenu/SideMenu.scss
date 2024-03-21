@@ -41,4 +41,16 @@ $font-size: 18px;
   background-image: url(../../images/exit_button.svg);
   background-repeat: no-repeat;
   background-position: 26px center;
+  cursor: pointer;
+
+  &:hover {
+    background: linear-gradient(
+      90deg,
+      #c5b6f1 10.6%,
+      #c6b7f2 37.1%,
+      #f6f17b 71.6%,
+      #f5f07a 89.1%,
+      #f5f07a 100%
+    );
+  }
 }

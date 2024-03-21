@@ -1,5 +1,5 @@
-import SideMenu from '../SideMenu/SideMenu.jsx';
-import PersonalArea from '../../pages/PersonalArea/PersonalArea.jsx';
+import SideMenu from '../../components/SideMenu/SideMenu.jsx';
+import PersonalArea from '../../components/PersonalArea/PersonalArea.jsx';
 import './AdminPanel.scss';
 
 function AdminPanel() {
