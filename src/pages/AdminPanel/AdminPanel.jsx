@@ -8,7 +8,9 @@ function AdminPanel() {
       <div className="admin-panel__sidebar">
         <SideMenu />
       </div>
-      <PersonalArea />
+      <div className="admin-panel__main">
+        <PersonalArea />
+      </div>
     </div>
   );
 }
