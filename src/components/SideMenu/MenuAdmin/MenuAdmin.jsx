@@ -33,8 +33,7 @@ function MenuAdmin() {
         <p className="side-menu__text">Оценка ЭС</p>
       </Link>
       <Link
-        to="/#"
-        target="_blank"
+        to="/analytics"
         className="side-menu__item side-menu__item_analytics"
       >
         <p className="side-menu__text"> Аналитика</p>

@@ -8,14 +8,17 @@ import {
 } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
-import NotFound from '../NotFound/NotFound.jsx';
-import Boards from '../Boards/Boards.jsx';
-import { endpoint } from '../../constants/constantsEndpointRoute.js';
+
 import Auth from '../../pages/Auth/Auth.jsx';
 import Register from '../../pages/Register/Register.jsx';
-import { boardsList } from '../../constants/boardsList.js';
 import AdminPanel from '../../pages/AdminPanel/AdminPanel.jsx';
 import MyTeamAdmin from '../../pages/MyTeamAdmin/MyTeamAdmin.jsx';
+import Boards from '../Boards/Boards.jsx';
+import AnalyticsPage from '../../pages/AnalyticsPage/AnalyticsPage.jsx';
+import NotFound from '../NotFound/NotFound.jsx';
+
+import { endpoint } from '../../constants/constantsEndpointRoute.js';
+import { boardsList } from '../../constants/boardsList.js';
 
 import { getUserData } from '../../utils/mainApi.js';
 import { setAdminData } from '../../store/slices/adminDataSlices.js';
@@ -103,6 +106,7 @@ function App() {
           }
         />
         <Route path='/myteam' element={<ProtectedRoute element={MyTeamAdmin} isLoggedIn={isLoggedIn} isLoading={false} />} />
+        <Route path='/analytics' element={<ProtectedRoute element={AnalyticsPage} isLoggedIn={isLoggedIn}/>}/>
         {/* страница без роута */}
         <Route path={anyPage} element={<NotFound />} />
       </Routes>
