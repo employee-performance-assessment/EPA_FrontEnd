@@ -24,6 +24,11 @@
       width: 354px;
       height: 534px;
 
+      .logo {
+        height: 56px;
+        border: 0;
+      }
+
       h1 {
         @include text($font-size: 36px, $line-height: 44px);
         max-width: 345px;
@@ -67,7 +72,11 @@
         }
 
         span {
-          @include text($font-weight: 400, $line-height: 1.25, $font-size: 12px);
+          @include text(
+            $font-weight: 400,
+            $line-height: 1.25,
+            $font-size: 12px
+          );
           width: 308px;
           align-self: center;
           color: $red-base-color;
@@ -92,7 +101,7 @@
         }
 
         &:disabled {
-          opacity: .8;
+          opacity: 0.8;
         }
       }
     }
@@ -106,7 +115,12 @@
   }
 
   .link {
-    @include text($font-size: 16px, $line-height: 19px, $font-weight: 400, $color: $dark-green-base-color);
+    @include text(
+      $font-size: 16px,
+      $line-height: 19px,
+      $font-weight: 400,
+      $color: $dark-green-base-color
+    );
     margin-top: 15px;
     cursor: pointer;
   }
