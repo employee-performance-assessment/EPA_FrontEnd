@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import styles from './Auth.module.scss';
 
-import { useFormValidation } from '../../utils/hooks/useFormValidation.js';
-import { authorize } from '../../utils/registration.js';
+import { useFormValidation } from '../../hooks/useFormValidation.js';
+import { authorize } from '../../utils/auth.js';
 import { getUserData } from '../../utils/mainApi.js';
 
 import { setToken } from '../../store/slices/tokenSlices.js';

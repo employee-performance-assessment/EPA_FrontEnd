@@ -5,13 +5,13 @@ import { setAdminData } from '../../store/slices/adminDataSlices.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 
 import Logo from '../../components/Logo/Logo.jsx';
-import { useFormValidation } from '../../utils/hooks/useFormValidation.js';
+import { useFormValidation } from '../../hooks/useFormValidation.js';
 
 import styles from './Register.module.scss';
 import registerImg from '../../images/register-img.png';
 import eyelash from '../../images/eye-close.svg';
 import eyeOpen from '../../images/eye-open.svg';
-import { register } from '../../utils/registration.js';
+import { register } from '../../utils/auth.js';
 
 function Register() {
   const [isOpen, setIsOpen] = useState(false);

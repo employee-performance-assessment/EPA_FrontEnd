@@ -42,10 +42,10 @@ function App() {
         getUserData(token)
           .then((res) => {
             if (res) {
+              navigate(location.pathname);
               dispatch(setAdminData(res));
               dispatch(setIsLoggedIn(true));
             }
-            navigate(location.pathname);
           })
           .catch((err) => console.log(`Ошибка: ${err}`));
       }
