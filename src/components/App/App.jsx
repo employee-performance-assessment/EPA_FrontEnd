@@ -15,6 +15,7 @@ import Auth from '../../pages/Auth/Auth.jsx';
 import Register from '../../pages/Register/Register.jsx';
 import { boardsList } from '../../constants/boardsList.js';
 import AdminPanel from '../../pages/AdminPanel/AdminPanel.jsx';
+import MyTeamAdmin from '../../pages/MyTeamAdmin/MyTeamAdmin.jsx';
 
 import { getUserData } from '../../utils/mainApi.js';
 import { setAdminData } from '../../store/slices/adminDataSlices.js';
@@ -101,6 +102,7 @@ function App() {
             />
           }
         />
+        <Route path='/myteam' element={<ProtectedRoute element={MyTeamAdmin} isLoggedIn={isLoggedIn} isLoading={false} />} />
         {/* страница без роута */}
         <Route path={anyPage} element={<NotFound />} />
       </Routes>
