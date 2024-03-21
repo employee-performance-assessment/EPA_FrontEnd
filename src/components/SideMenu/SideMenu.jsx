@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 import MenuAdmin from './MenuAdmin/MenuAdmin.jsx';
 import MenuEmployee from './MenuEmployee/MenuEmployee.jsx';
 import exitIcon from '../../images/exit_button.svg';
+import logo from '../../images/logo.svg';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 import { setAdminData } from '../../store/slices/adminDataSlices.js';
 import { setToken } from '../../store/slices/tokenSlices.js';
-import Logo from '../Logo/Logo.jsx';
 import './SideMenu.scss';
 
 function SideMenu() {
@@ -25,9 +25,7 @@ function SideMenu() {
 
   return (
     <div className="side-menu">
-      <div className="side-menu__logo">
-        <Logo />
-      </div>
+      <img className="side-menu__logo" src={logo} alt="Логотип" />
       {location.pathname === '/admin-person-area' ? (
         <MenuAdmin />
       ) : (
