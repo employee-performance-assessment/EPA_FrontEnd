@@ -11,11 +11,11 @@ import { setToken } from '../../store/slices/tokenSlices.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 import { setAdminData } from '../../store/slices/adminDataSlices.js';
 
-import Logo from '../../components/Logo/Logo.jsx';
 import registerImg from '../../images/register-img.png';
 
 import eyelash from '../../images/eye-close.svg';
 import eyeOpen from '../../images/eye-open.svg';
+import logo from '../../images/logo.svg';
 
 function Auth() {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +38,10 @@ function Auth() {
         });
         navigate('/admin-person-area');
       })
-      .catch((err) => (err === 'Error: 500') ? alert('Не корректный логин или пароль') : console.log(err)); //* * добавить показ ошибки в модалке */
+      .catch((err) =>
+        err === 'Error: 500'
+          ? alert('Не корректный логин или пароль')
+          : console.log(err));
   };
 
   const togglePassword = () => {
@@ -57,7 +60,7 @@ function Auth() {
     <section className={styles.wrapper}>
       <div className={styles.container}>
         <form id="register" onSubmit={handleSubmit}>
-          <Logo />
+          <img className={styles.logo} src={logo} alt="Логотип" />
           <h1>Сервис для оценки сотрудников</h1>
           <label>
             <input
@@ -75,8 +78,8 @@ function Auth() {
           <label>
             <input
               type="password"
-              minLength="4"
-              maxLength="12"
+              minLength="8"
+              maxLength="14"
               name="password"
               id="authPassword"
               value={values.password || ''}
