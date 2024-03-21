@@ -1,5 +1,5 @@
 import checkResponse from './checkResponse.js';
-import { endpointUpdateUserData, endpointUserData } from '../constants/constantAPI.js';
+import { endpointUpdateUserData, endpointUserData, endpointGetAllUsers } from '../constants/constantAPI.js';
 
 // проверка токена
 export const getUserData = (token) =>
@@ -24,4 +24,13 @@ export const updateUserData = (id, token, data) =>
       email: data.email,
       password: data.password,
     })
+  }).then((res) => checkResponse(res));
+
+export const getAllUsers = (token) =>
+  fetch(endpointGetAllUsers, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
   }).then((res) => checkResponse(res));
