@@ -1,0 +1,95 @@
+$main-color: black;
+$font-weight: 500;
+$font-size: 18px;
+
+.side-menu__list {
+  padding: 80px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+
+.side-menu__item {
+  color: $main-color;
+  display: flex;
+  text-decoration: none;
+  flex-direction: row;
+  margin-bottom: 40px;
+  font-weight: $font-weight;
+  font-size: $font-size;
+}
+
+.side-menu__item_personal::before {
+  content: '';
+  padding: 16px;
+  background-image: url(../../../images/UserCircle.svg);
+  background-repeat: no-repeat;
+}
+.side-menu__item_kanban::before {
+  content: '';
+  padding: 16px;
+  background-image: url(../../../images/KanbanBoard.svg);
+  background-repeat: no-repeat;
+}
+.side-menu__item_asses::before {
+  content: '';
+  padding: 16px;
+  background-image: url(../../../images/assessment.svg);
+  background-repeat: no-repeat;
+}
+.side-menu__item_analytics::before {
+  content: '';
+  padding: 16px;
+  background-image: url(../../../images/analytics.svg);
+  background-repeat: no-repeat;
+}
+
+.side-menu__item:hover {
+  color: #5bb264;
+}
+
+.side-menu__item_personal:hover::before {
+  content: '';
+  padding: 16px;
+  background-image: url(../../../images/UserCircle_active.svg);
+  background-repeat: no-repeat;
+}
+.side-menu__item_kanban:hover::before {
+  content: '';
+  padding: 16px;
+  background-image: url(../../../images/KanbanBoard_active.svg);
+  background-repeat: no-repeat;
+}
+.side-menu__item_asses:hover::before {
+  content: '';
+  padding: 16px;
+  background-image: url(../../../images/assessment_active.svg);
+  background-repeat: no-repeat;
+}
+.side-menu__item_analytics:hover::before {
+  content: '';
+  padding: 16px;
+  background-image: url(../../../images/analytics_active.svg);
+  background-repeat: no-repeat;
+}
+
+.side-menu__text {
+  align-self: center;
+  padding-left: 8px;
+}
+
+.side-menu__button-exit {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  background-color: #f5f5f5;
+  border-radius: 20px;
+  border: none;
+  color: $main-color;
+  padding: 20px 0px;
+  font-size: 20px;
+  font-weight: 600;
+  width: 180px;
+  background-image: url(../../../images/exit_button.svg);
+  background-repeat: no-repeat;
+  background-position: 26px center;
+}
