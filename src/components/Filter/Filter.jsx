@@ -1,4 +1,3 @@
-import { placeholder } from '@babel/types';
 import { useState } from 'react';
 import Select from 'react-select';
 

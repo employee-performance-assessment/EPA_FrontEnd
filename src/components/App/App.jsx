@@ -51,7 +51,8 @@ function App() {
               dispatch(setIsLoggedIn(true));
             }
           })
-          .catch((err) => console.log(`Ошибка: ${err}`));
+          // eslint-disable-next-line no-alert
+          .catch((err) => alert(`Ошибка: ${err}`));
       }
     } else {
       navigate('/');

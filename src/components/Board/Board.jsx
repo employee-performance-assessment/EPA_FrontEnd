@@ -73,16 +73,10 @@ function Board({
   }
 
   // функция сортировки применяемая для упорядочивания карт для отрисовки после перетпскивания
-  const sortCard = (a, b) => {
-    if (a.order > b.order) {
-      return 1;
-    }
-    return -1;
-  };
+  const sortCard = (a, b) => a - b;
 
   // функция установки цвета поля баллов
   function getCollor(bord, deadline) {
-    // console.log(deadline - new Date().getTime());
     if (deadline - new Date().getTime() <= 0) {
       return 'boardDnD__card-points_red';
     } else if (bord === 'К выполнению') {
@@ -98,9 +92,9 @@ function Board({
     }
   }
 
-  function settingDateDeadline(unixData) {
-    const date = new Date(unixData); // Преобразуем Unix-время в миллисекунды
-    return date.toLocaleDateString(); // Форматируем дату
+  function settingDateDeadline(unixTime) {
+    const date = new Date(unixTime); // Преобразуем Unix-время в миллисекунды
+    return date.toLocaleDateString();
   }
 
   return (
@@ -137,27 +131,6 @@ function Board({
       ))}
     </div>
   );
-
-  // на потом!!!
-  //   return (
-  //     <div className="boardDnD">
-  //       <div className="boardDnD__column boardDnD__column_left">
-  //         <Toolbar addCard={addCard} clearCards={clearCards} />
-  //       </div>
-  //       <div className="boardDnD__column boardDnD__column_center">
-  //         <Cards cards={[
-  //           { title: 'первое dasdsadfsafsdafsdafdsaf задание', id: 111 },
-  //           { title: 'второе задание', id: 222 },
-  //         ]} title='Выполнить' />
-  //       </div>
-  //       <div className="boardDnD__column">
-  //         <Cards cards={[
-  //           { title: 'первое ujnjdjt задание', id: 111 },
-  //           { title: 'второе зfghfhfhgf gfdgdgdg адание', id: 222 },
-  //         ]} title='Готово' />
-  //       </div>
-  //     </div>
-  //   );
 }
 
 export default Board;

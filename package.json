@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run lint:fix && react-scripts build",
     "test": "react-script test",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .js,.jsx .  --color",
