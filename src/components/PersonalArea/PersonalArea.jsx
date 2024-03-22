@@ -60,7 +60,8 @@ function PersonalArea() {
         values.repeatPassword = '';
         values.newPassword = '';
       })
-      .catch((err) => alert(err)); //* * добавить показ ошибки в модалке */
+      // eslint-disable-next-line no-alert
+      .catch((err) => alert(err));
   }
 
   function handleEditing() {

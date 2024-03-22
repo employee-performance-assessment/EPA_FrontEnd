@@ -39,9 +39,8 @@ function Auth() {
         navigate('/admin-person-area');
       })
       .catch((err) =>
-        err === 'Error: 500'
-          ? alert('Не корректный логин или пароль')
-          : console.log(err));
+        // eslint-disable-next-line no-alert
+        err === 'Error: 500' ? alert('Не корректный логин или пароль') : alert(err));
   };
 
   const togglePassword = () => {
