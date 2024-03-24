@@ -6,7 +6,7 @@ function Logo({ backColor = 'white', textColor }) {
       <div className={styles.well_block}>
         <span>well</span>
       </div>
-        <span style={{ color: textColor }}>done</span>
+      <span style={{ color: textColor }}>done</span>
     </div>
   );
 }

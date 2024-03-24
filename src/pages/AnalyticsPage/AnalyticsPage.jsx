@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
+import Checkbox from '../../components/Checkbox/Checkbox.jsx';
 
 import flyMan from '../../images/fly-man.svg';
 import commandIcon from '../../images/command-icon.svg';
 
 import styles from './AnalyticsPage.module.scss';
-import Checkbox from '../../components/Checkbox/Checkbox.jsx';
 
 function AnalyticsPage({ isLoggedIn }) {
   const [value, setValue] = useState('');
@@ -15,8 +15,14 @@ function AnalyticsPage({ isLoggedIn }) {
       <SideMenu />
       <div className={styles.container}>
         <header className={styles.header}>
-          <div className={styles.analytic}><span>Аналитика</span></div>
-          <Checkbox shadow='none' labelLeft="Командная" labelRight="Индивидуальная" />
+          <div className={styles.analytic}>
+            <span>Аналитика</span>
+          </div>
+          <Checkbox
+            shadow="none"
+            labelLeft="Командная"
+            labelRight="Индивидуальная"
+          />
         </header>
         <div className={styles.filter_block}>
           <Checkbox labelLeft="Оценки" labelRight="Дедлайны" />
@@ -27,7 +33,7 @@ function AnalyticsPage({ isLoggedIn }) {
             type="date"
             name="calendar"
             id="calendar"
-            placeholder='Календарь'
+            placeholder="Календарь"
           />
         </div>
         <article className={styles.info_empty}>

@@ -106,8 +106,22 @@ function App() {
             />
           }
         />
-        <Route path='/myteam' element={<ProtectedRoute element={MyTeamAdmin} isLoggedIn={isLoggedIn} isLoading={false} />} />
-        <Route path='/analytics' element={<ProtectedRoute element={AnalyticsPage} isLoggedIn={isLoggedIn}/>}/>
+        <Route
+          path="/myteam"
+          element={
+            <ProtectedRoute
+              element={MyTeamAdmin}
+              isLoggedIn={isLoggedIn}
+              isLoading={false}
+            />
+          }
+        />
+        <Route
+          path="/analytics"
+          element={
+            <ProtectedRoute element={AnalyticsPage} isLoggedIn={isLoggedIn} />
+          }
+        />
         {/* страница без роута */}
         <Route path={anyPage} element={<NotFound />} />
       </Routes>
