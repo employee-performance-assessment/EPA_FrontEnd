@@ -35,11 +35,11 @@ export const getAllUsers = (token) =>
     },
   }).then((res) => checkResponse(res));
 
-export const addNewEmployee = ({ name, jobTitle, email, password, confirmPassword }) =>
+export const addNewEmployee = ({ fullName, position, email }) =>
   fetch(endpointAddNewEmployee, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ name, jobTitle, email, password, confirmPassword }),
+    body: JSON.stringify({ fullName, position, email }),
   }).then((res) => checkResponse(res));

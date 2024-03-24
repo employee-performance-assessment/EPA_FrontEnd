@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import './MyTeamAdmin.scss';
 import { useEffect, useState } from 'react';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
@@ -9,10 +10,9 @@ import AddUserForm from '../../components/AddUserForm/AddUserForm.jsx';
 
 function MyTeamAdmin() {
   const [employeeList, setEmployeeList] = useState([]);
-  const [isAddEmployeePopupOpen, setIsAddEmployeePopupOpen] = useState(true);
+  const [isAddEmployeePopupOpen, setIsAddEmployeePopupOpen] = useState(false);
 
   const handleOpenAddEmployeeForm = () => {
-    console.log('you clicked on add user button');
     setIsAddEmployeePopupOpen(true);
   };
 
@@ -31,7 +31,7 @@ function MyTeamAdmin() {
 
   return (
     <section className="my-team">
-              {isAddEmployeePopupOpen && <AddUserForm />}
+      {isAddEmployeePopupOpen && <AddUserForm setIsAddEmployeePopupOpen = { setIsAddEmployeePopupOpen } />}
       <div className="my-team__wrapper">
         <div className="my-team__sidemenu">
           <SideMenu />

@@ -40,7 +40,6 @@ export const handleChangeInput = (
   validationMessage,
   isValidFunction
 ) => {
-  console.log('handleChange function:', setErrors);
   handleChange(e);
   validateInput(
     e.target.name,
