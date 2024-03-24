@@ -51,16 +51,12 @@ function MyTeamAdmin() {
             {/* {employeeList ? (
               <></>
             ) : ( */}
-              <div className="my-team__content_type_empty">
-                <img
-                  src={EmptyList}
-                  alt=""
-                  className="my-team__content-image"
-                />
-                <p>
-                  Список пуст. <br /> Добавьте сотрудников в список.
-                </p>
-              </div>
+            <div className="my-team__content_type_empty">
+              <img src={EmptyList} alt="" className="my-team__content-image" />
+              <p>
+                Список пуст. <br /> Добавьте сотрудников в список.
+              </p>
+            </div>
             {/* )} */}
           </div>
         </div>

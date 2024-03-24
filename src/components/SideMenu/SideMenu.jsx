@@ -26,11 +26,7 @@ function SideMenu() {
   return (
     <div className="side-menu">
       <img className="side-menu__logo" src={logo} alt="Логотип" />
-      {adminData.role === 'ROLE_ADMIN' ? (
-        <MenuAdmin />
-      ) : (
-        <MenuEmployee />
-      )}
+      {adminData.role === 'ROLE_ADMIN' ? <MenuAdmin /> : <MenuEmployee />}
       <button onClick={handleLogout} className="sideMenu__button">
         <img
           src={exitIcon}
