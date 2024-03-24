@@ -92,7 +92,7 @@ function PersonalArea() {
             value={values.name || ''}
             onChange={handleChange}
             placeholder="Имя Фамилия"
-            pattern="^[а-яА-Я\s\-]+$"
+            pattern="^[а-яА-Яa-zA-Z\s\-]+$"
             disabled={!editing}
           />
           <span className="personal-area__input-error">{errors.name}</span>
@@ -101,12 +101,12 @@ function PersonalArea() {
             type="text"
             id="job"
             minLength="1"
-            maxLength="20"
+            maxLength="255"
             name="job"
             value={values.job || ''}
             onChange={handleChange}
             placeholder="Должность"
-            pattern="^[а-яА-Я\s\-]+$"
+            pattern="^[а-яА-Яa-zA-Z\s\-]+$"
             disabled={!editing}
           />
           <span className="personal-area__input-error">{errors.job}</span>
