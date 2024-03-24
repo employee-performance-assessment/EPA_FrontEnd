@@ -1,6 +1,6 @@
 import './Checkbox.scss';
 
-const Checkbox = ({ labelLeft, labelRight, isChecked, setIsChecked, shadow }) => (
+const Checkbox = ({ labelLeft, labelRight, isChecked, setIsChecked, shadow }) => {
   <label
     style={{ boxShadow: shadow }}
     className={`switch-checkbox ${isChecked ? 'checked' : ''}`}
@@ -12,7 +12,7 @@ const Checkbox = ({ labelLeft, labelRight, isChecked, setIsChecked, shadow }) =>
     <div className="right-side">
       <span>{labelRight}</span>
     </div>
-  </label>
-);
+  </label>;
+};
 
 export default Checkbox;
