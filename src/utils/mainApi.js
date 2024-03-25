@@ -1,5 +1,5 @@
 import checkResponse from './checkResponse.js';
-import { USERS } from '../constants/constantAPI.js';
+import { USERS, ADMIN_USERS } from '../constants/constantAPI.js';
 
 // проверка токена
 export const getUserData = (token) =>
@@ -33,4 +33,14 @@ export const getAllUsers = (token) =>
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
+  }).then((res) => checkResponse(res));
+
+export const addNewEmployee = ({ token, fullName, position, email, password }) =>
+  fetch(ADMIN_USERS, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ fullName, position, email, password }),
   }).then((res) => checkResponse(res));
