@@ -1,7 +1,10 @@
+@import '../../styles/vars';
+@import '../../styles/mixins';
+
 .my-team {
   max-width: 1440px;
   padding: 24px 20px 60px 0px;
-  color: #333232;
+  color: $black-base-color;
   height: 960px;
 }
 
@@ -12,9 +15,10 @@
 .my-team__main {
   width: 1163px;
   height: 876px;
-  background-color:#F5F5F5;
+  background-color: $light-gray-base-color;
   border-radius: 40px;
   margin-left: 257px;
+  overflow: hidden;
 }
 
 .my-team__nav {
@@ -24,7 +28,7 @@
   align-items: center;
   padding-left: 24px;
   padding-right: 24px;
-  background-color: #F5F5F5;
+  background-color: $light-gray-base-color;
   border-radius: 40px;
   height: 120px;
   box-shadow: 0px 4px 20px rgba(166, 166, 166, .4);
@@ -39,25 +43,25 @@
 .my-team__label {
   font-size: 26px;
   line-height: 121%;
-  font-weight: 500;
+  font-weight: $fw-medium;
   margin-left: 12px;
 }
 
 .my-team__button {
-  background-color: #F5F07A;
+  background-color: $yellow-base-color;
   border: none;
   width: 332px;
   padding: 16px 40px;
   font-size: 20px;
   line-height: 121%;
-  font-weight: 600;
+  font-weight: $fw-semibold;
   border-radius: 20px;
   display: flex;
   gap: 10px;
   justify-content: center;
   max-height: 56px;
+  cursor: pointer;
 }
-
 
 .my-team__content_type_empty {
   width: 100%;

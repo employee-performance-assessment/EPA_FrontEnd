@@ -6,10 +6,13 @@ import UsersThree from '../../images/UsersThree.svg';
 import PlusIcon from '../../images/Plus.svg';
 import { getAllUsers } from '../../utils/mainApi.js';
 import AddUserForm from '../../components/AddUserForm/AddUserForm.jsx';
+import EmployeeList from '../../components/EmployeeList/EmployeeList.jsx';
+import EditEmployeeForm from '../../components/EditEmployeeForm/EditEmployeeForm.jsx';
 
 function MyTeamAdmin() {
   const [employeeList, setEmployeeList] = useState([]);
   const [isAddEmployeePopupOpen, setIsAddEmployeePopupOpen] = useState(false);
+  const [isEditEmployeePopupOpen, setIsEditEmployeePopupOpen] = useState(false);
 
   const handleOpenAddEmployeeForm = () => {
     setIsAddEmployeePopupOpen(true);
@@ -32,6 +35,11 @@ function MyTeamAdmin() {
     <section className="my-team">
       {isAddEmployeePopupOpen && (
         <AddUserForm setIsAddEmployeePopupOpen={setIsAddEmployeePopupOpen} />
+      )}
+      {isEditEmployeePopupOpen && (
+        <EditEmployeeForm
+          setIsEditEmployeePopupOpen={setIsEditEmployeePopupOpen}
+        />
       )}
       <div className="my-team__wrapper">
         <div className="my-team__sidemenu">
@@ -62,7 +70,10 @@ function MyTeamAdmin() {
           </nav>
           <div className="my-team__content">
             {employeeList ? (
-              <></>
+              <EmployeeList
+                employeeList={employeeList}
+                setIsEditEmployeePopupOpen={setIsEditEmployeePopupOpen}
+              />
             ) : (
               <div className="my-team__content_type_empty">
                 <img
