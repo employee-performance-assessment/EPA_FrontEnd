@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import './MyTeamAdmin.scss';
 import { useEffect, useState } from 'react';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
@@ -31,7 +30,9 @@ function MyTeamAdmin() {
 
   return (
     <section className="my-team">
-      {isAddEmployeePopupOpen && <AddUserForm setIsAddEmployeePopupOpen = { setIsAddEmployeePopupOpen } />}
+      {isAddEmployeePopupOpen && (
+        <AddUserForm setIsAddEmployeePopupOpen={setIsAddEmployeePopupOpen} />
+      )}
       <div className="my-team__wrapper">
         <div className="my-team__sidemenu">
           <SideMenu />
@@ -46,7 +47,11 @@ function MyTeamAdmin() {
               />
               <p className="my-team__label">Моя команда</p>
             </div>
-            <button type="button" className="my-team__button" onClick={handleOpenAddEmployeeForm}>
+            <button
+              type="button"
+              className="my-team__button"
+              onClick={handleOpenAddEmployeeForm}
+            >
               Добавить сотрудника
               <img
                 src={PlusIcon}

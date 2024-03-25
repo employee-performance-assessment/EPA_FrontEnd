@@ -9,6 +9,7 @@
   display: flex;
   flex-direction: column;
   padding: 80px 159px 95px 160px;
+  position: relative;
 }
 
 .userForm__title {
@@ -21,6 +22,7 @@
 .userForm__form {
   margin-top: 30px;
   width: 531px;
+  position: relative;
 }
 
 .userForm__fieldset {
@@ -44,11 +46,9 @@
   padding: 20px 24px;
   font-size: 20px;
   color: $light-grey-color;
+  box-sizing: border-box;
+  height: 64px;
 }
-
-// .userForm__input:not(:first-child) {
-//   margin-top: 15px;
-// }
 
 .userForm__span{
   height: 15px;
@@ -91,4 +91,19 @@
   padding-bottom: 16px;
   font-size: 20px;
   font-weight: $fw-semibold;
+}
+
+.userForm__closeIcon-block {
+  border: none;
+  position: absolute;
+  background-color: $dark-grey-base-color;
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
+  top: 41px;
+  right: 80px;
+}
+
+.userForm__closeIcon {
+
 }

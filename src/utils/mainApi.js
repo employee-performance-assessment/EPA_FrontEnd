@@ -1,9 +1,9 @@
 import checkResponse from './checkResponse.js';
-import { endpointUpdateUserData, endpointUserData, endpointGetAllUsers, endpointAddNewEmployee } from '../constants/constantAPI.js';
+import { USERS, ADMIN_USERS } from '../constants/constantAPI.js';
 
 // проверка токена
 export const getUserData = (token) =>
-  fetch(endpointUserData, {
+  fetch(`${USERS}/me`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -12,7 +12,7 @@ export const getUserData = (token) =>
   }).then((res) => checkResponse(res));
 
 export const updateUserData = (id, token, data) =>
-  fetch(`${endpointUpdateUserData}${id}`, {
+  fetch(`${USERS}/${id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export const updateUserData = (id, token, data) =>
   }).then((res) => checkResponse(res));
 
 export const getAllUsers = (token) =>
-  fetch(endpointGetAllUsers, {
+  fetch(USERS, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -35,11 +35,12 @@ export const getAllUsers = (token) =>
     },
   }).then((res) => checkResponse(res));
 
-export const addNewEmployee = ({ fullName, position, email }) =>
-  fetch(endpointAddNewEmployee, {
+export const addNewEmployee = ({ token, fullName, position, email, password }) =>
+  fetch(ADMIN_USERS, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ fullName, position, email }),
+    body: JSON.stringify({ fullName, position, email, password }),
   }).then((res) => checkResponse(res));

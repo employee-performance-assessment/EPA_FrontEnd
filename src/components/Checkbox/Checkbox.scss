@@ -1,3 +1,6 @@
+@import '../../styles/vars';
+@import '../../styles/mixins';
+
 .switch-checkbox {
   display: flex;
   align-items: center;
@@ -6,15 +9,16 @@
   overflow: hidden;
   font-size: 18px;
   line-height: 121%;
-  max-width: 400px;
+  width: 350px;
   height: 54px;
-  background-color: #fff;
-  color: #333232;
-  font-weight: 500;
+  background-color: $white-base-color;
+  color: $black-base-color;
+  font-weight: $fw-medium;
   box-sizing: border-box;
   padding-left: 3px;
   padding-right: 3px;
   white-space: nowrap;
+  box-shadow: 0px 4px 20px 0px rgba(166, 166, 166, 0.4);
 }
 
 .switch-checkbox .left-side,
@@ -24,12 +28,14 @@
   text-align: center;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
   height: 100%;
 }
 
 .switch-checkbox .left-side {
-  background-color: #C5B6F1;
+  background-color: $purple-base-color;
   border-radius: 20px;
   height: 48px;
 }
@@ -40,10 +46,10 @@
 }
 
 .switch-checkbox.checked .left-side {
-  background-color: #fff;
+  background-color: $white-base-color;
 }
 
 .switch-checkbox.checked .right-side {
-  background-color: #C5B6F1;
+  background-color: $purple-base-color;
   height: 48px;
 }
