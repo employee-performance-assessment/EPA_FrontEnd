@@ -77,11 +77,15 @@ function PersonalArea() {
       <div className="personal-area__header">
         <div className="personal-area__header-icon" />
         <h2 className="personal-area__header-title">{adminData.fullName}</h2>
-        <div className="personal-area__header-job">{adminData.position || 'Должность'}</div>
+        <div className="personal-area__header-job">
+          {adminData.position || 'Должность'}
+        </div>
       </div>
       <div className="personal-area__container">
         <form className="personal-area__form" onSubmit={handleSubmit}>
-          <h2 className="personal-area__title">{editing ? 'Редактирование' : 'Личные данные'}</h2>
+          <h2 className="personal-area__title">
+            {editing ? 'Редактирование' : 'Личные данные'}
+          </h2>
           <input
             className={`personal-area__input ${errors.name ? 'personal-area__input_type-error' : ''}`}
             type="text"
@@ -92,7 +96,7 @@ function PersonalArea() {
             value={values.name || ''}
             onChange={handleChange}
             placeholder="Имя Фамилия"
-            pattern="^[а-яА-Я\s\-]+$"
+            pattern="^[а-яА-Яa-zA-Z\s\-]+$"
             disabled={!editing}
           />
           <span className="personal-area__input-error">{errors.name}</span>
@@ -101,12 +105,12 @@ function PersonalArea() {
             type="text"
             id="job"
             minLength="1"
-            maxLength="20"
+            maxLength="255"
             name="job"
             value={values.job || ''}
             onChange={handleChange}
             placeholder="Должность"
-            pattern="^[а-яА-Я\s\-]+$"
+            pattern="^[а-яА-Яa-zA-Z\s\-]+$"
             disabled={!editing}
           />
           <span className="personal-area__input-error">{errors.job}</span>
@@ -124,7 +128,7 @@ function PersonalArea() {
             disabled={!editing}
           />
           <span className="personal-area__input-error">{errors.email}</span>
-          {editing &&
+          {editing && (
             <>
               <input
                 className={`personal-area__input ${errors.newPassword ? 'personal-area__input_type-error' : ''}`}
@@ -140,12 +144,16 @@ function PersonalArea() {
                 disabled={!editing}
               />
               <span
-                className={`personal-area__password-eye ${passwordVisible ?
-                  'personal-area__password-eye_open' :
-                  'personal-area__password-eye_close'}`}
+                className={`personal-area__password-eye ${
+                  passwordVisible
+                    ? 'personal-area__password-eye_open'
+                    : 'personal-area__password-eye_close'
+                }`}
                 onClick={handlePasswordVisibility}
               />
-              <span className="personal-area__input-error">{errors.newPassword}</span>
+              <span className="personal-area__input-error">
+                {errors.newPassword}
+              </span>
               <input
                 className={`personal-area__input ${errors.repeatPassword ? 'personal-area__input_type-error' : ''}`}
                 type={passwordVisible ? 'text' : 'password'}
@@ -160,22 +168,28 @@ function PersonalArea() {
                 disabled={!editing}
               />
               <span
-                className={`personal-area__password-eye ${passwordVisible ?
-                  'personal-area__password-eye_open' :
-                  'personal-area__password-eye_close'}`}
+                className={`personal-area__password-eye ${
+                  passwordVisible
+                    ? 'personal-area__password-eye_open'
+                    : 'personal-area__password-eye_close'
+                }`}
                 onClick={handlePasswordVisibility}
               />
-              <span className="personal-area__input-error">{errors.repeatPassword}</span>
-            </>}
-          {editing &&
+              <span className="personal-area__input-error">
+                {errors.repeatPassword}
+              </span>
+            </>
+          )}
+          {editing && (
             <button
               type="submit"
               className={`personal-area__button ${isValid && !isDisabledButton ? '' : 'personal-area__button_inactive'}`}
               disabled={!isValid || isDisabledButton}
             >
               {'Подтвердить'}
-            </button>}
-          {!editing &&
+            </button>
+          )}
+          {!editing && (
             <button
               type="button"
               className="personal-area__button"
@@ -183,33 +197,41 @@ function PersonalArea() {
             >
               {'Редактировать'}
               <div className="personal-area__button-icon" />
-            </button>}
+            </button>
+          )}
         </form>
-        {!editing && <div className="personal-area__questionnaire">
-          <h3 className="personal-area__questionnaire-title">{'Анкета для оценки'}</h3>
-          <Link to={'/setting-questionnaire'} className="personal-area__questionnaire-link">
-            <div className="personal-area__questionnaire-container">
-              <p className="personal-area__questionnaire-text">
-                {`Вы можете редактировать анкету
+        {!editing && (
+          <div className="personal-area__questionnaire">
+            <h3 className="personal-area__questionnaire-title">
+              {'Анкета для оценки'}
+            </h3>
+            <Link
+              to={'/setting-questionnaire'}
+              className="personal-area__questionnaire-link"
+            >
+              <div className="personal-area__questionnaire-container">
+                <p className="personal-area__questionnaire-text">
+                  {`Вы можете редактировать анкету
               для оценки сотрудника.
               Добавлять новые критерии
               и менять заданные.`}
-              </p>
-              <p className="personal-area__questionnaire-text">
-                {`У вас есть возможность выбрать,
+                </p>
+                <p className="personal-area__questionnaire-text">
+                  {`У вас есть возможность выбрать,
               что будет влиять на рейтинг
               сотрудника, только Ваши оценки или
               оценки всей команды.`}
-              </p>
-              <p className="personal-area__questionnaire-text">
-                {'Перейти к анкете'}
-                <span className="personal-area__questionnaire-link-icon" />
-              </p>
-            </div>
-          </Link>
-        </div>}
+                </p>
+                <p className="personal-area__questionnaire-text">
+                  {'Перейти к анкете'}
+                  <span className="personal-area__questionnaire-link-icon" />
+                </p>
+              </div>
+            </Link>
+          </div>
+        )}
       </div>
-    </div >
+    </div>
   );
 }
 

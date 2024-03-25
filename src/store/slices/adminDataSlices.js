@@ -10,8 +10,8 @@ const adminDataSlices = createSlice({
   reducers: {
     setAdminData(state, action) {
       state.adminData = action.payload;
-    }
-  }
+    },
+  },
 });
 
 export const { setAdminData } = adminDataSlices.actions;

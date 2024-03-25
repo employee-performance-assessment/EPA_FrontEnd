@@ -7,6 +7,6 @@ export default configureStore({
   reducer: {
     isLoggedIn: isLoggedInSlice,
     adminData: adminDataSlices,
-    token: tokenSlices
-  }
+    token: tokenSlices,
+  },
 });

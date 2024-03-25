@@ -40,7 +40,9 @@ function Auth() {
       })
       .catch((err) =>
         // eslint-disable-next-line no-alert
-        err === 'Error: 500' ? alert('Не корректный логин или пароль') : alert(err));
+        err === 'Error: 500'
+          ? alert('Не корректный логин или пароль')
+          : alert(err));
   };
 
   const togglePassword = () => {

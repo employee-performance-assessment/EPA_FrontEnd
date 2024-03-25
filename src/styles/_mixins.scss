@@ -4,7 +4,8 @@
 @mixin text(
   $color: $black-base-color,
   $font-size: 20px,
-  $font-weight: $fw-medium, //500
+  $font-weight: $fw-medium,
+  //500
   $line-height: 1.2 // (24px)
 ) {
   margin: 0;

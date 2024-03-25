@@ -58,13 +58,13 @@ function Register() {
             <input
               type="data"
               id="user-name"
-              minLength="3"
+              minLength="1"
               maxLength="255"
               name="name"
               value={values.name || ''}
               onChange={handleChange}
               placeholder="Имя Фамилия"
-              pattern="^[а-яА-Я\s\-]+$"
+              pattern="^[а-яА-Яa-zA-Z\s\-]+$"
               required
             />
             <span>{errors.name}</span>

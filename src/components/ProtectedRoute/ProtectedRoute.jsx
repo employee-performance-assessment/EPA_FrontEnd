@@ -6,7 +6,11 @@ function ProtectedRoute({ element: Component, ...props }) {
   const { login } = endpoint;
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
 
-  return isLoggedIn ? <Component {...props} /> : <Navigate to={login} replace />;
+  return isLoggedIn ? (
+    <Component {...props} />
+  ) : (
+    <Navigate to={login} replace />
+  );
 }
 
 export default ProtectedRoute;
