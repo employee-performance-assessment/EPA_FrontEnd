@@ -1,16 +1,27 @@
 @import '../../styles/mixins';
 
 .personal-area {
-  width: calc(100% - 257px);
-  background-color: $light-gray-base-color;
-  margin: 28px 20px 60px 0;
-  border-radius: 40px;
+  width: 100%;
+  margin: 24px 20px 60px 0;
+  display: flex;
+
+  &__sidemenu {
+    flex-grow: 0;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    background-color: $light-gray-base-color;
+    border-radius: 40px;
+    margin-left: 37px;
+  }
 
   &__header {
     width: 100%;
     height: 120px;
     border-radius: 40px;
-    box-shadow: 0px 4px 20px rgba(166, 166, 166, .4);
+    box-shadow: 0px 4px 20px rgba(166, 166, 166, 0.4);
     background-color: $light-gray-base-color;
     display: flex;
     flex-direction: row;
@@ -43,7 +54,7 @@
     @include text($font-size: 16px, $line-height: 19px);
   }
 
-  &__container {
+  &__section {
     display: flex;
     flex-direction: row;
     gap: 40px;
@@ -72,7 +83,6 @@
     &__input_type-error {
       border: 2px solid $red-base-color;
     }
-
 
     &__input_type-error:focus {
       outline: none;
@@ -169,7 +179,7 @@
     padding: 40px 30px 32px;
     background-color: $white-base-color;
     border-radius: 40px;
-    box-shadow: 0px 4px 20px rgba(166, 166, 166, .4);
+    box-shadow: 0px 4px 20px rgba(166, 166, 166, 0.4);
     display: flex;
     flex-direction: column;
     justify-content: space-between;

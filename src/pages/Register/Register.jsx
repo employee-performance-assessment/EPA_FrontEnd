@@ -32,7 +32,8 @@ function Register() {
         dispatch(setAdminData(res));
         dispatch(setIsLoggedIn(true));
       })
-      .catch((err) => alert(err)); //* * добавить показ ошибки в модалке */
+      // eslint-disable-next-line no-alert
+      .catch((err) => alert(err));
   };
 
   const togglePassword = () => {
@@ -57,13 +58,13 @@ function Register() {
             <input
               type="data"
               id="user-name"
-              minLength="3"
+              minLength="1"
               maxLength="255"
               name="name"
               value={values.name || ''}
               onChange={handleChange}
               placeholder="Имя Фамилия"
-              pattern="^[а-яА-Я\s\-]+$"
+              pattern="^[а-яА-Яa-zA-Z\s\-]+$"
               required
             />
             <span>{errors.name}</span>

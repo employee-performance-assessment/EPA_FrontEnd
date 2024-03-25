@@ -1,13 +1,12 @@
 import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { endpoint } from '../../constants/constantsEndpointRoute.js';
-import Preloader from '../Preloader/Preloader.jsx';
-// этот компонент принимает другой компонент в качестве пропса
-// он также может взять неограниченное число пропсов и передать их новому компоненту
+
 function ProtectedRoute({ element: Component, ...props }) {
   const { login } = endpoint;
-  return props.isLoading ? (
-    <Preloader />
-  ) : props.isLoggedIn ? (
+  const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
+
+  return isLoggedIn ? (
     <Component {...props} />
   ) : (
     <Navigate to={login} replace />

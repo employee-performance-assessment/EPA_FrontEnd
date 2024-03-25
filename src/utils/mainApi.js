@@ -23,7 +23,7 @@ export const updateUserData = (id, token, data) =>
       position: data.position,
       email: data.email,
       password: data.password,
-    })
+    }),
   }).then((res) => checkResponse(res));
 
 export const getAllUsers = (token) =>

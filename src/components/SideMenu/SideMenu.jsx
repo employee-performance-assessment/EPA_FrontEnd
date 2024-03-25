@@ -1,5 +1,5 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import MenuAdmin from './MenuAdmin/MenuAdmin.jsx';
 import MenuEmployee from './MenuEmployee/MenuEmployee.jsx';
 import exitIcon from '../../images/exit_button.svg';
@@ -10,9 +10,9 @@ import { setToken } from '../../store/slices/tokenSlices.js';
 import './SideMenu.scss';
 
 function SideMenu() {
-  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const adminData = useSelector((state) => state.adminData.adminData);
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -26,11 +26,7 @@ function SideMenu() {
   return (
     <div className="side-menu">
       <img className="side-menu__logo" src={logo} alt="Логотип" />
-      {location.pathname === '/admin-person-area' ? (
-        <MenuAdmin />
-      ) : (
-        <MenuEmployee />
-      )}
+      {adminData.role === 'ROLE_ADMIN' ? <MenuAdmin /> : <MenuEmployee />}
       <button onClick={handleLogout} className="sideMenu__button">
         <img
           src={exitIcon}

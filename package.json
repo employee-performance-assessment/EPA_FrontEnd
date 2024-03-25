@@ -5,7 +5,7 @@
   "dependencies": {
     "@babel/preset-env": "^7.23.9",
     "@babel/preset-react": "^7.23.3",
-    "@mui/material": "^5.15.12",
+    "@mui/material": "^5.15.14",
     "@reduxjs/toolkit": "^2.2.1",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run lint:fix && react-scripts build",
     "test": "react-script test",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .js,.jsx .  --color",
