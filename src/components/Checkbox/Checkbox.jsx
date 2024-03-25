@@ -1,17 +1,17 @@
-import { useState } from 'react';
 import './Checkbox.scss';
 
-const Checkbox = ({ labelLeft, labelRight }) => {
-  const [isChecked, setIsChecked] = useState(false);
-
-  const handleToggle = () => {
-    setIsChecked(!isChecked);
-  };
-
+function Checkbox({
+  labelLeft,
+  labelRight,
+  isChecked,
+  setIsChecked,
+  shadow
+}) {
   return (
     <label
+      style={{ boxShadow: shadow }}
       className={`switch-checkbox ${isChecked ? 'checked' : ''}`}
-      onClick={handleToggle}
+      onClick={() => setIsChecked(!isChecked)}
     >
       <div className="left-side">
         <span>{labelLeft}</span>
@@ -21,6 +21,6 @@ const Checkbox = ({ labelLeft, labelRight }) => {
       </div>
     </label>
   );
-};
+}
 
 export default Checkbox;

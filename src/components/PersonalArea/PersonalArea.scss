@@ -1,9 +1,9 @@
 @import '../../styles/mixins';
 
 .personal-area {
-  width: calc(100% - 257px);
+  width: 100%;
   background-color: $light-gray-base-color;
-  margin: 28px 20px 60px 0;
+  margin: 24px 20px 60px 0;
   border-radius: 40px;
 
   &__header {
