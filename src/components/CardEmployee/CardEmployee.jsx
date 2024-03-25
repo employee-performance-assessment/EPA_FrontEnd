@@ -9,7 +9,7 @@ function CardEmployee() {
 
   return (
     <section className={styles.criteria__container}>
-      <Checkbox label1={defaultLabel} label2={newLabel} />
+      <Checkbox labelLeft={defaultLabel} labelRight={newLabel} />
       <ul className={styles.criteria__list}>
         {/* Текст карточек пока приходит из json */}
         {cards.map((card) => (

@@ -20,26 +20,32 @@ function App() {
   const [isFormAuthBlock, setIsFormAuthBlock] = useState(false);
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
 
-  const clearCards = () => { };
+  const clearCards = () => {};
 
   return (
     <div className="page">
       {/* <div className="page__content"> */}
       <Routes>
-        <Route path='/' element={<Navigate to="/login" />}/>
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/signup" element={<Register />} />
-        <Route path="/login" element={
-          <Auth
-            isFormAuthBlock={isFormAuthBlock}
-            setIsFormAuthBlock={setIsFormAuthBlock}
-          />}
+        <Route
+          path="/login"
+          element={
+            <Auth
+              isFormAuthBlock={isFormAuthBlock}
+              setIsFormAuthBlock={setIsFormAuthBlock}
+            />
+          }
         />
-        <Route path="/admin-person-area" element={
-          <ProtectedRoute
-            element={AdminPanel}
-            isLoggedIn={isLoggedIn}
-            isLoading={false}
-          />}
+        <Route
+          path="/admin-person-area"
+          element={
+            <ProtectedRoute
+              element={AdminPanel}
+              isLoggedIn={isLoggedIn}
+              isLoading={false}
+            />
+          }
         />
         {/* канбан доска */}
         <Route
