@@ -49,6 +49,12 @@ function AddUserForm({ setIsAddEmployeePopupOpen }) {
     }
   }, [errors]);
 
+  useEffect(() => {
+    if (values.confirmPassword !== values.password) {
+      setErrors({ confirmPassword: VALIDATION_MESSAGES.passwordsNotMatch });
+    }
+  }, [values.confirmPassword]);
+
   const handleRegisterEmployee = (e) => {
     e.preventDefault();
     const { name, position, email, password } = values;
