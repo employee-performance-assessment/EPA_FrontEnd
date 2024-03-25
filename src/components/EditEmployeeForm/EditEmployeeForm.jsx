@@ -3,7 +3,6 @@ import UserForm from '../UserForm/UserForm.jsx';
 import Input from '../Input/Input.jsx';
 import OpenEyeIcon from '../../images/eye-open.svg';
 import CloseEyeIcon from '../../images/eye-close.svg';
-import { addNewEmployee } from '../../utils/mainApi.js';
 import { useFormValidation } from '../../hooks/useFormValidation.js';
 import {
   handleChangeInput,
@@ -13,9 +12,9 @@ import {
   isValidName,
   isValidPassword,
 } from '../../utils/validationConstants.js';
-import './AddUserForm.scss';
+import './EditEmployeeForm.scss';
 
-function AddUserForm({ setIsAddEmployeePopupOpen }) {
+function EditEmployeeForm({ setIsEditEmployeePopupOpen }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -55,28 +54,24 @@ function AddUserForm({ setIsAddEmployeePopupOpen }) {
     }
   }, [values.confirmPassword]);
 
-  const registerEmployee = (e) => {
+  const editEmployeeData = (e) => {
     e.preventDefault();
-    const { name, position, email, password } = values;
-    const { token } = JSON.parse(localStorage.getItem('token'));
-    addNewEmployee({ token, fullName: name, position, email, password }).then(
-      () => {
-        setIsAddEmployeePopupOpen(false);
-      }
-    );
+    alert('u edited user info');
+    // const { name, position, email, password } = values;
+    // const { token } = JSON.parse(localStorage.getItem('token'));
   };
 
-  const handleCloseAddEmployeePopup = () => {
-    setIsAddEmployeePopupOpen(false);
+  const handleCloseEditEmployeePopup = () => {
+    setIsEditEmployeePopupOpen(false);
   };
 
   return (
-    <section className="addUserForm">
+    <section className="editEmployeeForm">
       <UserForm
-        formTitle="Регистрация сотрудника"
-        handleSubmit={registerEmployee}
+        formTitle="Редактирование данных"
+        handleSubmit={editEmployeeData}
         isValid={isValid}
-        handleClosePopup = { handleCloseAddEmployeePopup }
+        handleClosePopup = { handleCloseEditEmployeePopup }
       >
         <Input
           type="text"
@@ -212,4 +207,4 @@ function AddUserForm({ setIsAddEmployeePopupOpen }) {
   );
 }
 
-export default AddUserForm;
+export default EditEmployeeForm;
