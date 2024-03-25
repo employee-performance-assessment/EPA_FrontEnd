@@ -16,7 +16,7 @@ function EmployeeProfileCard({ user, setIsEditEmployeePopupOpen }) {
 
   return (
     <div className="profile-card">
-      <div className="profile-card__name-block">
+      <div className="profile-card__info-block">
         <p className="profile-card__name">{user.fullName}</p>
         <p className="profile-card__job-title">/ {user.position}</p>
       </div>

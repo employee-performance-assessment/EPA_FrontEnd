@@ -20,7 +20,7 @@
   font-weight: $fw-medium;
 }
 
-.profile-card__name-block {
+.profile-card__info-block {
   display: flex;
   flex-direction: row;
   gap: 40px;
@@ -39,6 +39,7 @@
 
 .profile-card__job-title {
   margin: 0;
+  align-self: center;
 }
 
 .profile-card__email {
