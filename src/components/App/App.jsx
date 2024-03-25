@@ -12,7 +12,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
 import Auth from '../../pages/Auth/Auth.jsx';
 import Register from '../../pages/Register/Register.jsx';
 import PersonalArea from '../../pages/PersonalArea/PersonalArea.jsx';
-import MyTeamAdmin from '../../pages/MyTeamAdmin/MyTeamAdmin.jsx';
+import MyTeam from '../../pages/MyTeam/MyTeam.jsx';
 import Boards from '../Boards/Boards.jsx';
 import AnalyticsPage from '../../pages/AnalyticsPage/AnalyticsPage.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
@@ -110,7 +110,7 @@ function App() {
           path="/myteam"
           element={
             <ProtectedRoute
-              element={MyTeamAdmin}
+              element={MyTeam}
               isLoggedIn={isLoggedIn}
               isLoading={false}
             />

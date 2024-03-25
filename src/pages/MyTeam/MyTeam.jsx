@@ -1,4 +1,4 @@
-import './MyTeamAdmin.scss';
+import './MyTeam.scss';
 import { useEffect, useState } from 'react';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import EmptyList from '../../images/EmptyList.png';
@@ -9,7 +9,7 @@ import AddUserForm from '../../components/AddUserForm/AddUserForm.jsx';
 import EmployeeList from '../../components/EmployeeList/EmployeeList.jsx';
 import EditEmployeeForm from '../../components/EditEmployeeForm/EditEmployeeForm.jsx';
 
-function MyTeamAdmin() {
+function MyTeam() {
   const [employeeList, setEmployeeList] = useState([]);
   const [isAddEmployeePopupOpen, setIsAddEmployeePopupOpen] = useState(false);
   const [isEditEmployeePopupOpen, setIsEditEmployeePopupOpen] = useState(false);
@@ -93,4 +93,4 @@ function MyTeamAdmin() {
   );
 }
 
-export default MyTeamAdmin;
+export default MyTeam;
