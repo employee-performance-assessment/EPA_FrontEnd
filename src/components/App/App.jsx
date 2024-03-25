@@ -17,7 +17,7 @@ import Boards from '../Boards/Boards.jsx';
 import AnalyticsPage from '../../pages/AnalyticsPage/AnalyticsPage.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
 
-import { endpoint } from '../../constants/constantsEndpointRoute.js';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import { boardsList } from '../../constants/boardsList.js';
 
 import { getUserData } from '../../utils/mainApi.js';
@@ -30,7 +30,15 @@ function App() {
   const [dropCard, setDropCard] = useState(null);
   const [startBoard, setStartBoard] = useState(null);
   const [currentBoard, setCurrentBoard] = useState(null);
-  const { board, anyPage } = endpoint;
+  const {
+    login,
+    register,
+    personalArea,
+    myTeam,
+    board,
+    anyPage,
+    analytics,
+  } = ENDPOINT_ROUTES;
   const [isFormAuthBlock, setIsFormAuthBlock] = useState(false);
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
   const navigate = useNavigate();
@@ -66,10 +74,10 @@ function App() {
   return (
     <div className="page">
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/signup" element={<Register />} />
+        <Route path="/" element={<Navigate to={login} />} />
+        <Route path={register} element={<Register />} />
         <Route
-          path="/login"
+          path={login}
           element={
             <Auth
               isFormAuthBlock={isFormAuthBlock}
@@ -78,7 +86,7 @@ function App() {
           }
         />
         <Route
-          path="/admin-person-area"
+          path={personalArea}
           element={
             <ProtectedRoute
               element={PersonalArea}
@@ -107,7 +115,7 @@ function App() {
           }
         />
         <Route
-          path="/myteam"
+          path={myTeam}
           element={
             <ProtectedRoute
               element={MyTeam}
@@ -117,7 +125,7 @@ function App() {
           }
         />
         <Route
-          path="/analytics"
+          path={analytics}
           element={
             <ProtectedRoute element={AnalyticsPage} isLoggedIn={isLoggedIn} />
           }
