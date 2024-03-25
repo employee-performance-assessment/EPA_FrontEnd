@@ -11,7 +11,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
 
 import Auth from '../../pages/Auth/Auth.jsx';
 import Register from '../../pages/Register/Register.jsx';
-import AdminPanel from '../../pages/AdminPanel/AdminPanel.jsx';
+import PersonalArea from '../../pages/PersonalArea/PersonalArea.jsx';
 import MyTeamAdmin from '../../pages/MyTeamAdmin/MyTeamAdmin.jsx';
 import Boards from '../Boards/Boards.jsx';
 import AnalyticsPage from '../../pages/AnalyticsPage/AnalyticsPage.jsx';
@@ -81,7 +81,7 @@ function App() {
           path="/admin-person-area"
           element={
             <ProtectedRoute
-              element={AdminPanel}
+              element={PersonalArea}
               isLoggedIn={isLoggedIn}
               isLoading={false}
             />

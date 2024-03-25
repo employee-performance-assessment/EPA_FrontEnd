@@ -2,9 +2,20 @@
 
 .personal-area {
   width: 100%;
-  background-color: $light-gray-base-color;
   margin: 24px 20px 60px 0;
-  border-radius: 40px;
+  display: flex;
+
+  &__sidemenu {
+    flex-grow: 0;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    background-color: $light-gray-base-color;
+    border-radius: 40px;
+    margin-left: 37px;
+  }
 
   &__header {
     width: 100%;
@@ -43,7 +54,7 @@
     @include text($font-size: 16px, $line-height: 19px);
   }
 
-  &__container {
+  &__section {
     display: flex;
     flex-direction: row;
     gap: 40px;
