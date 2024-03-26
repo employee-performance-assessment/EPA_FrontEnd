@@ -23,7 +23,7 @@ import { boardsList } from '../../constants/boardsList.js';
 import { getUserData } from '../../utils/mainApi.js';
 import { setAdminData } from '../../store/slices/adminDataSlices.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
-// import AssessmentCriteria from '../AssessmentCriteria/AssessmentCriteria.jsx';
+import AssessmentCriteria from '../../pages/AssessmentCriteria/AssessmentCriteria.jsx';
 
 function App() {
   // в cardsList записываем ответ на запрос get от API, задания со всеми параметрами
@@ -39,14 +39,14 @@ function App() {
     board,
     anyPage,
     analytics,
+    criteria,
   } = ENDPOINT_ROUTES;
-  const [isFormAuthBlock, setIsFormAuthBlock] = useState(false);
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const clearCards = () => {};
+  const clearCards = () => { };
 
   const tokenCheck = () => {
     if (localStorage.getItem('token')) {
@@ -77,63 +77,27 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to={login} />} />
         <Route path={register} element={<Register />} />
-        <Route
-          path={login}
-          element={
-            <Auth
-              isFormAuthBlock={isFormAuthBlock}
-              setIsFormAuthBlock={setIsFormAuthBlock}
-            />
-          }
-        />
-        <Route
-          path={personalArea}
-          element={
-            <ProtectedRoute
-              element={PersonalArea}
-              // element={AssessmentCriteria}
-              isLoggedIn={isLoggedIn}
-              isLoading={false}
-            />
-          }
-        />
-        {/* канбан доска */}
-        <Route
-          path={board}
-          element={
-            <ProtectedRoute
-              element={Boards}
-              isLoggedIn={isLoggedIn}
-              currentBoard={currentBoard}
-              setCurrentBoard={setCurrentBoard}
-              dropCard={dropCard}
-              setDropCard={setDropCard}
-              startBoard={startBoard}
-              setStartBoard={setStartBoard}
-              clearCards={clearCards}
-              cardsLists={cardsLists}
-              setCardsLists={setCardsLists}
-            />
-          }
-        />
-        <Route
-          path={myTeam}
-          element={
-            <ProtectedRoute
-              element={MyTeam}
-              isLoggedIn={isLoggedIn}
-              isLoading={false}
-            />
-          }
-        />
-        <Route
-          path={analytics}
-          element={
-            <ProtectedRoute element={AnalyticsPage} isLoggedIn={isLoggedIn} />
-          }
-        />
-        {/* страница без роута */}
+        <Route path={login} element={<Auth />} />
+        <Route path={personalArea} element={<ProtectedRoute element={PersonalArea} />} />
+        <Route path={myTeam} element={<ProtectedRoute element={MyTeam} />} />
+        <Route path={analytics} element={<ProtectedRoute element={AnalyticsPage} />} />
+        <Route path={criteria} element={<ProtectedRoute element={AssessmentCriteria} />} />
         <Route path={anyPage} element={<NotFound />} />
+        <Route path={board} element={
+          <ProtectedRoute
+            element={Boards}
+            isLoggedIn={isLoggedIn}
+            currentBoard={currentBoard}
+            setCurrentBoard={setCurrentBoard}
+            dropCard={dropCard}
+            setDropCard={setDropCard}
+            startBoard={startBoard}
+            setStartBoard={setStartBoard}
+            clearCards={clearCards}
+            cardsLists={cardsLists}
+            setCardsLists={setCardsLists}
+          />
+        } />
       </Routes>
     </div>
   );
