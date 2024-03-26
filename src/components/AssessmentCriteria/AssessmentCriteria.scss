@@ -4,6 +4,7 @@
   background-color: $light-gray-base-color;
   margin: 24px 20px 60px 0;
   border-radius: 40px;
+  padding-bottom: 80px;
 
   &__header {
     width: 100%;
@@ -56,7 +57,7 @@
   &__container {
     display: flex;
     flex-direction: column;
-    padding: 0 80px 90px;
+    padding: 0 80px;
   }
 
   &__title {
@@ -65,11 +66,12 @@
     letter-spacing: 1px;
   }
 
-  &__criterion-inputs {
+  &__form {
     margin-top: 40px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    position: relative;
   }
 
   &__add-button {
@@ -81,5 +83,89 @@
     margin: 12px 114px 0 0;
     cursor: pointer;
     background-color: $light-gray-base-color;
+    position: absolute;
+    bottom: 110px;
+    right: -45px;
+  }
+
+  &__submit {
+    width: 350px;
+    height: 56px;
+    background-color: $purple-base-color;
+    border-radius: 20px;
+    border: none;
+    @include text($font-size: 20px, $font-weight: 600, $line-height: 24px);
+    cursor: pointer;
+    margin-top: 80px;
+
+    &:hover {
+      cursor: pointer;
+      background: $wrapper;
+    }
+
+    &:active {
+      cursor: pointer;
+      background: $yellow-base-color;
+    }
+  }
+
+  &__popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba($color: $black-base-color, $alpha: 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__popup-window {
+    width: 700px;
+    height: 340px;
+    border-radius: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: $white-base-color;
+  }
+
+  &__popup-title {
+    @include text($font-size: 26px, $line-height: 31px);
+    margin: 80px 0 20px;
+  }
+
+  &__popup-subtitle {
+    @include text($font-size: 20px, $line-height: 24px);
+    margin: 0 0 40px;
+    width: 500px;
+    text-align: center;
+  }
+
+  &__popup-button {
+    text-decoration: none;
+    @include text($font-size: 20px, $font-weight: 600, $line-height: 24px);
+    background-color: $purple-base-color;
+    margin-bottom: 65px;
+    width: 350px;
+    height: 56px;
+    border-radius: 20px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      cursor: pointer;
+      background: $wrapper;
+    }
+
+    &:active {
+      cursor: pointer;
+      background: $yellow-base-color;
+    }
   }
 }

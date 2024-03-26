@@ -1,7 +1,6 @@
 import checkResponse from './checkResponse.js';
-import { USERS } from '../constants/constantAPI.js';
+import { ADMIN_CRITERIA, USERS, ADMIN_USERS } from '../constants/constantAPI.js';
 
-// проверка токена
 export const getUserData = (token) =>
   fetch(`${USERS}/me`, {
     method: 'GET',
@@ -11,8 +10,8 @@ export const getUserData = (token) =>
     },
   }).then((res) => checkResponse(res));
 
-export const updateUserData = (id, token, data) =>
-  fetch(`${USERS}/${id}`, {
+export const updateAdminData = (id, token, data) =>
+  fetch(`${ADMIN_USERS}/${id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -33,4 +32,25 @@ export const getAllUsers = (token) =>
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
+  }).then((res) => checkResponse(res));
+
+export const getAllCriterion = (token) =>
+  fetch(ADMIN_CRITERIA, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => checkResponse(res));
+
+export const addCriterion = (token, criterionName) =>
+  fetch(ADMIN_CRITERIA, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      name: criterionName,
+    }),
   }).then((res) => checkResponse(res));

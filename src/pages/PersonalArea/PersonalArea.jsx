@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormValidation } from '../../hooks/useFormValidation.js';
-import { updateUserData } from '../../utils/mainApi.js';
+import { updateAdminData } from '../../utils/mainApi.js';
 import { setAdminData } from '../../store/slices/adminDataSlices.js';
 import './PersonalArea.scss';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
@@ -54,7 +54,7 @@ function PersonalArea() {
       password: values.repeatPassword || null,
     };
 
-    updateUserData(adminData.id, token, newUserDataForServer)
+    updateAdminData(adminData.id, token, newUserDataForServer)
       .then(() => {
         setEditing(false);
         dispatch(setAdminData({ ...adminData, ...newUserData }));
@@ -209,7 +209,7 @@ function PersonalArea() {
                 {'Анкета для оценки'}
               </h3>
               <Link
-                to={'/setting-questionnaire'}
+                to={'/criteria-setting'}
                 className="personal-area__questionnaire-link"
               >
                 <div className="personal-area__questionnaire-container">

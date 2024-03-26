@@ -23,6 +23,7 @@ import { boardsList } from '../../constants/boardsList.js';
 import { getUserData } from '../../utils/mainApi.js';
 import { setAdminData } from '../../store/slices/adminDataSlices.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
+// import AssessmentCriteria from '../AssessmentCriteria/AssessmentCriteria.jsx';
 
 function App() {
   // в cardsList записываем ответ на запрос get от API, задания со всеми параметрами
@@ -82,6 +83,7 @@ function App() {
           element={
             <ProtectedRoute
               element={PersonalArea}
+              // element={AssessmentCriteria}
               isLoggedIn={isLoggedIn}
               isLoading={false}
             />
