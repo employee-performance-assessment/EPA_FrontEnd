@@ -22,24 +22,36 @@
 
 .profile-card__info-block {
   display: flex;
+  align-items: center;
   flex-direction: row;
   gap: 40px;
   width: 482px;
   height: 64px;
 }
 
-.profile-card__name {
-  margin: 0;
+.profile-card__name-block {
   width: 175px;
   height: 52px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 175px;
+  display: flex;
+  align-items: center;
 }
 
-.profile-card__job-title {
+.profile-card__name {
   margin: 0;
-  align-self: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.profile-card__position-block {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  max-width: 380px;
+}
+
+.profile-card__position {
+  margin: 0;
+  width: 100%;
 }
 
 .profile-card__email {

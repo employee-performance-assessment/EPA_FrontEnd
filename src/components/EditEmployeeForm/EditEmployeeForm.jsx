@@ -14,18 +14,37 @@ import {
 } from '../../utils/validationConstants.js';
 import './EditEmployeeForm.scss';
 
-function EditEmployeeForm({ setIsEditEmployeePopupOpen }) {
+function EditEmployeeForm({ setIsEditEmployeePopupOpen, user }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const { values, handleChange, errors, setErrors, isValid, setIsValid } =
-    useFormValidation({
-      name: '',
-      position: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    });
+  const {
+    values,
+    setValues,
+    handleChange,
+    errors,
+    setErrors,
+    isValid,
+    setIsValid,
+  } = useFormValidation({
+    name: '',
+    position: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  useEffect(() => {
+    if (user) {
+      setValues({
+        name: user.fullName || '',
+        position: user.position || '',
+        email: user.email || '',
+        password: '',
+        confirmPassword: '',
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     const hasErrors =
@@ -71,7 +90,7 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen }) {
         formTitle="Редактирование данных"
         handleSubmit={editEmployeeData}
         isValid={isValid}
-        handleClosePopup = { handleCloseEditEmployeePopup }
+        handleClosePopup={handleCloseEditEmployeePopup}
       >
         <Input
           type="text"

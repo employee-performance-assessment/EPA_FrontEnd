@@ -13,9 +13,15 @@ function MyTeam() {
   const [employeeList, setEmployeeList] = useState([]);
   const [isAddEmployeePopupOpen, setIsAddEmployeePopupOpen] = useState(false);
   const [isEditEmployeePopupOpen, setIsEditEmployeePopupOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const handleOpenAddEmployeeForm = () => {
     setIsAddEmployeePopupOpen(true);
+  };
+
+  const handleOpenEditEmployeeForm = (user) => {
+    setSelectedUser(user);
+    setIsEditEmployeePopupOpen(true);
   };
 
   useEffect(() => {
@@ -39,6 +45,7 @@ function MyTeam() {
       {isEditEmployeePopupOpen && (
         <EditEmployeeForm
           setIsEditEmployeePopupOpen={setIsEditEmployeePopupOpen}
+          user={selectedUser}
         />
       )}
       <div className="my-team__wrapper">
@@ -72,7 +79,7 @@ function MyTeam() {
             {employeeList ? (
               <EmployeeList
                 employeeList={employeeList}
-                setIsEditEmployeePopupOpen={setIsEditEmployeePopupOpen}
+                handleOpenEditEmployeeForm={handleOpenEditEmployeeForm}
               />
             ) : (
               <div className="my-team__content_type_empty">
