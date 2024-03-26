@@ -120,4 +120,104 @@
       height: 58px;
     }
   }
+
+  .slider {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    height: 320px;
+    width: 100%;
+
+    .info_block {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+
+      .year {
+        @include text($font-size: 16px, $line-height: 1.15);
+        margin-bottom: 19px;
+      }
+
+      .name {
+        @include text($font-size: 24px, $line-height: 1.15);
+        text-transform: none;
+        margin-bottom: 12px;
+      }
+
+      .rating {
+        width: 75px;
+        height: 11px;
+        margin-bottom: 19px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .text {
+        @include text($font-size: 16px, $line-height: 1.2);
+        text-transform: none;
+        margin-bottom: 19px;
+      }
+    }
+
+    .image_block {
+      display: flex;
+      justify-content: space-between;
+      width: 473px;
+      height: 256px;
+
+      .img {
+        width: 222px;
+        height: 100%;
+        border-radius: 15px;
+        background-size: cover;
+      }
+    }
+
+    .arrow {
+      @include button;
+      //@include button-hover;
+      position: absolute;
+      top: 40%;
+      left: -25px;
+      width: 99px;
+      height: 99px;
+      //background-image: url(../../../images/arrow.svg);
+      background-repeat: no-repeat;
+      z-index: 2;
+
+      &:last-of-type {
+        transform: rotate(180deg);
+        left: 1105px;
+      }
+    }
+
+    article {
+      position: absolute;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      top: 0;
+      left: 0;
+      width: 431px;
+      height: 100%;
+      opacity: 0;
+      transition: 0.5s;
+      padding: 24px;
+
+      &.activeSlyde {
+        opacity: 1;
+        transform: translate(0);
+      }
+
+      &.lastSlyde {
+        transform: translate(-100%);
+      }
+
+      &.nextSlyde {
+        transform: translate(100%);
+      }
+    }
+  }
 }
