@@ -58,6 +58,10 @@
         border-radius: 20px;
         padding: 15px 24px;
         @include text($black-base-color, 20px, 500, 1.2);
+
+        background-image: url(../../images/calendar.svg);
+      background-repeat: no-repeat;
+      background-position: 359px;
       }
     }
 
@@ -66,14 +70,14 @@
     }
 
     input[type='date']::-webkit-calendar-picker-indicator {
-      background-image: url(../../images/calendar.svg);
+      background-image: /* url(../../images/calendar.svg) */none;
       background-repeat: no-repeat;
     }
 
-    input[type='date']::before {
+    /* input[type='date']::before {
       @include text($black-base-color, 20px, 500, 1.2);
       content: attr(placeholder);
-    }
+    } */
 
     input[type='date']:focus::before {
       content: '' !important;

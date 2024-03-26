@@ -24,6 +24,7 @@ import { boardsList } from '../../constants/boardsList.js';
 import { getUserData } from '../../utils/mainApi.js';
 import { setAdminData } from '../../store/slices/adminDataSlice.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
+import AssessmentCriteria from '../../pages/AssessmentCriteria/AssessmentCriteria.jsx';
 
 function App() {
   // в cardsList записываем ответ на запрос get от API, задания со всеми параметрами
@@ -31,15 +32,22 @@ function App() {
   const [dropCard, setDropCard] = useState(null);
   const [startBoard, setStartBoard] = useState(null);
   const [currentBoard, setCurrentBoard] = useState(null);
-  const { login, register, personalArea, myTeam, board, anyPage, analytics } =
-    ENDPOINT_ROUTES;
-  const [isFormAuthBlock, setIsFormAuthBlock] = useState(false);
+  const {
+    login,
+    register,
+    personalArea,
+    myTeam,
+    board,
+    anyPage,
+    analytics,
+    criteria,
+  } = ENDPOINT_ROUTES;
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const clearCards = () => {};
+  const clearCards = () => { };
 
   const tokenCheck = () => {
     if (localStorage.getItem('token')) {

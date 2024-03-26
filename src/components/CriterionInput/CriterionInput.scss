@@ -27,30 +27,18 @@
     }
   }
 
-  &__buttons {
-    display: flex;
-    align-items: center;
-    margin-left: 24px;
-  }
-
   &__button {
+    margin-left: 24px;
     width: 27px;
     height: 27px;
     background-repeat: no-repeat;
     background-position: center;
     margin-right: 17px;
     cursor: pointer;
+    background-image: url(../../images/delete-button-icon.svg);
 
     &:hover {
       transform: scale(1.2);
-    }
-
-    &_edit {
-      background-image: url(../../images/edit-button-icon.svg);
-    }
-
-    &_delete {
-      background-image: url(../../images/delete-button-icon.svg);
     }
   }
 }
