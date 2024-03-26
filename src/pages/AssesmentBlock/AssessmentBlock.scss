@@ -1,0 +1,91 @@
+.AssessmentBlock {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 24px 20px 60px 20px;
+}
+
+.AssessmentBlock__container {
+  width: 1163px;
+  margin-left: 37px;
+}
+.AssessmentBlock__header {
+  height: 120px;
+  padding: 0 24px;
+  box-sizing: content-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 40px;
+  background-color: rgba(245, 245, 245, 1);
+}
+.header__wrapper {
+  display: flex;
+  align-items: center;
+}
+.header__icon {
+  padding: 8px;
+  margin-right: 12px;
+}
+.header__text {
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 31.47px;
+  text-align: left;
+}
+.header__button {
+  width: 307px;
+  height: 56px;
+  background-color: rgba(245, 240, 122, 1);
+  border-radius: 20px;
+  border: none;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24.2px;
+  text-align: center;
+}
+
+.AssessmentBlock__filters {
+  display: flex;
+  height: 120px;
+  padding: 0 24px;
+  box-sizing: content-box;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 40px;
+}
+
+.filters__text {
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 31.47px;
+}
+
+.filters__items {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24.2px;
+  text-align: left;
+}
+.filters__button {
+  background-color: rgba(197, 182, 241, 1);
+  border-radius: 20px;
+  height: 52px;
+  width: 137px;
+}
+.filters__window {
+  width: 247px;
+  height: 52px;
+}
+.filters__search {
+  width: 330px;
+  height: 52px;
+}
+.filters__calendar {
+  width: 216px;
+  height: 52px;
+}
+
+.filters__calendar::after {
+  background-image: url(../../images/calendar_icon.svg);
+}
