@@ -47,7 +47,7 @@ function App() {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const clearCards = () => { };
+  const clearCards = () => {};
 
   const tokenCheck = () => {
     if (localStorage.getItem('token')) {
@@ -78,15 +78,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to={login} />} />
         <Route path={register} element={<Register />} />
-        <Route
-          path={login}
-          element={
-            <Auth
-              isFormAuthBlock={isFormAuthBlock}
-              setIsFormAuthBlock={setIsFormAuthBlock}
-            />
-          }
-        />
+        <Route path={login} element={<Auth />} />
         <Route path="" element={<AdminRoute />}>
           <Route path={personalArea} element={<PersonalArea />} />
           <Route
@@ -108,8 +100,9 @@ function App() {
           />
           <Route path={myTeam} element={<MyTeam />} />
           <Route path={analytics} element={<AnalyticsPage />} />
+          <Route path={criteria} element={<AssessmentCriteria />} />
         </Route>
-        <Route path='' element={<ProtectedRoute />}>
+        <Route path="" element={<ProtectedRoute />}>
           <Route path={anyPage} element={<NotFound />} />
         </Route>
       </Routes>
