@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState /* , useEffect */ } from 'react';
+import { useSelector } from 'react-redux';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import Checkbox from '../../components/Checkbox/Checkbox.jsx';
 
@@ -10,8 +11,42 @@ import commandIcon from '../../images/command-icon.svg';
 import styles from './AnalyticsPage.module.scss';
 
 function AnalyticsPage() {
+  // const reviewData = [];
+
   const [value, setValue] = useState('');
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
+  // const [estimation, setEstimation] = useState(reviewData);
+  /* const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const lastIndex = estimation.length - 1;
+    if (currentIndex < 0) {
+      setCurrentIndex(lastIndex);
+    }
+    if (currentIndex > lastIndex) {
+      setCurrentIndex(0);
+    }
+  }, [currentIndex, estimation]);
+
+  useEffect(() => {
+    const slider = setInterval(
+      () => setCurrentIndex((prevState) => prevState + 1),
+      50000
+    );
+    return () => {
+      clearInterval(slider);
+    };
+  }, [currentIndex]);
+
+  const handleStarr = (rating) => {
+    const arr = [];
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < rating; i++) {
+      arr.push(<img src={ratingStar} alt="рейтинг" />);
+    }
+    return arr;
+  }; */
+  console.log(value.split('-').reverse().join('-'));
 
   return isLoggedIn ? (
     <section className={styles.page}>

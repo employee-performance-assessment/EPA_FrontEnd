@@ -70,14 +70,8 @@
     }
 
     input[type='date']::-webkit-calendar-picker-indicator {
-      background-image: /* url(../../images/calendar.svg) */none;
-      background-repeat: no-repeat;
+      background-image: none;
     }
-
-    /* input[type='date']::before {
-      @include text($black-base-color, 20px, 500, 1.2);
-      content: attr(placeholder);
-    } */
 
     input[type='date']:focus::before {
       content: '' !important;
