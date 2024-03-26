@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormValidation } from '../../hooks/useFormValidation.js';
-import { updateUserData } from '../../utils/mainApi.js';
+import { updateAdminData } from '../../utils/mainApi.js';
 import { setAdminData } from '../../store/slices/adminDataSlice.js';
 import './PersonalArea.scss';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
