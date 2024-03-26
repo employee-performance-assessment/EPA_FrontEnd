@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
+import AdminRoute from '../AdminRoute/AdminRoute.jsx';
 
 import Auth from '../../pages/Auth/Auth.jsx';
 import Register from '../../pages/Register/Register.jsx';
@@ -21,7 +22,7 @@ import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import { boardsList } from '../../constants/boardsList.js';
 
 import { getUserData } from '../../utils/mainApi.js';
-import { setAdminData } from '../../store/slices/adminDataSlices.js';
+import { setAdminData } from '../../store/slices/adminDataSlice.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 
 function App() {
@@ -30,15 +31,8 @@ function App() {
   const [dropCard, setDropCard] = useState(null);
   const [startBoard, setStartBoard] = useState(null);
   const [currentBoard, setCurrentBoard] = useState(null);
-  const {
-    login,
-    register,
-    personalArea,
-    myTeam,
-    board,
-    anyPage,
-    analytics,
-  } = ENDPOINT_ROUTES;
+  const { login, register, personalArea, myTeam, board, anyPage, analytics } =
+    ENDPOINT_ROUTES;
   const [isFormAuthBlock, setIsFormAuthBlock] = useState(false);
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
   const navigate = useNavigate();
@@ -85,53 +79,31 @@ function App() {
             />
           }
         />
-        <Route
-          path={personalArea}
-          element={
-            <ProtectedRoute
-              element={PersonalArea}
-              isLoggedIn={isLoggedIn}
-              isLoading={false}
-            />
-          }
-        />
-        {/* канбан доска */}
-        <Route
-          path={board}
-          element={
-            <ProtectedRoute
-              element={Boards}
-              isLoggedIn={isLoggedIn}
-              currentBoard={currentBoard}
-              setCurrentBoard={setCurrentBoard}
-              dropCard={dropCard}
-              setDropCard={setDropCard}
-              startBoard={startBoard}
-              setStartBoard={setStartBoard}
-              clearCards={clearCards}
-              cardsLists={cardsLists}
-              setCardsLists={setCardsLists}
-            />
-          }
-        />
-        <Route
-          path={myTeam}
-          element={
-            <ProtectedRoute
-              element={MyTeam}
-              isLoggedIn={isLoggedIn}
-              isLoading={false}
-            />
-          }
-        />
-        <Route
-          path={analytics}
-          element={
-            <ProtectedRoute element={AnalyticsPage} isLoggedIn={isLoggedIn} />
-          }
-        />
-        {/* страница без роута */}
-        <Route path={anyPage} element={<NotFound />} />
+        <Route path="" element={<AdminRoute />}>
+          <Route path={personalArea} element={<PersonalArea />} />
+          <Route
+            path={board}
+            element={
+              <Boards
+                isLoggedIn={isLoggedIn}
+                currentBoard={currentBoard}
+                setCurrentBoard={setCurrentBoard}
+                dropCard={dropCard}
+                setDropCard={setDropCard}
+                startBoard={startBoard}
+                setStartBoard={setStartBoard}
+                clearCards={clearCards}
+                cardsLists={cardsLists}
+                setCardsLists={setCardsLists}
+              />
+            }
+          />
+          <Route path={myTeam} element={<MyTeam />} />
+          <Route path={analytics} element={<AnalyticsPage />} />
+        </Route>
+        <Route path='' element={<ProtectedRoute />}>
+          <Route path={anyPage} element={<NotFound />} />
+        </Route>
       </Routes>
     </div>
   );

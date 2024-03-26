@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import adminDataSlices from './slices/adminDataSlices';
+import adminDataSlices from './slices/adminDataSlice';
 import isLoggedInSlice from './slices/isLoggedInSlice';
 import tokenSlices from './slices/tokenSlices';
 

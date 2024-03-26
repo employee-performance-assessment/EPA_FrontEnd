@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormValidation } from '../../hooks/useFormValidation.js';
 import { updateUserData } from '../../utils/mainApi.js';
-import { setAdminData } from '../../store/slices/adminDataSlices.js';
+import { setAdminData } from '../../store/slices/adminDataSlice.js';
 import './PersonalArea.scss';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 
@@ -12,7 +12,7 @@ function PersonalArea() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { errors, values, isValid, handleChange } = useFormValidation();
   const token = useSelector((state) => state.token.token);
-  const adminData = useSelector((state) => state.adminData.adminData);
+  const adminData = useSelector((state) => state.adminData);
   const [isDisabledButton, setIsDisabledButton] = useState(false);
   const dispatch = useDispatch();
 
