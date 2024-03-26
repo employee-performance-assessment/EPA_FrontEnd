@@ -31,3 +31,12 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s;
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #dad6d6;
+  border-radius: 4px;
+}

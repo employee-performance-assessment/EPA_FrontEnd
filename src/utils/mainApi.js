@@ -34,6 +34,16 @@ export const getAllUsers = (token) =>
     },
   }).then((res) => checkResponse(res));
 
+export const addNewEmployee = ({ token, fullName, position, email, password }) =>
+  fetch(ADMIN_USERS, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ fullName, position, email, password }),
+  }).then((res) => checkResponse(res));
+
 export const getAllCriterion = (token) =>
   fetch(ADMIN_CRITERIA, {
     method: 'GET',
