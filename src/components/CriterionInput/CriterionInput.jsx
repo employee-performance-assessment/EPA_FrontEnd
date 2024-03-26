@@ -1,39 +1,30 @@
-import { useState } from 'react';
 import { useFormValidation } from '../../hooks/useFormValidation';
 import './CriterionInput.scss';
 
-function CriterionInput({ card, text, editing, handleDelete }) {
-  const [edit, setEdit] = useState(false);
+function CriterionInput({ criterion, name, editing, handleDelete }) {
   const { values, handleChange } = useFormValidation();
 
   function setVisibleInputData() {
-    if (!values.text && !edit) {
-      values.text = text;
+    if (!values.name) {
+      values.name = name;
     }
   }
 
   setVisibleInputData();
 
-  function handleEdit() {
-    setEdit(!edit);
-  }
-
   return (
     <div className="criterion">
       <input
-        className={`criterion__input ${edit && editing && 'criterion__input_active'}`}
-        name="text"
+        className={`criterion__input ${editing && 'criterion__input_active'}`}
+        name="name"
         type="text"
         placeholder={'Введите новый критерий оценки'}
-        value={values.text || ''}
-        disabled={!editing || !edit}
+        value={values.name || ''}
+        disabled={!editing}
         onChange={handleChange}
       />
       {editing &&
-        <div className="criterion__buttons">
-          <div className="criterion__button criterion__button_edit" onClick={handleEdit} />
-          <div className="criterion__button criterion__button_delete" onClick={() => handleDelete(card)} />
-        </div>}
+        <div className="criterion__button" onClick={() => handleDelete(criterion)} />}
     </div>
   );
 }
