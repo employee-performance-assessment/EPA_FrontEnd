@@ -1,0 +1,88 @@
+@import '../../styles/vars';
+
+.employeeViewFilter__container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 40px;
+}
+
+.employeeViewFilter__marks {
+  width: 566px;
+  display: flex;
+  align-items: center;
+}
+
+.employeeViewFilter__title {
+  font-size: 26px;
+  font-weight: $fw-medium;
+  line-height: 31.47px;
+  color: $black-base-color;
+  padding: 0 10px;
+}
+
+.employeeViewFilter__stars {
+  width: 275px;
+  height: 63px;
+  margin-right: 40px;
+}
+
+.employeeViewFilter__button {
+  height: 52px;
+  background: $white-base-color;
+  border-radius: 40px;
+  border: solid 2px $dark-grey-base-color;
+  padding: 14px 26px;
+  font-size: 20px;
+  font-weight: $fw-medium;
+  line-height: 24.2px;
+  color: $black-base-color;
+
+  &_active {
+    border: none;
+    background: $purple-base-color;
+  }
+
+  &_marks {
+    width: 107px;
+    height: 54px;
+    border: none;
+    background: $grey-base-color;
+    border-radius: 20px;
+  }
+}
+
+.employeeViewFilter__calendar {
+  position: relative;
+}
+
+.employeeViewFilter__input {
+  width: 330px;
+  height: 52px;
+  border-radius: 20px;
+  border: solid 2px $dark-grey-base-color;
+  padding: 14px 24px;
+  font-size: 20px;
+  font-weight: $fw-medium;
+  line-height: 24.2px;
+  color: $black-base-color;
+
+  &_marks {
+    width: 407px;
+    height: 54px;
+    padding-right: 60px;
+  }
+}
+
+.employeeViewFilter__icon {
+  position: absolute;
+  top: 16.5px;
+  right: 18px;
+  width: 18px;
+  height: 19.5px;
+  background: url(../../images/calendar_icon.svg);
+  background-size: cover;
+  border: none;
+}
