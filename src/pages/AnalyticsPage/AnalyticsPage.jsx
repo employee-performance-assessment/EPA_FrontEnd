@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import Checkbox from '../../components/Checkbox/Checkbox.jsx';
 
@@ -7,8 +8,9 @@ import commandIcon from '../../images/command-icon.svg';
 
 import styles from './AnalyticsPage.module.scss';
 
-function AnalyticsPage({ isLoggedIn }) {
+function AnalyticsPage() {
   const [value, setValue] = useState('');
+  const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
 
   return isLoggedIn ? (
     <section className={styles.page}>

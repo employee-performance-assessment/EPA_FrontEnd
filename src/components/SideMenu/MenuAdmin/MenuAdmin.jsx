@@ -15,28 +15,24 @@ function MenuAdmin() {
     <ul className="side-menu__list">
       <Link
         to={personalArea}
-        target="_blank"
         className="side-menu__item side-menu__item_personal"
       >
         <p className="side-menu__text">Личный кабинет</p>
       </Link>
       <Link
         to={myTeam}
-        target="_blank"
         className="side-menu__item side-menu__item_my-team"
       >
         <p className="side-menu__text">Моя команда</p>
       </Link>
       <Link
         to={board}
-        target="_blank"
         className="side-menu__item side-menu__item_kanban"
       >
         <p className="side-menu__text">Канбан доска</p>
       </Link>
       <Link
         to={estimate}
-        target="_blank"
         className="side-menu__item side-menu__item_asses"
       >
         <p className="side-menu__text">Оценка ЭС</p>
