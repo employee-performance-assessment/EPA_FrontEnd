@@ -13,6 +13,7 @@ import {
   isValidPassword,
 } from '../../utils/validationConstants.js';
 import './EditEmployeeForm.scss';
+import { updateEmployeeData } from '../../utils/mainApi.js';
 
 function EditEmployeeForm({ setIsEditEmployeePopupOpen, user }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,21 +28,22 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user }) {
     isValid,
     setIsValid,
   } = useFormValidation({
-    name: '',
-    position: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    // name: '',
+    // position: '',
+    // email: '',
+    // password: '',
+    // confirmPassword: '',
   });
 
   useEffect(() => {
     if (user) {
       setValues({
+        ...values,
         name: user.fullName || '',
         position: user.position || '',
         email: user.email || '',
-        password: '',
-        confirmPassword: '',
+        // password: '',
+        // confirmPassword: '',
       });
     }
   }, [user]);
@@ -53,31 +55,47 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user }) {
       errors.confirmPassword ||
       errors.position;
 
-    const hasValues =
-      !values.name ||
-      !values.position ||
-      !values.email ||
-      !values.password ||
-      !values.confirmPassword;
+    const hasValues = !values.name || !values.position || !values.email;
+    const hasPasswordNoConfirmPassword =
+    values.password && !values.confirmPassword;
 
-    if (hasErrors || hasValues) {
+    if (hasErrors || hasValues || hasPasswordNoConfirmPassword) {
       setIsValid(false);
+      setErrors({ confirmPassword: VALIDATION_MESSAGES.emptyConfirmPassword });
     } else {
       setIsValid(true);
+      setErrors({ confirmPassword: '' });
     }
+
+    return () => {
+      setErrors({});
+    };
   }, [errors]);
 
   useEffect(() => {
     if (values.confirmPassword !== values.password) {
       setErrors({ confirmPassword: VALIDATION_MESSAGES.passwordsNotMatch });
+    } else {
+      setErrors({ confirmPassword: '' });
     }
-  }, [values.confirmPassword]);
+  }, [values.confirmPassword, values.password,]);
 
   const editEmployeeData = (e) => {
     e.preventDefault();
-    alert('u edited user info');
-    // const { name, position, email, password } = values;
-    // const { token } = JSON.parse(localStorage.getItem('token'));
+    const { name, position, email, password } = values;
+    const { token } = JSON.parse(localStorage.getItem('token'));
+
+    updateEmployeeData({
+      id: user.id,
+      token,
+      fullName: name,
+      position,
+      email,
+      password,
+    }).then((res) => {
+      console.log('res', res);
+      setIsEditEmployeePopupOpen(false);
+    });
   };
 
   const handleCloseEditEmployeePopup = () => {
@@ -114,7 +132,7 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user }) {
         />
         <Input
           type="text"
-          name="jobTitle"
+          name="position"
           value={values.position}
           onChange={(e) =>
             handleChangeInput(
@@ -172,7 +190,7 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user }) {
               placeholder="Пароль авторизации"
               spanClassName="userForm__span"
               error={errors.password}
-              required={true}
+              required={false}
             />
             <button
               type="button"
@@ -207,7 +225,7 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user }) {
               autoComplete="off"
               spanClassName="userForm__span"
               error={errors.confirmPassword}
-              required={true}
+              required={false}
             />
             <button
               type="button"

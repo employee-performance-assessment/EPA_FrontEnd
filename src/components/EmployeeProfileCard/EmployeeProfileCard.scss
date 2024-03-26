@@ -37,6 +37,7 @@
 }
 
 .profile-card__name {
+  width: 175px;
   margin: 0;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -46,12 +47,14 @@
   height: 52px;
   display: flex;
   align-items: center;
-  max-width: 380px;
+  width: 265px;
 }
 
 .profile-card__position {
   margin: 0;
-  width: 100%;
+  width: 265px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .profile-card__email {
