@@ -1,11 +1,72 @@
+import { useState } from 'react';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import './AssessmentBlock.scss';
 import icon from '../../images/assessmentBlock_icon.svg';
 import image from '../../images/assessmentBlock_image.svg';
+import AssessmentCard from '../../components/AssessmentCard/AssessmentCard.jsx';
 
 function AssessmentBlock() {
   // по клику на кнопку осуществится переход к анкете
+  // const [data, setData] = useState({});
+  const [filterState, setFilterState] = useState('asses');
+  const data = [
+    {
+      id: 0,
+      name: 'Creola Katherine Johnson',
+      job: 'mathematician',
+    },
+    {
+      id: 1,
+      name: 'Mario José Molina-Pasquel Henríquez',
+      job: 'chemist',
+    },
+    {
+      id: 2,
+      name: 'Mohammad Abdus Salam',
+      job: 'physicist',
+    },
+    {
+      id: 3,
+      name: 'Percy Lavon Julian',
+      job: 'chemist',
+    },
+    {
+      id: 4,
+      name: 'Subrahmanyan Chandrasekhar',
+      job: 'astrophysicist',
+    },
+  ];
+  const data2 = [
+    {
+      id: 0,
+      name: 'Creola Katherine Johnson',
+      job: 'mathematician',
+    },
+    {
+      id: 1,
+      name: 'Mario José Molina-Pasquel Henríquez',
+      job: 'chemist',
+    },
+    {
+      id: 2,
+      name: 'Mohammad Abdus Salam',
+      job: 'physicist',
+    },
+    {
+      id: 3,
+      name: 'Percy Lavon Julian',
+      job: 'chemist',
+    },
+    {
+      id: 4,
+      name: 'Subrahmanyan Chandrasekhar',
+      job: 'astrophysicist',
+    },
+  ];
   function handleClick() {}
+  function handleChangeFilterState(e) {
+    setFilterState(e.target.id);
+  }
 
   return (
     <section className="AssessmentBlock">
@@ -26,10 +87,20 @@ function AssessmentBlock() {
         </div>
         <div className="AssessmentBlock__filters">
           <h3 className="filters__text">Фильтры:</h3>
-          <button className="filters__items filters__button">Оценить</button>
-          <div className="filters__items filters__window">
+          <button
+            className="filters__items filters__button"
+            id="asses"
+            onClick={(e) => handleChangeFilterState(e)}
+          >
+            Оценить
+          </button>
+          <button
+            className="filters__items filters__button filters__button_done"
+            id="asses_done"
+            onClick={(e) => handleChangeFilterState(e)}
+          >
             Оценка поставлена
-          </div>
+          </button>
           <input
             type="text"
             placeholder="Поиск"
@@ -37,15 +108,36 @@ function AssessmentBlock() {
           />
           <form className="filters__items filters__calendar">Календарь</form>
         </div>
-        <img
-          src={image}
-          alt="картинка фона с изображением человека"
-          className="AssessmentBlock__immage"
-        />
-        <span className="AssessmentBlock__span">
-          <p className="">Список пока что пуст.</p>Новые карточки для оценки
-          сотрудников можете добавить с помощью кнопки «Провести анкетирование»
-        </span>
+        {data.lenght === 0 ? (
+          <>
+            <img
+              src={image}
+              alt="картинка фона с изображением человека"
+              className="AssessmentBlock__immage"
+            />
+            <span className="AssessmentBlock__span">
+              <p className="">Список пока что пуст.</p>Новые карточки для оценки
+              сотрудников можете добавить с помощью кнопки «Провести
+              анкетирование»
+            </span>
+          </>
+        ) : filterState === 'asses' ? (
+          <ul className="AssessmentBlock__list">
+            {data.map((i) => (
+              <>
+                <AssessmentCard key={i.id} name={i.name} job={i.job} />
+              </>
+            ))}
+          </ul>
+        ) : (
+          <ul className="AssessmentBlock__list">
+            {data2.map((i) => (
+              <>
+                <AssessmentCard key={i.id} name={i.name} job={i.job} />
+              </>
+            ))}
+          </ul>
+        )}
       </div>
     </section>
   );
