@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   Navigate,
   Route,
@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
+import AdminRoute from '../AdminRoute/AdminRoute.jsx';
 
 import Auth from '../../pages/Auth/Auth.jsx';
 import Register from '../../pages/Register/Register.jsx';
@@ -16,21 +17,17 @@ import MyTeam from '../../pages/MyTeam/MyTeam.jsx';
 import Boards from '../Boards/Boards.jsx';
 import AnalyticsPage from '../../pages/AnalyticsPage/AnalyticsPage.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
+import AssessmentCriteria from '../../pages/AssessmentCriteria/AssessmentCriteria.jsx';
+import EmployeeViewPage from '../../pages/EmployeeViewPage/EmployeeViewPage.jsx';
 
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
-import { boardsList } from '../../constants/boardsList.js';
 
 import { getUserData } from '../../utils/mainApi.js';
-import { setAdminData } from '../../store/slices/adminDataSlices.js';
+import { setAdminData } from '../../store/slices/adminDataSlice.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
-import AssessmentCriteria from '../../pages/AssessmentCriteria/AssessmentCriteria.jsx';
 
 function App() {
   // в cardsList записываем ответ на запрос get от API, задания со всеми параметрами
-  const [cardsLists, setCardsLists] = useState(boardsList);
-  const [dropCard, setDropCard] = useState(null);
-  const [startBoard, setStartBoard] = useState(null);
-  const [currentBoard, setCurrentBoard] = useState(null);
   const {
     login,
     register,
@@ -40,13 +37,12 @@ function App() {
     anyPage,
     analytics,
     criteria,
+    viewCards,
   } = ENDPOINT_ROUTES;
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-
-  const clearCards = () => { };
 
   const tokenCheck = () => {
     if (localStorage.getItem('token')) {
@@ -78,26 +74,17 @@ function App() {
         <Route path="/" element={<Navigate to={login} />} />
         <Route path={register} element={<Register />} />
         <Route path={login} element={<Auth />} />
-        <Route path={personalArea} element={<ProtectedRoute element={PersonalArea} />} />
-        <Route path={myTeam} element={<ProtectedRoute element={MyTeam} />} />
-        <Route path={analytics} element={<ProtectedRoute element={AnalyticsPage} />} />
-        <Route path={criteria} element={<ProtectedRoute element={AssessmentCriteria} />} />
-        <Route path={anyPage} element={<NotFound />} />
-        <Route path={board} element={
-          <ProtectedRoute
-            element={Boards}
-            isLoggedIn={isLoggedIn}
-            currentBoard={currentBoard}
-            setCurrentBoard={setCurrentBoard}
-            dropCard={dropCard}
-            setDropCard={setDropCard}
-            startBoard={startBoard}
-            setStartBoard={setStartBoard}
-            clearCards={clearCards}
-            cardsLists={cardsLists}
-            setCardsLists={setCardsLists}
-          />
-        } />
+        <Route path="" element={<AdminRoute />}>
+          <Route path={personalArea} element={<PersonalArea />} />
+          <Route path={board} element={<Boards isLoggedIn={isLoggedIn} />} />
+          <Route path={myTeam} element={<MyTeam />} />
+          <Route path={analytics} element={<AnalyticsPage />} />
+          <Route path={criteria} element={<AssessmentCriteria />} />
+          <Route path={viewCards} element={<EmployeeViewPage />} />
+        </Route>
+        <Route path="" element={<ProtectedRoute />}>
+          <Route path={anyPage} element={<NotFound />} />
+        </Route>
       </Routes>
     </div>
   );
