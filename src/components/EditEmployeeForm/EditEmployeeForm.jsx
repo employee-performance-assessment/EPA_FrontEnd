@@ -28,12 +28,18 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user }) {
     isValid,
     setIsValid,
   } = useFormValidation({
-    // name: '',
-    // position: '',
-    // email: '',
-    // password: '',
-    // confirmPassword: '',
   });
+
+  const handleCloseEditEmployeePopup = () => {
+    setIsEditEmployeePopupOpen(false);
+    setErrors({
+      name: '',
+      position: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    });
+  };
 
   useEffect(() => {
     if (user) {
@@ -42,14 +48,13 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user }) {
         name: user.fullName || '',
         position: user.position || '',
         email: user.email || '',
-        // password: '',
-        // confirmPassword: '',
       });
     }
   }, [user]);
 
   useEffect(() => {
     const hasErrors =
+      errors.name ||
       errors.email ||
       errors.password ||
       errors.confirmPassword ||
@@ -57,20 +62,18 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user }) {
 
     const hasValues = !values.name || !values.position || !values.email;
     const hasPasswordNoConfirmPassword =
-    values.password && !values.confirmPassword;
+      values.password && !values.confirmPassword;
 
     if (hasErrors || hasValues || hasPasswordNoConfirmPassword) {
       setIsValid(false);
-      setErrors({ confirmPassword: VALIDATION_MESSAGES.emptyConfirmPassword });
     } else {
       setIsValid(true);
-      setErrors({ confirmPassword: '' });
     }
 
     return () => {
       setErrors({});
     };
-  }, [errors]);
+  }, [values]);
 
   useEffect(() => {
     if (values.confirmPassword !== values.password) {
@@ -78,7 +81,7 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user }) {
     } else {
       setErrors({ confirmPassword: '' });
     }
-  }, [values.confirmPassword, values.password,]);
+  }, [values.confirmPassword, values.password]);
 
   const editEmployeeData = (e) => {
     e.preventDefault();
@@ -92,14 +95,9 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user }) {
       position,
       email,
       password,
-    }).then((res) => {
-      console.log('res', res);
-      setIsEditEmployeePopupOpen(false);
+    }).then(() => {
+      handleCloseEditEmployeePopup();
     });
-  };
-
-  const handleCloseEditEmployeePopup = () => {
-    setIsEditEmployeePopupOpen(false);
   };
 
   return (
