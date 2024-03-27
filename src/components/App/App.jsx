@@ -44,11 +44,6 @@ function App() {
   const location = useLocation();
   const dispatch = useDispatch();
 
-<<<<<<< HEAD
-=======
-  const clearCards = () => { };
-
->>>>>>> 616c11bff63f69e798ced35f69d348015368ed5a
   const tokenCheck = () => {
     if (localStorage.getItem('token')) {
       const { token } = JSON.parse(localStorage.getItem('token'));
