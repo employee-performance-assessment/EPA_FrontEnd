@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   Navigate,
   Route,
@@ -19,7 +19,6 @@ import AnalyticsPage from '../../pages/AnalyticsPage/AnalyticsPage.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
 
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
-import { boardsList } from '../../constants/boardsList.js';
 
 import { getUserData } from '../../utils/mainApi.js';
 import { setAdminData } from '../../store/slices/adminDataSlice.js';
@@ -28,10 +27,6 @@ import AssessmentCriteria from '../../pages/AssessmentCriteria/AssessmentCriteri
 
 function App() {
   // в cardsList записываем ответ на запрос get от API, задания со всеми параметрами
-  const [cardsLists, setCardsLists] = useState(boardsList);
-  const [dropCard, setDropCard] = useState(null);
-  const [startBoard, setStartBoard] = useState(null);
-  const [currentBoard, setCurrentBoard] = useState(null);
   const {
     login,
     register,
@@ -46,8 +41,6 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-
-  const clearCards = () => {};
 
   const tokenCheck = () => {
     if (localStorage.getItem('token')) {
@@ -81,23 +74,7 @@ function App() {
         <Route path={login} element={<Auth />} />
         <Route path="" element={<AdminRoute />}>
           <Route path={personalArea} element={<PersonalArea />} />
-          <Route
-            path={board}
-            element={
-              <Boards
-                isLoggedIn={isLoggedIn}
-                currentBoard={currentBoard}
-                setCurrentBoard={setCurrentBoard}
-                dropCard={dropCard}
-                setDropCard={setDropCard}
-                startBoard={startBoard}
-                setStartBoard={setStartBoard}
-                clearCards={clearCards}
-                cardsLists={cardsLists}
-                setCardsLists={setCardsLists}
-              />
-            }
-          />
+          <Route path={board} element={<Boards isLoggedIn={isLoggedIn} />} />
           <Route path={myTeam} element={<MyTeam />} />
           <Route path={analytics} element={<AnalyticsPage />} />
           <Route path={criteria} element={<AssessmentCriteria />} />

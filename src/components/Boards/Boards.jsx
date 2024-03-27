@@ -1,24 +1,20 @@
-import Board from '../Board/Board.jsx';
-import './Boards.css';
 import { useSelector } from 'react-redux';
-import SideMenu from '../../components/SideMenu/SideMenu.jsx';
+import { useState } from 'react';
+import Board from '../Board/Board.jsx';
+import SideMenu from '../SideMenu/SideMenu.jsx';
 import './Boards.scss';
+import './Boards.css';
 import UsersThree from '../../images/UsersThree.svg';
 import PlusIcon from '../../images/Plus.svg';
+import { boardsList } from '../../constants/boardsList.js';
 
-function Boards({
-  currentBoard,
-  setCurrentBoard,
-  clearCards,
-  cardsLists,
-  setCardsLists,
-  dropCard,
-  setDropCard,
-  startBoard,
-  setStartBoard,
-}) {
+function Boards() {
+  const clearCards = () => {};
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
-
+  const [cardsLists, setCardsLists] = useState(boardsList);
+  const [dropCard, setDropCard] = useState(null);
+  const [startBoard, setStartBoard] = useState(null);
+  const [currentBoard, setCurrentBoard] = useState(null);
   return isLoggedIn ? (
     <section className="boards_page">
       <div className="boards__wrapper">
@@ -26,7 +22,6 @@ function Boards({
           <SideMenu />
         </div>
         <div className="boards__main">
-
           <nav className="boards__nav">
             <div className="boards__icon-block">
               <img
@@ -36,10 +31,7 @@ function Boards({
               />
               <p className="boards__label">Моя команда</p>
             </div>
-            <button
-              type="button"
-              className="boards__button"
-            >
+            <button type="button" className="boards__button">
               Добавить сотрудника
               <img
                 src={PlusIcon}
@@ -70,7 +62,9 @@ function Boards({
         </div>
       </div>
     </section>
-  ) : ('');
+  ) : (
+    ''
+  );
 }
 
 export default Boards;
