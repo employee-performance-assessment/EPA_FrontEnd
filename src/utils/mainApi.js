@@ -1,5 +1,9 @@
 import checkResponse from './checkResponse.js';
-import { ADMIN_CRITERIA, USERS, ADMIN_USERS } from '../constants/constantAPI.js';
+import {
+  ADMIN_CRITERIA,
+  USERS,
+  ADMIN_USERS,
+} from '../constants/constantAPI.js';
 
 export const getUserData = (token) =>
   fetch(`${USERS}/me`, {
@@ -34,7 +38,13 @@ export const getAllUsers = (token) =>
     },
   }).then((res) => checkResponse(res));
 
-export const addNewEmployee = ({ token, fullName, position, email, password }) =>
+export const addNewEmployee = ({
+  token,
+  fullName,
+  position,
+  email,
+  password,
+}) =>
   fetch(ADMIN_USERS, {
     method: 'POST',
     headers: {
@@ -64,3 +74,31 @@ export const addCriterion = (token, criterionName) =>
       name: criterionName,
     }),
   }).then((res) => checkResponse(res));
+
+export const updateEmployeeData = ({
+  id,
+  token,
+  fullName,
+  position,
+  email,
+  password,
+}) => {
+  const requestBody = {
+    fullName,
+    position,
+    email,
+  };
+
+  if (password) {
+    requestBody.password = password;
+  }
+
+  return fetch(`${ADMIN_USERS}/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(requestBody),
+  }).then((res) => checkResponse(res));
+};
