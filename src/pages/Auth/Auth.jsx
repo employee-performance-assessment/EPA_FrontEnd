@@ -9,7 +9,7 @@ import { getUserData } from '../../utils/mainApi.js';
 
 import { setToken } from '../../store/slices/tokenSlices.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
-import { setAdminData } from '../../store/slices/adminDataSlices.js';
+import { setAdminData } from '../../store/slices/adminDataSlice.js';
 
 import registerImg from '../../images/register-img.png';
 

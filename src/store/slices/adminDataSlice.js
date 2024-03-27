@@ -1,15 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  adminData: {},
-};
+const initialState = {};
 
 const adminDataSlices = createSlice({
   name: 'adminData',
   initialState,
   reducers: {
     setAdminData(state, action) {
-      state.adminData = action.payload;
+      return action.payload;
     },
   },
 });
