@@ -24,6 +24,11 @@ function MyTeam() {
     setIsEditEmployeePopupOpen(true);
   };
 
+  const handleUpdateUser = (updatedUser) => {
+    setEmployeeList((prevList) =>
+      prevList.map((user) => (user.id === updatedUser.id ? updatedUser : user)));
+  };
+
   useEffect(() => {
     const { token } = JSON.parse(localStorage.getItem('token'));
     if (token) {
@@ -46,6 +51,7 @@ function MyTeam() {
         <EditEmployeeForm
           setIsEditEmployeePopupOpen={setIsEditEmployeePopupOpen}
           user={selectedUser}
+          handleUpdateUser={handleUpdateUser}
         />
       )}
       <div className="my-team__wrapper">

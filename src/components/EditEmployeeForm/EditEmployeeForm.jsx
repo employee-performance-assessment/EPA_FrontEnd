@@ -15,7 +15,7 @@ import {
 import './EditEmployeeForm.scss';
 import { updateEmployeeData } from '../../utils/mainApi.js';
 
-function EditEmployeeForm({ setIsEditEmployeePopupOpen, user }) {
+function EditEmployeeForm({ setIsEditEmployeePopupOpen, user, handleUpdateUser }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -95,8 +95,9 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user }) {
       position,
       email,
       password,
-    }).then(() => {
+    }).then((res) => {
       handleCloseEditEmployeePopup();
+      handleUpdateUser(res);
     });
   };
 
