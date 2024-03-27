@@ -1,9 +1,9 @@
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { endpoint } from '../../constants/constantsEndpointRoute.js';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
 function ProtectedRoute({ element: Component, ...props }) {
-  const { login } = endpoint;
+  const { login } = ENDPOINT_ROUTES;
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
 
   return isLoggedIn ? (

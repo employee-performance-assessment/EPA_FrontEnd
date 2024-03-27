@@ -11,18 +11,19 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
 
 import Auth from '../../pages/Auth/Auth.jsx';
 import Register from '../../pages/Register/Register.jsx';
-import AdminPanel from '../../pages/AdminPanel/AdminPanel.jsx';
-import MyTeamAdmin from '../../pages/MyTeamAdmin/MyTeamAdmin.jsx';
+import PersonalArea from '../../pages/PersonalArea/PersonalArea.jsx';
+import MyTeam from '../../pages/MyTeam/MyTeam.jsx';
 import Boards from '../Boards/Boards.jsx';
 import AnalyticsPage from '../../pages/AnalyticsPage/AnalyticsPage.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
 
-import { endpoint } from '../../constants/constantsEndpointRoute.js';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import { boardsList } from '../../constants/boardsList.js';
 
 import { getUserData } from '../../utils/mainApi.js';
 import { setAdminData } from '../../store/slices/adminDataSlices.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
+import AssessmentCriteria from '../../pages/AssessmentCriteria/AssessmentCriteria.jsx';
 
 function App() {
   // в cardsList записываем ответ на запрос get от API, задания со всеми параметрами
@@ -30,14 +31,22 @@ function App() {
   const [dropCard, setDropCard] = useState(null);
   const [startBoard, setStartBoard] = useState(null);
   const [currentBoard, setCurrentBoard] = useState(null);
-  const { board, anyPage } = endpoint;
-  const [isFormAuthBlock, setIsFormAuthBlock] = useState(false);
+  const {
+    login,
+    register,
+    personalArea,
+    myTeam,
+    board,
+    anyPage,
+    analytics,
+    criteria,
+  } = ENDPOINT_ROUTES;
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const clearCards = () => {};
+  const clearCards = () => { };
 
   const tokenCheck = () => {
     if (localStorage.getItem('token')) {
@@ -66,64 +75,29 @@ function App() {
   return (
     <div className="page">
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/signup" element={<Register />} />
-        <Route
-          path="/login"
-          element={
-            <Auth
-              isFormAuthBlock={isFormAuthBlock}
-              setIsFormAuthBlock={setIsFormAuthBlock}
-            />
-          }
-        />
-        <Route
-          path="/admin-person-area"
-          element={
-            <ProtectedRoute
-              element={AdminPanel}
-              isLoggedIn={isLoggedIn}
-              isLoading={false}
-            />
-          }
-        />
-        {/* канбан доска */}
-        <Route
-          path={board}
-          element={
-            <ProtectedRoute
-              element={Boards}
-              isLoggedIn={isLoggedIn}
-              currentBoard={currentBoard}
-              setCurrentBoard={setCurrentBoard}
-              dropCard={dropCard}
-              setDropCard={setDropCard}
-              startBoard={startBoard}
-              setStartBoard={setStartBoard}
-              clearCards={clearCards}
-              cardsLists={cardsLists}
-              setCardsLists={setCardsLists}
-            />
-          }
-        />
-        <Route
-          path="/myteam"
-          element={
-            <ProtectedRoute
-              element={MyTeamAdmin}
-              isLoggedIn={isLoggedIn}
-              isLoading={false}
-            />
-          }
-        />
-        <Route
-          path="/analytics"
-          element={
-            <ProtectedRoute element={AnalyticsPage} isLoggedIn={isLoggedIn} />
-          }
-        />
-        {/* страница без роута */}
+        <Route path="/" element={<Navigate to={login} />} />
+        <Route path={register} element={<Register />} />
+        <Route path={login} element={<Auth />} />
+        <Route path={personalArea} element={<ProtectedRoute element={PersonalArea} />} />
+        <Route path={myTeam} element={<ProtectedRoute element={MyTeam} />} />
+        <Route path={analytics} element={<ProtectedRoute element={AnalyticsPage} />} />
+        <Route path={criteria} element={<ProtectedRoute element={AssessmentCriteria} />} />
         <Route path={anyPage} element={<NotFound />} />
+        <Route path={board} element={
+          <ProtectedRoute
+            element={Boards}
+            isLoggedIn={isLoggedIn}
+            currentBoard={currentBoard}
+            setCurrentBoard={setCurrentBoard}
+            dropCard={dropCard}
+            setDropCard={setDropCard}
+            startBoard={startBoard}
+            setStartBoard={setStartBoard}
+            clearCards={clearCards}
+            cardsLists={cardsLists}
+            setCardsLists={setCardsLists}
+          />
+        } />
       </Routes>
     </div>
   );

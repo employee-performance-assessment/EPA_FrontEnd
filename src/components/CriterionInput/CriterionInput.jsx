@@ -1,16 +1,30 @@
-import styles from './CriterionInput.module.scss';
+import { useFormValidation } from '../../hooks/useFormValidation';
+import './CriterionInput.scss';
 
-function CriterionInput({ text }) {
+function CriterionInput({ criterion, name, editing, handleDelete }) {
+  const { values, handleChange } = useFormValidation();
+
+  function setVisibleInputData() {
+    if (!values.name) {
+      values.name = name;
+    }
+  }
+
+  setVisibleInputData();
+
   return (
-    <div className={styles.criterion__container}>
+    <div className="criterion">
       <input
-        className={styles.criterion__text}
+        className={`criterion__input ${editing && 'criterion__input_active'}`}
+        name="name"
         type="text"
-        placeholder={text}
-        value={text}
-        // После уточнения функционала добавить возможность админу вводить текст
-        readOnly={true}
+        placeholder={'Введите новый критерий оценки'}
+        value={values.name || ''}
+        disabled={!editing}
+        onChange={handleChange}
       />
+      {editing &&
+        <div className="criterion__button" onClick={() => handleDelete(criterion)} />}
     </div>
   );
 }

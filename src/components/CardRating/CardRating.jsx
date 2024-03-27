@@ -87,7 +87,7 @@ function CardRating({ rating, startDate, endDate }) {
 
   return (
     // в ссылку передаем путь на страницу с отображением оценок
-    <Link Link to={'/'} className="card-rating">
+    <Link to={'/'} className="card-rating">
       <div className="card-rating__stars-container">{setStars()}</div>
       <h3 className="card-rating__title">Рейтинг за неделю</h3>
       <p className="card-rating__subtitle">{formatText()}</p>
