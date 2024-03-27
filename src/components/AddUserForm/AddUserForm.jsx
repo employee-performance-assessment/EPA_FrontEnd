@@ -100,7 +100,7 @@ function AddUserForm({ setIsAddEmployeePopupOpen }) {
         />
         <Input
           type="text"
-          name="jobTitle"
+          name="position"
           value={values.position}
           onChange={(e) =>
             handleChangeInput(

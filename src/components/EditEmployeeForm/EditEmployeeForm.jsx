@@ -13,56 +13,92 @@ import {
   isValidPassword,
 } from '../../utils/validationConstants.js';
 import './EditEmployeeForm.scss';
+import { updateEmployeeData } from '../../utils/mainApi.js';
 
-function EditEmployeeForm({ setIsEditEmployeePopupOpen }) {
+function EditEmployeeForm({ setIsEditEmployeePopupOpen, user, handleUpdateUser }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const { values, handleChange, errors, setErrors, isValid, setIsValid } =
-    useFormValidation({
+  const {
+    values,
+    setValues,
+    handleChange,
+    errors,
+    setErrors,
+    isValid,
+    setIsValid,
+  } = useFormValidation({
+  });
+
+  const handleCloseEditEmployeePopup = () => {
+    setIsEditEmployeePopupOpen(false);
+    setErrors({
       name: '',
       position: '',
       email: '',
       password: '',
       confirmPassword: '',
     });
+  };
+
+  useEffect(() => {
+    if (user) {
+      setValues({
+        ...values,
+        name: user.fullName || '',
+        position: user.position || '',
+        email: user.email || '',
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     const hasErrors =
+      errors.name ||
       errors.email ||
       errors.password ||
       errors.confirmPassword ||
       errors.position;
 
-    const hasValues =
-      !values.name ||
-      !values.position ||
-      !values.email ||
-      !values.password ||
-      !values.confirmPassword;
+    const hasValues = !values.name || !values.position || !values.email;
+    const hasPasswordNoConfirmPassword =
+      values.password && !values.confirmPassword;
 
-    if (hasErrors || hasValues) {
+    if (hasErrors || hasValues || hasPasswordNoConfirmPassword) {
       setIsValid(false);
     } else {
       setIsValid(true);
     }
-  }, [errors]);
+
+    return () => {
+      setErrors({});
+    };
+  }, [values]);
 
   useEffect(() => {
     if (values.confirmPassword !== values.password) {
       setErrors({ confirmPassword: VALIDATION_MESSAGES.passwordsNotMatch });
+    } else {
+      setErrors({ confirmPassword: '' });
     }
-  }, [values.confirmPassword]);
+  }, [values.confirmPassword, values.password]);
 
   const editEmployeeData = (e) => {
     e.preventDefault();
-    alert('u edited user info');
-    // const { name, position, email, password } = values;
-    // const { token } = JSON.parse(localStorage.getItem('token'));
-  };
+    const { name, position, email, password } = values;
+    const { token } = JSON.parse(localStorage.getItem('token'));
 
-  const handleCloseEditEmployeePopup = () => {
-    setIsEditEmployeePopupOpen(false);
+    updateEmployeeData({
+      id: user.id,
+      token,
+      fullName: name,
+      position,
+      email,
+      password,
+    }).then((res) => {
+      handleCloseEditEmployeePopup();
+      handleUpdateUser(res);
+    });
   };
 
   return (
@@ -71,7 +107,7 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen }) {
         formTitle="Редактирование данных"
         handleSubmit={editEmployeeData}
         isValid={isValid}
-        handleClosePopup = { handleCloseEditEmployeePopup }
+        handleClosePopup={handleCloseEditEmployeePopup}
       >
         <Input
           type="text"
@@ -95,7 +131,7 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen }) {
         />
         <Input
           type="text"
-          name="jobTitle"
+          name="position"
           value={values.position}
           onChange={(e) =>
             handleChangeInput(
@@ -153,7 +189,7 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen }) {
               placeholder="Пароль авторизации"
               spanClassName="userForm__span"
               error={errors.password}
-              required={true}
+              required={false}
             />
             <button
               type="button"
@@ -188,7 +224,7 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen }) {
               autoComplete="off"
               spanClassName="userForm__span"
               error={errors.confirmPassword}
-              required={true}
+              required={false}
             />
             <button
               type="button"

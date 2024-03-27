@@ -15,7 +15,8 @@ export const VALIDATION_MESSAGES = {
   invalidPassword:
     'Длина пароля не менее 8 символов и не более 14, только латинскими буквами',
   invalidJobTitle: 'Не более 20 символов',
-  passwordsNotMatch: 'Пароль и подтверждение пароля должны совпадать'
+  passwordsNotMatch: 'Пароль и подтверждение пароля должны совпадать',
+  emptyConfirmPassword: 'Заполните поле'
 };
 
 export const validateInput = (
