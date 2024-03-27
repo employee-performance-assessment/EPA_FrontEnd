@@ -4,7 +4,7 @@ import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import EmptyList from '../../images/EmptyList.png';
 import UsersThree from '../../images/UsersThree.svg';
 import PlusIcon from '../../images/Plus.svg';
-import { getAllUsers, deleteEmployee } from '../../utils/mainApi.js';
+import { getAllUsers, deleteUser } from '../../utils/mainApi.js';
 import AddUserForm from '../../components/AddUserForm/AddUserForm.jsx';
 import EmployeeList from '../../components/EmployeeList/EmployeeList.jsx';
 import EditEmployeeForm from '../../components/EditEmployeeForm/EditEmployeeForm.jsx';
@@ -30,7 +30,7 @@ function MyTeam() {
   };
 
   const handleDeleteEmployee = (token, id) => {
-    deleteEmployee(token, id).then(() => {
+    deleteUser(token, id).then(() => {
       setEmployeeList((prevList) => prevList.filter((user) => user.id !== id));
     });
   };

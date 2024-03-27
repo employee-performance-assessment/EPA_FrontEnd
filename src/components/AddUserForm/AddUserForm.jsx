@@ -3,7 +3,7 @@ import UserForm from '../UserForm/UserForm.jsx';
 import Input from '../Input/Input.jsx';
 import OpenEyeIcon from '../../images/eye-open.svg';
 import CloseEyeIcon from '../../images/eye-close.svg';
-import { addNewEmployee } from '../../utils/mainApi.js';
+import { addNewUser } from '../../utils/mainApi.js';
 import { useFormValidation } from '../../hooks/useFormValidation.js';
 import {
   handleChangeInput,
@@ -59,7 +59,7 @@ function AddUserForm({ setIsAddEmployeePopupOpen }) {
     e.preventDefault();
     const { name, position, email, password } = values;
     const { token } = JSON.parse(localStorage.getItem('token'));
-    addNewEmployee({ token, fullName: name, position, email, password }).then(
+    addNewUser({ token, fullName: name, position, email, password }).then(
       () => {
         setIsAddEmployeePopupOpen(false);
       }

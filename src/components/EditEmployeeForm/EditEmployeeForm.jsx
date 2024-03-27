@@ -13,7 +13,7 @@ import {
   isValidPassword,
 } from '../../utils/validationConstants.js';
 import './EditEmployeeForm.scss';
-import { updateEmployeeData } from '../../utils/mainApi.js';
+import { updateUserData } from '../../utils/mainApi.js';
 
 function EditEmployeeForm({ setIsEditEmployeePopupOpen, user, handleUpdateUser }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -88,7 +88,7 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user, handleUpdateUser }
     const { name, position, email, password } = values;
     const { token } = JSON.parse(localStorage.getItem('token'));
 
-    updateEmployeeData({
+    updateUserData({
       id: user.id,
       token,
       fullName: name,
