@@ -1,7 +1,7 @@
 import EmployeeProfileCard from '../EmployeeProfileCard/EmployeeProfileCard.jsx';
 import './EmployeeList.scss';
 
-function EmployeeList({ employeeList, handleOpenEditEmployeeForm }) {
+function EmployeeList({ employeeList, handleOpenEditEmployeeForm, handleDeleteEmployee }) {
   return (
     <section className="employeeList">
       {employeeList.map((employee) => (
@@ -9,6 +9,7 @@ function EmployeeList({ employeeList, handleOpenEditEmployeeForm }) {
           user={employee}
           key={employee.id}
           handleOpenEditEmployeeForm={handleOpenEditEmployeeForm}
+          handleDeleteEmployee={handleDeleteEmployee}
         />
       ))}
     </section>
