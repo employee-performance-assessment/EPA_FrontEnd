@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import IconDots from '../../images/3dots.svg';
 import './EmployeeProfileCard.scss';
 
-function EmployeeProfileCard({ user, handleOpenEditEmployeeForm }) {
+function EmployeeProfileCard({ user, handleOpenEditEmployeeForm, handleDeleteEmployee }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const openMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -12,6 +14,11 @@ function EmployeeProfileCard({ user, handleOpenEditEmployeeForm }) {
   const openEditEmployeePopup = () => {
     handleOpenEditEmployeeForm(user);
     setIsMenuOpen(false);
+  };
+
+  const deleteEmployee = () => {
+    const { token } = JSON.parse(localStorage.getItem('token'));
+    handleDeleteEmployee(token, user.id);
   };
 
   return (
@@ -43,13 +50,13 @@ function EmployeeProfileCard({ user, handleOpenEditEmployeeForm }) {
           </button>
           <button
             className="profile-card__menu-option"
-            // onClick={() => console.log("Go to profile page clicked")}
+            onClick={() => navigate(`/${user.id}`)} // указать роут лк сотрудника
           >
             Перейти в ЛК
           </button>
           <button
             className="profile-card__menu-option"
-            // onClick={() => console.log("Delete clicked")}
+            onClick={deleteEmployee}
           >
             Удалить
           </button>

@@ -88,7 +88,7 @@ function AddUserForm({ setIsAddEmployeePopupOpen }) {
               handleChange,
               errors,
               setErrors,
-              VALIDATION_MESSAGES.invalidName,
+              VALIDATION_MESSAGES.invalidNameOrPosition,
               isValidName
             )
           }
@@ -108,7 +108,7 @@ function AddUserForm({ setIsAddEmployeePopupOpen }) {
               handleChange,
               errors,
               setErrors,
-              VALIDATION_MESSAGES.invalidJobTitle,
+              VALIDATION_MESSAGES.invalidNameOrPosition,
               isValidJobTitle
             )
           }

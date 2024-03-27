@@ -119,7 +119,7 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user, handleUpdateUser }
               handleChange,
               errors,
               setErrors,
-              VALIDATION_MESSAGES.invalidName,
+              VALIDATION_MESSAGES.invalidNameOrPosition,
               isValidName
             )
           }
@@ -139,7 +139,7 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user, handleUpdateUser }
               handleChange,
               errors,
               setErrors,
-              VALIDATION_MESSAGES.invalidJobTitle,
+              VALIDATION_MESSAGES.invalidNameOrPosition,
               isValidJobTitle
             )
           }

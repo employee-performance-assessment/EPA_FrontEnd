@@ -4,7 +4,7 @@ import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import EmptyList from '../../images/EmptyList.png';
 import UsersThree from '../../images/UsersThree.svg';
 import PlusIcon from '../../images/Plus.svg';
-import { getAllUsers } from '../../utils/mainApi.js';
+import { getAllUsers, deleteEmployee } from '../../utils/mainApi.js';
 import AddUserForm from '../../components/AddUserForm/AddUserForm.jsx';
 import EmployeeList from '../../components/EmployeeList/EmployeeList.jsx';
 import EditEmployeeForm from '../../components/EditEmployeeForm/EditEmployeeForm.jsx';
@@ -29,6 +29,12 @@ function MyTeam() {
       prevList.map((user) => (user.id === updatedUser.id ? updatedUser : user)));
   };
 
+  const handleDeleteEmployee = (token, id) => {
+    deleteEmployee(token, id).then(() => {
+      setEmployeeList((prevList) => prevList.filter((user) => user.id !== id));
+    });
+  };
+
   useEffect(() => {
     const { token } = JSON.parse(localStorage.getItem('token'));
     if (token) {
@@ -38,6 +44,7 @@ function MyTeam() {
             setEmployeeList(res);
           }
         })
+        // eslint-disable-next-line no-alert
         .catch((err) => alert(err));
     }
   }, [setEmployeeList]);
@@ -86,6 +93,7 @@ function MyTeam() {
               <EmployeeList
                 employeeList={employeeList}
                 handleOpenEditEmployeeForm={handleOpenEditEmployeeForm}
+                handleDeleteEmployee={handleDeleteEmployee}
               />
             ) : (
               <div className="my-team__content_type_empty">

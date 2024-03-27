@@ -36,7 +36,9 @@ export const getAllUsers = (token) =>
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-  }).then((res) => checkResponse(res));
+  })
+    .then((res) => checkResponse(res));
+  // .then((users) => users.filter((user) => user.role === 'ROLE_USER'));
 
 export const addNewEmployee = ({
   token,
@@ -102,3 +104,13 @@ export const updateEmployeeData = ({
     body: JSON.stringify(requestBody),
   }).then((res) => checkResponse(res));
 };
+
+export const deleteEmployee = (token, id) =>
+  fetch(`${ADMIN_USERS}/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => checkResponse(res));
