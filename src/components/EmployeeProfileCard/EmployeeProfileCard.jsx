@@ -16,7 +16,7 @@ function EmployeeProfileCard({ user, handleOpenEditEmployeeForm, handleDeleteEmp
     setIsMenuOpen(false);
   };
 
-  const deleteEmployee = () => {
+  const deleteUser = () => {
     const { token } = JSON.parse(localStorage.getItem('token'));
     handleDeleteEmployee(token, user.id);
   };
@@ -56,7 +56,7 @@ function EmployeeProfileCard({ user, handleOpenEditEmployeeForm, handleDeleteEmp
           </button>
           <button
             className="profile-card__menu-option"
-            onClick={deleteEmployee}
+            onClick={deleteUser}
           >
             Удалить
           </button>
