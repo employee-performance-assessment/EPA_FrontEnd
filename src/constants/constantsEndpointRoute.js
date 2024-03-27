@@ -7,5 +7,6 @@ export const ENDPOINT_ROUTES = {
   analytics: '/analytics',
   estimate: '/estimate',
   criteria: '/criteria-setting',
+  viewCards: '/view-cards',
   anyPage: '/*',
 };

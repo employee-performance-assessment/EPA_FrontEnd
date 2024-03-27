@@ -17,13 +17,14 @@ import MyTeam from '../../pages/MyTeam/MyTeam.jsx';
 import Boards from '../Boards/Boards.jsx';
 import AnalyticsPage from '../../pages/AnalyticsPage/AnalyticsPage.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
+import AssessmentCriteria from '../../pages/AssessmentCriteria/AssessmentCriteria.jsx';
+import EmployeeViewPage from '../../pages/EmployeeViewPage/EmployeeViewPage.jsx';
 
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
 import { getUserData } from '../../utils/mainApi.js';
 import { setAdminData } from '../../store/slices/adminDataSlice.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
-import AssessmentCriteria from '../../pages/AssessmentCriteria/AssessmentCriteria.jsx';
 
 function App() {
   // в cardsList записываем ответ на запрос get от API, задания со всеми параметрами
@@ -36,12 +37,18 @@ function App() {
     anyPage,
     analytics,
     criteria,
+    viewCards,
   } = ENDPOINT_ROUTES;
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
 
+<<<<<<< HEAD
+=======
+  const clearCards = () => { };
+
+>>>>>>> 616c11bff63f69e798ced35f69d348015368ed5a
   const tokenCheck = () => {
     if (localStorage.getItem('token')) {
       const { token } = JSON.parse(localStorage.getItem('token'));
@@ -78,6 +85,7 @@ function App() {
           <Route path={myTeam} element={<MyTeam />} />
           <Route path={analytics} element={<AnalyticsPage />} />
           <Route path={criteria} element={<AssessmentCriteria />} />
+          <Route path={viewCards} element={<EmployeeViewPage />} />
         </Route>
         <Route path="" element={<ProtectedRoute />}>
           <Route path={anyPage} element={<NotFound />} />
