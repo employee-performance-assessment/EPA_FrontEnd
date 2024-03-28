@@ -1,0 +1,22 @@
+@import '../../styles/vars';
+
+.employeeViewCriteria__card {
+  display: grid;
+  grid-template-columns: 419px 230px 167px;
+  column-gap: 24px;
+  margin-bottom: 20px;
+}
+
+.employeeViewCriteria__text {
+  font-size: 20px;
+  font-weight: $fw-medium;
+  line-height: 24.2px;
+  color: $black-base-color;
+}
+
+.employeeViewCriteria__starbox {
+  width: 166.91px;
+  height: 52.67px;
+  border-radius: 10px;
+  background-color: $grey-base-color;
+}

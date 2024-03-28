@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFormValidation } from '../../hooks/useFormValidation.js';
 import { updateAdminData } from '../../utils/mainApi.js';
 import { setAdminData } from '../../store/slices/adminDataSlice.js';
-import './PersonalArea.scss';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
+import './PersonalArea.scss';
 
 function PersonalArea() {
   const [editing, setEditing] = useState(false);

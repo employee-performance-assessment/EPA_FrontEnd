@@ -75,7 +75,7 @@
 .cardRating__star_out {
   position: relative;
   z-index: 1;
-  background-image: url(../../images/star_card_empty.svg);
+  background-image: url(../../images/star-card-empty.svg);
   width: 17px;
   height: 16px;
   background-repeat: no-repeat;
@@ -84,7 +84,7 @@
 }
 
 .cardRating__star_in {
-  background-image: url(../../images/star_card_full.svg);
+  background-image: url(../../images/star-card-full.svg);
   position: absolute;
   z-index: 2;
   overflow: hidden;
