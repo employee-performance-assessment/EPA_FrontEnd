@@ -7,6 +7,7 @@
   align-items: center;
   gap: 8px;
   margin-top: 40px;
+  height: 64px;
 }
 
 .employeeViewFilter__marks {
@@ -27,10 +28,12 @@
   width: 275px;
   height: 63px;
   margin-right: 40px;
+  display: flex;
+  align-items: center;
 }
 
 .employeeViewFilter__button {
-  height: 52px;
+  height: 54px;
   background: $white-base-color;
   border-radius: 40px;
   border: solid 2px $dark-grey-base-color;
@@ -60,7 +63,7 @@
 
 .employeeViewFilter__input {
   width: 330px;
-  height: 52px;
+  height: 54px;
   border-radius: 20px;
   border: solid 2px $dark-grey-base-color;
   padding: 14px 24px;

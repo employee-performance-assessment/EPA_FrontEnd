@@ -1,24 +1,35 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import IconDots from '../../images/3dots.svg';
 import './EmployeeProfileCard.scss';
 
-function EmployeeProfileCard({ user, setIsEditEmployeePopupOpen }) {
+function EmployeeProfileCard({ user, handleOpenEditEmployeeForm, handleDeleteEmployee }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const openMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const openEditEmployeePopup = () => {
-    setIsEditEmployeePopupOpen(true);
+    handleOpenEditEmployeeForm(user);
     setIsMenuOpen(false);
+  };
+
+  const deleteUser = () => {
+    const { token } = JSON.parse(localStorage.getItem('token'));
+    handleDeleteEmployee(token, user.id);
   };
 
   return (
     <div className="profile-card">
       <div className="profile-card__info-block">
-        <p className="profile-card__name">{user.fullName}</p>
-        <p className="profile-card__job-title">/ {user.position}</p>
+        <div className='profile-card__name-block'>
+          <p className="profile-card__name">{user.fullName}</p>
+        </div>
+        <div className='profile-card__position-block'>
+          <p className="profile-card__position">/ {user.position}</p>
+        </div>
       </div>
       <div className="profile-card__email">{user.email}</div>
       <div className="profile-card__menu">
@@ -39,13 +50,13 @@ function EmployeeProfileCard({ user, setIsEditEmployeePopupOpen }) {
           </button>
           <button
             className="profile-card__menu-option"
-            // onClick={() => console.log("Go to profile page clicked")}
+            onClick={() => navigate(`/${user.id}`)} // указать роут лк сотрудника
           >
             Перейти в ЛК
           </button>
           <button
             className="profile-card__menu-option"
-            // onClick={() => console.log("Delete clicked")}
+            onClick={deleteUser}
           >
             Удалить
           </button>

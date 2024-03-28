@@ -1,9 +1,7 @@
-import tasks from './tasks.json';
-import marks from './marks.json';
 import styles from './EmployeeViewBlock.module.scss';
 import EmployeeViewCard from '../EmployeeViewCard/EmployeeViewCard.jsx';
 
-function EmployeeViewBlock({ view }) {
+function EmployeeViewBlock({ view, tasks, marks }) {
   return (
     <ul className={styles.employeeViewBlock__list}>
       {/* Текст карточек пока приходит из json */}
