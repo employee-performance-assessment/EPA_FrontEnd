@@ -3,6 +3,7 @@ import styles from './EmployeeRatingPage.module.scss';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import EmployeeViewCriteria from '../../components/EmployeeViewCriteria/EmployeeViewCriteria.jsx';
 import criteria from './criteria.json';
+import setStars from '../../utils/setStars.js';
 
 function EmployeeRatingPage() {
   return (
@@ -20,7 +21,10 @@ function EmployeeRatingPage() {
               Оценки за Февраль 2024
             </h2>
           </div>
-          <div className={styles.employeeRatingPage__score}></div>
+          <div className={styles.employeeRatingPage__score}>
+            {/* Захардкодил рейтинг в хедере, будет приходить с бэка */}
+            {setStars('4', styles.employeeRatingPage__star_out, styles.employeeRatingPage__star_in)}
+          </div>
         </div>
         <div className={styles.employeeRatingPage__block}>
           <div className={styles.employeeRatingPage__criteria}>
@@ -31,7 +35,7 @@ function EmployeeRatingPage() {
           <ul className={styles.employeeRatingPage__list}>
             {/* Текст карточек пока приходит из json */}
             {criteria.map((card) => (
-              <EmployeeViewCriteria key={card.id} text={card.text} />
+              <EmployeeViewCriteria key={card.id} text={card.text} rating={card.rating} />
             ))}
           </ul>
 

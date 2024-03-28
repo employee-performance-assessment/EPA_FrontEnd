@@ -2,7 +2,7 @@ import InputStars from '../InputStars/InputStars';
 
 import styles from './EmployeeViewFilter.module.scss';
 
-function EmployeeViewFilter({ view, handleChange }) {
+function EmployeeViewFilter({ view, handleChange, showAllCards, version }) {
   return !view ? (
     <div className={styles.employeeViewFilter__container}>
       <h3 className={styles.employeeViewFilter__title}>Фильтры:</h3>
@@ -32,13 +32,12 @@ function EmployeeViewFilter({ view, handleChange }) {
       <div className={styles.employeeViewFilter__marks}>
         <h3 className={styles.employeeViewFilter__title}>Фильтры:</h3>
         <div className={styles.employeeViewFilter__stars}>
-          <InputStars
-            name={'stars'}
-            handleChange={handleChange} />
+          <InputStars name={'stars'} handleChange={handleChange} version={version} />
         </div>
         <button
           type="button"
           className={`${styles.employeeViewFilter__button_marks} ${styles.employeeViewFilter__button}`}
+          onClick={showAllCards}
         >
           Все
         </button>
