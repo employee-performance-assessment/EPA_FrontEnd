@@ -5,7 +5,7 @@ import EmptyList from '../../images/EmptyList.png';
 import UsersThree from '../../images/UsersThree.svg';
 import PlusIcon from '../../images/Plus.svg';
 import { getAllUsers, deleteUser } from '../../utils/mainApi.js';
-import AddUserForm from '../../components/AddUserForm/AddUserForm.jsx';
+import AddEmployeeForm from '../../components/AddEmployeeForm/AddEmployeeForm.jsx';
 import EmployeeList from '../../components/EmployeeList/EmployeeList.jsx';
 import EditEmployeeForm from '../../components/EditEmployeeForm/EditEmployeeForm.jsx';
 
@@ -35,6 +35,11 @@ function MyTeam() {
     });
   };
 
+  const handleAddNewEmployee = (user) => {
+    setEmployeeList((prevList) => [...prevList, user]);
+    setIsAddEmployeePopupOpen(false);
+  };
+
   useEffect(() => {
     const { token } = JSON.parse(localStorage.getItem('token'));
     if (token) {
@@ -52,7 +57,10 @@ function MyTeam() {
   return (
     <section className="my-team">
       {isAddEmployeePopupOpen && (
-        <AddUserForm setIsAddEmployeePopupOpen={setIsAddEmployeePopupOpen} />
+        <AddEmployeeForm
+          setIsAddEmployeePopupOpen={setIsAddEmployeePopupOpen}
+          handleAddNewEmployee={handleAddNewEmployee}
+        />
       )}
       {isEditEmployeePopupOpen && (
         <EditEmployeeForm
