@@ -68,6 +68,32 @@
   right: 37px;
   border-radius: 30px;
   background-color: $grey-base-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.employeeRatingPage__star_out {
+  position: relative;
+  z-index: 1;
+  background-image: url(../../images/star-employee-rating-page-empty.svg);
+  width: 40px;
+  height: 39px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 14px;
+}
+
+.employeeRatingPage__star_in {
+  background-image: url(../../images/star-employee-rating-page-full.svg);
+  position: absolute;
+  z-index: 2;
+  overflow: hidden;
+  width: 0;
+  width: 40px;
+  height: 39px;
+  background-repeat: no-repeat;
+  background-size: 40px auto;
 }
 
 .employeeRatingPage__block {
