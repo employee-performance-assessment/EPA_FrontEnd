@@ -28,7 +28,7 @@ export const updateAdminData = (id, token, data) =>
   });
 
 export const getAllUsers = (token) =>
-  makeAuthenticatedRequest(USERS, 'GET', token);
+  makeAuthenticatedRequest(ADMIN_USERS, 'GET', token);
 
 export const addNewUser = ({ token, fullName, position, email, password }) =>
   makeAuthenticatedRequest(ADMIN_USERS, 'POST', token, { fullName, position, email, password });
