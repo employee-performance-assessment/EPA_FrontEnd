@@ -39,8 +39,8 @@ function AssessmentBlock() {
   const data2 = [
     {
       id: 0,
-      name: 'Creola Katherine Johnson',
-      job: 'mathematician',
+      name: 'Creola',
+      job: 'chemist',
     },
     {
       id: 1,
@@ -108,7 +108,7 @@ function AssessmentBlock() {
           />
           <form className="filters__items filters__calendar">Календарь</form>
         </div>
-        {data.lenght === 0 ? (
+        {data.length === 0 ? (
           <>
             <img
               src={image}

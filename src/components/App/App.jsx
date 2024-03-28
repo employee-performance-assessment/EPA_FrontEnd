@@ -24,6 +24,7 @@ import { getUserData } from '../../utils/mainApi.js';
 import { setAdminData } from '../../store/slices/adminDataSlices.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 import AssessmentBlock from '../../pages/AssesmentBlock/AssessmentBlock.jsx';
+import Questionnaire from '../Questionnaire/Questionnaire.jsx';
 
 function App() {
   // в cardsList записываем ответ на запрос get от API, задания со всеми параметрами
@@ -40,6 +41,7 @@ function App() {
     anyPage,
     analytics,
     estimate,
+    questionnaire,
   } = ENDPOINT_ROUTES;
   const [isFormAuthBlock, setIsFormAuthBlock] = useState(false);
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
@@ -136,6 +138,12 @@ function App() {
           path={estimate}
           element={
             <ProtectedRoute element={AssessmentBlock} isLoggedIn={isLoggedIn} />
+          }
+        />
+        <Route
+          path={questionnaire}
+          element={
+            <ProtectedRoute element={Questionnaire} isLoggedIn={isLoggedIn} />
           }
         />
         {/* страница без роута */}
