@@ -4,16 +4,17 @@ import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import EmployeeViewCriteria from '../../components/EmployeeViewCriteria/EmployeeViewCriteria.jsx';
 import criteria from './criteria.json';
 import setStars from '../../utils/setStars.js';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
 function EmployeeRatingPage() {
+  const { viewCards } = ENDPOINT_ROUTES;
   return (
     <section className={styles.employeeRatingPage__wrapper}>
       <SideMenu />
       <div className={styles.employeeRatingPage__container}>
         <div className={styles.employeeRatingPage__header}>
           <div className={styles.employeeRatingPage__row}>
-            {/* Временный роут-заглушка */}
-            <Link to={'#'} className={styles.employeeRatingPage__link}>
+            <Link to={viewCards} className={styles.employeeRatingPage__link}>
               <div className={styles.employeeRatingPage__icon}></div>
               <p className={styles.employeeRatingPage__caption}>Назад </p>
             </Link>

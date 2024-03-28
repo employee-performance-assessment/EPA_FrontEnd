@@ -82,6 +82,10 @@
   background-repeat: no-repeat;
   background-size: contain;
   margin-right: 14px;
+
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
 .employeeRatingPage__star_in {
