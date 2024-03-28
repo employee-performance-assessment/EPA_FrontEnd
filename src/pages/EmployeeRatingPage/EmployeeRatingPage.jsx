@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styles from './EmployeeRatingPage.module.scss';
-import SideMenu from '../SideMenu/SideMenu.jsx';
+import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 
 function EmployeeRatingPage() {
   return (

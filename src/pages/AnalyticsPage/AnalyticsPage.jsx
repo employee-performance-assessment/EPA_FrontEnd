@@ -2,53 +2,51 @@ import { useState /* , useEffect */ } from 'react';
 import { useSelector } from 'react-redux';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import Checkbox from '../../components/Checkbox/Checkbox.jsx';
+import RatingCard from '../../components/RatingCard/RatingCard.jsx';
 
-import flyMan from '../../images/fly-man.svg';
-
-/* import ratingStar from '../../images/rating_star_full.svg';
-import emptyStar from '../../images/rating_star_empty.svg'; */
+// import flyMan from '../../images/fly-man.svg';
 
 import commandIcon from '../../images/command-icon.svg';
 
 import styles from './AnalyticsPage.module.scss';
 
 function AnalyticsPage() {
-  /* const reviewData = []; */
+  const data =
+    {
+      teamRating: [
+        {
+          year: 2023,
+          month: 1,
+          rating: 4,
+          team: 'user',
+          id: 1,
+        },
+        {
+          year: 2023,
+          month: 2,
+          rating: 5,
+          team: 'user',
+          id: 2,
+        },
+        {
+          year: 2023,
+          month: 3,
+          rating: 2,
+          team: 'user',
+          id: 3,
+        },
+        {
+          year: 2023,
+          month: 4,
+          rating: 3,
+          team: 'user',
+          id: 4,
+        },
+      ],
+    };
 
   const [value, setValue] = useState('');
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
-
-  /* const [estimation, setEstimation] = useState(reviewData);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    const lastIndex = estimation.length - 1;
-    if (currentIndex < 0) {
-      setCurrentIndex(lastIndex);
-    }
-    if (currentIndex > lastIndex) {
-      setCurrentIndex(0);
-    }
-  }, [currentIndex, estimation]);
-
-  useEffect(() => {
-    const slider = setInterval(
-      () => setCurrentIndex((prevState) => prevState + 1),
-      50000
-    );
-    return () => {
-      clearInterval(slider);
-    };
-  }, [currentIndex]);
-
-  const handleStarr = (rating) => {
-    const arr = [];
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < rating; i++) {
-      arr.push(<img src={ratingStar} alt="рейтинг" />);
-    }
-    return arr;
-  }; */
 
   // console.log(value.split('-').reverse().join('-'));
 
@@ -80,53 +78,28 @@ function AnalyticsPage() {
             onBlur={(e) => (e.target.type = 'text')}
           />
         </div>
-        <article className={styles.info_empty}>
+        {/* <article className={styles.info_empty}>
           <h3>Команда</h3>
           <div className={styles.img_block}>
             <img className={styles.flyMan} src={flyMan} alt="Список пуст" />
             <span>Данных для аналитики ещё нет.</span>
           </div>
-
-          {/* {<section className={styles.slider}>
-      {estimation.map((data, personIndex) => {
-        const { id, date, name, rating } = data;
-        let state = styles.nextSlide;
-        if (personIndex === currentIndex) {
-          state = styles.activeSlide;
-        }
-        if (
-          personIndex === currentIndex - 1 ||
-          (currentIndex === 0 && personIndex === estimation.length - 1)
-        ) {
-          state = styles.lastSlide;
-        }
-        return (
-          <article className={state} key={id}>
-            <div className={styles.info_block}>
-              <span className={styles.year}>{date}</span>
-              <h4 className={styles.name}>{name}</h4>
-              <div className={styles.rating}>{handleStarr(rating)}</div>
-            </div>
-          </article>
-        );
-      })}
-      <button
-        onClick={() => setCurrentIndex((prevState) => prevState - 1)}
-        className={styles.arrow}
-        type="button"
-      ></button>
-      <button
-        onClick={() => setCurrentIndex((prevState) => prevState + 1)}
-        className={styles.arrow}
-        type="button"
-      ></button>
-    </section>} */}
-
           <img
             className={styles.commandIcon}
             src={commandIcon}
             alt="Иконка команды"
           />
+        </article> */}
+        <article className={styles.info_data}>
+          <div className={styles.command_block}>
+            <h3>Команда</h3>
+            <img
+            className={styles.commandIcon}
+            src={commandIcon}
+            alt="Иконка команды"
+          />
+          </div>
+          <RatingCard data={data} />
         </article>
       </div>
     </section>

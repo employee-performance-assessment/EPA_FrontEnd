@@ -1,0 +1,119 @@
+@import '../../styles/vars';
+@import '../../styles/mixins';
+
+.slider {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  height: 320px;
+  width: 100%;
+  border: 1px solid;
+
+  .info_block {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+
+    .year {
+      @include text($font-size: 16px, $line-height: 1.15);
+      margin-bottom: 18px;
+    }
+
+    .rating {
+      width: 338px;
+      height: 197px;
+      margin: 9px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .month_block {
+        width: 100%;
+        height: 44px;
+        align-items: center;
+        justify-content: space-between;
+
+        span {
+          @include text($black-base-color, 16px, 500, 19px);
+
+        }
+
+        .star_out {
+          position: relative;
+          z-index: 1;
+          background-image: url(../../images/star_header_empty.svg);
+          width: 43px;
+          height: 43px;
+          background-repeat: no-repeat;
+          background-size: cover;
+          margin-right: 8px;
+        }
+
+        .star_in {
+          background-image: url(../../images/star_header_full.svg);
+          position: absolute;
+          z-index: 2;
+          overflow: hidden;
+          width: 0;
+          width: 43px;
+          height: 43px;
+          background-repeat: no-repeat;
+          background-size: cover;
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+
+  .arrow {
+  @include button;
+  position: absolute;
+  top: 40%;
+  left: 0;
+  width: 56px;
+  height: 56px;
+  background-image: url(../../images/arrow.svg);
+  background-repeat: no-repeat;
+  transition: opacity .5s ease-in-out;
+  z-index: 2;
+
+  &:last-of-type {
+    transform: rotate(180deg);
+    left: 1024px;
+  }
+
+  &:hover {
+    opacity: .7;
+  }
+}
+
+article {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  top: 0;
+  left: 0;
+  width: 431px;
+  height: 100%;
+  opacity: 0;
+  transition: 0.5s;
+  padding: 24px;
+
+  &.activeSlide {
+    opacity: 1;
+    transform: translate(0);
+  }
+
+  &.lastSlide {
+    transform: translate(-100%);
+  }
+
+  &.nextSlide {
+    transform: translate(100%);
+  }
+}
+}
