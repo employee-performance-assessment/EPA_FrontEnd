@@ -20,6 +20,7 @@ import NotFound from '../NotFound/NotFound.jsx';
 import AssessmentCriteria from '../../pages/AssessmentCriteria/AssessmentCriteria.jsx';
 import EmployeeViewPage from '../../pages/EmployeeViewPage/EmployeeViewPage.jsx';
 import EmployeeRatingPage from '../../pages/EmployeeRatingPage/EmployeeRatingPage.jsx';
+import TaskViewPage from '../../pages/TaskViewPage/TaskViewPage.jsx';
 
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
@@ -72,6 +73,7 @@ function App() {
 
   return (
     <div className="page">
+      <TaskViewPage />
       <Routes>
         <Route path="/" element={<Navigate to={login} />} />
         <Route path={register} element={<Register />} />
