@@ -9,5 +9,6 @@ export const ENDPOINT_ROUTES = {
   criteria: '/criteria-setting',
   viewCards: '/view-cards',
   viewRating: '/view-rating',
+  viewTask: '/view-task',
   anyPage: '/*',
 };
