@@ -9,7 +9,7 @@ function UserForm({ formTitle, handleSubmit, children, isValid, handleClosePopup
         <fieldset className="userForm__fieldset">
           {children}
         </fieldset>
-        <button type='submit' className='userForm__submit-button' disable={!isValid}>Подтвердить</button>
+        <button type='submit' className='userForm__submit-button' disabled={!isValid}>Подтвердить</button>
       </form>
       <button className="userForm__closeIcon-block" type='button' onClick={handleClosePopup}>
           <img

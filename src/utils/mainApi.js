@@ -1,66 +1,49 @@
 import checkResponse from './checkResponse.js';
 import { ADMIN_CRITERIA, USERS, ADMIN_USERS } from '../constants/constantAPI.js';
 
+const makeAuthenticatedRequest = (url, method, token, body) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  };
+
+  const options = {
+    method,
+    headers,
+    body: body ? JSON.stringify(body) : undefined,
+  };
+
+  return fetch(url, options).then((res) => checkResponse(res));
+};
+
 export const getUserData = (token) =>
-  fetch(`${USERS}/me`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  }).then((res) => checkResponse(res));
+  makeAuthenticatedRequest(`${USERS}/me`, 'GET', token);
 
 export const updateAdminData = (id, token, data) =>
-  fetch(`${ADMIN_USERS}/${id}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      fullName: data.fullName,
-      position: data.position,
-      email: data.email,
-      password: data.password,
-    }),
-  }).then((res) => checkResponse(res));
+  makeAuthenticatedRequest(`${ADMIN_USERS}/${id}`, 'PATCH', token, {
+    fullName: data.fullName,
+    position: data.position,
+    email: data.email,
+    password: data.password,
+  });
 
 export const getAllUsers = (token) =>
-  fetch(USERS, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  }).then((res) => checkResponse(res));
+  makeAuthenticatedRequest(ADMIN_USERS, 'GET', token);
 
-export const addNewEmployee = ({ token, fullName, position, email, password }) =>
-  fetch(ADMIN_USERS, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ fullName, position, email, password }),
-  }).then((res) => checkResponse(res));
+export const addNewUser = ({ token, fullName, position, email, password }) =>
+  makeAuthenticatedRequest(ADMIN_USERS, 'POST', token, { fullName, position, email, password });
 
 export const getAllCriterion = (token) =>
-  fetch(ADMIN_CRITERIA, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  }).then((res) => checkResponse(res));
+  makeAuthenticatedRequest(ADMIN_CRITERIA, 'GET', token);
 
 export const addCriterion = (token, criterionName) =>
-  fetch(ADMIN_CRITERIA, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      name: criterionName,
-    }),
-  }).then((res) => checkResponse(res));
+  makeAuthenticatedRequest(ADMIN_CRITERIA, 'POST', token, { name: criterionName });
+
+export const updateUserData = ({ id, token, fullName, position, email, password }) => {
+  const requestBody = { fullName, position, email };
+  if (password) requestBody.password = password;
+  return makeAuthenticatedRequest(`${ADMIN_USERS}/${id}`, 'PATCH', token, requestBody);
+};
+
+export const deleteUser = (token, id) =>
+  makeAuthenticatedRequest(`${ADMIN_USERS}/${id}`, 'DELETE', token);

@@ -4,8 +4,8 @@ import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import EmptyList from '../../images/EmptyList.png';
 import UsersThree from '../../images/UsersThree.svg';
 import PlusIcon from '../../images/Plus.svg';
-import { getAllUsers } from '../../utils/mainApi.js';
-import AddUserForm from '../../components/AddUserForm/AddUserForm.jsx';
+import { getAllUsers, deleteUser } from '../../utils/mainApi.js';
+import AddEmployeeForm from '../../components/AddEmployeeForm/AddEmployeeForm.jsx';
 import EmployeeList from '../../components/EmployeeList/EmployeeList.jsx';
 import EditEmployeeForm from '../../components/EditEmployeeForm/EditEmployeeForm.jsx';
 
@@ -13,9 +13,31 @@ function MyTeam() {
   const [employeeList, setEmployeeList] = useState([]);
   const [isAddEmployeePopupOpen, setIsAddEmployeePopupOpen] = useState(false);
   const [isEditEmployeePopupOpen, setIsEditEmployeePopupOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const handleOpenAddEmployeeForm = () => {
     setIsAddEmployeePopupOpen(true);
+  };
+
+  const handleOpenEditEmployeeForm = (user) => {
+    setSelectedUser(user);
+    setIsEditEmployeePopupOpen(true);
+  };
+
+  const handleUpdateUser = (updatedUser) => {
+    setEmployeeList((prevList) =>
+      prevList.map((user) => (user.id === updatedUser.id ? updatedUser : user)));
+  };
+
+  const handleDeleteEmployee = (token, id) => {
+    deleteUser(token, id).then(() => {
+      setEmployeeList((prevList) => prevList.filter((user) => user.id !== id));
+    });
+  };
+
+  const handleAddNewEmployee = (user) => {
+    setEmployeeList((prevList) => [...prevList, user]);
+    setIsAddEmployeePopupOpen(false);
   };
 
   useEffect(() => {
@@ -27,6 +49,7 @@ function MyTeam() {
             setEmployeeList(res);
           }
         })
+        // eslint-disable-next-line no-alert
         .catch((err) => alert(err));
     }
   }, [setEmployeeList]);
@@ -34,11 +57,16 @@ function MyTeam() {
   return (
     <section className="my-team">
       {isAddEmployeePopupOpen && (
-        <AddUserForm setIsAddEmployeePopupOpen={setIsAddEmployeePopupOpen} />
+        <AddEmployeeForm
+          setIsAddEmployeePopupOpen={setIsAddEmployeePopupOpen}
+          handleAddNewEmployee={handleAddNewEmployee}
+        />
       )}
       {isEditEmployeePopupOpen && (
         <EditEmployeeForm
           setIsEditEmployeePopupOpen={setIsEditEmployeePopupOpen}
+          user={selectedUser}
+          handleUpdateUser={handleUpdateUser}
         />
       )}
       <div className="my-team__wrapper">
@@ -72,7 +100,8 @@ function MyTeam() {
             {employeeList ? (
               <EmployeeList
                 employeeList={employeeList}
-                setIsEditEmployeePopupOpen={setIsEditEmployeePopupOpen}
+                handleOpenEditEmployeeForm={handleOpenEditEmployeeForm}
+                handleDeleteEmployee={handleDeleteEmployee}
               />
             ) : (
               <div className="my-team__content_type_empty">

@@ -19,6 +19,8 @@ import AnalyticsPage from '../../pages/AnalyticsPage/AnalyticsPage.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
 import AssessmentCriteria from '../../pages/AssessmentCriteria/AssessmentCriteria.jsx';
 import EmployeeViewPage from '../../pages/EmployeeViewPage/EmployeeViewPage.jsx';
+import EmployeeRatingPage from '../../pages/EmployeeRatingPage/EmployeeRatingPage.jsx';
+import TaskViewPage from '../../pages/TaskViewPage/TaskViewPage.jsx';
 
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
@@ -38,6 +40,7 @@ function App() {
     analytics,
     criteria,
     viewCards,
+    viewRating,
   } = ENDPOINT_ROUTES;
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
   const navigate = useNavigate();
@@ -70,6 +73,7 @@ function App() {
 
   return (
     <div className="page">
+      <TaskViewPage />
       <Routes>
         <Route path="/" element={<Navigate to={login} />} />
         <Route path={register} element={<Register />} />
@@ -81,6 +85,7 @@ function App() {
           <Route path={analytics} element={<AnalyticsPage />} />
           <Route path={criteria} element={<AssessmentCriteria />} />
           <Route path={viewCards} element={<EmployeeViewPage />} />
+          <Route path={viewRating} element={<EmployeeRatingPage />} />
         </Route>
         <Route path="" element={<ProtectedRoute />}>
           <Route path={anyPage} element={<NotFound />} />

@@ -10,12 +10,14 @@ export const isValidName = (name) => PATTERN_USERNAME.test(name);
 export const isValidJobTitle = (jobTitle) => PATTERN_JOB_TITLE.test(jobTitle);
 
 export const VALIDATION_MESSAGES = {
-  invalidName: 'ошибка имени',
-  invalidEmail: 'ошибка почты',
+  invalidNameOrPosition: 'Введите от 1 до 255 симв., кириллицу, латиницу, дефис и пробел',
+  invalidEmail: 'Введите корректный адрес электронной почты в формате имя@домен',
   invalidPassword:
-    'Длина пароля не менее 8 символов и не более 14, только латинскими буквами',
-  invalidJobTitle: 'Не более 20 символов',
-  passwordsNotMatch: 'Пароль и подтверждение пароля должны совпадать'
+    // eslint-disable-next-line no-useless-escape
+    'Введите от 8 до 14 симв., латиницу, цифры и спецсимволы',
+  passwordsNotMatch: 'Пароли не совпадают',
+  emptyConfirmPassword: 'Пожалуйста, подтвердите пароль',
+  emptyInput: 'Поле обязательно для заполнения'
 };
 
 export const validateInput = (

@@ -8,5 +8,7 @@ export const ENDPOINT_ROUTES = {
   estimate: '/estimate',
   criteria: '/criteria-setting',
   viewCards: '/view-cards',
+  viewRating: '/view-rating',
+  viewTask: '/view-task',
   anyPage: '/*',
 };

@@ -50,14 +50,18 @@
   height: 64px;
 }
 
+<<<<<<< HEAD
 .userForm__span {
   height: 15px;
+=======
+.userForm__span{
+  height: 30px;
+>>>>>>> 1d52829f9151241abe0bbaef19aef0b243a84150
   font-weight: $fw-regular;
   font-size: 12px;
   line-height: 121%;
   color: $black-base-color;
   padding-left: 24px;
-  margin-bottom: 15px;
 }
 
 .userForm__passwordField {
