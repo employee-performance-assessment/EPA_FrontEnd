@@ -152,3 +152,26 @@ export const boardsList = [
     ],
   },
 ];
+
+export const boardsListEmty = [
+  {
+    id: 1,
+    title: 'К выполнению',
+    items: [],
+  },
+  {
+    id: 2,
+    title: 'В работе',
+    items: [],
+  },
+  {
+    id: 3,
+    title: 'На ревью',
+    items: [],
+  },
+  {
+    id: 4,
+    title: 'Выполнено',
+    items: [],
+  },
+];
