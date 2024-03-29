@@ -18,29 +18,27 @@ function EmployeeViewBlock({ view, tasks, marks }) {
   return (
     <ul className={styles.employeeViewBlock__list}>
       {/* Текст карточек пока приходит из json */}
-      {!view ?
-        tasks.map((card) => (
-          <EmployeeViewCard
-            type="tasks"
-            key={card.id}
-            title={card.title}
-            deadline={card.deadline}
-            terms={card.terms}
-            points={card.points}
-            handleClickTasks={handleClickTasks}
-          />
-        )) :
-        marks.map((card) => (
-          <EmployeeViewCard
-            type="marks"
-            key={card.id}
-            month={card.month}
-            date={card.date}
-            rating={card.rating}
-            handleClickMarks={handleClickMarks}
-          />
+      {view
+        ? marks.map((card) => (
+            <EmployeeViewCard
+              type="marks"
+              key={card.id}
+              date={card.date}
+              rating={card.rating}
+              handleClickMarks={handleClickMarks}
+            />
         ))
-      }
+        : tasks.map((card) => (
+            <EmployeeViewCard
+              type="tasks"
+              key={card.id}
+              title={card.title}
+              deadline={card.deadline}
+              terms={card.terms}
+              points={card.points}
+              handleClickTasks={handleClickTasks}
+            />
+        ))}
     </ul>
   );
 }

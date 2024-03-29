@@ -60,29 +60,6 @@
   color: $black-base-color;
 }
 
-.taskViewPage__select {
-  width: 196px;
-  height: 40px;
-  box-shadow: 0px 4px 20px 0px #a6a6a666;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: $fw-medium;
-  line-height: 22px;
-  padding-left: 20px;
-  color: $black-base-color;
-  appearance: none;
-  overflow: hidden;
-  background: url('../../images/select-open-down.svg') no-repeat;
-  background-position: bottom 10px right 10px;
-}
-
-.taskViewPage__option {
-  font-size: 16px;
-  font-weight: $fw-medium;
-  line-height: 22px;
-}
-
 .taskViewPage__edit {
   display: flex;
   gap: 5.88px;
