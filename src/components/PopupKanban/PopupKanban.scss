@@ -2,8 +2,10 @@
 @import '../../styles/mixins';
 
 .popup-kanban {
-  position: absolute;
+  position: fixed;
   top: 0;
+  right: 0;
+  bottom: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
@@ -33,25 +35,10 @@
   background-color: white;
 }
 
-.popup-kanban__input {
-  border: 2px solid $black-base-color;
-  border-radius: 20px;
-  padding: 20px 24px;
-  font-size: 20px;
-  color: $black-base-color;
-  box-sizing: border-box;
-  height: 64px;
-  width: 400px;
-}
-
 .popup-kanban__button_purple {
   width: 350px;
   height: 56px;
   background-color: $purple-base-color;
-}
-
-.popup-kanban__img-pen {
-  margin: auto 15px auto 15px;
 }
 
 .popup-kanban__popup {
@@ -64,12 +51,11 @@
 }
 
 .popup-kanban__button_close {
+  padding: 0;
+  background-image: url(../../images/closePopup.svg);
+  width: 56px;
+  height: 56px;
   position: absolute;
-  top: 0;
-  right: 0;
-}
-
-.popup-kanban__input-conteiner {
-  height: 64px;
-  margin-bottom: 20px;
+  top: 40px;
+  right: 80px;
 }

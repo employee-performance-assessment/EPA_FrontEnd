@@ -9,21 +9,17 @@ import { PopupKanban } from '../../components/PopupKanban/PopupKanban.jsx';
 import plus from '../../images/Plus.svg';
 import edit from '../../images/edit-button-icon.svg';
 import caretDown from '../../images/CaretDown_black.svg';
-import { boardsListEmty } from '../../constants/boardsList.js';
+import { boardsList } from '../../constants/boardsList.js';
 import './Kanban.scss';
 
 function Kanban() {
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
-  const [isEmpty, setIsEmpty] = useState(0);
+  const [isEmpty, setIsEmpty] = useState(1);
   const [isOpenPopup, setIsOpenPopup] = useState(true);
 
   const nameProject = 'Linkpass';
   const nameNotActivProject = 'ByteBoost';
-  const more = '...ещё';
-  const projects = 'Проекты';
-  const allProject = 'Все';
   const numberProjects = '3';
-  const makeTask = 'Создать задачу';
 
   return isLoggedIn ? (
     <section className="kanban_page">
@@ -34,30 +30,51 @@ function Kanban() {
         <div className="kanban__main">
           <nav className="kanban__nav">
             <p className="kanban__label">Проект:</p>
-            <button type="button" className="kanban__button kanban__button_border">
+            <button
+              type="button"
+              className="kanban__button kanban__button_border"
+            >
               {nameProject}
             </button>
-            <button type="button" className="kanban__button kanban__button_non-border">
+            <button
+              type="button"
+              className="kanban__button kanban__button_non-border"
+            >
               {nameNotActivProject}
             </button>
-            <button type="button" className="kanban__button kanban__button_more">
-              {more} {numberProjects} <img src={caretDown} alt="Раскрыть список проектов" />
+            <button
+              type="button"
+              className="kanban__button kanban__button_more"
+            >
+              ...ещё {numberProjects}
+              <img src={caretDown} alt="Раскрыть список проектов" />
             </button>
-            <button type="button" className="kanban__button kanban__button_purple">
-              <p className='kanban__button-title_all'>{allProject}</p>
+            <button
+              type="button"
+              className="kanban__button kanban__button_purple"
+            >
+              <p className="kanban__button-title_all">Все</p>
             </button>
             <button type="button" className="kanban__button kanban__button">
-              {projects} <img src={edit} alt="Редактировать проект" />
+              Проекты <img src={edit} alt="Редактировать проект" />
             </button>
-            <button type="button" className="kanban__button kanban__button_purple kanban__button_task">
-              <p className='kanban__button-title_make'>{makeTask}</p> <img className='kanban__button-img' src={plus} alt="Добавить новую задачу" />
+            <button
+              type="button"
+              className="kanban__button kanban__button_purple kanban__button_task"
+            >
+              <p className="kanban__button-title_make">Создать задачу</p>
+              <img
+                className="kanban__button-img"
+                src={plus}
+                alt="Добавить новую задачу"
+              />
             </button>
           </nav>
-          <Boards boardsList={boardsListEmty} />
+          <Boards boardsList={boardsList} />
           {isEmpty !== 0 ? <NotFoundTask /> : <NotProject />}
         </div>
       </div>
-      {isOpenPopup ? <PopupKanban /> : ''}
+      {!isOpenPopup && <PopupKanban />}
     </section>
   ) : (
     ''
