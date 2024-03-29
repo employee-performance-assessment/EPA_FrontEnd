@@ -1,0 +1,188 @@
+@import '../../styles/vars';
+
+.taskViewPage__wrapper {
+  width: 100%;
+  display: flex;
+  gap: 37px;
+  padding: 0;
+  margin: 24px 20px;
+}
+
+.taskViewPage__container {
+  width: 1163px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  border-radius: 28px;
+  background-color: $light-gray-base-color;
+}
+
+.taskViewPage__header {
+  position: relative;
+  width: 100%;
+  height: 114px;
+  border-bottom: 2px solid $grey-base-color;
+}
+
+.taskViewPage__row {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 52px 0 38px 66.75px;
+}
+
+.taskViewPage__link {
+  display: flex;
+  gap: 12.25px;
+  align-items: center;
+  text-decoration: none;
+}
+
+.taskViewPage__icon {
+  width: 9px;
+  height: 16.5px;
+  background: url(../../images/CaretLeft.svg);
+  background-size: cover;
+  background-position: center;
+}
+
+.taskViewPage__caption {
+  font-size: 16px;
+  font-weight: $fw-medium;
+  line-height: 19.36px;
+  color: $black-base-color;
+}
+
+.taskViewPage__number {
+  font-size: 16px;
+  font-weight: $fw-medium;
+  line-height: 19.36px;
+  color: $black-base-color;
+}
+
+.taskViewPage__select {
+  width: 196px;
+  height: 40px;
+  box-shadow: 0px 4px 20px 0px #a6a6a666;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: $fw-medium;
+  line-height: 22px;
+  padding-left: 20px;
+  color: $black-base-color;
+  appearance: none;
+  overflow: hidden;
+  background: url('../../images/select-open-down.svg') no-repeat;
+  background-position: bottom 10px right 10px;
+}
+
+.taskViewPage__option {
+  font-size: 16px;
+  font-weight: $fw-medium;
+  line-height: 22px;
+}
+
+.taskViewPage__edit {
+  display: flex;
+  gap: 5.88px;
+  align-items: center;
+  margin-left: 96px;
+  padding: 0;
+  font-size: 16px;
+  font-weight: $fw-medium;
+  line-height: 19.36px;
+  text-align: center;
+  color: $black-base-color;
+  background-color: transparent;
+  border: none;
+
+  div {
+    background: url(../../images/edit-button-icon.svg);
+    background-size: cover;
+    width: 15.62px;
+    height: 15.63px;
+  }
+}
+
+.taskViewPage__score {
+  position: absolute;
+  width: 128px;
+  height: 41px;
+  top: 20px;
+  right: 20px;
+  border-radius: 50px;
+  background-color: $yellow-base-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: $fw-medium;
+  line-height: 19.36px;
+}
+
+.taskViewPage__block {
+  position: relative;
+  display: flex;
+  gap: 46px;
+}
+
+.taskViewPage__tasks {
+  width: 673px;
+  padding-right: 46px;
+  padding-left: 60px;
+  border-right: solid 1px $black-base-color;
+
+  h3 {
+    font-size: 26px;
+    font-weight: $fw-medium;
+    line-height: 31.47px;
+    color: $black-base-color;
+    margin-bottom: 24px;
+  }
+
+  li {
+    font-size: 22px;
+    font-weight: $fw-regular;
+    line-height: 26.63px;
+    color: $black-base-color;
+    margin-bottom: 22px;
+  }
+}
+
+.taskViewPage__props {
+  width: 359px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  li {
+    display: grid;
+    grid-template-columns: 140px auto;
+    font-size: 20px;
+    line-height: 24.2px;
+  }
+}
+
+.taskViewPage__name {
+  font-weight: $fw-semibold;
+}
+
+.taskViewPage__value {
+  font-weight: $fw-medium;
+}
+
+.taskViewPage__delete {
+  position: absolute;
+  bottom: 64px;
+  right: 85px;
+  width: 240px;
+  height: 56px;
+  border-radius: 20px;
+  background-color: $purple-base-color;
+  border: none;
+  font-size: 20px;
+  font-weight: $fw-semibold;
+  line-height: 24.2px;
+}

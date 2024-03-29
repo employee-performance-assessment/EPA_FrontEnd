@@ -13,9 +13,9 @@ import {
   isValidName,
   isValidPassword,
 } from '../../utils/validationConstants.js';
-import './AddUserForm.scss';
+import './AddEmployeeForm.scss';
 
-function AddUserForm({ setIsAddEmployeePopupOpen }) {
+function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -60,8 +60,8 @@ function AddUserForm({ setIsAddEmployeePopupOpen }) {
     const { name, position, email, password } = values;
     const { token } = JSON.parse(localStorage.getItem('token'));
     addNewUser({ token, fullName: name, position, email, password }).then(
-      () => {
-        setIsAddEmployeePopupOpen(false);
+      (user) => {
+        handleAddNewEmployee(user);
       }
     );
   };
@@ -71,7 +71,7 @@ function AddUserForm({ setIsAddEmployeePopupOpen }) {
   };
 
   return (
-    <section className="addUserForm">
+    <section className="addEmployeeForm">
       <UserForm
         formTitle="Регистрация сотрудника"
         handleSubmit={registerEmployee}
@@ -212,4 +212,4 @@ function AddUserForm({ setIsAddEmployeePopupOpen }) {
   );
 }
 
-export default AddUserForm;
+export default AddEmployeeForm;

@@ -10,7 +10,7 @@ export const isValidName = (name) => PATTERN_USERNAME.test(name);
 export const isValidJobTitle = (jobTitle) => PATTERN_JOB_TITLE.test(jobTitle);
 
 export const VALIDATION_MESSAGES = {
-  invalidNameOrPosition: 'Введите от 1 до 255 симв., поле может содержать кириллицу, латиницу, дефис и пробел',
+  invalidNameOrPosition: 'Введите от 1 до 255 симв., кириллицу, латиницу, дефис и пробел',
   invalidEmail: 'Введите корректный адрес электронной почты в формате имя@домен',
   invalidPassword:
     // eslint-disable-next-line no-useless-escape
