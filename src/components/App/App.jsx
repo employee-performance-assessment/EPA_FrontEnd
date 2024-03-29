@@ -6,7 +6,7 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
 import AdminRoute from '../AdminRoute/AdminRoute.jsx';
 
@@ -43,7 +43,6 @@ function App() {
     viewRating,
     viewTask,
   } = ENDPOINT_ROUTES;
-  const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();

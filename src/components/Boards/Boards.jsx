@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Board from '../Board/Board.jsx';
 import './Boards.scss';
 
-
 function Boards({ boardsList }) {
   const clearCards = () => { };
   const [cardsLists, setCardsLists] = useState(boardsList);
@@ -10,8 +9,7 @@ function Boards({ boardsList }) {
   const [startBoard, setStartBoard] = useState(null);
   const [currentBoard, setCurrentBoard] = useState(null);
 
-
-  return <><div className="boards">
+  return <div className="boards">
     {cardsLists.map((board, i) => (
       <Board
         cardsLists={cardsLists}
@@ -29,9 +27,7 @@ function Boards({ boardsList }) {
         setCurrentBoard={setCurrentBoard}
       />
     ))}
-  </div>
-  </>
-
+  </div>;
 }
 
 export default Boards;

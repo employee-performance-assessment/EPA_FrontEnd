@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
-import './NotFound.scss'
+import './NotFound.scss';
+
 function NotFound() {
   const history = useNavigate();
 

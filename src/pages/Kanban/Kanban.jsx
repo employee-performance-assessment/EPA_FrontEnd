@@ -1,30 +1,29 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
-import Boards from '../../components/Boards/Boards.jsx'
-import { NotFoundTask } from '../../components/NotFoundTask/NotFoundTask.jsx'
+import Boards from '../../components/Boards/Boards.jsx';
+import { NotFoundTask } from '../../components/NotFoundTask/NotFoundTask.jsx';
 import { NotProject } from '../../components/NotProject/NotProject.jsx';
-import { PopupKanban } from '../../components/PopupKanban/PopupKanban.jsx'
-import plus from '../../images/Plus.svg'
-import edit from '../../images/edit-button-icon.svg'
-import caretDown from '../../images/CaretDown_black.svg'
+import { PopupKanban } from '../../components/PopupKanban/PopupKanban.jsx';
+import plus from '../../images/Plus.svg';
+import edit from '../../images/edit-button-icon.svg';
+import caretDown from '../../images/CaretDown_black.svg';
 import { boardsListEmty } from '../../constants/boardsList.js';
-import { boardsList } from '../../constants/boardsList.js';
-import './Kanban.scss'
-
+import './Kanban.scss';
 
 function Kanban() {
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
-  const [isEmpty, setIsEmpty] = useState(0)
+  const [isEmpty, setIsEmpty] = useState(0);
   const [isOpenPopup, setIsOpenPopup] = useState(true);
 
-  const nameProject = 'Linkpass'
-  const nameNotActivProject = 'ByteBoost'
-  const more = '...ещё'
-  const projects = 'Проекты'
-  const allProject = 'Все'
-  const numberProjects = '3'
-  const makeTask = 'Создать задачу'
+  const nameProject = 'Linkpass';
+  const nameNotActivProject = 'ByteBoost';
+  const more = '...ещё';
+  const projects = 'Проекты';
+  const allProject = 'Все';
+  const numberProjects = '3';
+  const makeTask = 'Создать задачу';
 
   return isLoggedIn ? (
     <section className="kanban_page">
@@ -55,7 +54,7 @@ function Kanban() {
             </button>
           </nav>
           <Boards boardsList={boardsListEmty} />
-          {isEmpty != 0 ? <NotFoundTask /> : <NotProject />}
+          {isEmpty !== 0 ? <NotFoundTask /> : <NotProject />}
         </div>
       </div>
       {isOpenPopup ? <PopupKanban /> : ''}
