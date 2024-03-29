@@ -14,7 +14,7 @@ import Auth from '../../pages/Auth/Auth.jsx';
 import Register from '../../pages/Register/Register.jsx';
 import PersonalArea from '../../pages/PersonalArea/PersonalArea.jsx';
 import MyTeam from '../../pages/MyTeam/MyTeam.jsx';
-import Boards from '../Boards/Boards.jsx';
+import Kanban from '../../pages/Kanban/Kanban.jsx';
 import AnalyticsPage from '../../pages/AnalyticsPage/AnalyticsPage.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
 import AssessmentCriteria from '../../pages/AssessmentCriteria/AssessmentCriteria.jsx';
@@ -80,7 +80,7 @@ function App() {
         <Route path={login} element={<Auth />} />
         <Route path="" element={<AdminRoute />}>
           <Route path={personalArea} element={<PersonalArea />} />
-          <Route path={board} element={<Boards isLoggedIn={isLoggedIn} />} />
+          <Route path={board} element={<Kanban />} />
           <Route path={myTeam} element={<MyTeam />} />
           <Route path={analytics} element={<AnalyticsPage />} />
           <Route path={criteria} element={<AssessmentCriteria />} />

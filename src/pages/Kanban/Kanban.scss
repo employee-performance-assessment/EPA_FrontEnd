@@ -1,0 +1,117 @@
+@import '../../styles/vars';
+@import '../../styles/mixins';
+
+.kanban_page {
+  max-width: 1440px;
+  padding: 24px 20px 60px 0px;
+  color: $black-base-color;
+}
+
+.kanban__wrapper {
+  display: flex;
+  gap: 37px;
+}
+
+.kanban__sidemenu {
+  padding: 36px 0px 0px 20px;
+}
+
+.kanban__main {
+  width: 1163px;
+  height: 876px;
+  border-radius: 40px;
+}
+
+.kanban__nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 24px;
+  padding-right: 24px;
+  background-color: $light-gray-base-color;
+  border-radius: 40px;
+  height: 120px;
+  box-shadow: 0px 4px 20px rgba(166, 166, 166, 0.4);
+}
+
+.kanban__icon-block {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.kanban__label {
+  font-size: 29px;
+  line-height: 31.47%;
+  font-weight: 500;
+}
+
+.kanban__button-title_all {
+  margin: auto 15px auto 15px;
+}
+
+.kanban__button_non-border {
+  padding-left: 10px;
+}
+
+.kanban__button-title_make {
+  margin: auto 10px auto 20px;
+}
+.kanban__button-img {
+  margin: auto 20px auto 0;
+}
+.kanban__button {
+  border: none;
+  padding: 16px 20px;
+  font-size: 20px;
+  line-height: 121%;
+  font-weight: $fw-semibold;
+  border-radius: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  max-height: 56px;
+  cursor: pointer;
+  background-color: $light-gray-base-color;
+}
+
+.kanban__button_more {
+  width: min-content;
+  white-space: nowrap;
+  padding-left: 5px;
+}
+
+.kanban__button_purple {
+  width: min-content;
+  white-space: nowrap;
+  background-color: $purple-base-color;
+}
+
+.kanban__button_task {
+  margin-left: 30px;
+}
+
+.kanban__button_border {
+  margin-left: 15px;
+  border: 1px solid;
+  width: 125px;
+}
+
+.kanban__content_type_empty {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.kanban__content-image {
+  margin-top: 128px;
+}
+
+.kanban__content_type_empty p {
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 121%;
+  text-align: center;
+  margin-top: 35px;
+}
