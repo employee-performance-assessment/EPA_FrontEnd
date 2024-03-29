@@ -153,7 +153,7 @@ export const boardsList = [
   },
 ];
 
-export const boardsListEmty = [
+export const boardsListEmpty = [
   {
     id: 1,
     title: 'К выполнению',

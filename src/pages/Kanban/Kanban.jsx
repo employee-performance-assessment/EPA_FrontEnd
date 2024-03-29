@@ -9,17 +9,22 @@ import { PopupKanban } from '../../components/PopupKanban/PopupKanban.jsx';
 import plus from '../../images/Plus.svg';
 import edit from '../../images/edit-button-icon.svg';
 import caretDown from '../../images/CaretDown_black.svg';
-import { boardsList } from '../../constants/boardsList.js';
+import { boardsListEmpty } from '../../constants/boardsList.js';
 import './Kanban.scss';
 
 function Kanban() {
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
   const [isEmpty, setIsEmpty] = useState(1);
   const [isOpenPopup, setIsOpenPopup] = useState(true);
-
+  // не забыть проверить положение когда с бэка придет пустой объект с
+  // проектами, не должно ничего отрисовываться.
   const nameProject = 'Linkpass';
   const nameNotActivProject = 'ByteBoost';
   const numberProjects = '3';
+
+  function handleClickOpenPopup() {
+    setIsOpenPopup(true);
+  }
   return isLoggedIn ? (
     <section className="kanban_page">
       <div className="kanban__wrapper">
@@ -54,7 +59,11 @@ function Kanban() {
             >
               <p className="kanban__button-title_all">Все</p>
             </button>
-            <button type="button" className="kanban__button kanban__button">
+            <button
+              type="button"
+              className="kanban__button kanban__button"
+              onClick={handleClickOpenPopup}
+            >
               Проекты <img src={edit} alt="Редактировать проект" />
             </button>
             <button
@@ -69,11 +78,11 @@ function Kanban() {
               />
             </button>
           </nav>
-          <Boards boardsList={boardsList} />
-          {isEmpty !== 0 ? <NotFoundTask /> : <NotProject />}
+          <Boards boardsList={boardsListEmpty} />
+          {isEmpty !== 1 ? <NotFoundTask /> : <NotProject />}
         </div>
       </div>
-      {isOpenPopup && <PopupKanban />}
+      {isOpenPopup && <PopupKanban setIsOpenPopup={setIsOpenPopup} />}
     </section>
   ) : (
     ''

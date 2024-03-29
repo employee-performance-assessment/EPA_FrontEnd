@@ -1,11 +1,15 @@
 import './PopupKanban.scss';
 import ContainerInputPopupKanban from '../ContainerInputPopupKanban/ContainerInputPopupKanban.jsx';
 
-export function PopupKanban() {
+export function PopupKanban({ setIsOpenPopup }) {
   const arrProject = [
     { nameProject: 'gsdfgsdg' },
     { nameProject: 'пвпапвыпв' },
   ];
+
+  function handleClickClose() {
+    setIsOpenPopup(false);
+  }
 
   return (
     <div className="popup-kanban">
@@ -26,6 +30,7 @@ export function PopupKanban() {
         <button
           className="popup-kanban__button popup-kanban__button_close"
           aria-label="закрыть модальное окно"
+          onClick={handleClickClose}
         ></button>
       </div>
     </div>
