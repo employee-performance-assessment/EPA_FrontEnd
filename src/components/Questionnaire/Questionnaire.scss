@@ -1,0 +1,78 @@
+.Questionnaire {
+  display: flex;
+  gap: 37px;
+}
+
+.Questionnaire__sidemenu {
+  padding: 36px 0px 0px 20px;
+}
+
+.Questionnaire__wrapper {
+  margin: 24px 20px 24px 0;
+  width: 1163px;
+  border-radius: 28px;
+  background-color: rgba(245, 245, 245, 1);
+}
+
+.Questionnaire__header {
+  margin: 14px 60px 0;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Questionnaire-header__back-button {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19.36px;
+  border: none;
+  margin-right: 36px;
+}
+
+.Questionnaire-header__back-button::before {
+  content: '';
+  padding: 2px 12px;
+  background-image: url(../../images/CaretLeft.svg);
+  background-repeat: no-repeat;
+}
+
+.Questionnaire-header__data {
+  width: 348px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24.2px;
+  text-align: left;
+  margin-right: 105px;
+}
+
+.Questionnaire-header__icon {
+  margin: 32px 12px;
+}
+
+.Questionnaire-header__underscribe {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24.2px;
+  margin-right: 12px;
+}
+
+.Questionnaire-header__underscribe:last-child {
+  margin-right: 25px;
+}
+
+.Questionnaire-titles {
+  height: 97px;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 31.47px;
+  display: flex;
+  align-items: center;
+}
+
+.Questionnaire-titles__text {
+  margin: 0 413px 0 60px;
+}
+
+.Questionnaire-container {
+}
