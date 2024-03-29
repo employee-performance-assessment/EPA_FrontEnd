@@ -1,4 +1,4 @@
-import './Board.css';
+import './Board.scss';
 import TimerDeadline from '../TimerDeadline/TimerDeadline.jsx';
 
 function Board({
@@ -7,7 +7,6 @@ function Board({
   setCardsLists,
   cardsLists,
   board,
-  /* idBoard,  */
   dropCard,
   setDropCard,
   startBoard,
