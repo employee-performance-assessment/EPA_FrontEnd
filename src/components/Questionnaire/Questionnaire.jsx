@@ -4,7 +4,7 @@ import icon from '../../images/Questionnaire_user.svg';
 import InputStars from '../InputStars/InputStars.js';
 import '../InputStars/InputStars.scss';
 
-function Questionnaire() {
+export default function Questionnaire() {
   const name = 'Иван Иванов';
   const job = 'Разработчик';
 
@@ -125,5 +125,3 @@ function Questionnaire() {
     </div>
   );
 }
-
-export default Questionnaire;
