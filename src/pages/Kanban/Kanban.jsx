@@ -20,7 +20,6 @@ function Kanban() {
   const nameProject = 'Linkpass';
   const nameNotActivProject = 'ByteBoost';
   const numberProjects = '3';
-
   return isLoggedIn ? (
     <section className="kanban_page">
       <div className="kanban__wrapper">
@@ -74,7 +73,7 @@ function Kanban() {
           {isEmpty !== 0 ? <NotFoundTask /> : <NotProject />}
         </div>
       </div>
-      {!isOpenPopup && <PopupKanban />}
+      {isOpenPopup && <PopupKanban />}
     </section>
   ) : (
     ''
