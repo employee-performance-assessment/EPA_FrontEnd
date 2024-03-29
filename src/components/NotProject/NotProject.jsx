@@ -1,7 +1,7 @@
 import './NotProject.scss';
 import empty from '../../images/about-our-team.svg';
-import pencilSimple from '../../images/PencilSimple.svg'
-import trashSimple from '../../images/TrashSimple.svg'
+import pencilSimple from '../../images/PencilSimple.svg';
+import trashSimple from '../../images/TrashSimple.svg';
 
 export function NotProject() {
   return <div className="not-project">

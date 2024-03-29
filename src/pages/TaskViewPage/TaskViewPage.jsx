@@ -1,15 +1,18 @@
 import { Link } from 'react-router-dom';
 import styles from './TaskViewPage.module.scss';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
 function TaskViewPage() {
+  const { viewCards } = ENDPOINT_ROUTES;
+
   return (
     <section className={styles.taskViewPage__wrapper}>
       <SideMenu />
       <div className={styles.taskViewPage__container}>
         <div className={styles.taskViewPage__header}>
           <div className={styles.taskViewPage__row}>
-            <Link to="#" className={styles.taskViewPage__link}>
+            <Link to={viewCards} className={styles.taskViewPage__link}>
               <div className={styles.taskViewPage__icon}></div>
               <p className={styles.taskViewPage__caption}>Назад </p>
             </Link>

@@ -6,7 +6,7 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
 import AdminRoute from '../AdminRoute/AdminRoute.jsx';
 
@@ -41,8 +41,8 @@ function App() {
     criteria,
     viewCards,
     viewRating,
+    viewTask,
   } = ENDPOINT_ROUTES;
-  const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -73,7 +73,6 @@ function App() {
 
   return (
     <div className="page">
-      <TaskViewPage />
       <Routes>
         <Route path="/" element={<Navigate to={login} />} />
         <Route path={register} element={<Register />} />
@@ -86,6 +85,7 @@ function App() {
           <Route path={criteria} element={<AssessmentCriteria />} />
           <Route path={viewCards} element={<EmployeeViewPage />} />
           <Route path={viewRating} element={<EmployeeRatingPage />} />
+          <Route path={viewTask} element={<TaskViewPage />} />
         </Route>
         <Route path="" element={<ProtectedRoute />}>
           <Route path={anyPage} element={<NotFound />} />
