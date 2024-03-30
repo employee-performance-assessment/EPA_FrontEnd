@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import EmployeeViewHeader from '../../components/EmployeeViewHeader/EmployeeViewHeader.jsx';
-import Checkbox from '../../components/Checkbox/Checkbox.jsx';
+import Switch from '../../components/Switch/Switch.jsx';
 import EmployeeViewFilter from '../../components/EmployeeViewFilter/EmployeeViewFilter.jsx';
 import EmployeeViewBlock from '../../components/EmployeeViewBlock/EmployeeViewBlock.jsx';
 import { useFormValidation } from '../../hooks/useFormValidation';
@@ -53,7 +53,7 @@ function EmployeeViewPage() {
       <SideMenu />
       <div className={styles.employeeViewPage__container}>
         <EmployeeViewHeader />
-        <Checkbox
+        <Switch
           labelLeft={'Задачи'}
           labelRight={'Оценки'}
           isChecked={viewTask}

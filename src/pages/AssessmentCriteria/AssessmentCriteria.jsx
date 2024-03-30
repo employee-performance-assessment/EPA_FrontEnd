@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CriterionInput from '../../components/CriterionInput/CriterionInput.jsx';
-import Checkbox from '../../components/Checkbox/Checkbox.jsx';
+import Switch from '../../components/Switch/Switch.jsx';
 import { getAllCriterion } from '../../utils/mainApi.js';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import initialCriteria from './CardEmployee.json';
@@ -70,7 +70,7 @@ function AssessmentCriteria() {
           <div className="assessment-criteria__checkbox-container">
             <h2 className="assessment-criteria__header-title">{'Для подсчета рейтинга учитывать оценки:'}</h2>
             <div className="assessment-criteria__checkbox">
-              <Checkbox
+              <Switch
                 labelLeft={labelSupervisor}
                 labelRight={labelAllTeam}
                 isChecked={isCheckedСounting}
@@ -82,7 +82,7 @@ function AssessmentCriteria() {
         </div>
         <div className="assessment-criteria__container-criterion">
           <h2 className="assessment-criteria__title">{'Критерии для оценки сотрудников'}</h2>
-          <Checkbox
+          <Switch
             labelLeft={labelDefaultCriteriaGrade}
             labelRight={labelEditCriteriaGrade}
             isChecked={isCheckedEditing}

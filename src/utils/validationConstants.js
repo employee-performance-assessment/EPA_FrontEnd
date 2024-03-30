@@ -1,7 +1,6 @@
 export const PATTERN_EMAIL =
   /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,63}$/;
-// eslint-disable-next-line no-useless-escape
-export const PATTERN_PASSWORD = /^(?=.*[A-Z])[A-Za-z0-9.,:;?!*+%<>\[\]/\\_{}$#-]{8,14}$/;
+export const PATTERN_PASSWORD = /^(?=.*[A-Z])[A-Za-z0-9.,:;?!*+%<>[\]/\\_{}$#-]{8,14}$/;
 export const PATTERN_USERNAME = /^[a-zA-Zа-яА-Я\s-]{1,255}$/;
 export const PATTERN_JOB_TITLE = /^[a-zA-Zа-яА-Я\s-]{1,255}$/;
 export const isValidEmail = (email) => PATTERN_EMAIL.test(email);
@@ -12,9 +11,7 @@ export const isValidJobTitle = (jobTitle) => PATTERN_JOB_TITLE.test(jobTitle);
 export const VALIDATION_MESSAGES = {
   invalidNameOrPosition: 'Введите от 1 до 255 симв., кириллицу, латиницу, дефис и пробел',
   invalidEmail: 'Введите корректный адрес электронной почты в формате имя@домен',
-  invalidPassword:
-    // eslint-disable-next-line no-useless-escape
-    'Введите от 8 до 14 симв., латиницу, цифры и спецсимволы',
+  invalidPassword: 'Введите от 8 до 14 симв., латиницу, цифры и спецсимволы',
   passwordsNotMatch: 'Пароли не совпадают',
   emptyConfirmPassword: 'Пожалуйста, подтвердите пароль',
   emptyInput: 'Поле обязательно для заполнения'

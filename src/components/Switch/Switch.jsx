@@ -1,18 +1,17 @@
-import './Checkbox.scss';
+import './Switch.scss';
 
-function Checkbox({
-  labelLeft,
-  labelRight,
-  isChecked,
-  setIsChecked,
-  shadow
-}) {
+function Switch({ labelLeft, labelRight, isChecked, setIsChecked, shadow }) {
   return (
     <label
       style={{ boxShadow: shadow }}
       className={`switch-checkbox ${isChecked ? 'checked' : ''}`}
-      onClick={() => setIsChecked(!isChecked)}
     >
+      <input
+        type="checkbox"
+        checked={isChecked}
+        onChange={() => setIsChecked(!isChecked)}
+        className="checkbox-input"
+      />
       <div className="left-side">
         <span>{labelLeft}</span>
       </div>
@@ -23,4 +22,4 @@ function Checkbox({
   );
 }
 
-export default Checkbox;
+export default Switch;

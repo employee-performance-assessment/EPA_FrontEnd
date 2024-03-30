@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
-import Checkbox from '../../components/Checkbox/Checkbox.jsx';
+import Switch from '../../components/Switch/Switch.jsx';
 import Select from '../../components/Select/Select.jsx';
 import SetStars from '../../components/SetStars/SetStars.js';
 
@@ -44,14 +44,14 @@ function AnalyticsPage() {
           <div className={styles.analytic}>
             <span>Аналитика</span>
           </div>
-          <Checkbox
+          <Switch
             shadow="none"
             labelLeft="Командная"
             labelRight="Индивидуальная"
           />
         </header>
         <div className={styles.filter_block}>
-          <Checkbox labelLeft="Оценки" labelRight="Дедлайны" />
+          <Switch labelLeft="Оценки" labelRight="Дедлайны" />
           <Select buttonText="Год" query={handleSubmitYear} typeSelect="list" />
         </div>
         <article className={styles.info_empty}>
