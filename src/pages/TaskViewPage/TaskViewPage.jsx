@@ -20,7 +20,7 @@ function TaskViewPage() {
             <select name="filter-tasks" className={styles.taskViewPage__select}>
               <option
                 value="todo"
-                selected
+                defaultValue
                 className={styles.taskViewPage__option}
               >
                 К выполнению

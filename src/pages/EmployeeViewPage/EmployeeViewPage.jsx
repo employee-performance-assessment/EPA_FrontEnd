@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react';
-import styles from './EmployeeViewPage.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import EmployeeViewHeader from '../../components/EmployeeViewHeader/EmployeeViewHeader.jsx';
 import Checkbox from '../../components/Checkbox/Checkbox.jsx';
 import EmployeeViewFilter from '../../components/EmployeeViewFilter/EmployeeViewFilter.jsx';
 import EmployeeViewBlock from '../../components/EmployeeViewBlock/EmployeeViewBlock.jsx';
 import { useFormValidation } from '../../hooks/useFormValidation';
+import { setViewMarks } from '../../store/slices/viewMarksSlices.js';
+import styles from './EmployeeViewPage.module.scss';
 import initTasks from './tasks.json';
 import initMarks from './marks.json';
 
 function EmployeeViewPage() {
+  const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
+  const dispatch = useDispatch();
   const { values, handleChange, setValues } = useFormValidation();
-  const [view, setView] = useState(false);
+  const [viewTask, setViewTask] = useState(viewMarks);
   const [marks, setMarks] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [version, setVersion] = useState(0);
@@ -22,8 +26,17 @@ function EmployeeViewPage() {
     } else {
       setMarks(initMarks);
     }
-    setTasks(initTasks);
+
+    if (values.filterTask) {
+      setTasks(initTasks.filter((i) => i.status === values.filterTask));
+    } else {
+      setTasks(initTasks.filter((i) => i.status === 'new'));
+    }
   }, [values]);
+
+  useEffect(() => {
+    dispatch(setViewMarks(viewTask));
+  }, [viewTask]);
 
   function showAllCards() {
     setMarks(initMarks);
@@ -40,14 +53,18 @@ function EmployeeViewPage() {
       <SideMenu />
       <div className={styles.employeeViewPage__container}>
         <EmployeeViewHeader />
-        <Checkbox labelLeft={'Задачи'} labelRight={'Оценки'} isChecked={view} setIsChecked={setView} />
+        <Checkbox
+          labelLeft={'Задачи'}
+          labelRight={'Оценки'}
+          isChecked={viewTask}
+          setIsChecked={setViewTask}
+        />
         <EmployeeViewFilter
-          view={view}
           handleChange={handleChange}
           showAllCards={showAllCards}
           version={version}
         />
-        <EmployeeViewBlock view={view} tasks={tasks} marks={marks} />
+        <EmployeeViewBlock tasks={tasks} marks={marks} />
       </div>
     </section>
   );
