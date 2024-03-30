@@ -12,6 +12,8 @@
     flex-direction: column;
     width: 100%;
     height: 100%;
+    border-radius: 40px;
+    background: $light-gray-base-color;
 
     .header {
       display: flex;
@@ -43,84 +45,140 @@
     }
     .filter_block {
       display: flex;
+      position: relative;
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
       height: 134px;
-      margin-left: 27px;
 
-      .calendar {
-        justify-content: center;
-        width: 407px;
-        height: 54px;
-        border: 2px solid rgb(218, 214, 214);
-        border-radius: 20px;
-        padding: 15px 24px;
+      .select {
+        width: 134px;
+        height: 64px;
+        border-radius: 40px;
+        background: $purple-base-color;
+        appearance: none;
+        background-image: url(../../images/select-arrow.svg);
+        background-position-x: calc(100% - 26px);
+        background-position-y: center;
+        background-repeat: no-repeat;
+        padding: 14px 26px;
         @include text($black-base-color, 20px, 500, 1.2);
 
-        background-image: url(../../images/calendar.svg);
-      background-repeat: no-repeat;
-      background-position: 359px;
+        .option {
+          width: 134px;
+
+          &:first-child {
+            margin-top: 12px;
+          }
+          &:last-child {
+            margin-bottom: 12px;
+          }
+        }
       }
-    }
-
-    input[value='']:not(:focus) {
-      color: transparent;
-    }
-
-    input[type='date']::-webkit-calendar-picker-indicator {
-      background-image: /* url(../../images/calendar.svg) */none;
-      background-repeat: no-repeat;
-    }
-
-    /* input[type='date']::before {
-      @include text($black-base-color, 20px, 500, 1.2);
-      content: attr(placeholder);
-    } */
-
-    input[type='date']:focus::before {
-      content: '' !important;
-      display: none;
     }
 
     .info_empty {
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
       width: 100%;
       height: 622px;
       padding: 40px;
       border-radius: 28px;
-      box-shadow: 0px 4px 20px 0px rgba(166, 166, 166, 0.4);
-    }
 
-    h3 {
-      @include text($black-base-color, 36px, 500, 44px);
-    }
+      .img_block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px;
+        width: 410px;
+        height: 479px;
 
-    .img_block {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px;
-      width: 410px;
-      height: 479px;
+        .flyMan {
+          width: 320px;
+          height: 332px;
+          margin-bottom: 40px;
+        }
 
-      .flyMan {
-        width: 320px;
-        height: 332px;
-        margin-bottom: 40px;
+        span {
+          @include text($black-base-color, 22px, 400, 27px);
+          text-align: center;
+        }
       }
 
-      span {
-        @include text($black-base-color, 22px, 400, 27px);
-        text-align: center;
+      .rating_block {
+        display: flex;
+        width: 100%;
+        height: 120px;
+        background: transparent;
+        align-items: center;
+        border-top: 1px solid rgb(218, 214, 214);
+
+        &:last-child {
+          border-bottom: 1px solid rgb(218, 214, 214);
+        }
+
+        .date {
+          width: 258px;
+
+          span {
+            @include text($black-base-color, 26px, 500, 31px);
+          }
+        }
+
+        .starOut {
+          position: relative;
+          z-index: 1;
+          background-image: url(../../images/rating-star-empty.svg);
+          width: 74px;
+          height: 71px;
+          background-repeat: no-repeat;
+          background-size: cover;
+          margin-right: 19px;
+        }
+
+        .starIn {
+          background-image: url(../../images/rating-star-full.svg);
+          position: absolute;
+          z-index: 2;
+          overflow: hidden;
+          width: 0;
+          width: 74px;
+          height: 71px;
+          background-repeat: no-repeat;
+          background-size: cover;
+          margin-right: 19px;
+        }
       }
     }
 
     .commandIcon {
       width: 138px;
       height: 58px;
+    }
+
+    h3 {
+      @include text($black-base-color, 36px, 500, 44px);
+    }
+
+    .info_data {
+      display: flex;
+      flex-direction: column;
+      //justify-content: space-between;
+      width: 100%;
+      height: 622px;
+      padding: 40px;
+      border-radius: 28px;
+      box-shadow: 0px 4px 20px 0px rgba(166, 166, 166, 0.4);
+
+      .command_block {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 70px;
+        border: 1px solid;
+      }
     }
   }
 }
