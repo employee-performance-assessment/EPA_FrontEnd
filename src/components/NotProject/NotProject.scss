@@ -2,15 +2,20 @@
 @import '../../styles/mixins';
 
 .not-project {
+  width: 496px;
+  height: 522px;
+  gap: 0px;
+  opacity: 0px;
+  margin: 0 auto 0 auto;
   display: grid;
-  margin-top: 83px;
-  justify-items: center;
+  margin-top: 60px;
+  justify-items: start;
 }
 
 .not-project__title {
   margin-top: 23px;
   width: 400px;
-  text-align: center;
+  // text-align: center;
 }
 
 .not-project__subtitle {
@@ -30,7 +35,6 @@
   max-height: 56px;
   cursor: pointer;
   background-color: $light-gray-base-color;
-  margin-top: 65px;
 }
 
 .not-project__input {
@@ -47,6 +51,7 @@
 .not-project__button_purple {
   width: 335px;
   background-color: $purple-base-color;
+  margin-top: 40px;
 }
 
 .not-project__input-conteiner {

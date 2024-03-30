@@ -11,7 +11,6 @@ function Board({
   setDropCard,
   startBoard,
   setStartBoard,
-  title,
 }) {
   // События, возникающие в перемещаемом объекте (исходный элемент):
   // ondragstart – возникает, когда пользователь начинает перемещать элемент
@@ -98,7 +97,7 @@ function Board({
 
   return (
     <div className="boardDnD">
-      <h1 className="boardDnD__title">{title}</h1>
+      <h1 className="boardDnD__title">{board.title}</h1>
       {board.items.sort(sortCard).map((card) => (
         <div
           className={'boardDnD__card'} // сначала сортируем карты по порядку (order), затем перебираем массив для отрисовки карточек
@@ -112,11 +111,11 @@ function Board({
         >
           <p className="boardDnD__card-number">{card.id}</p>
           <p
-            className={`boardDnD__card-points ${getCollor(title, card.deadline)}`}
+            className={`boardDnD__card-points ${getCollor(board.title, card.deadline)}`}
           >
             {card.points} баллов
           </p>
-          <h3 className="boardDnD__card-title">{card.title}</h3>
+          <h3 className="boardDnD__card-board.title">{card.title}</h3>
           <p className="boardDnD__card-deadline">
             Дедлайн: {settingDateDeadline(card.deadline)}
           </p>

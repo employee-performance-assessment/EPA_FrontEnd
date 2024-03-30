@@ -1,43 +1,21 @@
 import { Link } from 'react-router-dom';
 import styles from './TaskViewPage.module.scss';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
-import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
+import CustomSelect from '../../components/Filter/Filter.jsx';
 
 function TaskViewPage() {
-  const { viewCards } = ENDPOINT_ROUTES;
-
   return (
     <section className={styles.taskViewPage__wrapper}>
       <SideMenu />
       <div className={styles.taskViewPage__container}>
         <div className={styles.taskViewPage__header}>
           <div className={styles.taskViewPage__row}>
-            <Link to={viewCards} className={styles.taskViewPage__link}>
+            <Link to="#" className={styles.taskViewPage__link}>
               <div className={styles.taskViewPage__icon}></div>
               <p className={styles.taskViewPage__caption}>Назад </p>
             </Link>
             <h4 className={styles.taskViewPage__number}>125022024</h4>
-            <select name="filter-tasks" className={styles.taskViewPage__select}>
-              <option
-                value="todo"
-                defaultValue
-                className={styles.taskViewPage__option}
-              >
-                К выполнению
-              </option>
-              <option
-                value="inprogress"
-                className={styles.taskViewPage__option}
-              >
-                В работе
-              </option>
-              <option value="review" className={styles.taskViewPage__option}>
-                На ревью
-              </option>
-              <option value="done" className={styles.taskViewPage__option}>
-                Выполнено
-              </option>
-            </select>
+            <CustomSelect />
             <button type="button" className={styles.taskViewPage__edit}>
               <div></div>
               Редактировать
