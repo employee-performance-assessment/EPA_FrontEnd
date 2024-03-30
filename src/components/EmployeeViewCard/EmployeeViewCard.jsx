@@ -1,4 +1,4 @@
-import setStars from '../../utils/setStars';
+import SetStars from '../SetStars/SetStars';
 import styles from './EmployeeViewCard.module.scss';
 
 function EmployeeViewCard({
@@ -47,11 +47,11 @@ function EmployeeViewCard({
         </p>
       </div>
       <div className={styles.employeeViewCard__stars}>
-        {setStars(
-          rating,
-          styles.cardRating__star_out,
-          styles.cardRating__star_in
-        )}
+        <SetStars
+          rating={rating}
+          starOut={styles.cardRating__star_out}
+          starIn={styles.cardRating__star_in}
+        />
       </div>
       <div className={styles.employeeViewCard__button}>Подробнее</div>
     </div>

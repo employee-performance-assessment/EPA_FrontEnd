@@ -1,4 +1,4 @@
-import setStars from '../../utils/setStars';
+import SetStars from '../SetStars/SetStars';
 import styles from './EmployeeViewCriteria.module.scss';
 
 function EmployeeViewCriteria({ text, rating }) {
@@ -6,18 +6,18 @@ function EmployeeViewCriteria({ text, rating }) {
     <div className={styles.employeeViewCriteria__card}>
       <p className={styles.employeeViewCriteria__text}>{text}</p>
       <div className={styles.employeeViewCriteria__starbox}>
-        {setStars(
-          rating,
-          styles.employeeViewCriteria__star_out,
-          styles.employeeViewCriteria__star_in
-        )}
+        <SetStars
+          rating={rating}
+          starOut={styles.employeeViewCriteria__star_out}
+          starIn={styles.employeeViewCriteria__star_in}
+        />
       </div>
       <div className={styles.employeeViewCriteria__starbox}>
-        {setStars(
-          rating,
-          styles.employeeViewCriteria__star_out,
-          styles.employeeViewCriteria__star_in
-        )}
+        <SetStars
+          rating={rating}
+          starOut={styles.employeeViewCriteria__star_out}
+          starIn={styles.employeeViewCriteria__star_in}
+        />
       </div>
     </div>
   );

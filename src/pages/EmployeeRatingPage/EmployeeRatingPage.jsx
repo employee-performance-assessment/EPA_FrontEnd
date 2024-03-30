@@ -3,11 +3,12 @@ import styles from './EmployeeRatingPage.module.scss';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import EmployeeViewCriteria from '../../components/EmployeeViewCriteria/EmployeeViewCriteria.jsx';
 import criteria from './criteria.json';
-import setStars from '../../utils/setStars.js';
+import SetStars from '../../components/SetStars/SetStars.js';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
 function EmployeeRatingPage() {
   const { viewCards } = ENDPOINT_ROUTES;
+
   return (
     <section className={styles.employeeRatingPage__wrapper}>
       <SideMenu />
@@ -24,7 +25,11 @@ function EmployeeRatingPage() {
           </div>
           <div className={styles.employeeRatingPage__score}>
             {/* Захардкодил рейтинг в хедере, будет приходить с бэка */}
-            {setStars('4', styles.employeeRatingPage__star_out, styles.employeeRatingPage__star_in)}
+            <SetStars
+              rating={'4'}
+              starOut={styles.employeeRatingPage__star_out}
+              starIn={styles.employeeRatingPage__star_in}
+            />
           </div>
         </div>
         <div className={styles.employeeRatingPage__block}>

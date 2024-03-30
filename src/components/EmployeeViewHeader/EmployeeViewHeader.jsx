@@ -1,4 +1,4 @@
-import setStars from '../../utils/setStars';
+import SetStars from '../SetStars/SetStars';
 import styles from './EmployeeViewHeader.module.scss';
 
 function EmployeeViewHeader() {
@@ -17,11 +17,11 @@ function EmployeeViewHeader() {
       <div className={styles.employeeViewHeader__rating}>
         <p>Рейтинг за {month}</p>
         <div className={styles.employeeViewHeader__stars}>
-          {setStars(
-            rating,
-            styles.employeeViewHeader__star_out,
-            styles.employeeViewHeader__star_in
-          )}
+          <SetStars
+            rating={rating}
+            starOut={styles.employeeViewHeader__star_out}
+            starIn={styles.employeeViewHeader__star_in}
+          />
         </div>
       </div>
       <div className={styles.employeeViewHeader__point}>{point} баллов</div>
