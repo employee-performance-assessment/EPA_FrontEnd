@@ -1,7 +1,7 @@
 @import '../../styles/vars';
 @import '../../styles/mixins';
 
-.userForm__wrapper {
+.user-form__wrapper {
   background-color: $white-base-color;
   width: 850px;
   height: 800px;
@@ -12,20 +12,20 @@
   position: relative;
 }
 
-.userForm__title {
+.user-form__title {
   font-weight: $fw-semibold;
   font-size: 36px;
   line-height: 121%;
   text-align: left;
 }
 
-.userForm__form {
+.user-form__form {
   margin-top: 30px;
   width: 531px;
   position: relative;
 }
 
-.userForm__fieldset {
+.user-form__fieldset {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -33,14 +33,14 @@
   padding: 0;
 }
 
-.userForm__passwordField {
+.user-form__password-field {
   position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.userForm__input {
+.user-form__input {
   border: 2px solid $black-base-color;
   border-radius: 20px;
   padding: 20px 24px;
@@ -50,7 +50,7 @@
   height: 64px;
 }
 
-.userForm__span{
+.user-form__span{
   height: 30px;
   font-weight: $fw-regular;
   font-size: 12px;
@@ -59,12 +59,12 @@
   padding-left: 24px;
 }
 
-.userForm__passwordField {
+.user-form__password-field {
   position: relative;
   display: flex;
 }
 
-.userForm__togglePasswordButton {
+.user-form__password-button {
   position: absolute;
   top: 20px;
   right: 24px;
@@ -73,13 +73,13 @@
   border: none;
 }
 
-.userForm__input-error {
+.user-form__input-error {
   font-weight: $fw-regular;
   font-size: 12px;
   min-height: 15px;
 }
 
-.userForm__submit-button {
+.user-form__submit-button {
   margin-top: 25px;
   border-radius: 20px;
   width: 350px;
@@ -93,7 +93,7 @@
   cursor: pointer;
 }
 
-.userForm__closeIcon-block {
+.user-form__close-icon-block {
   border: none;
   position: absolute;
   background-color: $purple-base-color;
@@ -103,4 +103,11 @@
   top: 41px;
   right: 80px;
   cursor: pointer;
+}
+
+.user-form__eye-icon {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  background-repeat: no-repeat;
 }
