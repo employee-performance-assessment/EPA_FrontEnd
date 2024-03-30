@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import Checkbox from '../../components/Checkbox/Checkbox.jsx';
 import Select from '../../components/Select/Select.jsx';
-import setStars from '../../utils/setStars.js';
+import SetStars from '../../components/SetStars/SetStars.js';
 
 // import flyMan from '../../images/fly-man.svg';
 
@@ -66,7 +66,11 @@ function AnalyticsPage() {
                   {item.month} {item.year}
                 </span>
               </div>
-              {setStars(item.rating, styles.starOut, styles.starIn)}
+              <SetStars
+                rating={item.rating}
+                starOut={styles.starOut}
+                starIn={styles.starIn}
+              />
             </div>
           ))}
         </article>
