@@ -6,7 +6,7 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
 import AdminRoute from '../AdminRoute/AdminRoute.jsx';
 
@@ -14,17 +14,21 @@ import Auth from '../../pages/Auth/Auth.jsx';
 import Register from '../../pages/Register/Register.jsx';
 import PersonalArea from '../../pages/PersonalArea/PersonalArea.jsx';
 import MyTeam from '../../pages/MyTeam/MyTeam.jsx';
-import Boards from '../Boards/Boards.jsx';
+import Kanban from '../../pages/Kanban/Kanban.jsx';
 import AnalyticsPage from '../../pages/AnalyticsPage/AnalyticsPage.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
 import AssessmentCriteria from '../../pages/AssessmentCriteria/AssessmentCriteria.jsx';
 import EmployeeViewPage from '../../pages/EmployeeViewPage/EmployeeViewPage.jsx';
+import EmployeeRatingPage from '../../pages/EmployeeRatingPage/EmployeeRatingPage.jsx';
+import TaskViewPage from '../../pages/TaskViewPage/TaskViewPage.jsx';
 
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
 import { getUserData } from '../../utils/mainApi.js';
 import { setAdminData } from '../../store/slices/adminDataSlice.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
+import AssessmentBlock from '../../pages/AssesmentBlock/AssessmentBlock.jsx';
+import Questionnaire from '../Questionnaire/Questionnaire.jsx';
 
 function App() {
   // в cardsList записываем ответ на запрос get от API, задания со всеми параметрами
@@ -38,8 +42,11 @@ function App() {
     analytics,
     criteria,
     viewCards,
+    viewRating,
+    viewTask,
+    estimate,
+    questionnaire,
   } = ENDPOINT_ROUTES;
-  const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -76,11 +83,15 @@ function App() {
         <Route path={login} element={<Auth />} />
         <Route path="" element={<AdminRoute />}>
           <Route path={personalArea} element={<PersonalArea />} />
-          <Route path={board} element={<Boards isLoggedIn={isLoggedIn} />} />
+          <Route path={board} element={<Kanban />} />
           <Route path={myTeam} element={<MyTeam />} />
           <Route path={analytics} element={<AnalyticsPage />} />
           <Route path={criteria} element={<AssessmentCriteria />} />
           <Route path={viewCards} element={<EmployeeViewPage />} />
+          <Route path={viewRating} element={<EmployeeRatingPage />} />
+          <Route path={viewTask} element={<TaskViewPage />} />
+          <Route path={estimate} element={<AssessmentBlock />} />
+          <Route path={questionnaire} element={<Questionnaire />} />
         </Route>
         <Route path="" element={<ProtectedRoute />}>
           <Route path={anyPage} element={<NotFound />} />

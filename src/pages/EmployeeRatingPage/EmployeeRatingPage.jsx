@@ -3,16 +3,19 @@ import styles from './EmployeeRatingPage.module.scss';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import EmployeeViewCriteria from '../../components/EmployeeViewCriteria/EmployeeViewCriteria.jsx';
 import criteria from './criteria.json';
+import SetStars from '../../components/SetStars/SetStars.js';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
 function EmployeeRatingPage() {
+  const { viewCards } = ENDPOINT_ROUTES;
+
   return (
     <section className={styles.employeeRatingPage__wrapper}>
       <SideMenu />
       <div className={styles.employeeRatingPage__container}>
         <div className={styles.employeeRatingPage__header}>
           <div className={styles.employeeRatingPage__row}>
-            {/* Временный роут-заглушка */}
-            <Link to={'#'} className={styles.employeeRatingPage__link}>
+            <Link to={viewCards} className={styles.employeeRatingPage__link}>
               <div className={styles.employeeRatingPage__icon}></div>
               <p className={styles.employeeRatingPage__caption}>Назад </p>
             </Link>
@@ -20,7 +23,14 @@ function EmployeeRatingPage() {
               Оценки за Февраль 2024
             </h2>
           </div>
-          <div className={styles.employeeRatingPage__score}></div>
+          <div className={styles.employeeRatingPage__score}>
+            {/* Захардкодил рейтинг в хедере, будет приходить с бэка */}
+            <SetStars
+              rating={'4'}
+              starOut={styles.employeeRatingPage__star_out}
+              starIn={styles.employeeRatingPage__star_in}
+            />
+          </div>
         </div>
         <div className={styles.employeeRatingPage__block}>
           <div className={styles.employeeRatingPage__criteria}>
@@ -31,7 +41,7 @@ function EmployeeRatingPage() {
           <ul className={styles.employeeRatingPage__list}>
             {/* Текст карточек пока приходит из json */}
             {criteria.map((card) => (
-              <EmployeeViewCriteria key={card.id} text={card.text} />
+              <EmployeeViewCriteria key={card.id} text={card.text} rating={card.rating} />
             ))}
           </ul>
 

@@ -1,19 +1,24 @@
 import { useEffect, useState } from 'react';
-import styles from './EmployeeViewPage.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
 import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import EmployeeViewHeader from '../../components/EmployeeViewHeader/EmployeeViewHeader.jsx';
 import Checkbox from '../../components/Checkbox/Checkbox.jsx';
 import EmployeeViewFilter from '../../components/EmployeeViewFilter/EmployeeViewFilter.jsx';
 import EmployeeViewBlock from '../../components/EmployeeViewBlock/EmployeeViewBlock.jsx';
 import { useFormValidation } from '../../hooks/useFormValidation';
+import { setViewMarks } from '../../store/slices/viewMarksSlices.js';
+import styles from './EmployeeViewPage.module.scss';
 import initTasks from './tasks.json';
 import initMarks from './marks.json';
 
 function EmployeeViewPage() {
-  const { values, handleChange } = useFormValidation();
-  const [view, setView] = useState(false);
+  const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
+  const dispatch = useDispatch();
+  const { values, handleChange, setValues } = useFormValidation();
+  const [viewTask, setViewTask] = useState(viewMarks);
   const [marks, setMarks] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [version, setVersion] = useState(0);
 
   useEffect(() => {
     if (values.stars) {
@@ -21,17 +26,45 @@ function EmployeeViewPage() {
     } else {
       setMarks(initMarks);
     }
-    setTasks(initTasks);
+
+    if (values.filterTask) {
+      setTasks(initTasks.filter((i) => i.status === values.filterTask));
+    } else {
+      setTasks(initTasks.filter((i) => i.status === 'new'));
+    }
   }, [values]);
+
+  useEffect(() => {
+    dispatch(setViewMarks(viewTask));
+  }, [viewTask]);
+
+  function showAllCards() {
+    setMarks(initMarks);
+    setValues({});
+    resetStarsFilter();
+  }
+
+  function resetStarsFilter() {
+    setVersion(version + 1);
+  }
 
   return (
     <section className={styles.employeeViewPage__wrapper}>
       <SideMenu />
       <div className={styles.employeeViewPage__container}>
         <EmployeeViewHeader />
-        <Checkbox labelLeft={'Задачи'} labelRight={'Оценки'} isChecked={view} setIsChecked={setView} />
-        <EmployeeViewFilter view={view} handleChange={handleChange} />
-        <EmployeeViewBlock view={view} tasks={tasks} marks={marks} />
+        <Checkbox
+          labelLeft={'Задачи'}
+          labelRight={'Оценки'}
+          isChecked={viewTask}
+          setIsChecked={setViewTask}
+        />
+        <EmployeeViewFilter
+          handleChange={handleChange}
+          showAllCards={showAllCards}
+          version={version}
+        />
+        <EmployeeViewBlock tasks={tasks} marks={marks} />
       </div>
     </section>
   );

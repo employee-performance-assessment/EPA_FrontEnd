@@ -1,11 +1,35 @@
-import styles from './EmployeeViewBlock.module.scss';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import EmployeeViewCard from '../EmployeeViewCard/EmployeeViewCard.jsx';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
+import styles from './EmployeeViewBlock.module.scss';
 
-function EmployeeViewBlock({ view, tasks, marks }) {
+function EmployeeViewBlock({ tasks, marks }) {
+  const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
+  const { viewRating, viewTask } = ENDPOINT_ROUTES;
+  const navigate = useNavigate();
+
+  function handleClickMarks() {
+    navigate(viewRating);
+  }
+
+  function handleClickTasks() {
+    navigate(viewTask);
+  }
+
   return (
     <ul className={styles.employeeViewBlock__list}>
-      {/* Текст карточек пока приходит из json */}
-      {!view ?
+      {viewMarks ?
+        marks.map((card) => (
+          <EmployeeViewCard
+            type="marks"
+            key={card.id}
+            month={card.month}
+            date={card.date}
+            rating={card.rating}
+            handleClickMarks={handleClickMarks}
+          />
+        )) :
         tasks.map((card) => (
           <EmployeeViewCard
             type="tasks"
@@ -14,15 +38,7 @@ function EmployeeViewBlock({ view, tasks, marks }) {
             deadline={card.deadline}
             terms={card.terms}
             points={card.points}
-          />
-        )) :
-        marks.map((card) => (
-          <EmployeeViewCard
-            type="marks"
-            key={card.id}
-            month={card.month}
-            date={card.date}
-            rating={card.rating}
+            handleClickTasks={handleClickTasks}
           />
         ))
       }

@@ -4,13 +4,9 @@ import './CriterionInput.scss';
 function CriterionInput({ criterion, name, editing, handleDelete }) {
   const { values, handleChange } = useFormValidation();
 
-  function setVisibleInputData() {
-    if (!values.name) {
-      values.name = name;
-    }
+  if (!values.name) {
+    values.name = name;
   }
-
-  setVisibleInputData();
 
   return (
     <div className="criterion">

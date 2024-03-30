@@ -1,8 +1,8 @@
 import './InputStars.scss';
 
-function InputStars({ name, handleChange }) {
+function InputStars({ name, handleChange, version }) {
   return (
-    <form>
+    <form key={version}>
       <fieldset className="input-stars">
         <div className="input-stars__container" onChange={handleChange}>
           <input className="input-stars__input" type="radio" name={name} value={1} aria-label="Ужасно" />

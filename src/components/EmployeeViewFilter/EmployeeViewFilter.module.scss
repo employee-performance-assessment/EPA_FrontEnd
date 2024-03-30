@@ -8,6 +8,7 @@
   gap: 8px;
   margin-top: 40px;
   height: 64px;
+  box-sizing: border-box;
 }
 
 .employeeViewFilter__marks {
@@ -22,6 +23,24 @@
   line-height: 31.47px;
   color: $black-base-color;
   padding: 0 10px;
+}
+
+.employeeViewFilter__label {
+  height: 54px;
+  background: $white-base-color;
+  border-radius: 40px;
+  border: solid 2px $dark-grey-base-color;
+  padding: 14px 26px;
+  font-size: 20px;
+  font-weight: $fw-medium;
+  line-height: 24.2px;
+  color: $black-base-color;
+  cursor: pointer;
+}
+
+.employeeViewFilter__input_task:checked + .employeeViewFilter__label {
+  border: solid 2px $purple-base-color;
+  background: $purple-base-color;
 }
 
 .employeeViewFilter__stars {
@@ -42,23 +61,28 @@
   font-weight: $fw-medium;
   line-height: 24.2px;
   color: $black-base-color;
-
-  &_active {
-    border: none;
-    background: $purple-base-color;
-  }
+  cursor: pointer;
 
   &_marks {
     width: 107px;
     height: 54px;
     border: none;
-    background: $grey-base-color;
+    background: $purple-base-color;
     border-radius: 20px;
+
+    &:hover {
+      background: $wrapper;
+    }
+
+    &:active {
+      background: $yellow-base-color;
+    }
   }
 }
 
 .employeeViewFilter__calendar {
   position: relative;
+  pointer-events: none;
 }
 
 .employeeViewFilter__input {
@@ -71,6 +95,10 @@
   font-weight: $fw-medium;
   line-height: 24.2px;
   color: $black-base-color;
+
+  &_task {
+    visibility: hidden;
+  }
 
   &_marks {
     width: 407px;

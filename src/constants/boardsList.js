@@ -4,7 +4,7 @@ export const boardsList = [
     title: 'К выполнению',
     items: [
       {
-        title: 'задание 1 доgsdf gdfgsdfgdsfgsdgска 1',
+        title: 'задание 1 доgsdf 1',
         id: 125022124,
         order: 1,
         forfeit: 100,
@@ -150,5 +150,28 @@ export const boardsList = [
         points: 900,
       },
     ],
+  },
+];
+
+export const boardsListEmpty = [
+  {
+    id: 1,
+    title: 'К выполнению',
+    items: [],
+  },
+  {
+    id: 2,
+    title: 'В работе',
+    items: [],
+  },
+  {
+    id: 3,
+    title: 'На ревью',
+    items: [],
+  },
+  {
+    id: 4,
+    title: 'Выполнено',
+    items: [],
   },
 ];

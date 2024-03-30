@@ -6,7 +6,10 @@ export const ENDPOINT_ROUTES = {
   board: '/board',
   analytics: '/analytics',
   estimate: '/estimate',
+  questionnaire: '/questionnaire',
   criteria: '/criteria-setting',
   viewCards: '/view-cards',
+  viewRating: '/view-rating',
+  viewTask: '/view-task',
   anyPage: '/*',
 };
