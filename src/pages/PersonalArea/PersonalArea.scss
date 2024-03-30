@@ -1,21 +1,12 @@
 @import '../../styles/mixins';
 
 .personal-area {
-  margin: 24px 20px 60px;
   display: flex;
-
-  &__sidemenu {
-    margin-top: 35px;
-  }
-
-  &__container {
-    display: flex;
-    flex-direction: column;
-    background-color: $light-gray-base-color;
-    border-radius: 40px;
-    margin-left: 37px;
-    width: 100%;
-  }
+  flex-direction: column;
+  background-color: $light-gray-base-color;
+  border-radius: 40px;
+  margin: 24px 20px 60px 0;
+  width: 100%;
 
   &__header {
     width: 100%;

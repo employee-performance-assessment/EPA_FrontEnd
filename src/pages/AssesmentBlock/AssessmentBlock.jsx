@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import './AssessmentBlock.scss';
 import icon from '../../images/assessmentBlock_icon.svg';
 import image from '../../images/assessmentBlock_image.svg';
@@ -70,7 +69,6 @@ function AssessmentBlock() {
 
   return (
     <section className="AssessmentBlock">
-      <SideMenu />
       <div className="AssessmentBlock__container">
         <div className="AssessmentBlock__header">
           <div className="header__wrapper">

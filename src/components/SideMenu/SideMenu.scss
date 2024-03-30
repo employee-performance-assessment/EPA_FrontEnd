@@ -3,8 +3,9 @@ $font-weight: 500;
 $font-size: 18px;
 
 .side-menu {
-  height: 840px;
-  width: 200px;
+  padding: 56px 37px 60px 20px;
+  height: 100vh;
+  width: 257px;
   display: flex;
   flex-direction: column;
 }

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import Checkbox from '../../components/Checkbox/Checkbox.jsx';
 
 import flyMan from '../../images/fly-man.svg';
@@ -16,7 +15,6 @@ function AnalyticsPage() {
 
   return isLoggedIn ? (
     <section className={styles.page}>
-      <SideMenu />
       <div className={styles.container}>
         <header className={styles.header}>
           <div className={styles.analytic}>
