@@ -2,6 +2,7 @@ const BASE_URL = 'http://158.160.121.57:60606';
 
 export const ADMIN_TECHNOLOGY = `${BASE_URL}/admin/technology`;
 export const ADMIN_CRITERIA = `${BASE_URL}/admin/criteria`;
+export const ADMIN_CRITERIA_DEFAULT = `${BASE_URL}/admin/criteria/default`;
 export const ADMIN_PROJECTS = `${BASE_URL}/admin/project`;
 export const ADMIN_USERS = `${BASE_URL}/admin/employee`;
 export const ADMIN_TASK = `${BASE_URL}/admin/task`;

@@ -1,5 +1,5 @@
 import checkResponse from './checkResponse.js';
-import { ADMIN_CRITERIA, USERS, ADMIN_USERS } from '../constants/constantAPI.js';
+import { ADMIN_CRITERIA, USERS, ADMIN_USERS, ADMIN_CRITERIA_DEFAULT } from '../constants/constantAPI.js';
 
 const { token } = JSON.parse(localStorage.getItem('token'));
 
@@ -35,11 +35,14 @@ export const getAllUsers = (token) =>
 export const addNewUser = ({ fullName, position, email, password }) =>
   makeAuthenticatedRequest(ADMIN_USERS, 'POST', token, { fullName, position, email, password });
 
-export const getAllCriterion = (token) =>
+export const getAllCriterion = () =>
   makeAuthenticatedRequest(ADMIN_CRITERIA, 'GET', token);
 
 export const addCriterion = (token, criterionName) =>
   makeAuthenticatedRequest(ADMIN_CRITERIA, 'POST', token, { name: criterionName });
+
+export const getDefaultCriterion = () =>
+  makeAuthenticatedRequest(ADMIN_CRITERIA_DEFAULT, 'GET', token);
 
 export const updateUserData = ({ id, fullName, position, email, password }) => {
   const requestBody = { fullName, position, email };
