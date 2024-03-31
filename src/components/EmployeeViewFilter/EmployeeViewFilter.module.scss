@@ -25,6 +25,12 @@
   padding: 0 10px;
 }
 
+.employeeViewFilter__inputs {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
 .employeeViewFilter__label {
   height: 54px;
   background: $white-base-color;
@@ -98,6 +104,7 @@
 
   &_task {
     visibility: hidden;
+    width: 0;
   }
 
   &_marks {

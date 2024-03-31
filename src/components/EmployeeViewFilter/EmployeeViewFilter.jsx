@@ -35,7 +35,7 @@ function EmployeeViewFilter({ handleChange, showAllCards, version }) {
   ) : (
     <form className={styles.employeeViewFilter__container}>
       <h3 className={styles.employeeViewFilter__title}>Фильтры:</h3>
-      <div onChange={handleChange}>
+      <div className={styles.employeeViewFilter__inputs} onChange={handleChange}>
         <input className={styles.employeeViewFilter__input_task} type="radio" name="filterTask" id="new" value="new" aria-label="К выполнению" defaultChecked />
         <label htmlFor="new" className={styles.employeeViewFilter__label}>К выполнению</label>
         <input className={styles.employeeViewFilter__input_task} type="radio" name="filterTask" id="inProgress" value="inProgress" aria-label="В работе" />
