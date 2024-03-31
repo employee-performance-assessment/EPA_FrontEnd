@@ -1,7 +1,10 @@
 import './PopupEditTask.scss';
 import ContainerInputPopupEditTask from '../ContainerInputPopupEditTask/ContainerInputPopupEditTask.jsx';
+import PeriodDatePicker from '../PeriodDatePicker/PeriodDatePicker.jsx';
 
 export function PopupEditTask({ setIsOpenPopup }) {
+
+
   const arrInput = [
     {
       nameInput: 'Название задачи',
@@ -42,8 +45,9 @@ export function PopupEditTask({ setIsOpenPopup }) {
       <div className="popup-edit-task__popup">
         <h1 className="popup-edit-task__title">Редактировать</h1>
         <div className="popup-edit-task__container-input">
-          {arrInput.map((item) => (
-            <ContainerInputPopupEditTask item={item} key={item.nameInput} />
+          {arrInput.map((item) => (item.type === 'container-input-popup-edit-task__button_calendar' ?
+            <PeriodDatePicker />
+            : <ContainerInputPopupEditTask item={item} key={item.nameInput} />
           ))}
         </div>
         <button
