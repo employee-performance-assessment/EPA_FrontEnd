@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Select from 'react-select';
 
-const CustomSelect = () => {
+function CustomSelect() {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
@@ -99,6 +99,6 @@ const CustomSelect = () => {
       isSearchable={false}
     />
   );
-};
+}
 
 export default CustomSelect;

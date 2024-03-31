@@ -51,8 +51,8 @@ function EmployeeViewPage() {
     <section className={styles.employeeViewPage__container}>
       <EmployeeViewHeader />
       <Switch
-        labelLeft={'Задачи'}
-        labelRight={'Оценки'}
+        labelLeft="Задачи"
+        labelRight="Оценки"
         isChecked={viewTask}
         setIsChecked={setViewTask}
       />

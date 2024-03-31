@@ -10,7 +10,7 @@ function AssessmentCard({ name, job }) {
     <div className={styles.assessmentCard__container}>
       <p className={styles.assessmentCard__name}>{name}</p>
       <p className={styles.assessmentCard__job}>{job}</p>
-      <div className={styles.assessmentCard__rating}></div>
+      <div className={styles.assessmentCard__rating} />
       <button
         type="button"
         className={styles.assessmentCard__button}
