@@ -10,7 +10,7 @@ function EmployeeViewHeader() {
   return (
     <div className={styles.employeeViewHeader__container}>
       <div className={styles.employeeViewHeader__bio}>
-        <div className={styles.employeeViewHeader__image}></div>
+        <div className={styles.employeeViewHeader__image} />
         <p className={styles.employeeViewHeader__name}>{name}</p>
         <p className={styles.employeeViewHeader__job}>{job}</p>
       </div>

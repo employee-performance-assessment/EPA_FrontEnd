@@ -11,13 +11,13 @@ function TaskViewPage() {
       <div className={styles.taskViewPage__header}>
         <div className={styles.taskViewPage__row}>
           <Link to={viewCards} className={styles.taskViewPage__link}>
-            <div className={styles.taskViewPage__icon}></div>
+            <div className={styles.taskViewPage__icon} />
             <p className={styles.taskViewPage__caption}>Назад </p>
           </Link>
           <h4 className={styles.taskViewPage__number}>125022024</h4>
           <CustomSelect />
           <button type="button" className={styles.taskViewPage__edit}>
-            <div></div>
+            <div />
             Редактировать
           </button>
         </div>

@@ -85,7 +85,7 @@ function Select({
             ? `${styles.overlay} ${styles.overlay_active}`
             : `${styles.overlay}`
         }
-      ></div>
+       />
     </>
   );
 }

@@ -5,6 +5,8 @@
   "dependencies": {
     "@babel/preset-env": "^7.23.9",
     "@babel/preset-react": "^7.23.3",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.14",
     "@reduxjs/toolkit": "^2.2.1",
     "@testing-library/react": "^13.4.0",
@@ -42,7 +44,38 @@
       "plugin:storybook/recommended"
     ],
     "rules": {
-      "dot-notation": 0
+      "dot-notation": 0,
+      "react/prop-types": "off",
+      "disableEslintIgnore": 0,
+      "linebreak-style": 0,
+      "import/extensions": 0,
+      "prefer-promise-reject-errors": 0,
+      "import/prefer-default-export": 0,
+      "no-nested-ternary": 0,
+      "no-return-assign": 0,
+      "no-shadow": 0,
+      "no-param-reassign": 0,
+      "no-unused-expressions": 0,
+      "object-curly-newline": "off",
+      "comma-dangle": "off",
+      "operator-linebreak": "off",
+      "implicit-arrow-linebreak": "off",
+      "no-confusing-arrow": "off",
+      "consistent-return": "off",
+      "no-else-return": "off",
+      "default-case": "off",
+      "no-use-before-define": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "react/button-has-type": "off",
+      "jsx-a11y/label-has-associated-control": "off",
+      "react/jsx-no-useless-fragment": "off",
+      "jsx-a11y/control-has-associated-label": "off",
+      "jsx-a11y/click-events-have-key-events": "off",
+      "jsx-a11y/no-noninteractive-element-interactions": "off",
+      "react/jsx-no-bind": "off",
+      "react/jsx-filename-extension": "off",
+      "jsx-a11y/no-static-element-interactions": "off",
+      "jsx-a11y/anchor-is-valid":"off"
     }
   },
   "browserslist": {

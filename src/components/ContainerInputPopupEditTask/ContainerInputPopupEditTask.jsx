@@ -22,7 +22,7 @@ export default function ContainerInputPopupEditTask({ item }) {
           type="text"
           className="container-input-popup-edit-task__input "
           placeholder={item.nameInput}
-        ></input>
+         />
       ) : (
         <>
           <span className="container-input-popup-edit-task__span">
@@ -33,7 +33,7 @@ export default function ContainerInputPopupEditTask({ item }) {
             type="text"
             className="container-input-popup-edit-task__input_textarea"
             placeholder={item.nameInput}
-          ></textarea>
+           />
         </>
       )}
 
@@ -42,7 +42,7 @@ export default function ContainerInputPopupEditTask({ item }) {
           className={`container-input-popup-edit-task__button ${item.type}`}
           aria-label={`редактировать поле ${item.nameInput}`}
           onClick={handleClickClose}
-        ></button>
+         />
       )}
     </div>
   );

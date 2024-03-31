@@ -39,7 +39,7 @@ export default function PeriodDatePicker() {
     <div className="datepicker__input-conteiner">
       <DatePicker
         dateFormat="dd/MM/yyyy"
-        selectsRange={true}
+        selectsRange
         startDate={startDate}
         endDate={endDate}
         onChange={(update) => {

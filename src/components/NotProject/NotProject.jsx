@@ -8,7 +8,7 @@ export function NotProject() {
     <h1 className="not-project__title">У вас ещё нет проектов. Создайте свой первый проект.</h1>
     <img className="not-project__img" src={empty} alt="отсутствуют задания" />
     <div className='not-project__input-conteiner'>
-      <input type='text ' className="not-project__input" placeholder='Название проекта'></input>
+      <input type='text ' className="not-project__input" placeholder='Название проекта' />
       <img className="not-project__img-pen" src={pencilSimple} alt="создать проект" />
       <img className="not-found-task__img" src={trashSimple} alt="очистить поле" />
     </div>

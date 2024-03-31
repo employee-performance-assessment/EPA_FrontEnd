@@ -94,7 +94,7 @@ function Auth() {
               className={styles.eye}
               onClick={togglePassword}
               style={{ backgroundImage: `url(${isOpen ? eyeOpen : eyelash})` }}
-            ></span>
+             />
           </label>
           <button type="submit" disabled={!isValid}>
             Войти

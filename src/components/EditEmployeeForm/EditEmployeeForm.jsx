@@ -128,7 +128,7 @@ function EditEmployeeForm({
           inputClassName="user-form__input"
           placeholder="Имя Фамилия"
           spanClassName="user-form__span"
-          required={true}
+          required
         />
         <Input
           type="text"
@@ -148,7 +148,7 @@ function EditEmployeeForm({
           inputClassName="user-form__input"
           placeholder="Должность"
           spanClassName="user-form__span"
-          required={true}
+          required
         />
         <Input
           type="email"
@@ -168,7 +168,7 @@ function EditEmployeeForm({
           inputClassName="user-form__input"
           placeholder="Email"
           spanClassName="user-form__span"
-          required={true}
+          required
         />
         <>
           <div className="user-form__password-field">
