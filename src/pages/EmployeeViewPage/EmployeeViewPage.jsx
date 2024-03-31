@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import EmployeeViewHeader from '../../components/EmployeeViewHeader/EmployeeViewHeader.jsx';
 import Switch from '../../components/Switch/Switch.jsx';
@@ -18,6 +19,10 @@ function EmployeeViewPage() {
   const [marks, setMarks] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [version, setVersion] = useState(0);
+  const params = useParams();
+  const employeeId = params.id;
+
+  console.log(employeeId);
 
   useEffect(() => {
     if (values.stars) {
