@@ -5,6 +5,7 @@ import Boards from '../../components/Boards/Boards.jsx';
 import { NotFoundTask } from '../../components/NotFoundTask/NotFoundTask.jsx';
 import { NotProject } from '../../components/NotProject/NotProject.jsx';
 import { PopupKanban } from '../../components/PopupKanban/PopupKanban.jsx';
+import { PopupEditTask } from '../../components/PopupEditTask/PopupEditTask.jsx';
 import plus from '../../images/Plus.svg';
 import edit from '../../images/edit-button-icon.svg';
 import caretDown from '../../images/CaretDown_black.svg';
@@ -14,7 +15,7 @@ import './Kanban.scss';
 function Kanban() {
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
   const [isEmpty, setIsEmpty] = useState(1);
-  const [isOpenPopup, setIsOpenPopup] = useState(true);
+  const [isOpenPopup, setIsOpenPopup] = useState(false);
   // не забыть проверить положение когда с бэка придет пустой объект с
   // проектами, не должно ничего отрисовываться.
   const nameProject = 'Linkpass';
@@ -76,7 +77,7 @@ function Kanban() {
         <Boards boardsList={boardsListEmpty} />
         {isEmpty !== 1 ? <NotFoundTask /> : <NotProject />}
       </div>
-      {isOpenPopup && <PopupKanban setIsOpenPopup={setIsOpenPopup} />}
+      {isOpenPopup && <PopupEditTask setIsOpenPopup={setIsOpenPopup} />}
     </section>
   ) : (
     ''
