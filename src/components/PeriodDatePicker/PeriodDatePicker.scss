@@ -414,7 +414,8 @@
 .react-datepicker__time-name {
   color: $datepicker__text-color;
   display: inline-block;
-  width: $datepicker__item-size;
+  width: 31px;
+  height: 31px;
   line-height: $datepicker__item-size;
   text-align: center;
   margin: $datepicker__day-margin;
