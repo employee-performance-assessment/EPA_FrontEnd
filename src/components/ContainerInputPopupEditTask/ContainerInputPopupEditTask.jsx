@@ -1,6 +1,6 @@
 import './ContainerInputPopupEditTask.scss';
-import { useState, useEffect } from 'react';
 
+// import { useState, useEffect } from 'react';
 
 export default function ContainerInputPopupEditTask({ item }) {
   function handleClickClose() {
@@ -13,7 +13,6 @@ export default function ContainerInputPopupEditTask({ item }) {
       : '';
   }
 
-
   return (
     <div
       className={`container-input-popup-edit-task__input-conteiner ${setBigInput()}`}
@@ -24,20 +23,20 @@ export default function ContainerInputPopupEditTask({ item }) {
           className="container-input-popup-edit-task__input "
           placeholder={item.nameInput}
         ></input>
-      )
-        : (
-          <>
-            <span className="container-input-popup-edit-task__span">
-              Баллы, которые нужно списать за каждый день нарушения дедлайна или
-              начислить за сдачу раньше срока
-            </span>
-            <textarea
-              type="text"
-              className="container-input-popup-edit-task__input_textarea"
-              placeholder={item.nameInput}
-            ></textarea>
-          </>
-        )}
+      ) : (
+        <>
+          <span className="container-input-popup-edit-task__span">
+            Баллы, которые нужно списать за каждый день нарушения дедлайна или
+            начислить за сдачу раньше срока
+          </span>
+          <textarea
+            type="text"
+            className="container-input-popup-edit-task__input_textarea"
+            placeholder={item.nameInput}
+          ></textarea>
+        </>
+      )}
+
       {item.type !== 'container-input-popup-edit-task__button_empty' && (
         <button
           className={`container-input-popup-edit-task__button ${item.type}`}
