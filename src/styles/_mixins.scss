@@ -4,7 +4,8 @@
 @mixin text(
   $color: $black-base-color,
   $font-size: 20px,
-  $font-weight: $fw-medium, //500
+  $font-weight: $fw-medium,
+  //500
   $line-height: 1.2 // (24px)
 ) {
   margin: 0;
@@ -44,4 +45,11 @@
   user-select: none;
   background: $grey-base-color;
   color: $black-base-color;
+}
+
+@mixin positioning {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
 }

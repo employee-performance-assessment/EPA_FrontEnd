@@ -1,3 +1,6 @@
+@import '../../styles/vars';
+@import '../../styles/mixins';
+
 .profile-card {
   display: flex;
   position: relative;
@@ -5,50 +8,58 @@
   align-items: center;
   width: 1163px;
   height: 120px;
-  background-color: #F5F5F5;
-  border-top: 1px solid #DAD6D6;
-  border-bottom: 2px solid #DAD6D6;
+  background-color: $light-gray-base-color;
+  border-top: 1px solid $grey-base-color;
+  border-bottom: 2px solid $grey-base-color;
   box-sizing: border-box;
   padding: 28px 32px;
-  color: #333232;
+  color: $black-base-color;
   position: relative;
   font-size: 20px;
-  line-height: 24.2px;
-  font-weight: 500;
+  line-height: 121%;
+  font-weight: $fw-medium;
 }
 
 .profile-card__info-block {
   display: flex;
+  align-items: center;
   flex-direction: row;
-  gap: 12px;
+  gap: 40px;
   width: 482px;
+  height: 64px;
 }
 
-.profile-card__name-password {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  height: 64px;
+.profile-card__name-block {
   width: 175px;
+  height: 52px;
+  display: flex;
+  align-items: center;
 }
 
 .profile-card__name {
+  width: 175px;
   margin: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
-.profile-card__password {
-  margin: 0;
-  font-size: 16px;
+.profile-card__position-block {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  width: 265px;
 }
 
-.profile-card__job-title {
+.profile-card__position {
   margin: 0;
+  width: 265px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .profile-card__email {
   font-size: 22px;
-  font-weight: 600;
+  font-weight: $fw-semibold;
   line-height: 121%;
   margin-left: 92px;
 }
@@ -56,6 +67,7 @@
 .profile-card__menu {
   position: absolute;
   right: 32px;
+  cursor: pointer;
 }
 
 .profile-card__menu-options {
@@ -65,7 +77,7 @@
   width: 196px;
   padding: 8px 0;
   border-radius: 10px;
-  background-color: #fff;
+  background-color: $white-base-color;
   box-sizing: border-box;
   position: absolute;
   top: 76px;
@@ -82,11 +94,11 @@
   width: 100%;
   font-size: 16px;
   line-height: 22px;
-  font-weight: 500;
+  font-weight: $fw-medium;
   cursor: pointer;
   text-align: left;
 }
 
 .profile-card__menu-option:hover {
-  background-color: #C5B6F1;
+  background-color: $purple-base-color;
 }

@@ -1,29 +1,34 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import IconDots from '../../images/3dots.svg';
+import './EmployeeProfileCard.scss';
 
-function EmployeeProfileCard() {
-  // props: {user}
+function EmployeeProfileCard({ user, handleOpenEditEmployeeForm, handleDeleteEmployee }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
-  const user = {
-    name: 'Иван Иванов',
-    jobTitle: 'Разработчик',
-    email: 'Ivan@mail.ru',
-    password: 'Ivanco928',
+  const openMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleOpenMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  const openEditEmployeePopup = () => {
+    handleOpenEditEmployeeForm(user);
+    setIsMenuOpen(false);
+  };
+
+  const deleteUser = () => {
+    handleDeleteEmployee(user.id);
   };
 
   return (
     <div className="profile-card">
       <div className="profile-card__info-block">
-        <div className="profile-card__name-password">
-          <p className="profile-card__name">{user.name}</p>
-          <p className="profile-card__password">Пароль: {user.password}</p>
+        <div className='profile-card__name-block'>
+          <p className="profile-card__name">{user.fullName}</p>
         </div>
-        <p className="profile-card__job-title">/ {user.jobTitle}</p>
+        <div className='profile-card__position-block'>
+          <p className="profile-card__position">/ {user.position}</p>
+        </div>
       </div>
       <div className="profile-card__email">{user.email}</div>
       <div className="profile-card__menu">
@@ -31,28 +36,28 @@ function EmployeeProfileCard() {
           src={IconDots}
           alt="Кнопка действия"
           className="profile-card__menu-icon"
-          onClick={handleOpenMenu}
+          onClick={openMenu}
         />
       </div>
       {isMenuOpen && (
         <div className="profile-card__menu-options">
           <button
             className="profile-card__menu-option"
-            // onClick={() => (console.log("Edit clicked")}
+            onClick={openEditEmployeePopup}
           >
             Редактировать
           </button>
           <button
             className="profile-card__menu-option"
-            // onClick={() => console.log("Go to profile page clicked")}
+            onClick={() => navigate(`/${user.id}`)} // указать роут лк сотрудника
           >
-            Перейти в кабинет сотрудника
+            Перейти в ЛК
           </button>
           <button
             className="profile-card__menu-option"
-            // onClick={() => console.log("Delete clicked")}
+            onClick={deleteUser}
           >
-            Удалить сотрудника
+            Удалить
           </button>
         </div>
       )}

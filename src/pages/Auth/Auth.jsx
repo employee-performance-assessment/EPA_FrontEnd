@@ -9,7 +9,7 @@ import { getUserData } from '../../utils/mainApi.js';
 
 import { setToken } from '../../store/slices/tokenSlices.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
-import { setAdminData } from '../../store/slices/adminDataSlices.js';
+import { setAdminData } from '../../store/slices/adminDataSlice.js';
 
 import registerImg from '../../images/register-img.png';
 
@@ -40,7 +40,9 @@ function Auth() {
       })
       .catch((err) =>
         // eslint-disable-next-line no-alert
-        err === 'Error: 500' ? alert('Не корректный логин или пароль') : alert(err));
+        err === 'Error: 500'
+          ? alert('Не корректный логин или пароль')
+          : alert(err));
   };
 
   const togglePassword = () => {

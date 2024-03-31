@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setAdminData } from '../../store/slices/adminDataSlices.js';
+import { setAdminData } from '../../store/slices/adminDataSlice.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 
 import { useFormValidation } from '../../hooks/useFormValidation.js';
@@ -58,13 +58,13 @@ function Register() {
             <input
               type="data"
               id="user-name"
-              minLength="3"
+              minLength="1"
               maxLength="255"
               name="name"
               value={values.name || ''}
               onChange={handleChange}
               placeholder="Имя Фамилия"
-              pattern="^[а-яА-Я\s\-]+$"
+              pattern="^[а-яА-Яa-zA-Z\s\-]+$"
               required
             />
             <span>{errors.name}</span>

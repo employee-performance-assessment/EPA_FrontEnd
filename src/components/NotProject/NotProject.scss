@@ -1,0 +1,63 @@
+@import '../../styles/vars';
+@import '../../styles/mixins';
+
+.not-project {
+  width: 496px;
+  height: 522px;
+  gap: 0px;
+  opacity: 0px;
+  margin: 0 auto 0 auto;
+  display: grid;
+  margin-top: 60px;
+  justify-items: start;
+}
+
+.not-project__title {
+  margin-top: 23px;
+  width: 400px;
+  // text-align: center;
+}
+
+.not-project__subtitle {
+  margin-top: 6px;
+}
+
+.not-project__button {
+  border: none;
+  padding: 16px 20px;
+  font-size: 20px;
+  line-height: 121%;
+  font-weight: $fw-semibold;
+  border-radius: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  max-height: 56px;
+  cursor: pointer;
+  background-color: $light-gray-base-color;
+}
+
+.not-project__input {
+  border: 2px solid $black-base-color;
+  border-radius: 20px;
+  padding: 20px 24px;
+  font-size: 20px;
+  color: $black-base-color;
+  box-sizing: border-box;
+  height: 64px;
+  width: 400px;
+}
+
+.not-project__button_purple {
+  width: 335px;
+  background-color: $purple-base-color;
+  margin-top: 40px;
+}
+
+.not-project__input-conteiner {
+  display: flex;
+}
+
+.not-project__img-pen {
+  margin: auto 15px auto 15px;
+}

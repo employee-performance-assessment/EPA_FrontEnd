@@ -1,27 +1,20 @@
+import { useState } from 'react';
 import Board from '../Board/Board.jsx';
-import './Boards.css';
+import './Boards.scss';
 
-function Boards({
-  currentBoard,
-  setCurrentBoard,
-  clearCards,
-  cardsLists,
-  setCardsLists,
-  dropCard,
-  setDropCard,
-  startBoard,
-  setStartBoard,
-}) {
+function Boards({ boardsList }) {
+  const [cardsLists, setCardsLists] = useState(boardsList);
+  const [dropCard, setDropCard] = useState(null);
+  const [startBoard, setStartBoard] = useState(null);
+  const [currentBoard, setCurrentBoard] = useState(null);
+
   return (
     <div className="boards">
-      {cardsLists.map((board, i) => (
+      {cardsLists.map((board) => (
         <Board
           cardsLists={cardsLists}
           key={board.id}
-          title={board.title}
-          clearCards={clearCards}
           board={board}
-          idBoard={i}
           setCardsLists={setCardsLists}
           dropCard={dropCard}
           setDropCard={setDropCard}
