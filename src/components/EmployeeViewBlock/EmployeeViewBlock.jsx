@@ -6,15 +6,15 @@ import styles from './EmployeeViewBlock.module.scss';
 
 function EmployeeViewBlock({ tasks, marks }) {
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
-  const { viewRating, viewTask } = ENDPOINT_ROUTES;
+  const { ratingCards, taskCards } = ENDPOINT_ROUTES;
   const navigate = useNavigate();
 
   function handleClickMarks() {
-    navigate(viewRating);
+    navigate(ratingCards);
   }
 
   function handleClickTasks() {
-    navigate(viewTask);
+    navigate(taskCards);
   }
 
   return (

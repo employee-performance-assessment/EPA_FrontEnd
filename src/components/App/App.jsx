@@ -31,7 +31,6 @@ import AssessmentBlock from '../../pages/AssesmentBlock/AssessmentBlock.jsx';
 import Questionnaire from '../Questionnaire/Questionnaire.jsx';
 
 function App() {
-  // в cardsList записываем ответ на запрос get от API, задания со всеми параметрами
   const {
     login,
     register,
@@ -41,9 +40,9 @@ function App() {
     anyPage,
     analytics,
     criteria,
-    viewCards,
-    viewRating,
-    viewTask,
+    cardsEmployees,
+    ratingCards,
+    taskCards,
     estimate,
     questionnaire,
   } = ENDPOINT_ROUTES;
@@ -87,9 +86,9 @@ function App() {
           <Route path={myTeam} element={<MyTeam />} />
           <Route path={analytics} element={<AnalyticsPage />} />
           <Route path={criteria} element={<AssessmentCriteria />} />
-          <Route path={viewCards} element={<EmployeeViewPage />} />
-          <Route path={viewRating} element={<EmployeeRatingPage />} />
-          <Route path={viewTask} element={<TaskViewPage />} />
+          <Route path={`${cardsEmployees}/:id`} element={<EmployeeViewPage />} />
+          <Route path={ratingCards} element={<EmployeeRatingPage />} />
+          <Route path={taskCards} element={<TaskViewPage />} />
           <Route path={estimate} element={<AssessmentBlock />} />
           <Route path={questionnaire} element={<Questionnaire />} />
         </Route>

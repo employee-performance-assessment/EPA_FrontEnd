@@ -1,9 +1,10 @@
+/* eslint-disable no-alert */
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CriterionInput from '../../components/CriterionInput/CriterionInput.jsx';
 import Switch from '../../components/Switch/Switch.jsx';
-import { getAllCriterion } from '../../utils/mainApi.js';
-import initialCriteria from './CardEmployee.json';
+import { getAllCriterion, getDefaultCriterion } from '../../utils/mainApi.js';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import {
   labelSupervisor,
   labelAllTeam,
@@ -17,20 +18,22 @@ function AssessmentCriteria() {
   const [isCheckedСounting, setIsCheckedСounting] = useState(false);
   const [isCheckedEditing, setIsCheckedEditing] = useState(false);
   const [isOpenPopup, setIsOpenPopup] = useState(false);
-  const { token } = JSON.parse(localStorage.getItem('token'));
+  const { personalArea } = ENDPOINT_ROUTES;
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isCheckedEditing) {
-      getAllCriterion(token)
+      getAllCriterion()
         .then((res) => {
-          // dispatch(setAllCriterion(res));
           setCriteria(res);
         })
-        // eslint-disable-next-line no-alert
         .catch((err) => alert(err));
     } else {
-      setCriteria(initialCriteria);
+      getDefaultCriterion()
+        .then((res) => {
+          setCriteria(res);
+        })
+        .catch((err) => alert(err));
     }
   }, [isCheckedEditing]);
 
@@ -41,7 +44,6 @@ function AssessmentCriteria() {
   function addNewCriteria(evt) {
     evt.preventDefault();
     const newCriteria = { name: '' };
-    // addCriterion(token);
     setCriteria([...criteria, newCriteria]);
   }
 
@@ -52,7 +54,7 @@ function AssessmentCriteria() {
 
   function handleNavigate() {
     setIsOpenPopup(!isOpenPopup);
-    navigate('/admin-person-area');
+    navigate(personalArea);
   }
 
   return (
