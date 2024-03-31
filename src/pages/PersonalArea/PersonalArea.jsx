@@ -73,7 +73,7 @@ function PersonalArea() {
   }
 
   return (
-    <div className="personal-area">
+    <section className="personal-area">
       <div className="personal-area__header">
         <div className="personal-area__header-icon" />
         <h2 className="personal-area__header-title">{adminData.fullName}</h2>
@@ -229,7 +229,7 @@ function PersonalArea() {
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 }
 

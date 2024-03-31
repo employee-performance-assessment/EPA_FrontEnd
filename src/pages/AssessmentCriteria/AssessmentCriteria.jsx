@@ -56,7 +56,7 @@ function AssessmentCriteria() {
   }
 
   return (
-    <div className="assessment-criteria">
+    <section className="assessment-criteria">
       <div className="assessment-criteria__header">
         <Link to={'/admin-person-area'} className="assessment-criteria__link">
           <div className="assessment-criteria__link-arroy" />
@@ -120,7 +120,7 @@ function AssessmentCriteria() {
           </div>
         </div>
       }
-    </div >
+    </section >
   );
 }
 
