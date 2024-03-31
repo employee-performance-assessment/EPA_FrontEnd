@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-
-import SideMenu from '../../components/SideMenu/SideMenu.jsx';
-import Checkbox from '../../components/Checkbox/Checkbox.jsx';
+import Switch from '../../components/Switch/Switch.jsx';
 import Select from '../../components/Select/Select.jsx';
 import SetStars from '../../components/SetStars/SetStars.js';
 
@@ -34,13 +32,12 @@ function AnalyticsPage() {
 
   return isLoggedIn ? (
     <section className={styles.page}>
-      <SideMenu />
       <div style={isEstimate ? { background: 'white' } : null} className={styles.container}>
         <header className={styles.header}>
           <div className={styles.analytic}>
             <span>Аналитика</span>
           </div>
-          <Checkbox
+          <Switch
             shadow="none"
             labelLeft="Командная"
             labelRight="Индивидуальная"
@@ -49,7 +46,7 @@ function AnalyticsPage() {
           />
         </header>
         <div className={styles.filter_block}>
-          <Checkbox
+          <Switch
             labelLeft="Оценки"
             labelRight="Дедлайны"
             isChecked={isEstimate}

@@ -1,0 +1,75 @@
+@import '../../styles/vars';
+@import '../../styles/mixins';
+
+.container-input-popup-edit-task__input-conteiner {
+  height: 64px;
+  width: 470px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid $black-base-color;
+  border-radius: 20px;
+  padding-left: 24px;
+  color: $black-base-color;
+  box-sizing: border-box;
+}
+
+.container-input-popup-edit-task__input {
+  width: 350px;
+  margin: 18px auto auto 0;
+  border: none;
+  font-size: 20px;
+  outline: none;
+}
+
+.container-input-popup-edit-task__input-conteiner_big {
+  position: relative;
+  align-items: flex-start;
+  height: 346px;
+}
+
+.container-input-popup-edit-task__button {
+  border: none;
+  cursor: pointer;
+}
+
+.container-input-popup-edit-task__button_arrow-down {
+  width: 24px;
+  height: 24px;
+  margin-right: 20px;
+  background-color: white;
+  background: url(../../images/CaretDown-black.svg) no-repeat center center;
+}
+
+.container-input-popup-edit-task__button_calendar {
+  width: 32px;
+  height: 32px;
+  margin-right: 20px;
+  background-color: white;
+  background: url(../../images/Calendar-icon-popup.svg) no-repeat center center;
+}
+
+.container-input-popup-edit-task__button_big {
+  visibility: hidden;
+}
+
+.container-input-popup-edit-task__input_textarea {
+  margin: 18px auto auto 0;
+  border: none;
+  font-size: 20px;
+  width: 430px;
+  height: 300px;
+  outline: none;
+}
+
+.container-input-popup-edit-task__input_textarea:focus {
+  border: none;
+}
+
+.container-input-popup-edit-task__span {
+  position: absolute;
+  top: -29px;
+  font-weight: 400;
+  font-size: 12px;
+}

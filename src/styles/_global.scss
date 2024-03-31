@@ -15,6 +15,14 @@ body {
   min-height: 100vh;
 }
 
+.page-container {
+  display: flex;
+
+  &__sidemenu {
+    height: 100vh;
+  }
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

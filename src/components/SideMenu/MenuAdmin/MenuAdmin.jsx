@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { ENDPOINT_ROUTES } from '../../../constants/constantsEndpointRoute';
 import './MenuAdmin.scss';
 
@@ -13,37 +13,32 @@ function MenuAdmin() {
 
   return (
     <ul className="side-menu__list">
-      <Link
-        to={personalArea}
-        className="side-menu__item side-menu__item_personal"
-      >
+      <NavLink to={personalArea} className={
+        ({ isActive }) => `side-menu__item side-menu__item-personal ${isActive && 'side-menu__item_active side-menu__item-personal_active'}`
+      }>
         <p className="side-menu__text">Личный кабинет</p>
-      </Link>
-      <Link
-        to={myTeam}
-        className="side-menu__item side-menu__item_my-team"
-      >
+      </NavLink>
+      <NavLink to={myTeam} className={
+        ({ isActive }) => `side-menu__item side-menu__item-my-team ${isActive && 'side-menu__item_active side-menu__item-my-team_active'}`
+      }>
         <p className="side-menu__text">Моя команда</p>
-      </Link>
-      <Link
-        to={board}
-        className="side-menu__item side-menu__item_kanban"
-      >
+      </NavLink>
+      <NavLink to={board} className={
+        ({ isActive }) => `side-menu__item side-menu__item-kanban ${isActive && 'side-menu__item_active side-menu__item-kanban_active'}`
+      }>
         <p className="side-menu__text">Канбан доска</p>
-      </Link>
-      <Link
-        to={estimate}
-        className="side-menu__item side-menu__item_asses"
-      >
+      </NavLink>
+      <NavLink to={estimate} className={
+        ({ isActive }) => `side-menu__item side-menu__item-asses ${isActive && 'side-menu__item_active side-menu__item-asses_active'}`
+      }>
         <p className="side-menu__text">Оценка ЭС</p>
-      </Link>
-      <Link
-        to={analytics}
-        className="side-menu__item side-menu__item_analytics"
-      >
+      </NavLink>
+      <NavLink to={analytics} className={
+        ({ isActive }) => `side-menu__item side-menu__item-analytics ${isActive && 'side-menu__item_active side-menu__item-analytics_active'}`
+      }>
         <p className="side-menu__text"> Аналитика</p>
-      </Link>
-    </ul>
+      </NavLink>
+    </ul >
   );
 }
 

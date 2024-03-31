@@ -42,11 +42,7 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
       !values.password ||
       !values.confirmPassword;
 
-    if (hasErrors || hasValues) {
-      setIsValid(false);
-    } else {
-      setIsValid(true);
-    }
+    setIsValid(!hasErrors && !hasValues);
   }, [errors]);
 
   useEffect(() => {
@@ -58,8 +54,7 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
   const registerEmployee = (e) => {
     e.preventDefault();
     const { name, position, email, password } = values;
-    const { token } = JSON.parse(localStorage.getItem('token'));
-    addNewUser({ token, fullName: name, position, email, password }).then(
+    addNewUser({ fullName: name, position, email, password }).then(
       (user) => {
         handleAddNewEmployee(user);
       }
@@ -71,12 +66,12 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
   };
 
   return (
-    <section className="addEmployeeForm">
+    <section className="add-employee-form">
       <UserForm
         formTitle="Регистрация сотрудника"
         handleSubmit={registerEmployee}
         isValid={isValid}
-        handleClosePopup = { handleCloseAddEmployeePopup }
+        handleClosePopup={handleCloseAddEmployeePopup}
       >
         <Input
           type="text"
@@ -93,9 +88,9 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
             )
           }
           error={errors.name}
-          inputClassName="userForm__input"
+          inputClassName="user-form__input"
           placeholder="Имя Фамилия"
-          spanClassName="userForm__span"
+          spanClassName="user-form__span"
           required={true}
         />
         <Input
@@ -113,9 +108,9 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
             )
           }
           error={errors.position}
-          inputClassName="userForm__input"
+          inputClassName="user-form__input"
           placeholder="Должность"
-          spanClassName="userForm__span"
+          spanClassName="user-form__span"
           required={true}
         />
         <Input
@@ -133,17 +128,17 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
             )
           }
           error={errors.email}
-          inputClassName="userForm__input"
+          inputClassName="user-form__input"
           placeholder="Email"
-          spanClassName="userForm__span"
+          spanClassName="user-form__span"
           required={true}
         />
         <>
-          <div className="userForm__passwordField">
+          <div className="user-form__password-field">
             <Input
               type={showPassword ? 'text' : 'password'}
               name="password"
-              inputClassName="userForm__input"
+              inputClassName="user-form__input"
               value={values.password}
               onChange={(e) =>
                 handleChangeInput(
@@ -156,28 +151,30 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
                 )
               }
               placeholder="Пароль авторизации"
-              spanClassName="userForm__span"
+              spanClassName="user-form__span"
               error={errors.password}
               required={true}
             />
             <button
               type="button"
-              className="userForm__togglePasswordButton"
+              className="user-form__password-button"
               onClick={() => setShowPassword(!showPassword)}
             >
-              <img
-                src={showPassword ? OpenEyeIcon : CloseEyeIcon}
-                alt="иконка показа пароля"
+              <span
+                className="user-form__eye-icon"
+                style={{
+                  backgroundImage: `url(${showPassword ? OpenEyeIcon : CloseEyeIcon})`,
+                }}
               />
             </button>
           </div>
         </>
         <>
-          <div className="userForm__passwordField">
+          <div className="user-form__password-field">
             <Input
               type={showConfirmPassword ? 'text' : 'password'}
               name="confirmPassword"
-              inputClassName="userForm__input"
+              inputClassName="user-form__input"
               value={values.confirmPassword}
               onChange={(e) =>
                 handleChangeInput(
@@ -191,18 +188,20 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
               }
               placeholder="Подтвердите пароль"
               autoComplete="off"
-              spanClassName="userForm__span"
+              spanClassName="user-form__span"
               error={errors.confirmPassword}
               required={true}
             />
             <button
               type="button"
-              className="userForm__togglePasswordButton"
+              className="user-form__password-button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
-              <img
-                src={showConfirmPassword ? OpenEyeIcon : CloseEyeIcon}
-                alt="иконка показа пароля"
+              <span
+                className="user-form__eye-icon"
+                style={{
+                  backgroundImage: `url(${showConfirmPassword ? OpenEyeIcon : CloseEyeIcon})`,
+                }}
               />
             </button>
           </div>

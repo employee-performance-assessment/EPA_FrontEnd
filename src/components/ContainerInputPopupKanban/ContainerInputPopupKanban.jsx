@@ -13,7 +13,7 @@ export default function ContainerInputPopupKanban({ item }) {
         aria-label="кнопка редактирования проекта"
       ></button>
       <button
-        className="container-input-popup-kanban__button container-input-popup-kanban__button_delet"
+        className="container-input-popup-kanban__button container-input-popup-kanban__button_delete"
         aria-label="кнопка удаления проекта"
       ></button>
     </div>

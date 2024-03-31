@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CriterionInput from '../../components/CriterionInput/CriterionInput.jsx';
-import Checkbox from '../../components/Checkbox/Checkbox.jsx';
+import Switch from '../../components/Switch/Switch.jsx';
 import { getAllCriterion } from '../../utils/mainApi.js';
-import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import initialCriteria from './CardEmployee.json';
 import {
   labelSupervisor,
@@ -57,54 +56,49 @@ function AssessmentCriteria() {
   }
 
   return (
-    <div className="assessment-criteria">
-      <div className="assessment-criteria__sidemenu">
-        <SideMenu />
-      </div>
-      <div className="assessment-criteria__container">
-        <div className="assessment-criteria__header">
-          <Link to={'/admin-person-area'} className="assessment-criteria__link">
-            <div className="assessment-criteria__link-arroy" />
-            {'Вернуться'}
-          </Link>
-          <div className="assessment-criteria__checkbox-container">
-            <h2 className="assessment-criteria__header-title">{'Для подсчета рейтинга учитывать оценки:'}</h2>
-            <div className="assessment-criteria__checkbox">
-              <Checkbox
-                labelLeft={labelSupervisor}
-                labelRight={labelAllTeam}
-                isChecked={isCheckedСounting}
-                setIsChecked={setIsCheckedСounting}
-                shadow={'none'}
-              />
-            </div>
+    <section className="assessment-criteria">
+      <div className="assessment-criteria__header">
+        <Link to={'/admin-person-area'} className="assessment-criteria__link">
+          <div className="assessment-criteria__link-arroy" />
+          {'Вернуться'}
+        </Link>
+        <div className="assessment-criteria__checkbox-container">
+          <h2 className="assessment-criteria__header-title">{'Для подсчета рейтинга учитывать оценки:'}</h2>
+          <div className="assessment-criteria__checkbox">
+            <Switch
+              labelLeft={labelSupervisor}
+              labelRight={labelAllTeam}
+              isChecked={isCheckedСounting}
+              setIsChecked={setIsCheckedСounting}
+              shadow={'none'}
+            />
           </div>
         </div>
-        <div className="assessment-criteria__container-criterion">
-          <h2 className="assessment-criteria__title">{'Критерии для оценки сотрудников'}</h2>
-          <Checkbox
-            labelLeft={labelDefaultCriteriaGrade}
-            labelRight={labelEditCriteriaGrade}
-            isChecked={isCheckedEditing}
-            setIsChecked={setIsCheckedEditing}
-          />
-          <form className="assessment-criteria__form">
-            {criteria.map((criterion) => (
-              <CriterionInput
-                key={criterion.id}
-                criterion={criterion}
-                name={criterion.name}
-                editing={isCheckedEditing}
-                handleDelete={handleDelete}
-              />
-            ))}
-            {isCheckedEditing &&
-              <button className="assessment-criteria__add-button" onClick={(evt) => addNewCriteria(evt)}>
-                <span>+ </span>Добавить критерий
-              </button>}
-            <button className="assessment-criteria__submit" onClick={(evt) => handleSubmit(evt)}>Подтвердить</button>
-          </form >
-        </div >
+      </div>
+      <div className="assessment-criteria__container-criterion">
+        <h2 className="assessment-criteria__title">{'Критерии для оценки сотрудников'}</h2>
+        <Switch
+          labelLeft={labelDefaultCriteriaGrade}
+          labelRight={labelEditCriteriaGrade}
+          isChecked={isCheckedEditing}
+          setIsChecked={setIsCheckedEditing}
+        />
+        <form className="assessment-criteria__form">
+          {criteria.map((criterion) => (
+            <CriterionInput
+              key={criterion.id}
+              criterion={criterion}
+              name={criterion.name}
+              editing={isCheckedEditing}
+              handleDelete={handleDelete}
+            />
+          ))}
+          {isCheckedEditing &&
+            <button className="assessment-criteria__add-button" onClick={(evt) => addNewCriteria(evt)}>
+              <span>+ </span>Добавить критерий
+            </button>}
+          <button className="assessment-criteria__submit" onClick={(evt) => handleSubmit(evt)}>Подтвердить</button>
+        </form >
       </div>
       {
         isOpenPopup &&
@@ -126,7 +120,7 @@ function AssessmentCriteria() {
           </div>
         </div>
       }
-    </div >
+    </section >
   );
 }
 

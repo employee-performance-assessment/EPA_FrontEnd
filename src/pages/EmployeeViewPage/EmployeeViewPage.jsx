@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import EmployeeViewHeader from '../../components/EmployeeViewHeader/EmployeeViewHeader.jsx';
-import Checkbox from '../../components/Checkbox/Checkbox.jsx';
+import Switch from '../../components/Switch/Switch.jsx';
 import EmployeeViewFilter from '../../components/EmployeeViewFilter/EmployeeViewFilter.jsx';
 import EmployeeViewBlock from '../../components/EmployeeViewBlock/EmployeeViewBlock.jsx';
 import { useFormValidation } from '../../hooks/useFormValidation';
@@ -49,23 +48,20 @@ function EmployeeViewPage() {
   }
 
   return (
-    <section className={styles.employeeViewPage__wrapper}>
-      <SideMenu />
-      <div className={styles.employeeViewPage__container}>
-        <EmployeeViewHeader />
-        <Checkbox
-          labelLeft={'Задачи'}
-          labelRight={'Оценки'}
-          isChecked={viewTask}
-          setIsChecked={setViewTask}
-        />
-        <EmployeeViewFilter
-          handleChange={handleChange}
-          showAllCards={showAllCards}
-          version={version}
-        />
-        <EmployeeViewBlock tasks={tasks} marks={marks} />
-      </div>
+    <section className={styles.employeeViewPage__container}>
+      <EmployeeViewHeader />
+      <Switch
+        labelLeft={'Задачи'}
+        labelRight={'Оценки'}
+        isChecked={viewTask}
+        setIsChecked={setViewTask}
+      />
+      <EmployeeViewFilter
+        handleChange={handleChange}
+        showAllCards={showAllCards}
+        version={version}
+      />
+      <EmployeeViewBlock tasks={tasks} marks={marks} />
     </section>
   );
 }
