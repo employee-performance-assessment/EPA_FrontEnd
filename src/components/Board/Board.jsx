@@ -85,9 +85,8 @@ function Board({
       return 'boardDnD__card-points_violet';
     } if (bord === 'Выполнено') {
       return 'boardDnD__card-points_green';
-    } 
-      return '';
-    
+    }
+    return '';
   }
 
   function settingDateDeadline(unixTime) {
