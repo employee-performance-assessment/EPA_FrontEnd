@@ -1,6 +1,4 @@
 import { useSelector } from 'react-redux';
-
-import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import Switch from '../../components/Switch/Switch.jsx';
 import Select from '../../components/Select/Select.jsx';
 import SetStars from '../../components/SetStars/SetStars.js';
@@ -38,7 +36,6 @@ function AnalyticsPage() {
 
   return isLoggedIn ? (
     <section className={styles.page}>
-      <SideMenu />
       <div className={styles.container}>
         <header className={styles.header}>
           <div className={styles.analytic}>
