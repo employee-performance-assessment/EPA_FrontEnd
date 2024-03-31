@@ -14,9 +14,12 @@ function Select({
   selectStyle,
   listStyle,
   optionStyle,
-  typeSelect
+  typeSelect,
+  list,
+  buttonStyle,
 }) {
-  const [value, setValue] = useState('');
+  const [valueYear, setValueYear] = useState('');
+  const [valueUser, setValueUser] = useState('');
   const dispatch = useDispatch();
   const { isOverlay, type } = useSelector((state) => state.filter);
 
@@ -26,45 +29,63 @@ function Select({
   };
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    if (typeSelect === 'list') {
+      setValueYear(e.target.value);
+    } else if (typeSelect === 'users') {
+      setValueUser(e.target.id);
+    }
     dispatch(hiddenOverlay());
     query();
   };
 
   return (
     <>
-      <div className={styles.dropdown} style={selectStyle}>
-        <button onClick={handleShowDroplist}>{value || buttonText}</button>
+      <div
+        className={
+          (typeSelect === 'list' && selectStyle) ||
+          (typeSelect === 'users' && selectStyle)
+        }
+      >
+        <button className={buttonStyle} onClick={handleShowDroplist}>
+          {(typeSelect === 'list' && valueYear) ||
+            (typeSelect === 'users' && valueUser) ||
+            buttonText}
+        </button>
         <ul
-          style={listStyle}
           className={
-            isOverlay && type === /* 'list' */typeSelect
-              ? `${styles.list} ${styles.list_visible}`
-              : `${styles.list}`
+            isOverlay && type === typeSelect
+              ? `${listStyle} ${styles.list_visible}`
+              : `${listStyle}`
           }
         >
-          <li style={ optionStyle } value="2023" onClick={handleChange}>
-            2023
-          </li>
-          <li style={ optionStyle } value="2024" onClick={handleChange}>
-            2024
-          </li>
-          <li style={ optionStyle } value="2025" onClick={handleChange}>
-            2025
-          </li>
-          <li style={ optionStyle } value="2026" onClick={handleChange}>
-            2026
-          </li>
+          {list.map((item, index) => (
+            <li
+              key={
+                (typeSelect === 'list' && index) ||
+                (typeSelect === 'users' && item.id)
+              }
+              className={optionStyle}
+              value={
+                (typeSelect === 'users' && item.fullName) ||
+                (typeSelect === 'list' && item)
+              }
+              id={typeSelect === 'users' ? item.fullName : ''}
+              onClick={handleChange}
+            >
+              {(typeSelect === 'list' && item) ||
+                (typeSelect === 'users' && item.fullName)}
+            </li>
+          ))}
         </ul>
       </div>
       <div
         onClick={() => dispatch(hiddenOverlay())}
         className={
-          isOverlay && type === /* 'list' */typeSelect
+          isOverlay && type === typeSelect
             ? `${styles.overlay} ${styles.overlay_active}`
             : `${styles.overlay}`
         }
-      ></div>
+       />
     </>
   );
 }

@@ -4,7 +4,7 @@
 .dropdown {
   position: relative;
 
-  button {
+  /* button {
     text-decoration: none;
     width: 134px;
     height: 64px;
@@ -20,9 +20,9 @@
     text-align: start;
     cursor: pointer;
     border: none;
-  }
+  } */
 
-  .list {
+  /* .list {
     position: absolute;
     display: none;
     top: 64px;
@@ -58,12 +58,14 @@
         background: $white-base-color;
       }
     }
-  }
+  } */
 
-  .list_visible {
-    display: block;
-  }
+
 }
+
+.list_visible {
+    display: block !important;
+  }
 
 .overlay {
   display: none;

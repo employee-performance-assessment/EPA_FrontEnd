@@ -60,25 +60,25 @@ function AssessmentCriteria() {
   return (
     <section className="assessment-criteria">
       <div className="assessment-criteria__header">
-        <Link to={'/admin-person-area'} className="assessment-criteria__link">
+        <Link to="/admin-person-area" className="assessment-criteria__link">
           <div className="assessment-criteria__link-arroy" />
-          {'Вернуться'}
+          Вернуться
         </Link>
         <div className="assessment-criteria__checkbox-container">
-          <h2 className="assessment-criteria__header-title">{'Для подсчета рейтинга учитывать оценки:'}</h2>
+          <h2 className="assessment-criteria__header-title">Для подсчета рейтинга учитывать оценки:</h2>
           <div className="assessment-criteria__checkbox">
             <Switch
               labelLeft={labelSupervisor}
               labelRight={labelAllTeam}
               isChecked={isCheckedСounting}
               setIsChecked={setIsCheckedСounting}
-              shadow={'none'}
+              shadow="none"
             />
           </div>
         </div>
       </div>
       <div className="assessment-criteria__container-criterion">
-        <h2 className="assessment-criteria__title">{'Критерии для оценки сотрудников'}</h2>
+        <h2 className="assessment-criteria__title">Критерии для оценки сотрудников</h2>
         <Switch
           labelLeft={labelDefaultCriteriaGrade}
           labelRight={labelEditCriteriaGrade}

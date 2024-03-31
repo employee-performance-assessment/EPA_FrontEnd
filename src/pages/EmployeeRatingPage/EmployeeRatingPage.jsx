@@ -16,7 +16,7 @@ function EmployeeRatingPage() {
       <div className={styles.employeeRatingPage__header}>
         <div className={styles.employeeRatingPage__row}>
           <button type='button' onClick={handleClickBack} className={styles.employeeRatingPage__back}>
-            <div className={styles.employeeRatingPage__icon}></div>
+            <div className={styles.employeeRatingPage__icon} />
             <p className={styles.employeeRatingPage__caption}>Назад </p>
           </button>
           <h2 className={styles.employeeRatingPage__title}>
@@ -26,7 +26,7 @@ function EmployeeRatingPage() {
         <div className={styles.employeeRatingPage__score}>
           {/* Захардкодил рейтинг в хедере, будет приходить с бэка */}
           <SetStars
-            rating={'4'}
+            rating="4"
             starOut={styles.employeeRatingPage__star_out}
             starIn={styles.employeeRatingPage__star_in}
           />
@@ -34,7 +34,7 @@ function EmployeeRatingPage() {
       </div>
       <div className={styles.employeeRatingPage__block}>
         <div className={styles.employeeRatingPage__criteria}>
-          <p></p>
+          <p />
           <h3>От руководителя</h3>
           <h3>От коллег</h3>
         </div>

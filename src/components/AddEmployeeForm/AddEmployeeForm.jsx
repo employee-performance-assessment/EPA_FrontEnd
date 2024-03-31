@@ -91,7 +91,7 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
           inputClassName="user-form__input"
           placeholder="Имя Фамилия"
           spanClassName="user-form__span"
-          required={true}
+          required
         />
         <Input
           type="text"
@@ -111,7 +111,7 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
           inputClassName="user-form__input"
           placeholder="Должность"
           spanClassName="user-form__span"
-          required={true}
+          required
         />
         <Input
           type="email"
@@ -131,7 +131,7 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
           inputClassName="user-form__input"
           placeholder="Email"
           spanClassName="user-form__span"
-          required={true}
+          required
         />
         <>
           <div className="user-form__password-field">
@@ -153,7 +153,7 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
               placeholder="Пароль авторизации"
               spanClassName="user-form__span"
               error={errors.password}
-              required={true}
+              required
             />
             <button
               type="button"
@@ -190,7 +190,7 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
               autoComplete="off"
               spanClassName="user-form__span"
               error={errors.confirmPassword}
-              required={true}
+              required
             />
             <button
               type="button"

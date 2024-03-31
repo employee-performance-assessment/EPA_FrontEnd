@@ -184,7 +184,7 @@ function PersonalArea() {
               className={`personal-area__button ${isValid && !isDisabledButton ? '' : 'personal-area__button_inactive'}`}
               disabled={!isValid || isDisabledButton}
             >
-              {'Подтвердить'}
+              Подтвердить
             </button>
           )}
           {!editing && (
@@ -193,7 +193,7 @@ function PersonalArea() {
               className="personal-area__button"
               onClick={handleEditing}
             >
-              {'Редактировать'}
+              Редактировать
               <div className="personal-area__button-icon" />
             </button>
           )}
@@ -201,10 +201,10 @@ function PersonalArea() {
         {!editing && (
           <div className="personal-area__questionnaire">
             <h3 className="personal-area__questionnaire-title">
-              {'Анкета для оценки'}
+              Анкета для оценки
             </h3>
             <Link
-              to={'/criteria-setting'}
+              to="/criteria-setting"
               className="personal-area__questionnaire-link"
             >
               <div className="personal-area__questionnaire-container">
@@ -221,7 +221,7 @@ function PersonalArea() {
               оценки всей команды.`}
                 </p>
                 <p className="personal-area__questionnaire-text">
-                  {'Перейти к анкете'}
+                  Перейти к анкете
                   <span className="personal-area__questionnaire-link-icon" />
                 </p>
               </div>

@@ -4,9 +4,9 @@ export default function SetStars({ rating, starOut, starIn }) {
   function paintStar(width) {
     if (width >= 1) {
       return 100;
-    } else if (width < 1 && width > 0) {
+    } if (width < 1 && width > 0) {
       return (Math.asin(2 * width - 1) / Math.PI + 0.5) * 100;
-    } else if (width === 0 || width < 0) {
+    } if (width === 0 || width < 0) {
       return 0;
     }
   }
