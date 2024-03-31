@@ -3,6 +3,7 @@
 
 .switch-checkbox {
   display: flex;
+  align-items: center;
   cursor: pointer;
   border-radius: 20px;
   overflow: hidden;
@@ -25,7 +26,7 @@
 }
 
 .switch-checkbox.checked {
-  background-color: $purple-base-color;
+  background-color: $white-base-color;
 }
 
 .switch-checkbox .left-side,
@@ -44,10 +45,12 @@
 .switch-checkbox .left-side {
   background-color: $purple-base-color;
   border-radius: 20px;
+  height: 48px;
 }
 
 .switch-checkbox .right-side {
   border-radius: 20px;
+  height: 48px;
 }
 
 .switch-checkbox.checked .left-side {
