@@ -1,21 +1,24 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import EmployeeViewCriteria from '../../components/EmployeeViewCriteria/EmployeeViewCriteria.jsx';
 import SetStars from '../../components/SetStars/SetStars.js';
-import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import styles from './EmployeeRatingPage.module.scss';
 import criteria from './criteria.json';
 
 function EmployeeRatingPage() {
-  const { viewCards } = ENDPOINT_ROUTES;
+  const navigate = useNavigate();
+
+  function handleClickBack() {
+    navigate(-1);
+  }
 
   return (
     <section className={styles.employeeRatingPage__container}>
       <div className={styles.employeeRatingPage__header}>
         <div className={styles.employeeRatingPage__row}>
-          <Link to={viewCards} className={styles.employeeRatingPage__link}>
+          <div onClick={handleClickBack} className={styles.employeeRatingPage__back}>
             <div className={styles.employeeRatingPage__icon}></div>
             <p className={styles.employeeRatingPage__caption}>Назад </p>
-          </Link>
+          </div>
           <h2 className={styles.employeeRatingPage__title}>
             Оценки за Февраль 2024
           </h2>

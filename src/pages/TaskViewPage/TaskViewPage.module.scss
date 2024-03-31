@@ -24,11 +24,10 @@
   padding: 52px 0 38px 66.75px;
 }
 
-.taskViewPage__link {
+.taskViewPage__back {
   display: flex;
   gap: 12.25px;
-  align-items: center;
-  text-decoration: none;
+  cursor: pointer;
 }
 
 .taskViewPage__icon {

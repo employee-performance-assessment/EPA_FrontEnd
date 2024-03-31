@@ -24,11 +24,10 @@
   padding: 52px 0 38px 66.75px;
 }
 
-.employeeRatingPage__link {
+.employeeRatingPage__back {
   display: flex;
   gap: 12.25px;
-  align-items: center;
-  text-decoration: none;
+  cursor: pointer;
 }
 
 .employeeRatingPage__icon {
