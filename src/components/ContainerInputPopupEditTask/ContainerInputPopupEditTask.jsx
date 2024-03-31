@@ -1,4 +1,7 @@
 import './ContainerInputPopupEditTask.scss';
+import { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import './DatePicker.scss';
 
 export default function ContainerInputPopupEditTask({ item }) {
   function handleClickClose() {
@@ -12,16 +15,57 @@ export default function ContainerInputPopupEditTask({ item }) {
       : '';
   }
 
+  const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+  const months = [
+    'Январь',
+    'Февраль',
+    'Март',
+    'Апрель',
+    'Май',
+    'Июнь',
+    'Июль',
+    'Август',
+    'Сентябрь',
+    'Октябрь',
+    'Ноябрь',
+    'Декабрь',
+  ];
+
+  const locale = {
+    localize: {
+      day: (n) => days[n],
+      month: (n) => months[n],
+    },
+    formatLong: {
+      date: () => 'dd/mm/yyyy',
+    },
+  };
+
+  // CSS Modules, react-datepicker-cssmodules.css
+  // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+  const [startDate, setStartDate] = useState(new Date());
+
   return (
     <div
       className={`container-input-popup-edit-task__input-conteiner ${setBigInput()}`}
     >
       {item.type !== 'container-input-popup-edit-task__button_big' ? (
-        <input
-          type="text"
-          className="container-input-popup-edit-task__input "
-          placeholder={item.nameInput}
-        ></input>
+        item.type === 'container-input-popup-edit-task__button_calendar' ? (
+          <DatePicker
+            dateFormat="dd/MM/yyyy"
+            selected={startDate}
+            locale={locale}
+            onChange={(date) => setStartDate(date)}
+            required
+            form="external-form"
+          />
+        ) : (
+          <input
+            type="text"
+            className="container-input-popup-edit-task__input "
+            placeholder={item.nameInput}
+          ></input>
+        )
       ) : (
         <>
           <span className="container-input-popup-edit-task__span">
@@ -35,12 +79,13 @@ export default function ContainerInputPopupEditTask({ item }) {
           ></textarea>
         </>
       )}
-
-      <button
-        className={`container-input-popup-edit-task__button ${item.type}`}
-        aria-label={`редактировать поле ${item.nameInput}`}
-        onClick={handleClickClose}
-      ></button>
+      {item.type !== 'container-input-popup-edit-task__button_empty' && (
+        <button
+          className={`container-input-popup-edit-task__button ${item.type}`}
+          aria-label={`редактировать поле ${item.nameInput}`}
+          onClick={handleClickClose}
+        ></button>
+      )}
     </div>
   );
 }
