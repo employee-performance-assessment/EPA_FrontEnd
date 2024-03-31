@@ -15,7 +15,11 @@ import {
 import './EditEmployeeForm.scss';
 import { updateUserData } from '../../utils/mainApi.js';
 
-function EditEmployeeForm({ setIsEditEmployeePopupOpen, user, handleUpdateUser }) {
+function EditEmployeeForm({
+  setIsEditEmployeePopupOpen,
+  user,
+  handleUpdateUser,
+}) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -27,8 +31,7 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user, handleUpdateUser }
     setErrors,
     isValid,
     setIsValid,
-  } = useFormValidation({
-  });
+  } = useFormValidation({});
 
   const handleCloseEditEmployeePopup = () => {
     setIsEditEmployeePopupOpen(false);
@@ -86,11 +89,9 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user, handleUpdateUser }
   const editEmployeeData = (e) => {
     e.preventDefault();
     const { name, position, email, password } = values;
-    const { token } = JSON.parse(localStorage.getItem('token'));
 
     updateUserData({
       id: user.id,
-      token,
       fullName: name,
       position,
       email,
@@ -102,7 +103,7 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user, handleUpdateUser }
   };
 
   return (
-    <section className="editEmployeeForm">
+    <section className="edit-employee-form">
       <UserForm
         formTitle="Редактирование данных"
         handleSubmit={editEmployeeData}
@@ -124,9 +125,9 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user, handleUpdateUser }
             )
           }
           error={errors.name}
-          inputClassName="userForm__input"
+          inputClassName="user-form__input"
           placeholder="Имя Фамилия"
-          spanClassName="userForm__span"
+          spanClassName="user-form__span"
           required={true}
         />
         <Input
@@ -144,9 +145,9 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user, handleUpdateUser }
             )
           }
           error={errors.position}
-          inputClassName="userForm__input"
+          inputClassName="user-form__input"
           placeholder="Должность"
-          spanClassName="userForm__span"
+          spanClassName="user-form__span"
           required={true}
         />
         <Input
@@ -164,17 +165,17 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user, handleUpdateUser }
             )
           }
           error={errors.email}
-          inputClassName="userForm__input"
+          inputClassName="user-form__input"
           placeholder="Email"
-          spanClassName="userForm__span"
+          spanClassName="user-form__span"
           required={true}
         />
         <>
-          <div className="userForm__passwordField">
+          <div className="user-form__password-field">
             <Input
               type={showPassword ? 'text' : 'password'}
               name="password"
-              inputClassName="userForm__input"
+              inputClassName="user-form__input"
               value={values.password}
               onChange={(e) =>
                 handleChangeInput(
@@ -187,28 +188,30 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user, handleUpdateUser }
                 )
               }
               placeholder="Пароль авторизации"
-              spanClassName="userForm__span"
+              spanClassName="user-form__span"
               error={errors.password}
               required={false}
             />
             <button
               type="button"
-              className="userForm__togglePasswordButton"
+              className="user-form__password-button"
               onClick={() => setShowPassword(!showPassword)}
             >
-              <img
-                src={showPassword ? OpenEyeIcon : CloseEyeIcon}
-                alt="иконка показа пароля"
+              <span
+                className="user-form__eye-icon"
+                style={{
+                  backgroundImage: `url(${showPassword ? OpenEyeIcon : CloseEyeIcon})`,
+                }}
               />
             </button>
           </div>
         </>
         <>
-          <div className="userForm__passwordField">
+          <div className="user-form__password-field">
             <Input
               type={showConfirmPassword ? 'text' : 'password'}
               name="confirmPassword"
-              inputClassName="userForm__input"
+              inputClassName="user-form__input"
               value={values.confirmPassword}
               onChange={(e) =>
                 handleChangeInput(
@@ -222,18 +225,20 @@ function EditEmployeeForm({ setIsEditEmployeePopupOpen, user, handleUpdateUser }
               }
               placeholder="Подтвердите пароль"
               autoComplete="off"
-              spanClassName="userForm__span"
+              spanClassName="user-form__span"
               error={errors.confirmPassword}
               required={false}
             />
             <button
               type="button"
-              className="userForm__togglePasswordButton"
+              className="user-form__password-button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
-              <img
-                src={showConfirmPassword ? OpenEyeIcon : CloseEyeIcon}
-                alt="иконка показа пароля"
+              <span
+                className="user-form__eye-icon"
+                style={{
+                  backgroundImage: `url(${showConfirmPassword ? OpenEyeIcon : CloseEyeIcon})`,
+                }}
               />
             </button>
           </div>

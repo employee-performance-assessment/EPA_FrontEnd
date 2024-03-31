@@ -17,8 +17,7 @@ function EmployeeProfileCard({ user, handleOpenEditEmployeeForm, handleDeleteEmp
   };
 
   const deleteUser = () => {
-    const { token } = JSON.parse(localStorage.getItem('token'));
-    handleDeleteEmployee(token, user.id);
+    handleDeleteEmployee(user.id);
   };
 
   return (
