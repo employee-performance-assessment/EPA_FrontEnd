@@ -3,6 +3,7 @@ import ContainerInputPopupEditTask from '../ContainerInputPopupEditTask/Containe
 import PeriodDatePicker from '../PeriodDatePicker/PeriodDatePicker.jsx';
 
 export function PopupEditTask({ setIsOpenPopup }) {
+
   const arrInput = [
     {
       nameInput: 'Название задачи',

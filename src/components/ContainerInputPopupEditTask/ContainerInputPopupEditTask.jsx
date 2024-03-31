@@ -1,4 +1,5 @@
 import './ContainerInputPopupEditTask.scss';
+
 // import { useState, useEffect } from 'react';
 
 export default function ContainerInputPopupEditTask({ item }) {
@@ -35,6 +36,7 @@ export default function ContainerInputPopupEditTask({ item }) {
           ></textarea>
         </>
       )}
+
       {item.type !== 'container-input-popup-edit-task__button_empty' && (
         <button
           className={`container-input-popup-edit-task__button ${item.type}`}
