@@ -52,6 +52,7 @@ export default function ContainerInputPopupEditTask({ item }) {
       {item.type !== 'container-input-popup-edit-task__button_big' ? (
         item.type === 'container-input-popup-edit-task__button_calendar' ? (
           <DatePicker
+            first
             dateFormat="dd/MM/yyyy"
             selected={startDate}
             locale={locale}
