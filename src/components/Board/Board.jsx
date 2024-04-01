@@ -77,13 +77,17 @@ function Board({
   function getCollor(bord, deadline) {
     if (deadline - new Date().getTime() <= 0) {
       return 'boardDnD__card-points_red';
-    } if (bord === 'К выполнению') {
+    }
+    if (bord === 'К выполнению') {
       return 'boardDnD__card-points_grey';
-    } if (bord === 'В работе') {
+    }
+    if (bord === 'В работе') {
       return 'boardDnD__card-points_light-green';
-    } if (bord === 'На ревью') {
+    }
+    if (bord === 'На ревью') {
       return 'boardDnD__card-points_violet';
-    } if (bord === 'Выполнено') {
+    }
+    if (bord === 'Выполнено') {
       return 'boardDnD__card-points_green';
     }
     return '';
