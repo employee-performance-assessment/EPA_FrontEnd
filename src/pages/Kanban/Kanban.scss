@@ -16,6 +16,7 @@
 .kanban__nav {
   width: 100%;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding-left: 24px;
   padding-right: 24px;
@@ -35,18 +36,23 @@
   font-size: 29px;
   line-height: 31.47%;
   font-weight: 500;
+  margin: auto;
 }
 
 .kanban__button-title_all {
   margin: auto 15px auto 15px;
 }
-
+.kanban__button-title {
+  display: inline;
+  margin-right: 10px;
+  width: 80px;
+}
 .kanban__button_non-border {
   padding-left: 10px;
 }
 
 .kanban__button-title_make {
-  margin: auto 10px auto 20px;
+  margin: auto 10px auto 0;
 }
 .kanban__button-img {
   margin: auto 20px auto 0;
@@ -54,32 +60,46 @@
 .kanban__button {
   border: none;
   padding: 16px 20px;
+  margin-left: 20px;
   font-size: 20px;
   line-height: 121%;
   font-weight: $fw-semibold;
   border-radius: 20px;
-  display: flex;
-  gap: 10px;
-  justify-content: center;
   max-height: 56px;
   cursor: pointer;
   background-color: $light-gray-base-color;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .kanban__button_more {
   width: min-content;
-  white-space: nowrap;
+  font-size: 18px;
   padding-left: 5px;
+  margin: auto;
+  display: flex;
+}
+
+.kanban__button_project {
+  display: flex;
+  padding-left: 0;
 }
 
 .kanban__button_purple {
   width: min-content;
   white-space: nowrap;
   background-color: $purple-base-color;
+  display: flex;
+}
+.kanban__button_grey {
+  width: min-content;
+  white-space: nowrap;
+  background-color: $grey-base-color;
+  display: flex;
 }
 
 .kanban__button_task {
-  margin-left: 30px;
+  margin-left: 28px;
 }
 
 .kanban__button_border {
@@ -105,4 +125,8 @@
   line-height: 121%;
   text-align: center;
   margin-top: 35px;
+}
+
+.kanban__container-project {
+  display: flex;
 }

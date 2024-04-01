@@ -1,11 +1,7 @@
 import './PopupKanban.scss';
 import ContainerInputPopupKanban from '../ContainerInputPopupKanban/ContainerInputPopupKanban.jsx';
 
-export function PopupKanban({ setIsOpenPopup }) {
-  const arrProject = [
-    { nameProject: 'gsdfgsdg' },
-    { nameProject: 'пвпапвыпв' },
-  ];
+export function PopupKanban({ setIsOpenPopup, projectsName }) {
 
   function handleClickClose() {
     setIsOpenPopup(false);
@@ -15,8 +11,8 @@ export function PopupKanban({ setIsOpenPopup }) {
     <div className="popup-kanban">
       <div className="popup-kanban__popup">
         <h1 className="popup-kanban__title">Редактировать</h1>
-        {arrProject.map((item) => (
-          <ContainerInputPopupKanban item={item} key={item.nameProject} />
+        {projectsName.map((item) => (
+          <ContainerInputPopupKanban item={item} key={item.name}/>
         ))}
         <button className="popup-kanban__button ">
           Добавить новый проект +
