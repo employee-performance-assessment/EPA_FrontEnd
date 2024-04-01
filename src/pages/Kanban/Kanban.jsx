@@ -82,7 +82,8 @@ function Kanban() {
             </button>
             <button
               type="button"
-              className="kanban__button kanban__button_purple kanban__button_task"
+              className={`kanban__button ${projectsName.length < 1 ? 'kanban__button_grey' : 'kanban__button_purple'} kanban__button_task`}
+              disabled={projectsName.length < 1}
             >
               <p className="kanban__button-title_make">Создать задачу</p>
               <img
