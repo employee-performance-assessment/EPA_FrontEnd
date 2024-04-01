@@ -66,7 +66,7 @@ function App() {
           .catch((err) => alert(`Ошибка: ${err}`));
       }
     } else {
-      navigate('/');
+      navigate(login);
     }
   };
 
