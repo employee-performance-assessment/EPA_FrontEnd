@@ -6,7 +6,7 @@ export default function ContainerInputPopupKanban({ item }) {
       <input
         type="text"
         className="container-input-popup-kanban__input"
-        placeholder={item.nameProject}
+        placeholder={item.name}
       />
       <button
         className="container-input-popup-kanban__button container-input-popup-kanban__button_edit"
