@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router';
 import SideMenu from '../SideMenu/SideMenu.jsx';
 import './Questionnaire.scss';
 import icon from '../../images/Questionnaire_user.svg';
@@ -5,12 +6,33 @@ import InputStars from '../InputStars/InputStars.js';
 import '../InputStars/InputStars.scss';
 
 function Questionnaire() {
+  // передать пропсами кого оцениваем
   const name = 'Иван Иванов';
   const job = 'Разработчик';
+
+  const list = [
+    'Погружается в проект',
+    'Выполняет задачи',
+    'Работает в команде',
+    'Соблюдает дедлайны',
+    'Расставляет приоритеты',
+    ' Умеет решать сложные задачи',
+    'Ясно объясняет свои идеи команде',
+    'Эффективно работает над несколькими задачами одновременно',
+    'Воспринимает конструктивную критику',
+    'Помогает коллегам с их задачами',
+    'Запрашивает необходимую информацию и мнение коллег для решения совместных задач',
+    'Рекомендации для сотрудника',
+  ];
+
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
     console.log(e.target);
+  }
+  function GoBack() {
+    navigate('/estimate');
   }
 
   return (
@@ -20,7 +42,10 @@ function Questionnaire() {
       </div>
       <div className="Questionnaire__wrapper">
         <div className="Questionnaire__header">
-          <button className="Questionnaire-header__back-button">
+          <button
+            className="Questionnaire-header__back-button"
+            onClick={() => GoBack()}
+          >
             Назад к списку
           </button>
           {/* здесть прокинуть пропсом период оценки */}
@@ -42,74 +67,14 @@ function Questionnaire() {
         </div>
         <form action="" onSubmit={(e) => handleSubmit(e)}>
           <div className="Questionnaire-container">
-            <p className="Questionnaire__criterion">Погружается в проект</p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">Выполняет задачи</p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">Работает в команде</p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">Соблюдает дедлайны</p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">Расставляет приоритеты</p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">
-              Умеет решать сложные задачи
-            </p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">
-              Ясно объясняет свои идеи команде
-            </p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">
-              Эффективно работает над несколькими задачами одновременно
-            </p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">
-              Воспринимает конструктивную критику
-            </p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">
-              Помогает коллегам с их задачами
-            </p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">
-              Запрашивает необходимую информацию и мнение коллег для решения
-              совместных задач
-            </p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
+            {list.map((item) => (
+              <>
+                <p className="Questionnaire__criterion">{item}</p>
+                <div className="Questionnaire__value">
+                  <InputStars />
+                </div>
+              </>
+            ))}
           </div>
           <span className="Questionaire__text">
             Рекомендации для сотрудника

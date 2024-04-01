@@ -81,7 +81,7 @@ function AssessmentBlock() {
             />
             <h3 className="header__text">Оценка эффективности сотрудников</h3>
           </div>
-          <button className="header__button" onClick={() => handleClick()}>
+          <button className={data.length === 0 ? 'header__button' : 'header__button_empty'} onClick={() => handleClick()}>
             Провести анкетирование
           </button>
         </div>

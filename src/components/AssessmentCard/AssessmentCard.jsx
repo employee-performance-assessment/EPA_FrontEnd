@@ -9,8 +9,9 @@ function AssessmentCard({ name, job }) {
   return (
     <div className={styles.assessmentCard__container}>
       <p className={styles.assessmentCard__name}>{name}</p>
-      <p className={styles.assessmentCard__job}>{job}</p>
-      <div className={styles.assessmentCard__rating}></div>
+      <p className={styles.assessmentCard__job}>&frasl;{job}</p>
+      <div className={styles.assessmentCard__rating}>Оценки за март
+      <p className={styles.assessmentCard__data}>Дата анкетирования: 28.03.24</p></div>
       <button
         type="button"
         className={styles.assessmentCard__button}
