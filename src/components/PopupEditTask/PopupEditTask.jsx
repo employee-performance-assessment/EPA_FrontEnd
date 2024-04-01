@@ -60,7 +60,7 @@ export function PopupEditTask({ setIsOpenPopup }) {
           className="popup-edit-task__button popup-edit-task__button_close"
           aria-label="закрыть модальное окно"
           onClick={handleClickClose}
-        ></button>
+         />
       </div>
     </div>
   );

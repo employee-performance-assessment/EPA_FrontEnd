@@ -79,7 +79,7 @@ function AssessmentBlock() {
             />
             <h3 className="header__text">Оценка эффективности сотрудников</h3>
           </div>
-          <button className="header__button" onClick={() => handleClick()}>
+          <button className={data.length === 0 ? 'header__button' : 'header__button_empty'} onClick={() => handleClick()}>
             Провести анкетирование
           </button>
         </div>
@@ -122,17 +122,13 @@ function AssessmentBlock() {
         ) : filterState === 'asses' ? (
           <ul className="AssessmentBlock__list">
             {data.map((i) => (
-              <>
-                <AssessmentCard key={i.id} name={i.name} job={i.job} />
-              </>
+              <AssessmentCard key={i.id} name={i.name} job={i.job} />
             ))}
           </ul>
         ) : (
           <ul className="AssessmentBlock__list">
             {data2.map((i) => (
-              <>
-                <AssessmentCard key={i.id} name={i.name} job={i.job} />
-              </>
+              <AssessmentCard key={i.id} name={i.name} job={i.job} />
             ))}
           </ul>
         )}

@@ -12,7 +12,7 @@ function AssessmentFilter() {
       </div>
       <div className={styles.assessmentFilter__search}>
         <input type="text" className={styles.assessmentFilter__input} />
-        <div className={styles.assessmentFilter__icon}></div>
+        <div className={styles.assessmentFilter__icon} />
       </div>
     </div>
   );

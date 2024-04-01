@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import IconDots from '../../images/3dots.svg';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import './EmployeeProfileCard.scss';
 
 function EmployeeProfileCard({ user, handleOpenEditEmployeeForm, handleDeleteEmployee }) {
+  const { cardsEmployees } = ENDPOINT_ROUTES;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -49,7 +51,7 @@ function EmployeeProfileCard({ user, handleOpenEditEmployeeForm, handleDeleteEmp
           </button>
           <button
             className="profile-card__menu-option"
-            onClick={() => navigate(`/${user.id}`)} // указать роут лк сотрудника
+            onClick={() => navigate(`${cardsEmployees}/${user.id}`)}
           >
             Перейти в ЛК
           </button>

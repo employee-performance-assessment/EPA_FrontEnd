@@ -1,23 +1,26 @@
-import { Link } from 'react-router-dom';
-import styles from './TaskViewPage.module.scss';
+import { useNavigate } from 'react-router-dom';
 import CustomSelect from '../../components/Filter/Filter.jsx';
-import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
+import styles from './TaskViewPage.module.scss';
 
 function TaskViewPage() {
-  const { viewCards } = ENDPOINT_ROUTES;
+  const navigate = useNavigate();
+
+  function handleClickBack() {
+    navigate(-1);
+  }
 
   return (
     <section className={styles.taskViewPage__container}>
       <div className={styles.taskViewPage__header}>
         <div className={styles.taskViewPage__row}>
-          <Link to={viewCards} className={styles.taskViewPage__link}>
-            <div className={styles.taskViewPage__icon}></div>
+          <button type='button' onClick={handleClickBack} className={styles.taskViewPage__back}>
+            <div className={styles.taskViewPage__icon} />
             <p className={styles.taskViewPage__caption}>Назад </p>
-          </Link>
+          </button>
           <h4 className={styles.taskViewPage__number}>125022024</h4>
           <CustomSelect />
           <button type="button" className={styles.taskViewPage__edit}>
-            <div></div>
+            <div />
             Редактировать
           </button>
         </div>

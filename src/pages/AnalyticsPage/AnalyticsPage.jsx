@@ -18,8 +18,7 @@ function AnalyticsPage() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const { token } = JSON.parse(localStorage.getItem('token'));
-    getAllUsers(token).then((data) => setUsers(data));
+    getAllUsers().then((data) => setUsers(data));
   }, []);
 
   const handleSubmitYear = () => {

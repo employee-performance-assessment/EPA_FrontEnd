@@ -31,7 +31,7 @@ export function PopupKanban({ setIsOpenPopup }) {
           className="popup-kanban__button popup-kanban__button_close"
           aria-label="закрыть модальное окно"
           onClick={handleClickClose}
-        ></button>
+         />
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import './MyTeam.scss';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import EmptyList from '../../images/EmptyList.png';
 import UsersThree from '../../images/UsersThree.svg';
 import PlusIcon from '../../images/Plus.svg';
@@ -13,6 +14,7 @@ function MyTeam() {
   const [isAddEmployeePopupOpen, setIsAddEmployeePopupOpen] = useState(false);
   const [isEditEmployeePopupOpen, setIsEditEmployeePopupOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const token = useSelector((state) => state.token.token);
 
   const handleOpenAddEmployeeForm = () => {
     setIsAddEmployeePopupOpen(true);
@@ -28,8 +30,8 @@ function MyTeam() {
       prevList.map((user) => (user.id === updatedUser.id ? updatedUser : user)));
   };
 
-  const handleDeleteEmployee = (token, id) => {
-    deleteUser(token, id).then(() => {
+  const handleDeleteEmployee = (id) => {
+    deleteUser(id).then(() => {
       setEmployeeList((prevList) => prevList.filter((user) => user.id !== id));
     });
   };
@@ -40,9 +42,8 @@ function MyTeam() {
   };
 
   useEffect(() => {
-    const { token } = JSON.parse(localStorage.getItem('token'));
     if (token) {
-      getAllUsers(token)
+      getAllUsers()
         .then((res) => {
           if (res) {
             setEmployeeList(res);
