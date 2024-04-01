@@ -10,7 +10,6 @@ function PersonalArea() {
   const [editing, setEditing] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { errors, values, isValid, handleChange } = useFormValidation();
-  const token = useSelector((state) => state.token.token);
   const adminData = useSelector((state) => state.adminData);
   const [isDisabledButton, setIsDisabledButton] = useState(false);
   const dispatch = useDispatch();
@@ -53,7 +52,7 @@ function PersonalArea() {
       password: values.repeatPassword || null,
     };
 
-    updateAdminData(adminData.id, token, newUserDataForServer)
+    updateAdminData(adminData.id, newUserDataForServer)
       .then(() => {
         setEditing(false);
         dispatch(setAdminData({ ...adminData, ...newUserData }));

@@ -5,19 +5,21 @@ import { setAdminData } from '../../store/slices/adminDataSlice.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 
 import { useFormValidation } from '../../hooks/useFormValidation.js';
+import { register } from '../../utils/auth.js';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
 import styles from './Register.module.scss';
 import registerImg from '../../images/register-img.png';
 import eyelash from '../../images/eye-close.svg';
 import eyeOpen from '../../images/eye-open.svg';
 import logo from '../../images/logo.svg';
-import { register } from '../../utils/auth.js';
 
 function Register() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { errors, values, isValid, handleChange } = useFormValidation();
   const dispatch = useDispatch();
+  const { login } = ENDPOINT_ROUTES;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,7 +30,7 @@ function Register() {
       password: values.password,
     })
       .then((res) => {
-        navigate('/login');
+        navigate(login);
         dispatch(setAdminData(res));
         dispatch(setIsLoggedIn(true));
       })

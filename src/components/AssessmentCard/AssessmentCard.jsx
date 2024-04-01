@@ -1,11 +1,15 @@
 import { useNavigate } from 'react-router';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import styles from './AssessmentCard.module.scss';
 
 function AssessmentCard({ name, job }) {
   const navigate = useNavigate();
+  const { questionnaire } = ENDPOINT_ROUTES;
+
   function handleClick() {
-    navigate('/questionnaire');
+    navigate(questionnaire);
   }
+
   return (
     <div className={styles.assessmentCard__container}>
       <p className={styles.assessmentCard__name}>{name}</p>
