@@ -20,6 +20,7 @@ function Select({
 }) {
   const [valueYear, setValueYear] = useState('');
   const [valueUser, setValueUser] = useState('');
+  const [valueMonth, setValueMonth] = useState('');
   const dispatch = useDispatch();
   const { isOverlay, type } = useSelector((state) => state.filter);
 
@@ -29,26 +30,30 @@ function Select({
   };
 
   const handleChange = (e) => {
-    if (typeSelect === 'list') {
+    if (typeSelect === 'year') {
       setValueYear(e.target.value);
     } else if (typeSelect === 'users') {
       setValueUser(e.target.id);
+    } else if (typeSelect === 'month') {
+      setValueMonth(e.target.id);
     }
     dispatch(hiddenOverlay());
-    query();
+    typeSelect === 'year' || typeSelect === 'users' ? query() : null;
   };
 
   return (
     <>
       <div
         className={
-          (typeSelect === 'list' && selectStyle) ||
-          (typeSelect === 'users' && selectStyle)
+          (typeSelect === 'year' && selectStyle) ||
+          (typeSelect === 'users' && selectStyle) ||
+          (typeSelect === 'month' && selectStyle)
         }
       >
         <button className={buttonStyle} onClick={handleShowDroplist}>
-          {(typeSelect === 'list' && valueYear) ||
+          {(typeSelect === 'year' && valueYear) ||
             (typeSelect === 'users' && valueUser) ||
+            (typeSelect === 'month' && valueMonth) ||
             buttonText}
         </button>
         <ul
@@ -61,19 +66,25 @@ function Select({
           {list.map((item, index) => (
             <li
               key={
-                (typeSelect === 'list' && index) ||
-                (typeSelect === 'users' && item.id)
+                (typeSelect === 'year' ? index : null) ||
+                (typeSelect === 'month' ? index : null) ||
+                (typeSelect === 'users' ? item.id : null)
               }
               className={optionStyle}
               value={
                 (typeSelect === 'users' && item.fullName) ||
-                (typeSelect === 'list' && item)
+                (typeSelect === 'year' && item)/*  ||
+                (typeSelect === 'month' && item) */
               }
-              id={typeSelect === 'users' ? item.fullName : ''}
+              id={
+                typeSelect === 'users' ? item.fullName : '' ||
+              (typeSelect === 'month' ? item : '')
+              }
               onClick={handleChange}
             >
-              {(typeSelect === 'list' && item) ||
-                (typeSelect === 'users' && item.fullName)}
+              {(typeSelect === 'year' ? item : '') ||
+                (typeSelect === 'month' ? item : '') ||
+                (typeSelect === 'users' ? item.fullName : '')}
             </li>
           ))}
         </ul>
