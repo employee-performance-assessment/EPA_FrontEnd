@@ -54,7 +54,7 @@ function App() {
     if (localStorage.getItem('token')) {
       const { token } = JSON.parse(localStorage.getItem('token'));
       if (token) {
-        getUserData(token)
+        getUserData()
           .then((res) => {
             if (res) {
               navigate(location.pathname);

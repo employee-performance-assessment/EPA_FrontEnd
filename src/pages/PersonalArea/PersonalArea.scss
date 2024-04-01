@@ -50,6 +50,7 @@
     flex-direction: row;
     gap: 40px;
     padding: 0 80px 90px;
+    width: 1163px;
   }
 
   &__form {
@@ -60,7 +61,6 @@
   &__title {
     @include text($font-size: 24px, $line-height: 29px);
     margin-bottom: 30px;
-    letter-spacing: 1px;
   }
 
   &__input {
@@ -112,14 +112,13 @@
     margin-left: 24px;
     color: $red-base-color;
     max-width: calc(530px - 24px);
-    letter-spacing: 0.5px;
   }
 
   &__button {
     margin-top: 8px;
     width: 350px;
     height: 56px;
-    background-color: $dark-grey-base-color;
+    background-color: $purple-base-color;
     @include text($font-size: 20px, $font-weight: 600, $line-height: 24px);
     border-radius: 20px;
     border: none;
@@ -155,7 +154,6 @@
   &__questionnaire-title {
     @include text($font-size: 24px, $font-weight: 500, $line-height: 29px);
     margin-bottom: 30px;
-    letter-spacing: 0.8px;
   }
 
   &__questionnaire-link {
@@ -183,7 +181,6 @@
   &__questionnaire-text {
     @include text($font-size: 20px, $font-weight: 400, $line-height: 24px);
     white-space: pre-line;
-    letter-spacing: 0.8px;
 
     &:first-of-type {
       margin-bottom: 27px;

@@ -7,12 +7,14 @@ import logo from '../../images/logo.svg';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 import { setAdminData } from '../../store/slices/adminDataSlice.js';
 import { setToken } from '../../store/slices/tokenSlices.js';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import './SideMenu.scss';
 
 function SideMenu() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const adminData = useSelector((state) => state.adminData);
+  const { login } = ENDPOINT_ROUTES;
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -20,7 +22,7 @@ function SideMenu() {
     dispatch(setToken(''));
     dispatch(setIsLoggedIn(false));
     dispatch(setAdminData({}));
-    navigate('/');
+    navigate(login);
   };
 
   return (
