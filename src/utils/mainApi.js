@@ -5,6 +5,7 @@ import {
   ADMIN_USERS,
   ADMIN_CRITERIA_DEFAULT,
   PROJECTS,
+  ADMIN_TASK,
 } from '../constants/constantAPI.js';
 
 function getToken() {
@@ -38,6 +39,9 @@ export const updateAdminData = (id, data) =>
 
 export const getAllUsers = () => makeAuthenticatedRequest(ADMIN_USERS, 'GET');
 
+export const getCurrentUser = (id) =>
+  makeAuthenticatedRequest(`${USERS}/${id}`, 'GET');
+
 export const addNewUser = ({ fullName, position, email, password }) =>
   makeAuthenticatedRequest(ADMIN_USERS, 'POST', {
     fullName,
@@ -65,3 +69,5 @@ export const deleteUser = (id) =>
   makeAuthenticatedRequest(`${ADMIN_USERS}/${id}`, 'DELETE');
 
 export const getProjectsName = () => makeAuthenticatedRequest(PROJECTS, 'GET');
+
+export const getTasks = () => makeAuthenticatedRequest(ADMIN_TASK, 'GET');
