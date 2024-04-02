@@ -1,6 +1,5 @@
 import './MyTeam.scss';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import EmptyList from '../../images/EmptyList.png';
 import UsersThree from '../../images/UsersThree.svg';
 import PlusIcon from '../../images/Plus.svg';
@@ -14,7 +13,6 @@ function MyTeam() {
   const [isAddEmployeePopupOpen, setIsAddEmployeePopupOpen] = useState(false);
   const [isEditEmployeePopupOpen, setIsEditEmployeePopupOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  const token = useSelector((state) => state.token.token);
 
   const handleOpenAddEmployeeForm = () => {
     setIsAddEmployeePopupOpen(true);
@@ -42,6 +40,7 @@ function MyTeam() {
   };
 
   useEffect(() => {
+    const { token } = JSON.parse(localStorage.getItem('token'));
     if (token) {
       getAllUsers()
         .then((res) => {
