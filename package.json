@@ -1,6 +1,6 @@
 {
   "name": "epa_frontend",
-  "homepage": "https://employee-performance-assessment.github.io/epa_frontend/",
+  "homepage": "https://employee-performance-assessment.github.io/epa_frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -32,7 +32,9 @@
     "lint:fix": "npm run lint -- --fix --color",
     "format": "prettier . --write",
     "cm": "cz",
-    "prepare": "husky"
+    "prepare": "husky",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -112,6 +114,7 @@
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-storybook": "^0.8.0",
+    "gh-pages": "^6.1.1",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
