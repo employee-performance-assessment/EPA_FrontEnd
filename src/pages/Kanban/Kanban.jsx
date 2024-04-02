@@ -17,7 +17,11 @@ function Kanban() {
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
   const [isEmpty, setIsEmpty] = useState(1);
   const [isOpenPopup, setIsOpenPopup] = useState(false);
-  const [projectsName, setProjectsName] = useState([])
+  const [projectsName, setProjectsName] = useState([{
+    "id": 0,
+    "name": "string",
+    "status": "ABANDONED"
+  }])
 
 
   // не забыть проверить положение когда с бэка придет пустой объект с
@@ -77,6 +81,7 @@ function Kanban() {
               type="button"
               className="kanban__button kanban__button_project"
               onClick={handleClickViewAllTask}
+              disabled={projectsName.length < 1}
             >
               <p className="kanban__button-title_make">Проекты</p>  <img src={edit} alt="Редактировать проект" />
             </button>
