@@ -10,7 +10,11 @@ function MenuAdmin() {
   const [isMyTeam, setIsMyTeam] = useState(false);
 
   useEffect(() => {
-    if (pathname.includes('cards-employees')) {
+    if (
+      pathname.includes('cards-employees') ||
+      pathname.includes('task-cards') ||
+      pathname.includes('rating-cards')
+    ) {
       setIsMyTeam(true);
     } else {
       setIsMyTeam(false);
