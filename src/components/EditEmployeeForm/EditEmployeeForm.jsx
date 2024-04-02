@@ -15,7 +15,7 @@ import {
 } from '../../utils/validationConstants.js';
 import './EditEmployeeForm.scss';
 import { updateUserData } from '../../utils/mainApi.js';
-import { handleError } from '../../constants/errors.js';
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 function EditEmployeeForm({
   setIsEditEmployeePopupOpen,
@@ -24,9 +24,7 @@ function EditEmployeeForm({
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [popupTitle, setPopupTitle] = useState('');
-  const [popupText, setPopupText] = useState('');
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
 
   const {
     values,
@@ -47,7 +45,7 @@ function EditEmployeeForm({
       password: '',
       confirmPassword: '',
     });
-    setIsPopupOpen(false);
+    closePopup();
   };
 
   useEffect(() => {
@@ -108,8 +106,7 @@ function EditEmployeeForm({
         handleUpdateUser(res);
       })
       .catch((error) => {
-        setIsPopupOpen(true);
-        handleError({ error, setPopupTitle, setPopupText });
+        handleError(error);
       });
   };
 
@@ -119,7 +116,7 @@ function EditEmployeeForm({
         <InfoPopup
           title={popupTitle}
           text={popupText}
-          handleClosePopup={() => setIsPopupOpen(false)}
+          handleClosePopup={closePopup}
         />
       )}
       <section className="edit-employee-form">
