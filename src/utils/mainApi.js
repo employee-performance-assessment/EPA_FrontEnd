@@ -1,5 +1,11 @@
 import checkResponse from './checkResponse.js';
-import { ADMIN_CRITERIA, USERS, ADMIN_USERS, ADMIN_CRITERIA_DEFAULT } from '../constants/constantAPI.js';
+import {
+  ADMIN_CRITERIA,
+  USERS,
+  ADMIN_USERS,
+  ADMIN_CRITERIA_DEFAULT,
+  PROJECTS,
+} from '../constants/constantAPI.js';
 
 function getToken() {
   return JSON.parse(localStorage.getItem('token')).token;
@@ -20,8 +26,7 @@ const makeAuthenticatedRequest = (url, method, body) => {
   return fetch(url, options).then((res) => checkResponse(res));
 };
 
-export const getUserData = () =>
-  makeAuthenticatedRequest(`${USERS}/me`, 'GET');
+export const getUserData = () => makeAuthenticatedRequest(`${USERS}/me`, 'GET');
 
 export const updateAdminData = (id, data) =>
   makeAuthenticatedRequest(`${ADMIN_USERS}/${id}`, 'PATCH', {
@@ -31,11 +36,15 @@ export const updateAdminData = (id, data) =>
     password: data.password,
   });
 
-export const getAllUsers = () =>
-  makeAuthenticatedRequest(ADMIN_USERS, 'GET');
+export const getAllUsers = () => makeAuthenticatedRequest(ADMIN_USERS, 'GET');
 
 export const addNewUser = ({ fullName, position, email, password }) =>
-  makeAuthenticatedRequest(ADMIN_USERS, 'POST', { fullName, position, email, password });
+  makeAuthenticatedRequest(ADMIN_USERS, 'POST', {
+    fullName,
+    position,
+    email,
+    password,
+  });
 
 export const getAllCriterion = () =>
   makeAuthenticatedRequest(ADMIN_CRITERIA, 'GET');
@@ -54,3 +63,5 @@ export const updateUserData = ({ id, fullName, position, email, password }) => {
 
 export const deleteUser = (id) =>
   makeAuthenticatedRequest(`${ADMIN_USERS}/${id}`, 'DELETE');
+
+export const getProjectsName = () => makeAuthenticatedRequest(PROJECTS, 'GET');

@@ -6,8 +6,6 @@ import Switch from '../../components/Switch/Switch.jsx';
 import { getAllCriterion, getDefaultCriterion } from '../../utils/mainApi.js';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import {
-  labelSupervisor,
-  labelAllTeam,
   labelDefaultCriteriaGrade,
   labelEditCriteriaGrade
 } from '../../constants/constantLabelCheckbox.js';
@@ -15,7 +13,6 @@ import './AssessmentCriteria.scss';
 
 function AssessmentCriteria() {
   const [criteria, setCriteria] = useState([]);
-  const [isCheckedСounting, setIsCheckedСounting] = useState(false);
   const [isCheckedEditing, setIsCheckedEditing] = useState(false);
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const { personalArea } = ENDPOINT_ROUTES;
@@ -41,9 +38,15 @@ function AssessmentCriteria() {
     setCriteria(criteria.filter((item) => item.id !== criterion.id));
   }
 
+  function calculateId() {
+    if (criteria[0]) {
+      return String(criteria[criteria.length - 1].id + 1);
+    }
+  }
+
   function addNewCriteria(evt) {
     evt.preventDefault();
-    const newCriteria = { name: '' };
+    const newCriteria = { name: '', id: calculateId() };
     setCriteria([...criteria, newCriteria]);
   }
 
@@ -64,18 +67,6 @@ function AssessmentCriteria() {
           <div className="assessment-criteria__link-arroy" />
           Вернуться
         </Link>
-        <div className="assessment-criteria__checkbox-container">
-          <h2 className="assessment-criteria__header-title">Для подсчета рейтинга учитывать оценки:</h2>
-          <div className="assessment-criteria__checkbox">
-            <Switch
-              labelLeft={labelSupervisor}
-              labelRight={labelAllTeam}
-              isChecked={isCheckedСounting}
-              setIsChecked={setIsCheckedСounting}
-              shadow="none"
-            />
-          </div>
-        </div>
       </div>
       <div className="assessment-criteria__container-criterion">
         <h2 className="assessment-criteria__title">Критерии для оценки сотрудников</h2>
