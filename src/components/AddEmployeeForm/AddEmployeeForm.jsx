@@ -14,10 +14,15 @@ import {
   isValidPassword,
 } from '../../utils/validationConstants.js';
 import './AddEmployeeForm.scss';
+import InfoPopup from '../InfoPopup/InfoPopup.jsx';
+import { handleError  } from '../../constants/errors.js';
 
 function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [popupTitle, setPopupTitle] = useState('');
+  const [popupText, setPopupText] = useState('');
 
   const { values, handleChange, errors, setErrors, isValid, setIsValid } =
     useFormValidation({
@@ -58,14 +63,20 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
       (user) => {
         handleAddNewEmployee(user);
       }
-    );
+    ).catch((error) => {
+      setIsPopupOpen(true);
+      handleError({error, setPopupTitle, setPopupText});
+    })
   };
 
   const handleCloseAddEmployeePopup = () => {
     setIsAddEmployeePopupOpen(false);
+    setIsPopupOpen(false);
   };
 
   return (
+    <>
+    {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={() => setIsPopupOpen(false)}/>}
     <section className="add-employee-form">
       <UserForm
         formTitle="Регистрация сотрудника"
@@ -208,6 +219,8 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
         </>
       </UserForm>
     </section>
+    </>
+
   );
 }
 
