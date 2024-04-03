@@ -99,6 +99,8 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
           inputClassName="user-form__input"
           placeholder="Имя Фамилия"
           spanClassName="user-form__span"
+          minLength={1}
+          maxLenght={255}
           required
         />
         <Input
@@ -119,6 +121,8 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
           inputClassName="user-form__input"
           placeholder="Должность"
           spanClassName="user-form__span"
+          minLength={1}
+          maxLenght={255}
           required
         />
         <Input
@@ -139,6 +143,8 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
           inputClassName="user-form__input"
           placeholder="Email"
           spanClassName="user-form__span"
+          minLength={3}
+          maxLenght={255}
           required
         />
         <>
@@ -161,6 +167,8 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
               placeholder="Пароль авторизации"
               spanClassName="user-form__span"
               error={errors.password}
+              minLength={8}
+              maxLenght={14}
               required
             />
             <button
@@ -198,6 +206,8 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
               autoComplete="off"
               spanClassName="user-form__span"
               error={errors.confirmPassword}
+              minLength={8}
+              maxLenght={14}
               required
             />
             <button
