@@ -92,7 +92,7 @@ function MyTeam() {
           </button>
         </nav>
         <div className="my-team__content">
-          {employeeList ? (
+          {employeeList.length ? (
             <EmployeeList
               employeeList={employeeList}
               handleOpenEditEmployeeForm={handleOpenEditEmployeeForm}
