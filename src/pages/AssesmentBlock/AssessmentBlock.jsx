@@ -12,6 +12,7 @@ function AssessmentBlock() {
   useEffect(() => {
     getAllUsers()
       .then((res) => {
+        console.log(res);
         setUsers(res);
       })
       .catch((err) => console.log(err));
@@ -24,6 +25,7 @@ function AssessmentBlock() {
   function handleChangeFilterState(e) {
     setFilterState(e.target.id);
   }
+
 
   const data = [
     { id: 1, name: 'Василий', job: 'тестировщик' },
@@ -100,13 +102,13 @@ function AssessmentBlock() {
         ) : filterState === 'asses' ? (
           <ul className="AssessmentBlock__list">
             {data.map((i) => (
-              <AssessmentCard key={i.id} name={i.name} job={i.job} />
+              <AssessmentCard key={i.id} name={i.name} job={i.job} status='asses'/>
             ))}
           </ul>
         ) : (
           <ul className="AssessmentBlock__list">
             {data2.map((i) => (
-              <AssessmentCard key={i.id} name={i.name} job={i.job} />
+              <AssessmentCard key={i.id} name={i.name} job={i.job} status='NotAsses' />
             ))}
           </ul>
         )}
