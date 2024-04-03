@@ -1,5 +1,6 @@
 import checkResponse from './checkResponse.js';
 import {
+  ADMIN_CRITERIA,
   ADMIN_QUESTIONNAIRE_LAST,
   USERS,
   ADMIN_USERS,
@@ -51,6 +52,9 @@ export const addNewUser = ({ fullName, position, email, password }) =>
     email,
     password,
   });
+
+export const getAllCriterion = () =>
+  makeAuthenticatedRequest(ADMIN_CRITERIA, 'GET');
 
 export const getQuestionnaireLast = () =>
   makeAuthenticatedRequest(ADMIN_QUESTIONNAIRE_LAST, 'GET');
