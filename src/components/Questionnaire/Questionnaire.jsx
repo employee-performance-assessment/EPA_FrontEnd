@@ -6,8 +6,10 @@ import InputStars from '../InputStars/InputStars.js';
 import '../InputStars/InputStars.scss';
 import { getAllCriterion } from '../../utils/mainApi.js';
 
-export default function Questionnaire(name, job) {
+export default function Questionnaire() {
   const [criteria, setCriteria] = useState([]);
+  const name = 'ssss';
+  const job = 'cccc';
 
   useEffect(() => {
     getAllCriterion()

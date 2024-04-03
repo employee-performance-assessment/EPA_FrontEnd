@@ -1,15 +1,15 @@
-// import { useNavigate } from 'react-router';
-// import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
+import { useNavigate } from 'react-router';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import styles from './AssessmentCard.module.scss';
 import './AssessmentCard.css';
-import Questionnaire from '../Questionnaire/Questionnaire.jsx';
+// import Questionnaire from '../Questionnaire/Questionnaire.jsx';
 
-function AssessmentCard({ name, job, status }) {
-  // const navigate = useNavigate();
-  // const { questionnaire } = ENDPOINT_ROUTES;
-
-  function handleClick(name, job) {
-    return <Questionnaire job={job} name={name} />;
+function AssessmentCard({name , job, status}) {
+  const navigate = useNavigate();
+  const { questionnaire } = ENDPOINT_ROUTES;
+  function handleClick() {
+    // return <Questionnaire />;
+    navigate(questionnaire);
   }
 
   return (

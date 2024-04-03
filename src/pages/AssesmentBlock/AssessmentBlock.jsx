@@ -6,36 +6,31 @@ import AssessmentCard from '../../components/AssessmentCard/AssessmentCard.jsx';
 import { getAllUsers } from '../../utils/mainApi.js';
 
 function AssessmentBlock() {
-  // по клику на кнопку осуществится переход к анкете
   const [users, setUsers] = useState([]);
   const [filterState, setFilterState] = useState('asses');
   useEffect(() => {
     getAllUsers()
       .then((res) => {
-        console.log(res);
         setUsers(res);
       })
       .catch((err) => console.log(err));
   }, []);
-
+// осуществить добавление новой анкеты, жду от бека
   function handleClick() {
-     console.log(users);
-
+    console.log(users);
   }
   function handleChangeFilterState(e) {
     setFilterState(e.target.id);
-    console.log(filterState);
   }
-
-
+// временная заглушка, так как список анкет пока не готов на беке
   const data = [
     { id: 1, name: 'Василий', job: 'тестировщик' },
     { id: 2, name: 'Петр', job: 'фронт' },
     { id: 3, name: 'Мария', job: 'бэк' },
-    { id: 4, name: 'Иван', job: 'дизвйнер' },
+    { id: 4, name: 'Иван', job: 'дизaйнер' },
   ];
   const data2 = [
-    { id: 4, name: 'Иван', job: 'дизвйнер' },
+    { id: 4, name: 'Иван', job: 'дизaйнер' },
     { id: 3, name: 'Мария', job: 'бэк' },
     { id: 2, name: 'Петр', job: 'фронт' },
     { id: 1, name: 'Василий', job: 'тестировщик' },
@@ -65,14 +60,22 @@ function AssessmentBlock() {
         <div className="AssessmentBlock__filters">
           <h3 className="filters__text">Фильтры:</h3>
           <button
-            className={filterState !== "asses" ? "filters__items filters__button" : "filters__items filters__button filters__button_active"}
+            className={
+              filterState !== 'asses'
+                ? 'filters__items filters__button'
+                : 'filters__items filters__button filters__button_active'
+            }
             id="asses"
             onClick={(e) => handleChangeFilterState(e)}
           >
             Оценить
           </button>
           <button
-            className={filterState === "asses" ? "filters__items filters__button filters__button_done" : "filters__items filters__button filters__button_done filters__button_active"}
+            className={
+              filterState === 'asses'
+                ? 'filters__items filters__button filters__button_done'
+                : 'filters__items filters__button filters__button_done filters__button_active'
+            }
             id="asses_done"
             onClick={(e) => handleChangeFilterState(e)}
           >
@@ -83,8 +86,8 @@ function AssessmentBlock() {
             placeholder="Поиск"
             className="filters__items filters__search"
           />
-          <form className="filters__items filters__calendar">Календарь
-          {/* <PeriodDatePicker props="assesmentBlock"/> */}
+          <form className="filters__items filters__calendar">
+            Календарь
           </form>
         </div>
         {data.length === 0 ? (
@@ -103,13 +106,23 @@ function AssessmentBlock() {
         ) : filterState === 'asses' ? (
           <ul className="AssessmentBlock__list">
             {data.map((i) => (
-              <AssessmentCard key={i.id} name={i.name} job={i.job} status='asses'/>
+              <AssessmentCard
+                key={i.id}
+                name={i.name}
+                job={i.job}
+                status="asses"
+              />
             ))}
           </ul>
         ) : (
           <ul className="AssessmentBlock__list">
             {data2.map((i) => (
-              <AssessmentCard key={i.id} name={i.name} job={i.job} status='NotAsses' />
+              <AssessmentCard
+                key={i.id}
+                name={i.name}
+                job={i.job}
+                status="NotAsses"
+              />
             ))}
           </ul>
         )}

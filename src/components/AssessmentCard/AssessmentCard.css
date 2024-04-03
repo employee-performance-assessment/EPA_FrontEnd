@@ -21,4 +21,5 @@
   line-height: 24.2px;
   text-align: center;
   background-color: rgba(197, 182, 241, 1);
+  pointer-events: none;
 }
