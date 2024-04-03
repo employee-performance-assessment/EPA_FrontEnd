@@ -1,45 +1,55 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import SideMenu from '../SideMenu/SideMenu.jsx';
 import './Questionnaire.scss';
 import icon from '../../images/Questionnaire_user.svg';
 import InputStars from '../InputStars/InputStars.js';
 import '../InputStars/InputStars.scss';
+import { getAllCriterion } from '../../utils/mainApi.js';
 
 export default function Questionnaire() {
-  // передать пропсами кого оцениваем
-  const name = 'Иван Иванов';
-  const job = 'Разработчик';
+  const [criteria, setCriteria] = useState([]);
+  const name = 'ssss';
+  const job = 'cccc';
 
-  const list = [
-    'Погружается в проект',
-    'Выполняет задачи',
-    'Работает в команде',
-    'Соблюдает дедлайны',
-    'Расставляет приоритеты',
-    ' Умеет решать сложные задачи',
-    'Ясно объясняет свои идеи команде',
-    'Эффективно работает над несколькими задачами одновременно',
-    'Воспринимает конструктивную критику',
-    'Помогает коллегам с их задачами',
-    'Запрашивает необходимую информацию и мнение коллег для решения совместных задач',
-    'Рекомендации для сотрудника',
-  ];
+  useEffect(() => {
+    getAllCriterion()
+      .then((res) => {
+        setCriteria(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log(e.target);
-  }
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   console.log(e.target);
+  // }
   function GoBack() {
     navigate('/estimate');
   }
 
+  function handleChange() {
+    // console.log(e.target.value);
+    // console.log(e.target.name);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const values = [];
+    const input = '';
+
+    // eslint-disable-next-line no-restricted-syntax
+    // for (const input of inputs) {
+    //   values.push(Number(input.value));
+    // }
+console.log(values)
+console.log(input)
+    return values;
+  }
+
   return (
     <div className="Questionnaire">
-      <div className="Questionnaire__sidemenu">
-        <SideMenu />
-      </div>
       <div className="Questionnaire__wrapper">
         <div className="Questionnaire__header">
           <button
@@ -67,11 +77,11 @@ export default function Questionnaire() {
         </div>
         <form action="" onSubmit={(e) => handleSubmit(e)}>
           <div className="Questionnaire-container">
-            {list.map((item) => (
+            {criteria.map((item) => (
               <>
-                <p className="Questionnaire__criterion">{item}</p>
+                <p className="Questionnaire__criterion">{item.name}</p>
                 <div className="Questionnaire__value">
-                  <InputStars />
+                  <InputStars handleChange={handleChange} name={item.name} />
                 </div>
               </>
             ))}

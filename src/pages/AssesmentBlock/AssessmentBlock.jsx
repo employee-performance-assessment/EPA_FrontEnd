@@ -1,71 +1,40 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './AssessmentBlock.scss';
 import icon from '../../images/assessmentBlock_icon.svg';
 import image from '../../images/assessmentBlock_image.svg';
 import AssessmentCard from '../../components/AssessmentCard/AssessmentCard.jsx';
+import { getAllUsers } from '../../utils/mainApi.js';
 
 function AssessmentBlock() {
-  // по клику на кнопку осуществится переход к анкете
-  // const [data, setData] = useState({});
+  const [users, setUsers] = useState([]);
   const [filterState, setFilterState] = useState('asses');
-  const data = [
-    {
-      id: 0,
-      name: 'Creola Katherine Johnson',
-      job: 'mathematician',
-    },
-    {
-      id: 1,
-      name: 'Mario José Molina-Pasquel Henríquez',
-      job: 'chemist',
-    },
-    {
-      id: 2,
-      name: 'Mohammad Abdus Salam',
-      job: 'physicist',
-    },
-    {
-      id: 3,
-      name: 'Percy Lavon Julian',
-      job: 'chemist',
-    },
-    {
-      id: 4,
-      name: 'Subrahmanyan Chandrasekhar',
-      job: 'astrophysicist',
-    },
-  ];
-  const data2 = [
-    {
-      id: 0,
-      name: 'Creola',
-      job: 'chemist',
-    },
-    {
-      id: 1,
-      name: 'Mario José Molina-Pasquel Henríquez',
-      job: 'chemist',
-    },
-    {
-      id: 2,
-      name: 'Mohammad Abdus Salam',
-      job: 'physicist',
-    },
-    {
-      id: 3,
-      name: 'Percy Lavon Julian',
-      job: 'chemist',
-    },
-    {
-      id: 4,
-      name: 'Subrahmanyan Chandrasekhar',
-      job: 'astrophysicist',
-    },
-  ];
-  function handleClick() {}
+  useEffect(() => {
+    getAllUsers()
+      .then((res) => {
+        setUsers(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+// осуществить добавление новой анкеты, жду от бека
+  function handleClick() {
+    console.log(users);
+  }
   function handleChangeFilterState(e) {
     setFilterState(e.target.id);
   }
+// временная заглушка, так как список анкет пока не готов на беке
+  const data = [
+    { id: 1, name: 'Василий', job: 'тестировщик' },
+    { id: 2, name: 'Петр', job: 'фронт' },
+    { id: 3, name: 'Мария', job: 'бэк' },
+    { id: 4, name: 'Иван', job: 'дизaйнер' },
+  ];
+  const data2 = [
+    { id: 4, name: 'Иван', job: 'дизaйнер' },
+    { id: 3, name: 'Мария', job: 'бэк' },
+    { id: 2, name: 'Петр', job: 'фронт' },
+    { id: 1, name: 'Василий', job: 'тестировщик' },
+  ];
 
   return (
     <section className="AssessmentBlock">
@@ -79,21 +48,34 @@ function AssessmentBlock() {
             />
             <h3 className="header__text">Оценка эффективности сотрудников</h3>
           </div>
-          <button className={data.length === 0 ? 'header__button' : 'header__button_empty'} onClick={() => handleClick()}>
+          <button
+            className={
+              data.length === 0 ? 'header__button' : 'header__button_empty'
+            }
+            onClick={() => handleClick()}
+          >
             Провести анкетирование
           </button>
         </div>
         <div className="AssessmentBlock__filters">
           <h3 className="filters__text">Фильтры:</h3>
           <button
-            className="filters__items filters__button"
+            className={
+              filterState !== 'asses'
+                ? 'filters__items filters__button'
+                : 'filters__items filters__button filters__button_active'
+            }
             id="asses"
             onClick={(e) => handleChangeFilterState(e)}
           >
             Оценить
           </button>
           <button
-            className="filters__items filters__button filters__button_done"
+            className={
+              filterState === 'asses'
+                ? 'filters__items filters__button filters__button_done'
+                : 'filters__items filters__button filters__button_done filters__button_active'
+            }
             id="asses_done"
             onClick={(e) => handleChangeFilterState(e)}
           >
@@ -104,7 +86,9 @@ function AssessmentBlock() {
             placeholder="Поиск"
             className="filters__items filters__search"
           />
-          <form className="filters__items filters__calendar">Календарь</form>
+          <form className="filters__items filters__calendar">
+            Календарь
+          </form>
         </div>
         {data.length === 0 ? (
           <>
@@ -122,13 +106,23 @@ function AssessmentBlock() {
         ) : filterState === 'asses' ? (
           <ul className="AssessmentBlock__list">
             {data.map((i) => (
-              <AssessmentCard key={i.id} name={i.name} job={i.job} />
+              <AssessmentCard
+                key={i.id}
+                name={i.name}
+                job={i.job}
+                status="asses"
+              />
             ))}
           </ul>
         ) : (
           <ul className="AssessmentBlock__list">
             {data2.map((i) => (
-              <AssessmentCard key={i.id} name={i.name} job={i.job} />
+              <AssessmentCard
+                key={i.id}
+                name={i.name}
+                job={i.job}
+                status="NotAsses"
+              />
             ))}
           </ul>
         )}

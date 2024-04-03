@@ -7,6 +7,7 @@ export const ADMIN_CRITERIA_DEFAULT = `${BASE_URL}/admin/criteria/default`;
 export const ADMIN_PROJECTS = `${BASE_URL}/admin/project`;
 export const ADMIN_USERS = `${BASE_URL}/admin/employee`;
 export const ADMIN_TASK = `${BASE_URL}/admin/task`;
+export const ADMIN_QUESTIONARE = `${BASE_URL}/admin/questionnaire/`;
 
 export const PROJECTS = `${BASE_URL}/user/project`;
 export const USERS = `${BASE_URL}/user/employee`;
