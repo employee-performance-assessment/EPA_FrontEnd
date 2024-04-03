@@ -54,6 +54,7 @@
   line-height: 24.2px;
   text-align: center;
   background-color: rgba(218, 214, 214, 1);
+  pointer-events:none;
 }
 
 .AssessmentBlock__filters {
@@ -89,7 +90,7 @@
   margin-right: 0px;
 }
 .filters__button {
-  background-color: rgba(197, 182, 241, 1);
+  background-color: rgba(218, 214, 214, 1);
   height: 52px;
   width: 137px;
   border: none;
@@ -98,6 +99,11 @@
 .filters__button_done {
   width: 247px;
   height: 52px;
+}
+
+.filters__button_active{
+  background-color: rgba(197, 182, 241, 1);
+
 }
 .filters__search {
   width: 330px;
