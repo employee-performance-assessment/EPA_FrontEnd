@@ -20,9 +20,12 @@ body {
 
 .page-container {
   display: flex;
+  margin-left: 257px;
 
   &__sidemenu {
     height: 100vh;
+    position: fixed;
+    left: calc((100% - 1440px)/2);
   }
 }
 
