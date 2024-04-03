@@ -1,10 +1,11 @@
 import checkResponse from './checkResponse.js';
 import {
-  ADMIN_CRITERIA,
+  ADMIN_QUESTIONNAIRE_LAST,
   USERS,
   ADMIN_USERS,
   ADMIN_CRITERIA_DEFAULT,
   PROJECTS,
+  ADMIN_RESET_TO_DEFAULT_QUESTIONNAIRE,
 } from '../constants/constantAPI.js';
 
 function getToken() {
@@ -46,11 +47,14 @@ export const addNewUser = ({ fullName, position, email, password }) =>
     password,
   });
 
-export const getAllCriterion = () =>
-  makeAuthenticatedRequest(ADMIN_CRITERIA, 'GET');
+export const getQuestionnaireLast = () =>
+  makeAuthenticatedRequest(ADMIN_QUESTIONNAIRE_LAST, 'GET');
 
-export const addCriterion = (criterionName) =>
-  makeAuthenticatedRequest(ADMIN_CRITERIA, 'POST', { name: criterionName });
+export const updateQuestionnaireLast = (questionnaire) =>
+  makeAuthenticatedRequest(ADMIN_QUESTIONNAIRE_LAST, 'PATCH', questionnaire);
+
+export const resetToDefaultQuestionnaire = () =>
+  makeAuthenticatedRequest(ADMIN_RESET_TO_DEFAULT_QUESTIONNAIRE, 'PATCH');
 
 export const getDefaultCriterion = () =>
   makeAuthenticatedRequest(ADMIN_CRITERIA_DEFAULT, 'GET');
