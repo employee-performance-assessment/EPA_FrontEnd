@@ -5,6 +5,7 @@ import {
   ADMIN_USERS,
   ADMIN_CRITERIA_DEFAULT,
   PROJECTS,
+  ADMIN_PROJECTS,
 } from '../constants/constantAPI.js';
 
 function getToken() {
@@ -65,3 +66,21 @@ export const deleteUser = (id) =>
   makeAuthenticatedRequest(`${ADMIN_USERS}/${id}`, 'DELETE');
 
 export const getProjectsName = () => makeAuthenticatedRequest(PROJECTS, 'GET');
+
+export const setProjectsNewName = (nameProject, id) => {
+  console.log(`${ADMIN_PROJECTS}/${id}`);
+  const requestBody = { nameProject };
+  return makeAuthenticatedRequest(
+    `${ADMIN_PROJECTS}/${id}`,
+    'POST',
+    requestBody
+  );
+};
+
+export const setNewProjects = (nameProject) => {
+  const requestBody = { name: nameProject };
+  return makeAuthenticatedRequest(ADMIN_PROJECTS, 'POST', requestBody);
+};
+
+export const deleteProject = (id) =>
+  makeAuthenticatedRequest(`${ADMIN_PROJECTS}/${id}`, 'DELETE');

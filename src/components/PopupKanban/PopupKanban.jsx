@@ -1,20 +1,66 @@
+import { useState } from 'react';
 import './PopupKanban.scss';
 import ContainerInputPopupKanban from '../ContainerInputPopupKanban/ContainerInputPopupKanban.jsx';
+import { setNewProjects, getProjectsName } from '../../utils/mainApi.js';
 
-export function PopupKanban({ setIsOpenPopup, projectsName }) {
+export function PopupKanban({ setIsOpenPopup, projects, setProjects }) {
+  const [isNewProject, setIsNewProject] = useState(false);
+  const [nameProject, setProjectName] = useState('');
 
   function handleClickClose() {
     setIsOpenPopup(false);
+  }
+
+  function handleNameProject(e) {
+    setProjectName(e.target.value);
+  }
+
+  function handleClickNewProject() {
+    setIsNewProject(true);
+  }
+
+  function handleButtonNewProject() {
+    setNewProjects(nameProject)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setIsNewProject(false);
+        getProjectsName()
+          .then((res) => {
+            setProjects(res);
+          })
+          .catch((err) => console.log(err));
+      });
   }
 
   return (
     <div className="popup-kanban">
       <div className="popup-kanban__popup">
         <h1 className="popup-kanban__title">Редактировать</h1>
-        {projectsName.map((item) => (
-          <ContainerInputPopupKanban item={item} key={item.name}/>
+        {projects.map((item) => (
+          <ContainerInputPopupKanban item={item} key={item.name} />
         ))}
-        <button className="popup-kanban__button ">
+        {isNewProject && (
+          <div className="container-input-popup-kanban__input-conteiner">
+            <input
+              type="text"
+              className="container-input-popup-kanban__input"
+              onChange={handleNameProject}
+              value={nameProject}
+            />
+            <button
+              className="container-input-popup-kanban__button container-input-popup-kanban__button_edit"
+              aria-label="кнопка редактирования проекта"
+              onClick={handleButtonNewProject}
+            />
+          </div>
+        )}
+        <button
+          className="popup-kanban__button "
+          onClick={handleClickNewProject}
+        >
           Добавить новый проект +
         </button>
         <button
@@ -27,7 +73,7 @@ export function PopupKanban({ setIsOpenPopup, projectsName }) {
           className="popup-kanban__button popup-kanban__button_close"
           aria-label="закрыть модальное окно"
           onClick={handleClickClose}
-         />
+        />
       </div>
     </div>
   );
