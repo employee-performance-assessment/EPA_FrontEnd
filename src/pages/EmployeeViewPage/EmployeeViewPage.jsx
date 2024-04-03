@@ -10,6 +10,7 @@ import { setViewMarks } from '../../store/slices/viewMarksSlices.js';
 import styles from './EmployeeViewPage.module.scss';
 import initTasks from './tasks.json';
 import initMarks from './marks.json';
+import { getCurrentUser, getTasks } from '../../utils/mainApi.js';
 
 function EmployeeViewPage() {
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
@@ -22,11 +23,35 @@ function EmployeeViewPage() {
   const params = useParams();
   const employeeId = params.id;
 
-  console.log(employeeId);
+  const [employee, setEmployee] = useState({});
+
+  useEffect(() => {
+    getCurrentUser(employeeId)
+      .then((res) => {
+        setEmployee(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [setEmployee]);
+
+  useEffect(() => {
+    getTasks()
+      .then((res) => {
+        setTasks(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   useEffect(() => {
     if (values.stars) {
-      setMarks(initMarks.filter((i) => Math.round(Number(i.rating)) === Number(values.stars)));
+      setMarks(
+        initMarks.filter(
+          (i) => Math.round(Number(i.rating)) === Number(values.stars)
+        )
+      );
     } else {
       setMarks(initMarks);
     }
@@ -54,7 +79,7 @@ function EmployeeViewPage() {
 
   return (
     <section className={styles.employeeViewPage__container}>
-      <EmployeeViewHeader />
+      <EmployeeViewHeader employee={employee} />
       <Switch
         labelLeft="Задачи"
         labelRight="Оценки"
