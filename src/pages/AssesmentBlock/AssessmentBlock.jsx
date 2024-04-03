@@ -24,6 +24,7 @@ function AssessmentBlock() {
   }
   function handleChangeFilterState(e) {
     setFilterState(e.target.id);
+    console.log(filterState);
   }
 
 
@@ -64,14 +65,14 @@ function AssessmentBlock() {
         <div className="AssessmentBlock__filters">
           <h3 className="filters__text">Фильтры:</h3>
           <button
-            className="filters__items filters__button"
+            className={filterState !== "asses" ? "filters__items filters__button" : "filters__items filters__button filters__button_active"}
             id="asses"
             onClick={(e) => handleChangeFilterState(e)}
           >
             Оценить
           </button>
           <button
-            className="filters__items filters__button filters__button_done"
+            className={filterState === "asses" ? "filters__items filters__button filters__button_done" : "filters__items filters__button filters__button_done filters__button_active"}
             id="asses_done"
             onClick={(e) => handleChangeFilterState(e)}
           >
