@@ -9,6 +9,8 @@ function Input({
   spanClassName,
   spanId,
   required,
+  minLength,
+  maxLenght
 }) {
   return (
     <>
@@ -21,6 +23,8 @@ function Input({
         placeholder={placeholder}
         autoComplete="off"
         required={required}
+        minLength={minLength}
+        maxLength={maxLenght}
       />
       <span className={spanClassName} id={spanId}>{error}</span>
     </>
