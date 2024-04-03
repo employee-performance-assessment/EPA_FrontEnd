@@ -1,26 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './AssessmentBlock.scss';
 import icon from '../../images/assessmentBlock_icon.svg';
 import image from '../../images/assessmentBlock_image.svg';
 import AssessmentCard from '../../components/AssessmentCard/AssessmentCard.jsx';
-import PeriodDatePicker from '../../components/PeriodDatePicker/PeriodDatePicker.jsx';
-// import { getAllUsers } from '../../utils/mainApi.js';
-// import { addNewQuestionare } from '../../utils/adminQuestionareApi.js';
+import { getAllUsers } from '../../utils/mainApi.js';
 
 function AssessmentBlock() {
   // по клику на кнопку осуществится переход к анкете
-  // const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]);
   const [filterState, setFilterState] = useState('asses');
-  // useEffect(() => {
-  //   getAllUsers()
-  //     .then((res) => {
-  //       setUsers(res);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
+  useEffect(() => {
+    getAllUsers()
+      .then((res) => {
+        setUsers(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   function handleClick() {
-    // addNewQuestionare().then((res)=> console.log(res));
+     console.log(users);
+
   }
   function handleChangeFilterState(e) {
     setFilterState(e.target.id);
@@ -81,8 +80,8 @@ function AssessmentBlock() {
             placeholder="Поиск"
             className="filters__items filters__search"
           />
-          <form className="filters__items filters__calendar">
-            <PeriodDatePicker />
+          <form className="filters__items filters__calendar">Календарь
+          {/* <PeriodDatePicker props="assesmentBlock"/> */}
           </form>
         </div>
         {data.length === 0 ? (
