@@ -5,7 +5,7 @@ function EmployeeViewCard({
   type,
   title,
   deadline,
-  terms,
+  penaltyPoints,
   points,
   rating,
   date,
@@ -30,7 +30,7 @@ function EmployeeViewCard({
       <div className={styles.employeeViewCard__text}>
         <h2 className={styles.employeeViewCard__title}>{title}</h2>
         <p className={styles.employeeViewCard__deadline}>Дедлайн: {deadline}</p>
-        <p className={styles.employeeViewCard__terms}>{terms}</p>
+        <p className={styles.employeeViewCard__terms}>{`Бонус/Штраф «${penaltyPoints}» баллов за день`}</p>
       </div>
       <div className={styles.employeeViewCard__rating}>{points} баллов</div>
       <div className={styles.employeeViewCard__button}>Подробнее</div>
