@@ -6,7 +6,6 @@ import {
   getTaskDetailsByAdmin,
   deleteTaskByAdmin,
 } from '../../utils/mainApi.js';
-import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import { formatDate } from '../../utils/utils.js';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
@@ -21,7 +20,7 @@ function TaskViewPage() {
     useErrorHandler();
 
   function handleClickBack() {
-    navigate(`${ENDPOINT_ROUTES.cardsEmployees}/${task.executorId}`);
+    navigate(-1);
   }
 
   useEffect(() => {
@@ -50,7 +49,7 @@ function TaskViewPage() {
   function handleDeleteTask() {
     deleteTaskByAdmin(taskId)
       .then(() => {
-        navigate(`${ENDPOINT_ROUTES.cardsEmployees}/${task.executorId}`);
+        navigate(-1);
       })
       .catch((err) => {
         handleError(err);
