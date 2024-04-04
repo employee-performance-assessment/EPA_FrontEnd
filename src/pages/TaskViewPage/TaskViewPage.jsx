@@ -1,23 +1,60 @@
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import CustomSelect from '../../components/Filter/Filter.jsx';
+import { getTaskDetailsByAdmin } from '../../utils/mainApi.js';
+import { formatDate } from '../../utils/utils.js';
 import styles from './TaskViewPage.module.scss';
 
 function TaskViewPage() {
+  const [task, setTask] = useState(null);
+  const { id: taskId } = useParams();
   const navigate = useNavigate();
+  const { fullName: adminName } = useSelector((state) => state.adminData);
 
   function handleClickBack() {
     navigate(-1);
+  }
+
+  useEffect(() => {
+    if (taskId) {
+      getTaskDetailsByAdmin(taskId)
+        .then((res) => {
+          if (res) {
+            setTask({
+              id: res.id,
+              name: res.name,
+              description: res.description,
+              projectName: res.project.name,
+              executorName: res.executor.fullName,
+              creationDate: formatDate(res.createDate),
+              deadline: formatDate(res.deadLine),
+              penalty: res.penaltyPoints,
+            });
+          }
+        })
+        // eslint-disable-next-line no-alert
+        .catch((err) => alert(err));
+    }
+  }, [taskId]);
+
+  if (!task) {
+    return null;
   }
 
   return (
     <section className={styles.taskViewPage__container}>
       <div className={styles.taskViewPage__header}>
         <div className={styles.taskViewPage__row}>
-          <button type='button' onClick={handleClickBack} className={styles.taskViewPage__back}>
+          <button
+            type="button"
+            onClick={handleClickBack}
+            className={styles.taskViewPage__back}
+          >
             <div className={styles.taskViewPage__icon} />
-            <p className={styles.taskViewPage__caption}>Назад </p>
+            <p className={styles.taskViewPage__caption}>Назад к задачам</p>
           </button>
-          <h4 className={styles.taskViewPage__number}>125022024</h4>
+          <h4 className={styles.taskViewPage__id}>{task.id}</h4>
           <CustomSelect />
           <button type="button" className={styles.taskViewPage__edit}>
             <div />
@@ -29,77 +66,42 @@ function TaskViewPage() {
 
       <div className={styles.taskViewPage__block}>
         <div className={styles.taskViewPage__tasks}>
-          <h3>
-            Cоздать дизайн мобильного приложения для онлайн-шоппинга в сфере
-            IT- технологий, которое будет включать следующие функции:
-          </h3>
-          <ul>
+          <h3>{task.name}</h3>
+          <ul>{task.description}</ul>
+        </div>
+        <div className={styles.taskViewPage__info}>
+          <ul className={styles.taskViewPage__props}>
             <li>
-              Главная страница с изображением популярных продуктов и функцией
-              быстрого поиска.
+              <p className={styles.taskViewPage__name}>Создано</p>
+              <p className={styles.taskViewPage__value}>{task.creationDate}</p>
             </li>
             <li>
-              Каталог товаров с категориями и фильтром для поиска по цене и
-              рейтингу.
+              <p className={styles.taskViewPage__name}>Дедлайн до</p>
+              <p className={styles.taskViewPage__value}>{task.deadline}</p>
             </li>
             <li>
-              Карточка товара с подробным описанием, фотографиями и отзывами
-              покупателей.
+              <p className={styles.taskViewPage__name}>Бонус/Штраф</p>
+              <p
+                className={styles.taskViewPage__value}
+              >{`«${task.penalty}» баллов за день`}</p>
             </li>
             <li>
-              Функция сравнения товаров для выбора наиболее подходящего
-              варианта.
+              <p className={styles.taskViewPage__name}>Исполнитель:</p>
+              <p className={styles.taskViewPage__value}>{task.executorName}</p>
             </li>
             <li>
-              Личный кабинет с историей покупок и возможностью добавления
-              товаров в избранное.
+              <p className={styles.taskViewPage__name}>Админ:</p>
+              <p className={styles.taskViewPage__value}>{adminName}</p>
             </li>
             <li>
-              Раздел “Рекомендуемые товары” на основе истории просмотров и
-              покупок пользователя.
-            </li>
-            <li>
-              Интеграция с социальными сетями для быстрого входа и обмена
-              отзывами с друзьями.
-            </li>
-            <li>Возможность оформления заказа и оплаты через приложение.</li>
-            <li>
-              Адаптивный дизайн для удобного использования на различных
-              устройствах.
+              <p className={styles.taskViewPage__name}>Проект:</p>
+              <p className={styles.taskViewPage__value}>{task.projectName}</p>
             </li>
           </ul>
+          <button type="button" className={styles.taskViewPage__delete}>
+            Удалить задачу
+          </button>
         </div>
-
-        <ul className={styles.taskViewPage__props}>
-          <li>
-            <p className={styles.taskViewPage__name}>Создано</p>
-            <p className={styles.taskViewPage__value}>24 февраля 2024</p>
-          </li>
-          <li>
-            <p className={styles.taskViewPage__name}>Дедлайн до</p>
-            <p className={styles.taskViewPage__value}>2 марта 2024</p>
-          </li>
-          <li>
-            <p className={styles.taskViewPage__name}>Бонус/Штраф</p>
-            <p className={styles.taskViewPage__value}>«100» баллов за день</p>
-          </li>
-          <li>
-            <p className={styles.taskViewPage__name}>Исполнитель:</p>
-            <p className={styles.taskViewPage__value}>Иван Иванов</p>
-          </li>
-          <li>
-            <p className={styles.taskViewPage__name}>Админ:</p>
-            <p className={styles.taskViewPage__value}>Василий Смирнов</p>
-          </li>
-          <li>
-            <p className={styles.taskViewPage__name}>Проект:</p>
-            <p className={styles.taskViewPage__value}>Linkpass</p>
-          </li>
-        </ul>
-
-        <button type="button" className={styles.taskViewPage__delete}>
-          Удалить задачу
-        </button>
       </div>
     </section>
   );
