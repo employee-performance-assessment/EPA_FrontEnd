@@ -8,11 +8,13 @@ import {
 } from '../../utils/mainApi.js';
 import { formatDate } from '../../utils/utils.js';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
+import PopupEditTask from '../../components/PopupEditTask/PopupEditTask.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import styles from './TaskViewPage.module.scss';
 
 function TaskViewPage() {
   const [task, setTask] = useState(null);
+  const [isEditTaskFormOpen, setIsEditTaskFormOpen] = useState(false);
   const { id: taskId } = useParams();
   const navigate = useNavigate();
   const { fullName: adminName } = useSelector((state) => state.adminData);
@@ -69,6 +71,9 @@ function TaskViewPage() {
           handleClosePopup={closePopup}
         />
       )}
+      {isEditTaskFormOpen && (
+        <PopupEditTask title='Редактировать' setIsOpenPopup={setIsEditTaskFormOpen}/>
+      )}
       <section className={styles.taskViewPage__container}>
         <div className={styles.taskViewPage__header}>
           <div className={styles.taskViewPage__row}>
@@ -82,7 +87,7 @@ function TaskViewPage() {
             </button>
             <h4 className={styles.taskViewPage__id}>{task.id}</h4>
             <CustomSelect />
-            <button type="button" className={styles.taskViewPage__edit}>
+            <button type="button" className={styles.taskViewPage__edit} onClick={() => setIsEditTaskFormOpen(true)}>
               <div />
               Редактировать
             </button>
