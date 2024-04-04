@@ -2,7 +2,7 @@ import './PopupEditTask.scss';
 import ContainerInputPopupEditTask from '../ContainerInputPopupEditTask/ContainerInputPopupEditTask.jsx';
 import PeriodDatePicker from '../PeriodDatePicker/PeriodDatePicker.jsx';
 
-export function PopupEditTask({ setIsOpenPopup }) {
+function PopupEditTask({ setIsOpenPopup, title }) {
   const arrInput = [
     {
       nameInput: 'Название задачи',
@@ -41,14 +41,15 @@ export function PopupEditTask({ setIsOpenPopup }) {
   return (
     <div className="popup-edit-task">
       <div className="popup-edit-task__popup">
-        <h1 className="popup-edit-task__title">Редактировать</h1>
+        <h1 className="popup-edit-task__title">{title}</h1>
         <div className="popup-edit-task__container-input">
           {arrInput.map((item) =>
             item.type === 'container-input-popup-edit-task__button_calendar' ? (
               <PeriodDatePicker />
             ) : (
               <ContainerInputPopupEditTask item={item} key={item.nameInput} />
-            ))}
+            )
+          )}
         </div>
         <button
           className="popup-edit-task__button popup-edit-task__button_purple"
@@ -60,8 +61,10 @@ export function PopupEditTask({ setIsOpenPopup }) {
           className="popup-edit-task__button popup-edit-task__button_close"
           aria-label="закрыть модальное окно"
           onClick={handleClickClose}
-         />
+        />
       </div>
     </div>
   );
 }
+
+export default PopupEditTask;
