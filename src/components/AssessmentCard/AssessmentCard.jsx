@@ -2,15 +2,10 @@ import { useNavigate } from 'react-router';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import styles from './AssessmentCard.module.scss';
 import './AssessmentCard.css';
-// import Questionnaire from '../Questionnaire/Questionnaire.jsx';
 
-function AssessmentCard({name , job, status}) {
+function AssessmentCard({user, name , job, status}) {
   const navigate = useNavigate();
   const { questionnaire } = ENDPOINT_ROUTES;
-  function handleClick() {
-    // return <Questionnaire />;
-    navigate(questionnaire);
-  }
 
   return (
     <div className={styles.assessmentCard__container}>
@@ -25,8 +20,8 @@ function AssessmentCard({name , job, status}) {
       <button
         type="button"
         className={status}
-        onClick={() => handleClick(name, job)}
-      >
+        onClick={() => navigate(`${questionnaire}/${user}`)}
+        >
         {status === 'asses' ? 'Оценить' : 'Отправлено'}
       </button>
     </div>

@@ -90,7 +90,8 @@ function App() {
           <Route path={ratingCards} element={<EmployeeRatingPage />} />
           <Route path={taskCards} element={<TaskViewPage />} />
           <Route path={estimate} element={<AssessmentBlock />} />
-          <Route path={questionnaire} element={<Questionnaire />} />
+          <Route path={`${questionnaire}/:id`} element={<Questionnaire />} />
+          {/* <Route path={questionnaire} element={<Questionnaire />} /> */}
         </Route>
         <Route path="" element={<ProtectedRoute />}>
           <Route path={anyPage} element={<NotFound />} />

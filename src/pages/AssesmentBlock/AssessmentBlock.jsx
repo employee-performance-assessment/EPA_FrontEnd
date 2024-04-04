@@ -15,25 +15,25 @@ function AssessmentBlock() {
       })
       .catch((err) => console.log(err));
   }, []);
-// осуществить добавление новой анкеты, жду от бека
+  // осуществить добавление новой анкеты, жду от бека
   function handleClick() {
     console.log(users);
   }
   function handleChangeFilterState(e) {
     setFilterState(e.target.id);
   }
-// временная заглушка, так как список анкет пока не готов на беке
+  // временная заглушка, так как список анкет пока не готов на беке
   const data = [
-    { id: 1, name: 'Василий', job: 'тестировщик' },
-    { id: 2, name: 'Петр', job: 'фронт' },
-    { id: 3, name: 'Мария', job: 'бэк' },
-    { id: 4, name: 'Иван', job: 'дизaйнер' },
+    { id: '1', name: 'Василий', job: 'тестировщик' },
+    { id: '2', name: 'Петр', job: 'фронт' },
+    { id: '3', name: 'Мария', job: 'бэк' },
+    { id: '4', name: 'Иван', job: 'дизaйнер' },
   ];
   const data2 = [
-    { id: 4, name: 'Иван', job: 'дизaйнер' },
-    { id: 3, name: 'Мария', job: 'бэк' },
-    { id: 2, name: 'Петр', job: 'фронт' },
-    { id: 1, name: 'Василий', job: 'тестировщик' },
+    { id: '4', name: 'Иван', job: 'дизaйнер' },
+    { id: '3', name: 'Мария', job: 'бэк' },
+    { id: '2', name: 'Петр', job: 'фронт' },
+    { id: '1', name: 'Василий', job: 'тестировщик' },
   ];
 
   return (
@@ -86,9 +86,7 @@ function AssessmentBlock() {
             placeholder="Поиск"
             className="filters__items filters__search"
           />
-          <form className="filters__items filters__calendar">
-            Календарь
-          </form>
+          <form className="filters__items filters__calendar">Календарь</form>
         </div>
         {data.length === 0 ? (
           <>
@@ -107,10 +105,11 @@ function AssessmentBlock() {
           <ul className="AssessmentBlock__list">
             {data.map((i) => (
               <AssessmentCard
-                key={i.id}
-                name={i.name}
-                job={i.job}
-                status="asses"
+              user={i.id}
+              name={i.name}
+              job={i.job}
+              status="asses"
+              key={i.id}
               />
             ))}
           </ul>
@@ -118,10 +117,11 @@ function AssessmentBlock() {
           <ul className="AssessmentBlock__list">
             {data2.map((i) => (
               <AssessmentCard
-                key={i.id}
-                name={i.name}
-                job={i.job}
-                status="NotAsses"
+              user={i.id}
+              name={i.name}
+              job={i.job}
+              status="asses"
+              key={i.id}
               />
             ))}
           </ul>
