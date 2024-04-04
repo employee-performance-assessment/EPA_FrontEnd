@@ -117,6 +117,9 @@
   top: 41px;
   right: 80px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .user-form__closeIcon {
