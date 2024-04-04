@@ -109,7 +109,11 @@ function Kanban() {
           </div>
         </nav>
         <Boards boardsList={boardsListEmpty} />
-        {isNoProject ? <NotProject /> : isNoTask === true && <NotFoundTask />}
+        {isNoProject ? (
+          <NotProject setProjects={setProjects} />
+        ) : (
+          isNoTask === true && <NotFoundTask />
+        )}
       </div>
       {isOpenPopup && (
         <PopupKanban

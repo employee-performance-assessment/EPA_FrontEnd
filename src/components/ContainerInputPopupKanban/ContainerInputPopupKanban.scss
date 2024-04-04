@@ -34,9 +34,9 @@
 }
 
 .container-input-popup-kanban__button_delete {
-  background-image: url(../../images/TrashSimple.svg);
+  @include button_delete;
 }
 
 .container-input-popup-kanban__button_edit {
-  background-image: url(../../images/PencilSimple.svg);
+  @include button_edit;
 }

@@ -72,11 +72,10 @@ export const deleteUser = (id) =>
 export const getProjectsName = () => makeAuthenticatedRequest(PROJECTS, 'GET');
 
 export const setProjectsNewName = (nameProject, id) => {
-  console.log(`${ADMIN_PROJECTS}/${id}`);
-  const requestBody = { nameProject };
+  const requestBody = { name: nameProject };
   return makeAuthenticatedRequest(
     `${ADMIN_PROJECTS}/${id}`,
-    'POST',
+    'PATCH',
     requestBody
   );
 };
