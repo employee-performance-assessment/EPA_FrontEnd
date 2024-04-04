@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import EmployeeViewCard from '../EmployeeViewCard/EmployeeViewCard.jsx';
@@ -6,16 +5,9 @@ import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import styles from './EmployeeViewBlock.module.scss';
 
 function EmployeeViewBlock({ tasks, marks }) {
-  const [newTasks, setNewTasks] = useState([]);
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
   const { ratingCards, taskCards } = ENDPOINT_ROUTES;
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if(tasks) {
-      setNewTasks(tasks.filter((task) => task.status === "NEW"))
-    }
-  }, [tasks])
 
   function handleClickMarks() {
     navigate(ratingCards);
@@ -38,14 +30,15 @@ function EmployeeViewBlock({ tasks, marks }) {
             handleClickMarks={handleClickMarks}
           />
         )) :
-        newTasks.map((task) => (
+        tasks.map((task) => (
           <EmployeeViewCard
             type="tasks"
             key={task.id}
-            title={task.name}
-            deadline={task.deadline}
-            penaltyPoints={task.penaltyPoints}
-            points={task.basicPoints}
+            task={task}
+            // title={task.name}
+            // deadline={task.deadline}
+            // penaltyPoints={task.penaltyPoints}
+            // points={task.basicPoints}
             handleClickTasks={handleClickTasks}
           />
         ))

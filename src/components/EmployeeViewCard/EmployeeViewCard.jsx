@@ -1,12 +1,14 @@
 import SetStars from '../SetStars/SetStars';
 import styles from './EmployeeViewCard.module.scss';
+import { formatDate } from '../../utils/utils';
 
 function EmployeeViewCard({
   type,
-  title,
-  deadline,
-  penaltyPoints,
-  points,
+  // title,
+  task,
+  // deadline,
+  // penaltyPoints,
+  // points,
   rating,
   date,
   handleClickMarks,
@@ -22,17 +24,19 @@ function EmployeeViewCard({
   const month = currentDate.toLocaleString('default', { month: 'long' });
   const day = currentDate.toLocaleString('default', options);
 
+  const lateFine = (task.penaltyPoints/task.basicPoints)*100
+
   return type === 'tasks' ? (
     <div
       className={styles.employeeViewCard__container}
       onClick={handleClickTasks}
     >
       <div className={styles.employeeViewCard__text}>
-        <h2 className={styles.employeeViewCard__title}>{title}</h2>
-        <p className={styles.employeeViewCard__deadline}>Дедлайн: {deadline}</p>
-        <p className={styles.employeeViewCard__terms}>{`Бонус/Штраф «${penaltyPoints}» баллов за день`}</p>
+        <h2 className={styles.employeeViewCard__title}>{task.name}</h2>
+        <p className={styles.employeeViewCard__deadline}>Дедлайн: {formatDate(task.deadLine)}</p>
+        <p className={styles.employeeViewCard__terms}>{`-${lateFine}% за просрочку дедлайна`}</p>
       </div>
-      <div className={styles.employeeViewCard__rating}>{points} баллов</div>
+      <div className={styles.employeeViewCard__rating}>{task.basicPoints} баллов</div>
       <div className={styles.employeeViewCard__button}>Подробнее</div>
     </div>
   ) : (
