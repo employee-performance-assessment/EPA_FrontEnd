@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import SetStars from '../SetStars/SetStars';
 import styles from './EmployeeViewCard.module.scss';
-import { formatDate } from '../../utils/utils';
+import { formatDate, calculatePercentage } from '../../utils/utils';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
 function EmployeeViewCard({ type, task, rating, date }) {
@@ -15,7 +15,7 @@ function EmployeeViewCard({ type, task, rating, date }) {
   const month = currentDate.toLocaleString('default', { month: 'long' });
   const day = currentDate.toLocaleString('default', options);
 
-  const lateFine = (task.penaltyPoints / task.basicPoints) * 100;
+  const lateFine = calculatePercentage(task.penaltyPoints,task.basicPoints);
 
   return type === 'tasks' ? (
     <div className={styles.employeeViewCard__container}>
@@ -34,7 +34,7 @@ function EmployeeViewCard({ type, task, rating, date }) {
       <button
         type="button"
         className={styles.employeeViewCard__button}
-        onClick={() => navigate(ENDPOINT_ROUTES.taskCards)}
+        onClick={() => navigate(`${ENDPOINT_ROUTES.taskCards}/${task.id}`)}
       >
         Подробнее
       </button>

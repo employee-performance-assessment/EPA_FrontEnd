@@ -98,4 +98,4 @@ export const deleteProject = (id) =>
 
 export const getAllUserTasksByAdmin = (employeeId) => makeAuthenticatedRequest(`${ADMIN_TASK}/find?employeeId=${employeeId}`, 'GET');
 
-export const getTaskDetails = (taskId) => makeAuthenticatedRequest(`${ADMIN_TASK}/${taskId}`, 'GET');
+export const getTaskDetailsByAdmin = (taskId) => makeAuthenticatedRequest(`${ADMIN_TASK}/${taskId}`, 'GET');

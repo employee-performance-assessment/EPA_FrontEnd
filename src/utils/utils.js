@@ -6,3 +6,7 @@ export function formatDate(date) {
   const year = parts[0];
   return `${day} ${months[month]} ${year}`;
 };
+
+export function calculatePercentage(finePoints, totalPoints) {
+  return (finePoints / totalPoints) * 100;
+};
