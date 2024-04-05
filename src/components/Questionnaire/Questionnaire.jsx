@@ -1,14 +1,18 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import './Questionnaire.scss';
 import icon from '../../images/Questionnaire_user.svg';
 import InputStars from '../InputStars/InputStars.js';
 import '../InputStars/InputStars.scss';
-import { getAllCriterion } from '../../utils/mainApi.js';
+import { getAllCriterion, getCurrentUser } from '../../utils/mainApi.js';
 
 export default function Questionnaire() {
   const [criteria, setCriteria] = useState([]);
-  const navigate = useNavigate();
+  const [user, setUser] = useState();
+
+  const params = useParams();
+  const employeeId = params.id;
+
   const name = 'ssss';
   const job = 'cccc';
 
@@ -19,6 +23,18 @@ export default function Questionnaire() {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getCurrentUser(employeeId)
+      .then((res) => {
+        setUser(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [setUser]);
 
   // function handleSubmit(e) {
   //   e.preventDefault();
@@ -43,8 +59,9 @@ export default function Questionnaire() {
     // for (const input of inputs) {
     //   values.push(Number(input.value));
     // }
-    console.log(values)
-    console.log(input)
+    console.log(values);
+    console.log(input);
+    console.log('user:', user);
     return values;
   }
 

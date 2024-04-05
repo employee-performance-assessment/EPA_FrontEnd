@@ -2,18 +2,18 @@ import { useNavigate } from 'react-router';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import styles from './AssessmentCard.module.scss';
 import './AssessmentCard.css';
-// import Questionnaire from '../Questionnaire/Questionnaire.jsx';
 
-function AssessmentCard({ fullName, position, status }) {
+function AssessmentCard({ user, fullName, position, status }) {
   const navigate = useNavigate();
   const { questionnaire } = ENDPOINT_ROUTES;
+
   function handleClick() {
-    navigate(questionnaire);
+    navigate(`${questionnaire}/${user}`);
   }
 
   return (
     <div className={styles.assessmentCard}
-      onClick={() => handleClick(fullName, position)}
+      onClick={handleClick}
     >
       <p className={styles.assessmentCard__name}>{fullName}</p>
       <p className={styles.assessmentCard__job}>&frasl; {position}</p>

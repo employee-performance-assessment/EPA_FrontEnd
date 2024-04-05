@@ -121,9 +121,7 @@ function AssessmentBlock() {
             placeholder="Поиск"
             className="filters__items filters__search"
           />
-          <form className="filters__items filters__calendar">
-            Календарь
-          </form>
+          <form className="filters__items filters__calendar">Календарь</form>
         </div>
         {users.length === 0 ? (
           <>
