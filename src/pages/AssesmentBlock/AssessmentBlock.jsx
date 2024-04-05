@@ -6,7 +6,7 @@ import { checkActivitySurveyButton, doQuestionnaireSurvey, getAllUsers } from '.
 
 function AssessmentBlock() {
   const [users, setUsers] = useState([]);
-  const [filterState, setFilterState] = useState('asses');
+  const [filterState, setFilterState] = useState('isAppreciated');
   const [isActivitySurveyButton, setIsActivitySurveyButton] = useState(false);
 
   useEffect(() => {
@@ -96,22 +96,22 @@ function AssessmentBlock() {
           <h3 className="filters__text">Фильтры:</h3>
           <button
             className={
-              filterState !== 'asses'
+              filterState !== 'isAppreciated'
                 ? 'filters__items filters__button'
                 : 'filters__items filters__button filters__button_active'
             }
-            id="asses"
+            id="isAppreciated"
             onClick={(e) => handleChangeFilterState(e)}
           >
             Оценить
           </button>
           <button
             className={
-              filterState === 'asses'
+              filterState === 'isAppreciated'
                 ? 'filters__items filters__button filters__button_done'
                 : 'filters__items filters__button filters__button_done filters__button_active'
             }
-            id="asses_done"
+            id="isAppreciated_done"
             onClick={(e) => handleChangeFilterState(e)}
           >
             Оценка поставлена
@@ -132,14 +132,14 @@ function AssessmentBlock() {
               анкетирование»
             </span>
           </>
-        ) : filterState === 'asses' && (
+        ) : filterState === 'isAppreciated' && (
           <ul className="AssessmentBlock__list">
             {users.map((user) => (
               <AssessmentCard
                 key={user.id}
                 fullName={user.fullName}
                 position={user.position}
-                status="asses"
+                status="isAppreciated"
               />
             ))}
           </ul>
