@@ -13,6 +13,7 @@ import {
   EVALUATIONS,
   ADMIN_EVALUATIONS,
   RECO,
+  USER_QUESTIONNAIRE,
 } from '../constants/constantAPI.js';
 
 function getToken() {
@@ -62,6 +63,9 @@ export const getAllCriterion = () =>
 
 export const getQuestionnaireLast = () =>
   makeAuthenticatedRequest(ADMIN_QUESTIONNAIRE_LAST, 'GET');
+
+export const getQuestionnaire = (questionnaireId) =>
+  makeAuthenticatedRequest(`${USER_QUESTIONNAIRE}/${questionnaireId}`, 'GET');
 
 export const updateQuestionnaireLast = (questionnaire) =>
   makeAuthenticatedRequest(ADMIN_QUESTIONNAIRE_LAST, 'PATCH', questionnaire);

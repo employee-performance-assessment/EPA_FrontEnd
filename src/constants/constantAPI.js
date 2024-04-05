@@ -10,6 +10,8 @@ export const ADMIN_QUESTIONNAIRE = `${BASE_URL}/admin/questionnaire/`;
 export const ADMIN_RESET_TO_DEFAULT_QUESTIONNAIRE = `${BASE_URL}/admin/questionnaire/last-with-default`;
 export const ADMIN_QUESTIONNAIRE_PASSED = `${BASE_URL}/admin/questionnaire/is-day-passed`;
 
+export const USER_QUESTIONNAIRE = `${BASE_URL}/user/questionnaire`;
+
 export const ADMIN_PROJECTS = `${BASE_URL}/admin/project`;
 export const ADMIN_USERS = `${BASE_URL}/admin/employee`;
 export const ADMIN_TASK = `${BASE_URL}/admin/task`;

@@ -20,6 +20,33 @@
     box-shadow: 0px 4px 20px rgba(166, 166, 166, .4);
   }
 
+  &_asses {
+    width: 217px;
+    height: 52px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 14px 40px;
+    border: none;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24.2px;
+    text-align: center;
+  }
+  
+  &_notAsses {
+    width: 217px;
+    height: 52px;
+    border-radius: 20px;
+    padding: 14px 40px;
+    border: none;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24.2px;
+    text-align: center;
+    background-color: rgba(197, 182, 241, 1);
+    pointer-events: none;
+  }
+
   &__button {
     width: 217px;
     height: 52px;

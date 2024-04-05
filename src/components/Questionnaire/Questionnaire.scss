@@ -5,10 +5,6 @@
   gap: 37px;
 }
 
-.Questionnaire__sidemenu {
-  padding: 36px 0px 0px 20px;
-}
-
 .Questionnaire__wrapper {
   margin: 24px 20px 24px 0;
   width: 1163px;
@@ -20,7 +16,6 @@
   margin: 14px 60px 0;
   height: 100px;
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
@@ -32,6 +27,8 @@
   margin-right: 36px;
   cursor: pointer;
   background-color: $light-gray-base-color;
+  width: 200px;
+  padding: 0;
 }
 
 .Questionnaire-header__back-button::before {
@@ -47,11 +44,16 @@
   font-weight: 500;
   line-height: 24.2px;
   text-align: left;
-  margin-right: 105px;
 }
 
 .Questionnaire-header__icon {
-  margin: 32px 12px;
+  margin: 0 12px;
+  background-image: url(../../images/icon-user-header.svg);
+  min-width: 52px;
+  height: 52px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .Questionnaire-header__underscribe {
@@ -62,7 +64,7 @@
 }
 
 .Questionnaire-header__underscribe:last-child {
-  margin-right: 25px;
+  margin-right: 0px;
 }
 
 .Questionnaire-titles {

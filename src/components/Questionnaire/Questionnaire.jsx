@@ -1,27 +1,28 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import './Questionnaire.scss';
-import icon from '../../images/Questionnaire_user.svg';
 import InputStars from '../InputStars/InputStars.js';
-import '../InputStars/InputStars.scss';
-import { getAllCriterion, getCurrentUser } from '../../utils/mainApi.js';
+import { getCurrentUser, getQuestionnaire } from '../../utils/mainApi.js';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
+import './Questionnaire.scss';
 
 export default function Questionnaire() {
+  const { estimate } = ENDPOINT_ROUTES;
   const [criteria, setCriteria] = useState([]);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({ fullName: '', position: '' });
 
   const params = useParams();
   const employeeId = params.id;
 
-  const name = 'ssss';
-  const job = 'cccc';
-
   useEffect(() => {
-    getAllCriterion()
-      .then((res) => {
-        setCriteria(res);
-      })
-      .catch((err) => console.log(err));
+    if (JSON.parse(localStorage.getItem('questionnaire'))) {
+      const questionnaireId = JSON.parse(localStorage.getItem('questionnaire')).id;
+      getQuestionnaire(questionnaireId)
+        .then((res) => {
+          console.log(res);
+          setCriteria(res);
+        })
+        .catch((err) => console.log(err));
+    }
   }, []);
 
   const navigate = useNavigate();
@@ -29,12 +30,13 @@ export default function Questionnaire() {
   useEffect(() => {
     getCurrentUser(employeeId)
       .then((res) => {
-        setUser(res);
+        setUser({
+          fullName: res.fullName,
+          position: res.position
+        });
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [setUser]);
+      .catch((err) => console.log(err));
+  }, []);
 
   // function handleSubmit(e) {
   //   e.preventDefault();
@@ -42,7 +44,7 @@ export default function Questionnaire() {
   // }
 
   function GoBack() {
-    navigate('/estimate');
+    navigate(estimate);
   }
 
   function handleChange() {
@@ -70,8 +72,9 @@ export default function Questionnaire() {
       <div className="Questionnaire__wrapper">
         <div className="Questionnaire__header">
           <button
+            type="button"
             className="Questionnaire-header__back-button"
-            onClick={() => GoBack()}
+            onClick={GoBack}
           >
             Назад к списку
           </button>
@@ -79,14 +82,10 @@ export default function Questionnaire() {
           <span className="Questionnaire-header__data">
             Оценка работы за март
           </span>
-          <img
-            src={icon}
-            alt="иконка с символическим изображением аватара пользователя"
-            className="Questionnaire-header__icon"
-          />
-          <span className="Questionnaire-header__underscribe">{name}</span>
+          <div className="Questionnaire-header__icon" />
+          <span className="Questionnaire-header__underscribe">{user.fullName}</span>
           <span className="Questionnaire-header__underscribe">&frasl;</span>
-          <span className="Questionnaire-header__underscribe">{job}</span>
+          <span className="Questionnaire-header__underscribe">{user.position}</span>
         </div>
         <div className="Questionnaire-titles">
           <span className="Questionnaire-titles__text">Критерии</span>

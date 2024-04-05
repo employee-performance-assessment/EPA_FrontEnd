@@ -31,7 +31,8 @@ function AssessmentBlock() {
 
   function handleClickSurveyButton() {
     doQuestionnaireSurvey()
-      .then(() => {
+      .then((res) => {
+        localStorage.setItem('questionnaire', JSON.stringify(res));
         getAllUsers()
         .then((res) => {
           setUsers(res);
@@ -70,8 +71,6 @@ function AssessmentBlock() {
       // }
   }
 
-  console.log(users);
-
   return (
     <section className="AssessmentBlock">
       <div className="AssessmentBlock__container">
@@ -95,22 +94,16 @@ function AssessmentBlock() {
         <div className="AssessmentBlock__filters">
           <h3 className="filters__text">Фильтры:</h3>
           <button
-            className={
-              filterState !== 'asses'
-                ? 'filters__items filters__button'
-                : 'filters__items filters__button filters__button_active'
-            }
+            className={`filters__items filters__button
+            ${filterState === 'asses' && 'filters__button_active'}`}
             id="asses"
             onClick={(e) => handleChangeFilterState(e)}
           >
             Оценить
           </button>
           <button
-            className={
-              filterState === 'asses'
-                ? 'filters__items filters__button filters__button_done'
-                : 'filters__items filters__button filters__button_done filters__button_active'
-            }
+            className={`filters__items filters__button filters__button_done
+            ${filterState !== 'asses' && 'filters__button_active'}`}
             id="asses_done"
             onClick={(e) => handleChangeFilterState(e)}
           >
@@ -137,6 +130,7 @@ function AssessmentBlock() {
             {users.map((user) => (
               <AssessmentCard
                 key={user.id}
+                user={user}
                 fullName={user.fullName}
                 position={user.position}
                 status="asses"
