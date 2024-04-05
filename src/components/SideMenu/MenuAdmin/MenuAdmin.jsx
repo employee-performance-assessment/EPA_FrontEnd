@@ -13,6 +13,7 @@ function MenuAdmin() {
     ratingCards,
     board,
     estimate,
+    questionnaire,
     analytics
   } = ENDPOINT_ROUTES;
 
@@ -37,7 +38,8 @@ function MenuAdmin() {
     pathname.includes(board) ?
       setIsBoard(true) : setIsBoard(false);
 
-    pathname.includes(estimate) ?
+    pathname.includes(estimate) ||
+    pathname.includes(questionnaire) ?
       setIsEstimate(true) : setIsEstimate(false);
 
     pathname.includes(analytics) ?

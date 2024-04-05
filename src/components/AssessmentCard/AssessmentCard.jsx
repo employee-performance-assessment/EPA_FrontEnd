@@ -4,16 +4,17 @@ import styles from './AssessmentCard.module.scss';
 import './AssessmentCard.css';
 // import Questionnaire from '../Questionnaire/Questionnaire.jsx';
 
-function AssessmentCard({name , job, status}) {
+function AssessmentCard({ name, job, status }) {
   const navigate = useNavigate();
   const { questionnaire } = ENDPOINT_ROUTES;
   function handleClick() {
-    // return <Questionnaire />;
     navigate(questionnaire);
   }
 
   return (
-    <div className={styles.assessmentCard__container}>
+    <div className={styles.assessmentCard}
+      onClick={() => handleClick(name, job)}
+    >
       <p className={styles.assessmentCard__name}>{name}</p>
       <p className={styles.assessmentCard__job}>&frasl; {job}</p>
       <div className={styles.assessmentCard__rating}>
@@ -22,13 +23,9 @@ function AssessmentCard({name , job, status}) {
           Дата анкетирования: 28.03.24
         </p>
       </div>
-      <button
-        type="button"
-        className={status}
-        onClick={() => handleClick(name, job)}
-      >
+      <div className={status}>
         {status === 'asses' ? 'Оценить' : 'Отправлено'}
-      </button>
+      </div>
     </div>
   );
 }

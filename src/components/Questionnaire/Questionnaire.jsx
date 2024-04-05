@@ -8,6 +8,7 @@ import { getAllCriterion } from '../../utils/mainApi.js';
 
 export default function Questionnaire() {
   const [criteria, setCriteria] = useState([]);
+  const navigate = useNavigate();
   const name = 'ssss';
   const job = 'cccc';
 
@@ -19,12 +20,11 @@ export default function Questionnaire() {
       .catch((err) => console.log(err));
   }, []);
 
-  const navigate = useNavigate();
-
   // function handleSubmit(e) {
   //   e.preventDefault();
   //   console.log(e.target);
   // }
+
   function GoBack() {
     navigate('/estimate');
   }
@@ -43,8 +43,8 @@ export default function Questionnaire() {
     // for (const input of inputs) {
     //   values.push(Number(input.value));
     // }
-console.log(values)
-console.log(input)
+    console.log(values)
+    console.log(input)
     return values;
   }
 
