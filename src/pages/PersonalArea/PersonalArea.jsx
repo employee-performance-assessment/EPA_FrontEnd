@@ -18,7 +18,7 @@ function PersonalArea() {
     if (!values.name && !editing) {
       values.name = adminData.fullName;
       values.email = adminData.email;
-      values.job = adminData.position || '';
+      values.job = adminData.position || 'Руководитель';
       values.repeatPassword = '';
       values.newPassword = '';
     }
@@ -77,7 +77,7 @@ function PersonalArea() {
         <div className="personal-area__header-icon" />
         <h2 className="personal-area__header-title">{adminData.fullName}</h2>
         <div className="personal-area__header-job">
-          {adminData.position || 'Должность'}
+          {adminData.position || 'Руководитель'}
         </div>
       </div>
       <div className="personal-area__section">

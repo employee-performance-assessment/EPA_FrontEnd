@@ -9,6 +9,7 @@ import {
   ADMIN_RESET_TO_DEFAULT_QUESTIONNAIRE,
   ADMIN_PROJECTS,
   ADMIN_TASK,
+  ADMIN_QUESTIONNAIRE_PASSED,
 } from '../constants/constantAPI.js';
 
 function getToken() {
@@ -64,6 +65,12 @@ export const updateQuestionnaireLast = (questionnaire) =>
 
 export const resetToDefaultQuestionnaire = () =>
   makeAuthenticatedRequest(ADMIN_RESET_TO_DEFAULT_QUESTIONNAIRE, 'PATCH');
+
+export const checkActivitySurveyButton = () =>
+  makeAuthenticatedRequest(ADMIN_QUESTIONNAIRE_PASSED, 'GET');
+
+export const doQuestionnaireSurvey = () =>
+  makeAuthenticatedRequest(ADMIN_QUESTIONNAIRE_LAST, 'PUT');
 
 export const getDefaultCriterion = () =>
   makeAuthenticatedRequest(ADMIN_CRITERIA_DEFAULT, 'GET');

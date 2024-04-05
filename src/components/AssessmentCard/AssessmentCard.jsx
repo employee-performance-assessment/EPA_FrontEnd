@@ -4,7 +4,7 @@ import styles from './AssessmentCard.module.scss';
 import './AssessmentCard.css';
 // import Questionnaire from '../Questionnaire/Questionnaire.jsx';
 
-function AssessmentCard({ name, job, status }) {
+function AssessmentCard({ fullName, position, status }) {
   const navigate = useNavigate();
   const { questionnaire } = ENDPOINT_ROUTES;
   function handleClick() {
@@ -13,10 +13,10 @@ function AssessmentCard({ name, job, status }) {
 
   return (
     <div className={styles.assessmentCard}
-      onClick={() => handleClick(name, job)}
+      onClick={() => handleClick(fullName, position)}
     >
-      <p className={styles.assessmentCard__name}>{name}</p>
-      <p className={styles.assessmentCard__job}>&frasl; {job}</p>
+      <p className={styles.assessmentCard__name}>{fullName}</p>
+      <p className={styles.assessmentCard__job}>&frasl; {position}</p>
       <div className={styles.assessmentCard__rating}>
         Оценки за март
         <p className={styles.assessmentCard__data}>
