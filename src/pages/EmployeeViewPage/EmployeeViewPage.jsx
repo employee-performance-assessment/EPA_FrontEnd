@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import SideMenu from '../../components/SideMenu/SideMenu.jsx';
 import EmployeeViewHeader from '../../components/EmployeeViewHeader/EmployeeViewHeader.jsx';
 import Switch from '../../components/Switch/Switch.jsx';
 import EmployeeViewFilter from '../../components/EmployeeViewFilter/EmployeeViewFilter.jsx';
@@ -8,8 +8,8 @@ import EmployeeViewBlock from '../../components/EmployeeViewBlock/EmployeeViewBl
 import { useFormValidation } from '../../hooks/useFormValidation';
 import { setViewMarks } from '../../store/slices/viewMarksSlices.js';
 import styles from './EmployeeViewPage.module.scss';
-import initTasks from './tasks.json';
 import initMarks from './marks.json';
+import { getCurrentUser, getAllUserTasksByAdmin } from '../../utils/mainApi.js';
 
 function EmployeeViewPage() {
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
@@ -17,20 +17,58 @@ function EmployeeViewPage() {
   const { values, handleChange, setValues } = useFormValidation();
   const [viewTask, setViewTask] = useState(viewMarks);
   const [marks, setMarks] = useState([]);
-  const [tasks, setTasks] = useState([]);
+  const [allTasks, setAllTasks] = useState([]);
+  const [currentTasks, setCurrentTasks] = useState([]);
   const [version, setVersion] = useState(0);
+  const { id: employeeId } = useParams();
+
+  const [employee, setEmployee] = useState({});
+  const [tasksStatus, setTasksStatus] = useState('NEW');
+
+  useEffect(() => {
+    if (employeeId) {
+      getCurrentUser(employeeId)
+        .then((res) => {
+          setEmployee(res);
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-alert
+          alert(err);
+        });
+    }
+  }, [employeeId]);
+
+  useEffect(() => {
+    if (employeeId) {
+      getAllUserTasksByAdmin(employeeId)
+        .then((res) => {
+          setAllTasks(res);
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-alert
+          alert(err);
+        });
+    }
+  }, [employeeId]);
+
+
+  useEffect(() => {
+    if (!allTasks.length) return;
+
+    setCurrentTasks(
+      allTasks.filter((task) => tasksStatus ? task.status === tasksStatus : true)
+    );
+  }, [tasksStatus, allTasks]);
 
   useEffect(() => {
     if (values.stars) {
-      setMarks(initMarks.filter((i) => Math.round(Number(i.rating)) === Number(values.stars)));
+      setMarks(
+        initMarks.filter(
+          (i) => Math.round(Number(i.rating)) === Number(values.stars)
+        )
+      );
     } else {
       setMarks(initMarks);
-    }
-
-    if (values.filterTask) {
-      setTasks(initTasks.filter((i) => i.status === values.filterTask));
-    } else {
-      setTasks(initTasks.filter((i) => i.status === 'new'));
     }
   }, [values]);
 
@@ -49,23 +87,21 @@ function EmployeeViewPage() {
   }
 
   return (
-    <section className={styles.employeeViewPage__wrapper}>
-      <SideMenu />
-      <div className={styles.employeeViewPage__container}>
-        <EmployeeViewHeader />
-        <Switch
-          labelLeft={'Задачи'}
-          labelRight={'Оценки'}
-          isChecked={viewTask}
-          setIsChecked={setViewTask}
-        />
-        <EmployeeViewFilter
-          handleChange={handleChange}
-          showAllCards={showAllCards}
-          version={version}
-        />
-        <EmployeeViewBlock tasks={tasks} marks={marks} />
-      </div>
+    <section className={styles.employeeViewPage__container}>
+      <EmployeeViewHeader employee={employee} />
+      <Switch
+        labelLeft="Задачи"
+        labelRight="Оценки"
+        isChecked={viewTask}
+        setIsChecked={setViewTask}
+      />
+      <EmployeeViewFilter
+        handleChange={handleChange}
+        showAllCards={showAllCards}
+        version={version}
+        setTasksStatus={setTasksStatus}
+      />
+      <EmployeeViewBlock tasks={currentTasks} marks={marks} employeeId={employeeId}/>
     </section>
   );
 }

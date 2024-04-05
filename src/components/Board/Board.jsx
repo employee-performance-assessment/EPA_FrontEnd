@@ -77,17 +77,20 @@ function Board({
   function getCollor(bord, deadline) {
     if (deadline - new Date().getTime() <= 0) {
       return 'boardDnD__card-points_red';
-    } else if (bord === 'К выполнению') {
-      return 'boardDnD__card-points_grey';
-    } else if (bord === 'В работе') {
-      return 'boardDnD__card-points_light-green';
-    } else if (bord === 'На ревью') {
-      return 'boardDnD__card-points_violet';
-    } else if (bord === 'Выполнено') {
-      return 'boardDnD__card-points_green';
-    } else {
-      return '';
     }
+    if (bord === 'К выполнению') {
+      return 'boardDnD__card-points_grey';
+    }
+    if (bord === 'В работе') {
+      return 'boardDnD__card-points_light-green';
+    }
+    if (bord === 'На ревью') {
+      return 'boardDnD__card-points_violet';
+    }
+    if (bord === 'Выполнено') {
+      return 'boardDnD__card-points_green';
+    }
+    return '';
   }
 
   function settingDateDeadline(unixTime) {
@@ -100,8 +103,8 @@ function Board({
       <h1 className="boardDnD__title">{board.title}</h1>
       {board.items.sort(sortCard).map((card) => (
         <div
-          className={'boardDnD__card'} // сначала сортируем карты по порядку (order), затем перебираем массив для отрисовки карточек
-          draggable={true}
+          className="boardDnD__card" // сначала сортируем карты по порядку (order), затем перебираем массив для отрисовки карточек
+          draggable
           onDragEnd={(e) => dragEndHandler(e)}
           onDragLeave={(e) => dragEndHandler(e)}
           onDragOver={(e) => dragOverHandler(e, board)}

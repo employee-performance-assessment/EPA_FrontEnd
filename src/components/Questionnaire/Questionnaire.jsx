@@ -1,26 +1,78 @@
-import SideMenu from '../SideMenu/SideMenu.jsx';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 import './Questionnaire.scss';
 import icon from '../../images/Questionnaire_user.svg';
 import InputStars from '../InputStars/InputStars.js';
 import '../InputStars/InputStars.scss';
+import { getAllCriterion, getCurrentUser } from '../../utils/mainApi.js';
 
 export default function Questionnaire() {
-  const name = 'Иван Иванов';
-  const job = 'Разработчик';
+  const [criteria, setCriteria] = useState([]);
+  const [user, setUser] = useState();
+
+  const params = useParams();
+  const employeeId = params.id;
+
+  const name = 'ssss';
+  const job = 'cccc';
+
+  useEffect(() => {
+    getAllCriterion()
+      .then((res) => {
+        setCriteria(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getCurrentUser(employeeId)
+      .then((res) => {
+        setUser(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [setUser]);
+
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   console.log(e.target);
+  // }
+
+  function GoBack() {
+    navigate('/estimate');
+  }
+
+  function handleChange() {
+    // console.log(e.target.value);
+    // console.log(e.target.name);
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(e.target);
+    const values = [];
+    const input = '';
+
+    // eslint-disable-next-line no-restricted-syntax
+    // for (const input of inputs) {
+    //   values.push(Number(input.value));
+    // }
+    console.log(values);
+    console.log(input);
+    console.log('user:', user);
+    return values;
   }
 
   return (
     <div className="Questionnaire">
-      <div className="Questionnaire__sidemenu">
-        <SideMenu />
-      </div>
       <div className="Questionnaire__wrapper">
         <div className="Questionnaire__header">
-          <button className="Questionnaire-header__back-button">
+          <button
+            className="Questionnaire-header__back-button"
+            onClick={() => GoBack()}
+          >
             Назад к списку
           </button>
           {/* здесть прокинуть пропсом период оценки */}
@@ -42,74 +94,14 @@ export default function Questionnaire() {
         </div>
         <form action="" onSubmit={(e) => handleSubmit(e)}>
           <div className="Questionnaire-container">
-            <p className="Questionnaire__criterion">Погружается в проект</p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">Выполняет задачи</p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">Работает в команде</p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">Соблюдает дедлайны</p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">Расставляет приоритеты</p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">
-              Умеет решать сложные задачи
-            </p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">
-              Ясно объясняет свои идеи команде
-            </p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">
-              Эффективно работает над несколькими задачами одновременно
-            </p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">
-              Воспринимает конструктивную критику
-            </p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">
-              Помогает коллегам с их задачами
-            </p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
-            <p className="Questionnaire__criterion">
-              Запрашивает необходимую информацию и мнение коллег для решения
-              совместных задач
-            </p>
-            <div className="Questionnaire__value">
-              {' '}
-              <InputStars />
-            </div>
+            {criteria.map((item) => (
+              <>
+                <p className="Questionnaire__criterion">{item.name}</p>
+                <div className="Questionnaire__value">
+                  <InputStars handleChange={handleChange} name={item.name} />
+                </div>
+              </>
+            ))}
           </div>
           <span className="Questionaire__text">
             Рекомендации для сотрудника

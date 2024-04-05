@@ -14,9 +14,13 @@ function Select({
   selectStyle,
   listStyle,
   optionStyle,
-  typeSelect
+  typeSelect,
+  list,
+  buttonStyle,
 }) {
-  const [value, setValue] = useState('');
+  const [valueYear, setValueYear] = useState('');
+  const [valueUser, setValueUser] = useState('');
+  const [valueMonth, setValueMonth] = useState('');
   const dispatch = useDispatch();
   const { isOverlay, type } = useSelector((state) => state.filter);
 
@@ -26,45 +30,73 @@ function Select({
   };
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    if (typeSelect === 'year') {
+      setValueYear(e.target.value);
+    } else if (typeSelect === 'users') {
+      setValueUser(e.target.id);
+    } else if (typeSelect === 'month') {
+      setValueMonth(e.target.id);
+    }
     dispatch(hiddenOverlay());
-    query();
+    typeSelect === 'year' || typeSelect === 'users' ? query() : null;
   };
 
   return (
     <>
-      <div className={styles.dropdown} style={selectStyle}>
-        <button onClick={handleShowDroplist}>{value || buttonText}</button>
+      <div
+        className={
+          (typeSelect === 'year' && selectStyle) ||
+          (typeSelect === 'users' && selectStyle) ||
+          (typeSelect === 'month' && selectStyle)
+        }
+      >
+        <button className={buttonStyle} onClick={handleShowDroplist}>
+          {(typeSelect === 'year' && valueYear) ||
+            (typeSelect === 'users' && valueUser) ||
+            (typeSelect === 'month' && valueMonth) ||
+            buttonText}
+        </button>
         <ul
-          style={listStyle}
           className={
-            isOverlay && type === /* 'list' */typeSelect
-              ? `${styles.list} ${styles.list_visible}`
-              : `${styles.list}`
+            isOverlay && type === typeSelect
+              ? `${listStyle} ${styles.list_visible}`
+              : `${listStyle}`
           }
         >
-          <li style={ optionStyle } value="2023" onClick={handleChange}>
-            2023
-          </li>
-          <li style={ optionStyle } value="2024" onClick={handleChange}>
-            2024
-          </li>
-          <li style={ optionStyle } value="2025" onClick={handleChange}>
-            2025
-          </li>
-          <li style={ optionStyle } value="2026" onClick={handleChange}>
-            2026
-          </li>
+          {list.map((item, index) => (
+            <li
+              key={
+                (typeSelect === 'year' ? index : null) ||
+                (typeSelect === 'month' ? index : null) ||
+                (typeSelect === 'users' ? item.id : null)
+              }
+              className={optionStyle}
+              value={
+                (typeSelect === 'users' && item.fullName) ||
+                (typeSelect === 'year' && item)/*  ||
+                (typeSelect === 'month' && item) */
+              }
+              id={
+                typeSelect === 'users' ? item.fullName : '' ||
+              (typeSelect === 'month' ? item : '')
+              }
+              onClick={handleChange}
+            >
+              {(typeSelect === 'year' ? item : '') ||
+                (typeSelect === 'month' ? item : '') ||
+                (typeSelect === 'users' ? item.fullName : '')}
+            </li>
+          ))}
         </ul>
       </div>
       <div
         onClick={() => dispatch(hiddenOverlay())}
         className={
-          isOverlay && type === /* 'list' */typeSelect
+          isOverlay && type === typeSelect
             ? `${styles.overlay} ${styles.overlay_active}`
             : `${styles.overlay}`
         }
-      ></div>
+       />
     </>
   );
 }

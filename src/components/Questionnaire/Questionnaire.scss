@@ -1,3 +1,5 @@
+@import '../../styles/vars';
+
 .Questionnaire {
   display: flex;
   gap: 37px;
@@ -28,6 +30,8 @@
   line-height: 19.36px;
   border: none;
   margin-right: 36px;
+  cursor: pointer;
+  background-color: $light-gray-base-color;
 }
 
 .Questionnaire-header__back-button::before {

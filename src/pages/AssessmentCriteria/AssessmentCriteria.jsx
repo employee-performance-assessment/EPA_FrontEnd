@@ -1,13 +1,17 @@
+/* eslint-disable no-alert */
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useFormValidation } from '../../hooks/useFormValidation';
 import CriterionInput from '../../components/CriterionInput/CriterionInput.jsx';
 import Switch from '../../components/Switch/Switch.jsx';
-import { getAllCriterion } from '../../utils/mainApi.js';
-import SideMenu from '../../components/SideMenu/SideMenu.jsx';
-import initialCriteria from './CardEmployee.json';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import {
-  labelSupervisor,
-  labelAllTeam,
+  getQuestionnaireLast,
+  updateQuestionnaireLast,
+  getDefaultCriterion,
+  resetToDefaultQuestionnaire
+} from '../../utils/mainApi.js';
+import {
   labelDefaultCriteriaGrade,
   labelEditCriteriaGrade
 } from '../../constants/constantLabelCheckbox.js';
@@ -15,96 +19,119 @@ import './AssessmentCriteria.scss';
 
 function AssessmentCriteria() {
   const [criteria, setCriteria] = useState([]);
-  const [isCheckedСounting, setIsCheckedСounting] = useState(false);
   const [isCheckedEditing, setIsCheckedEditing] = useState(false);
   const [isOpenPopup, setIsOpenPopup] = useState(false);
-  const { token } = JSON.parse(localStorage.getItem('token'));
+  const { personalArea } = ENDPOINT_ROUTES;
+  const { values, handleChange, setValues } = useFormValidation();
   const navigate = useNavigate();
+  const dataForServer = { criterias: [] };
 
   useEffect(() => {
     if (isCheckedEditing) {
-      getAllCriterion(token)
+      setCriteria([]);
+      setValues({});
+      getQuestionnaireLast()
         .then((res) => {
-          // dispatch(setAllCriterion(res));
-          setCriteria(res);
+          setCriteria(res.criterias);
         })
-        // eslint-disable-next-line no-alert
         .catch((err) => alert(err));
     } else {
-      setCriteria(initialCriteria);
+      getDefaultCriterion()
+        .then((res) => {
+          setCriteria(res);
+        })
+        .catch((err) => alert(err));
     }
   }, [isCheckedEditing]);
 
   function handleDelete(criterion) {
+    delete values[criterion.id];
     setCriteria(criteria.filter((item) => item.id !== criterion.id));
+  }
+
+  function calculateId() {
+    if (criteria[0]) {
+      return criteria[criteria.length - 1].id + 1;
+    } else {
+      return 1;
+    }
   }
 
   function addNewCriteria(evt) {
     evt.preventDefault();
-    const newCriteria = { name: '' };
-    // addCriterion(token);
+    const newCriteria = { id: calculateId(), name: '' };
     setCriteria([...criteria, newCriteria]);
+  }
+
+  function createDataForServer() {
+    if (Object.values(values)[0]) {
+      Object.values(values).forEach((item) => {
+        const itemObject = { name: '' };
+        itemObject.name = item;
+        dataForServer.criterias.push(itemObject);
+      })
+    }
+    return dataForServer;
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    setIsOpenPopup(!isOpenPopup);
+    if (isCheckedEditing) {
+      updateQuestionnaireLast(createDataForServer())
+        .then(() => {
+          setIsOpenPopup(!isOpenPopup);
+          dataForServer.criterias = [];
+        })
+        .catch((err) => alert(err));
+    } else {
+      resetToDefaultQuestionnaire()
+        .then(() => {
+          setIsOpenPopup(!isOpenPopup);
+        })
+        .catch((err) => alert(err));
+    }
   }
 
   function handleNavigate() {
     setIsOpenPopup(!isOpenPopup);
-    navigate('/admin-person-area');
+    navigate(personalArea);
   }
 
   return (
-    <div className="assessment-criteria">
-      <div className="assessment-criteria__sidemenu">
-        <SideMenu />
+    <section className="assessment-criteria">
+      <div className="assessment-criteria__header">
+        <Link to="/admin-person-area" className="assessment-criteria__link">
+          <div className="assessment-criteria__link-arroy" />
+          Вернуться
+        </Link>
       </div>
-      <div className="assessment-criteria__container">
-        <div className="assessment-criteria__header">
-          <Link to={'/admin-person-area'} className="assessment-criteria__link">
-            <div className="assessment-criteria__link-arroy" />
-            {'Вернуться'}
-          </Link>
-          <div className="assessment-criteria__checkbox-container">
-            <h2 className="assessment-criteria__header-title">{'Для подсчета рейтинга учитывать оценки:'}</h2>
-            <div className="assessment-criteria__checkbox">
-              <Switch
-                labelLeft={labelSupervisor}
-                labelRight={labelAllTeam}
-                isChecked={isCheckedСounting}
-                setIsChecked={setIsCheckedСounting}
-                shadow={'none'}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="assessment-criteria__container-criterion">
-          <h2 className="assessment-criteria__title">{'Критерии для оценки сотрудников'}</h2>
-          <Switch
-            labelLeft={labelDefaultCriteriaGrade}
-            labelRight={labelEditCriteriaGrade}
-            isChecked={isCheckedEditing}
-            setIsChecked={setIsCheckedEditing}
-          />
-          <form className="assessment-criteria__form">
-            {criteria.map((criterion) => (
-              <CriterionInput
-                key={criterion.id}
-                criterion={criterion}
-                name={criterion.name}
-                editing={isCheckedEditing}
-                handleDelete={handleDelete}
-              />
-            ))}
-            {isCheckedEditing &&
-              <button className="assessment-criteria__add-button" onClick={(evt) => addNewCriteria(evt)}>
-                <span>+ </span>Добавить критерий
-              </button>}
-            <button className="assessment-criteria__submit" onClick={(evt) => handleSubmit(evt)}>Подтвердить</button>
-          </form >
-        </div >
+      <div className="assessment-criteria__container-criterion">
+        <h2 className="assessment-criteria__title">Критерии для оценки сотрудников</h2>
+        <Switch
+          labelLeft={labelDefaultCriteriaGrade}
+          labelRight={labelEditCriteriaGrade}
+          isChecked={isCheckedEditing}
+          setIsChecked={setIsCheckedEditing}
+        />
+        <form className="assessment-criteria__form">
+          {criteria.map((criterion) => (
+            <CriterionInput
+              key={criterion.id}
+              criterion={criterion}
+              text={criterion.name}
+              editing={isCheckedEditing}
+              handleDelete={handleDelete}
+              values={values}
+              handleChange={handleChange}
+              id={criterion.id}
+            />
+          ))}
+          {isCheckedEditing &&
+            <button className="assessment-criteria__add-button" onClick={(evt) => addNewCriteria(evt)}>
+              <span>+ </span>Добавить критерий
+            </button>}
+          <button className="assessment-criteria__submit" onClick={(evt) => handleSubmit(evt)}>Подтвердить</button>
+        </form >
       </div>
       {
         isOpenPopup &&
@@ -126,7 +153,7 @@ function AssessmentCriteria() {
           </div>
         </div>
       }
-    </div >
+    </section >
   );
 }
 

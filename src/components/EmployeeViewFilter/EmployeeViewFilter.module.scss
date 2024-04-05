@@ -25,11 +25,17 @@
   padding: 0 10px;
 }
 
+.employeeViewFilter__inputs {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
 .employeeViewFilter__label {
   height: 54px;
   background: $white-base-color;
   border-radius: 40px;
-  border: solid 2px $dark-grey-base-color;
+  border: solid 2px $grey-base-color;
   padding: 14px 26px;
   font-size: 20px;
   font-weight: $fw-medium;
@@ -55,7 +61,7 @@
   height: 54px;
   background: $white-base-color;
   border-radius: 40px;
-  border: solid 2px $dark-grey-base-color;
+  border: solid 2px $purple-base-color;
   padding: 14px 26px;
   font-size: 20px;
   font-weight: $fw-medium;
@@ -89,7 +95,7 @@
   width: 330px;
   height: 54px;
   border-radius: 20px;
-  border: solid 2px $dark-grey-base-color;
+  border: solid 2px $grey-base-color;
   padding: 14px 24px;
   font-size: 20px;
   font-weight: $fw-medium;
@@ -98,6 +104,7 @@
 
   &_task {
     visibility: hidden;
+    width: 0;
   }
 
   &_marks {

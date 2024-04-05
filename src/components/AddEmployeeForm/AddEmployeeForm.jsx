@@ -14,10 +14,13 @@ import {
   isValidPassword,
 } from '../../utils/validationConstants.js';
 import './AddEmployeeForm.scss';
+import InfoPopup from '../InfoPopup/InfoPopup.jsx';
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
 
   const { values, handleChange, errors, setErrors, isValid, setIsValid } =
     useFormValidation({
@@ -58,14 +61,19 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
       (user) => {
         handleAddNewEmployee(user);
       }
-    );
+    ).catch((error) => {
+      handleError(error)
+    })
   };
 
   const handleCloseAddEmployeePopup = () => {
     setIsAddEmployeePopupOpen(false);
+    closePopup()
   };
 
   return (
+    <>
+    {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup}/>}
     <section className="add-employee-form">
       <UserForm
         formTitle="Регистрация сотрудника"
@@ -91,7 +99,9 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
           inputClassName="user-form__input"
           placeholder="Имя Фамилия"
           spanClassName="user-form__span"
-          required={true}
+          minLength={1}
+          maxLenght={255}
+          required
         />
         <Input
           type="text"
@@ -111,7 +121,9 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
           inputClassName="user-form__input"
           placeholder="Должность"
           spanClassName="user-form__span"
-          required={true}
+          minLength={1}
+          maxLenght={255}
+          required
         />
         <Input
           type="email"
@@ -131,7 +143,9 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
           inputClassName="user-form__input"
           placeholder="Email"
           spanClassName="user-form__span"
-          required={true}
+          minLength={3}
+          maxLenght={255}
+          required
         />
         <>
           <div className="user-form__password-field">
@@ -153,7 +167,9 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
               placeholder="Пароль авторизации"
               spanClassName="user-form__span"
               error={errors.password}
-              required={true}
+              minLength={8}
+              maxLenght={14}
+              required
             />
             <button
               type="button"
@@ -190,7 +206,9 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
               autoComplete="off"
               spanClassName="user-form__span"
               error={errors.confirmPassword}
-              required={true}
+              minLength={8}
+              maxLenght={14}
+              required
             />
             <button
               type="button"
@@ -208,6 +226,8 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
         </>
       </UserForm>
     </section>
+    </>
+
   );
 }
 
