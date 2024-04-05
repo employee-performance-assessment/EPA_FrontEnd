@@ -1,3 +1,5 @@
+@import '../../styles/vars';
+
 .AssessmentBlock {
   display: flex;
   width: 100%;
@@ -8,6 +10,7 @@
 .AssessmentBlock__container {
   width: 1163px;
 }
+
 .AssessmentBlock__header {
   height: 120px;
   padding: 0 24px;
@@ -17,21 +20,26 @@
   align-items: center;
   border-radius: 40px;
   background-color: rgba(245, 245, 245, 1);
+  box-shadow: 0px 4px 20px rgba(166, 166, 166, 0.4);
 }
+
 .header__wrapper {
   display: flex;
   align-items: center;
 }
+
 .header__icon {
   padding: 8px;
   margin-right: 12px;
 }
+
 .header__text {
   font-size: 26px;
   font-weight: 500;
   line-height: 31.47px;
   text-align: left;
 }
+
 .header__button {
   width: 307px;
   height: 56px;
@@ -60,7 +68,7 @@
 .AssessmentBlock__filters {
   display: flex;
   height: 64px;
-  padding: 0 24px;
+  padding: 60px 0 0 10px;
   box-sizing: content-box;
   justify-content: space-between;
   align-items: center;
@@ -89,30 +97,35 @@
 .filters__items:last-child {
   margin-right: 0px;
 }
+
 .filters__button {
-  background-color: rgba(218, 214, 214, 1);
+  background-color: $white-base-color;
+  border: 2px solid $grey-base-color;
   height: 52px;
   width: 137px;
-  border: none;
   margin-right: 8px;
 }
+
 .filters__button_done {
   width: 247px;
   height: 52px;
 }
 
 .filters__button_active{
-  background-color: rgba(197, 182, 241, 1);
-
+  background-color: $purple-base-color;
+  border: none;
 }
+
 .filters__search {
   width: 330px;
   height: 52px;
   padding-left: 24px;
 }
+
 .filters__calendar {
   width: 216px;
   height: 52px;
+  pointer-events: none;
 }
 
 .filters__calendar::after {
@@ -122,6 +135,7 @@
   background-image: url(../../images/calendar_icon.svg);
   background-repeat: no-repeat;
 }
+
 .AssessmentBlock__immage {
   margin: 80px auto 40px;
   display: flex;
@@ -136,6 +150,11 @@
   font-weight: 400;
   line-height: 26.63px;
 }
+
 .AssessmentBlock__list {
+  display: flex;
+  flex-direction: column;
   margin-top: 24px;
+  gap: 24px;
+  padding: 0;
 }

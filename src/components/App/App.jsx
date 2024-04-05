@@ -87,8 +87,9 @@ function App() {
           <Route path={analytics} element={<AnalyticsPage />} />
           <Route path={criteria} element={<AssessmentCriteria />} />
           <Route path={`${cardsEmployees}/:id`} element={<EmployeeViewPage />} />
-          <Route path={ratingCards} element={<EmployeeRatingPage />} />
-          <Route path={taskCards} element={<TaskViewPage />} />
+          {/* <Route path={ratingCards} element={<EmployeeRatingPage />} /> */}
+          <Route path={`${ratingCards}/:id`} element={<EmployeeRatingPage />} />
+          <Route path={`${taskCards}/:id`} element={<TaskViewPage />} />
           <Route path={estimate} element={<AssessmentBlock />} />
           <Route path={`${questionnaire}/:id`} element={<Questionnaire />} />
           {/* <Route path={questionnaire} element={<Questionnaire />} /> */}

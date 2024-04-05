@@ -8,9 +8,8 @@ import EmployeeViewBlock from '../../components/EmployeeViewBlock/EmployeeViewBl
 import { useFormValidation } from '../../hooks/useFormValidation';
 import { setViewMarks } from '../../store/slices/viewMarksSlices.js';
 import styles from './EmployeeViewPage.module.scss';
-import initTasks from './tasks.json';
 import initMarks from './marks.json';
-import { getCurrentUser, getTasks } from '../../utils/mainApi.js';
+import { getCurrentUser, getAllUserTasksByAdmin } from '../../utils/mainApi.js';
 
 function EmployeeViewPage() {
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
@@ -18,32 +17,48 @@ function EmployeeViewPage() {
   const { values, handleChange, setValues } = useFormValidation();
   const [viewTask, setViewTask] = useState(viewMarks);
   const [marks, setMarks] = useState([]);
-  const [tasks, setTasks] = useState([]);
+  const [allTasks, setAllTasks] = useState([]);
+  const [currentTasks, setCurrentTasks] = useState([]);
   const [version, setVersion] = useState(0);
-  const params = useParams();
-  const employeeId = params.id;
+  const { id: employeeId } = useParams();
 
   const [employee, setEmployee] = useState({});
+  const [tasksStatus, setTasksStatus] = useState('NEW');
 
   useEffect(() => {
-    getCurrentUser(employeeId)
-      .then((res) => {
-        setEmployee(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [setEmployee]);
+    if (employeeId) {
+      getCurrentUser(employeeId)
+        .then((res) => {
+          setEmployee(res);
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-alert
+          alert(err);
+        });
+    }
+  }, [employeeId]);
 
   useEffect(() => {
-    getTasks()
-      .then((res) => {
-        setTasks(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    if (employeeId) {
+      getAllUserTasksByAdmin(employeeId)
+        .then((res) => {
+          setAllTasks(res);
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-alert
+          alert(err);
+        });
+    }
+  }, [employeeId]);
+
+
+  useEffect(() => {
+    if (!allTasks.length) return;
+
+    setCurrentTasks(
+      allTasks.filter((task) => tasksStatus ? task.status === tasksStatus : true)
+    );
+  }, [tasksStatus, allTasks]);
 
   useEffect(() => {
     if (values.stars) {
@@ -54,12 +69,6 @@ function EmployeeViewPage() {
       );
     } else {
       setMarks(initMarks);
-    }
-
-    if (values.filterTask) {
-      setTasks(initTasks.filter((i) => i.status === values.filterTask));
-    } else {
-      setTasks(initTasks.filter((i) => i.status === 'new'));
     }
   }, [values]);
 
@@ -90,8 +99,9 @@ function EmployeeViewPage() {
         handleChange={handleChange}
         showAllCards={showAllCards}
         version={version}
+        setTasksStatus={setTasksStatus}
       />
-      <EmployeeViewBlock tasks={tasks} marks={marks} />
+      <EmployeeViewBlock tasks={currentTasks} marks={marks} employeeId={employeeId}/>
     </section>
   );
 }
