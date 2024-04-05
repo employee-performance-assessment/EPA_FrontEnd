@@ -9,6 +9,9 @@ import {
   ADMIN_RESET_TO_DEFAULT_QUESTIONNAIRE,
   ADMIN_PROJECTS,
   ADMIN_TASK,
+  EVALUATIONS,
+  ADMIN_EVALUATIONS,
+  RECO,
 } from '../constants/constantAPI.js';
 
 function getToken() {
@@ -96,8 +99,22 @@ export const setNewProjects = (nameProject) => {
 export const deleteProject = (id) =>
   makeAuthenticatedRequest(`${ADMIN_PROJECTS}/${id}`, 'DELETE');
 
-export const getAllUserTasksByAdmin = (employeeId) => makeAuthenticatedRequest(`${ADMIN_TASK}/find?employeeId=${employeeId}`, 'GET');
+export const getAllUserTasksByAdmin = (employeeId) =>
+  makeAuthenticatedRequest(
+    `${ADMIN_TASK}/find?employeeId=${employeeId}`,
+    'GET'
+  );
 
-export const getTaskDetailsByAdmin = (taskId) => makeAuthenticatedRequest(`${ADMIN_TASK}/${taskId}`, 'GET');
+export const getTaskDetailsByAdmin = (taskId) =>
+  makeAuthenticatedRequest(`${ADMIN_TASK}/${taskId}`, 'GET');
 
-export const deleteTaskByAdmin = (taskId) => makeAuthenticatedRequest(`${ADMIN_TASK}/${taskId}`, 'DELETE');
+export const deleteTaskByAdmin = (taskId) =>
+  makeAuthenticatedRequest(`${ADMIN_TASK}/${taskId}`, 'DELETE');
+
+export const getColleaguesEvaluation = () =>
+  makeAuthenticatedRequest(EVALUATIONS, 'GET');
+
+export const getAdminEvaluation = () =>
+  makeAuthenticatedRequest(ADMIN_EVALUATIONS, 'GET');
+
+export const getReco = (id) => makeAuthenticatedRequest(`${RECO}/${id}`, 'GET');
