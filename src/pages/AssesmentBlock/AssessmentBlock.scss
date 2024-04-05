@@ -43,26 +43,30 @@
 .header__button {
   width: 307px;
   height: 56px;
-  background-color: rgba(245, 240, 122, 1);
+  background: $yellow-base-color;
   border-radius: 20px;
   border: none;
   font-size: 20px;
   font-weight: 600;
   line-height: 24.2px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+  cursor: pointer;
+
+  &:hover {
+    background: $wrapper;
+  }
+
+  &:active {
+    background: $purple-base-color;
+  }
 }
 
-.header__button_empty {
-  width: 307px;
-  height: 56px;
-  border-radius: 20px;
-  border: none;
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 24.2px;
-  text-align: center;
+.header__button_inactive {
   background-color: rgba(218, 214, 214, 1);
-  pointer-events:none;
+  pointer-events: none;
 }
 
 .AssessmentBlock__filters {
@@ -136,9 +140,14 @@
   background-repeat: no-repeat;
 }
 
-.AssessmentBlock__immage {
+.AssessmentBlock__image {
   margin: 80px auto 40px;
-  display: flex;
+  background-image: url(../../images/assessmentBlock_image.svg);
+  width: 320px;
+  height: 332px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .AssessmentBlock__span {
