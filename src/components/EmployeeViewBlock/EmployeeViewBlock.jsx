@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import EmployeeViewCard from '../EmployeeViewCard/EmployeeViewCard';
 import styles from './EmployeeViewBlock.module.scss';
 
-function EmployeeViewBlock({ tasks, marks }) {
+function EmployeeViewBlock({ tasks, marks, employeeId }) {
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
   return (
     <ul className={styles.employeeViewBlock__list}>
@@ -14,6 +14,7 @@ function EmployeeViewBlock({ tasks, marks }) {
             month={card.month}
             date={card.date}
             rating={card.rating}
+            employeeId={employeeId}
           />
         )) :
         tasks.map((task) => (

@@ -36,7 +36,7 @@ function EmployeeViewPage() {
           alert(err);
         });
     }
-  }, [setEmployee]);
+  }, [employeeId]);
 
   useEffect(() => {
     if (employeeId) {
@@ -101,7 +101,7 @@ function EmployeeViewPage() {
         version={version}
         setTasksStatus={setTasksStatus}
       />
-      <EmployeeViewBlock tasks={currentTasks} marks={marks} />
+      <EmployeeViewBlock tasks={currentTasks} marks={marks} employeeId={employeeId}/>
     </section>
   );
 }
