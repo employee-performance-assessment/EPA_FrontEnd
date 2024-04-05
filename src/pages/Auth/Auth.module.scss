@@ -98,10 +98,11 @@
         transition: opacity 0.5s;
 
         &:hover {
-          opacity: 0.5;
+          background: $wrapper;
         }
 
         &:disabled {
+          background: rgb(197, 182, 241);
           opacity: 0.8;
         }
       }

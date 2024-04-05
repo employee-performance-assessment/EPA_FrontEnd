@@ -1,45 +1,46 @@
+import { useNavigate } from 'react-router-dom';
 import SetStars from '../SetStars/SetStars';
 import styles from './EmployeeViewCard.module.scss';
+import { formatDate, calculatePercentage } from '../../utils/utils';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
-function EmployeeViewCard({
-  type,
-  title,
-  deadline,
-  penaltyPoints,
-  points,
-  rating,
-  date,
-  handleClickMarks,
-  handleClickTasks,
-}) {
+function EmployeeViewCard({ type, task, rating, date }) {
   const options = {
     day: 'numeric',
     month: 'numeric',
     year: '2-digit',
   };
-
+  const navigate = useNavigate();
   const currentDate = new Date(date);
   const month = currentDate.toLocaleString('default', { month: 'long' });
   const day = currentDate.toLocaleString('default', options);
 
+  const lateFine = calculatePercentage(task.penaltyPoints,task.basicPoints);
+
   return type === 'tasks' ? (
-    <div
-      className={styles.employeeViewCard__container}
-      onClick={handleClickTasks}
-    >
+    <div className={styles.employeeViewCard__container}>
       <div className={styles.employeeViewCard__text}>
-        <h2 className={styles.employeeViewCard__title}>{title}</h2>
-        <p className={styles.employeeViewCard__deadline}>Дедлайн: {deadline}</p>
-        <p className={styles.employeeViewCard__terms}>{`Бонус/Штраф «${penaltyPoints}» баллов за день`}</p>
+        <h2 className={styles.employeeViewCard__title}>{task.name}</h2>
+        <p className={styles.employeeViewCard__deadline}>
+          Дедлайн: {formatDate(task.deadLine)}
+        </p>
+        <p
+          className={styles.employeeViewCard__terms}
+        >{`-${lateFine}% за просрочку дедлайна`}</p>
       </div>
-      <div className={styles.employeeViewCard__rating}>{points} баллов</div>
-      <div className={styles.employeeViewCard__button}>Подробнее</div>
+      <div className={styles.employeeViewCard__rating}>
+        {task.basicPoints} баллов
+      </div>
+      <button
+        type="button"
+        className={styles.employeeViewCard__button}
+        onClick={() => navigate(`${ENDPOINT_ROUTES.taskCards}/${task.id}`)}
+      >
+        Подробнее
+      </button>
     </div>
   ) : (
-    <div
-      className={styles.employeeViewCard__container}
-      onClick={handleClickMarks}
-    >
+    <div className={styles.employeeViewCard__container}>
       <div className={styles.employeeViewCard__text}>
         <h2 className={styles.employeeViewCard__title}>Оценки за {month}</h2>
         <p className={styles.employeeViewCard__date}>
@@ -53,7 +54,13 @@ function EmployeeViewCard({
           starIn={styles.cardRating__star_in}
         />
       </div>
-      <div className={styles.employeeViewCard__button}>Подробнее</div>
+      <button
+        type="button"
+        className={styles.employeeViewCard__button}
+        onClick={() => navigate(ENDPOINT_ROUTES.ratingCards)}
+      >
+        Подробнее
+      </button>
     </div>
   );
 }

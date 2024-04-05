@@ -17,11 +17,13 @@ function EmployeeViewPage() {
   const { values, handleChange, setValues } = useFormValidation();
   const [viewTask, setViewTask] = useState(viewMarks);
   const [marks, setMarks] = useState([]);
-  const [tasks, setTasks] = useState([]);
+  const [allTasks, setAllTasks] = useState([]);
+  const [currentTasks, setCurrentTasks] = useState([]);
   const [version, setVersion] = useState(0);
   const { id: employeeId } = useParams();
 
   const [employee, setEmployee] = useState({});
+  const [tasksStatus, setTasksStatus] = useState('NEW');
 
   useEffect(() => {
     if (employeeId) {
@@ -40,7 +42,7 @@ function EmployeeViewPage() {
     if (employeeId) {
       getAllUserTasksByAdmin(employeeId)
         .then((res) => {
-          setTasks(res);
+          setAllTasks(res);
         })
         .catch((err) => {
           // eslint-disable-next-line no-alert
@@ -48,6 +50,15 @@ function EmployeeViewPage() {
         });
     }
   }, [employeeId]);
+
+
+  useEffect(() => {
+    if (!allTasks.length) return;
+
+    setCurrentTasks(
+      allTasks.filter((task) => tasksStatus ? task.status === tasksStatus : true)
+    );
+  }, [tasksStatus, allTasks]);
 
   useEffect(() => {
     if (values.stars) {
@@ -59,12 +70,6 @@ function EmployeeViewPage() {
     } else {
       setMarks(initMarks);
     }
-
-    // if (values.filterTask) {
-    //   setTasks(initTasks.filter((i) => i.status === values.filterTask));
-    // } else {
-    //   setTasks(initTasks.filter((i) => i.status === 'NEW'));
-    // }
   }, [values]);
 
   useEffect(() => {
@@ -94,8 +99,9 @@ function EmployeeViewPage() {
         handleChange={handleChange}
         showAllCards={showAllCards}
         version={version}
+        setTasksStatus={setTasksStatus}
       />
-      <EmployeeViewBlock tasks={tasks} marks={marks} />
+      <EmployeeViewBlock tasks={currentTasks} marks={marks} />
     </section>
   );
 }

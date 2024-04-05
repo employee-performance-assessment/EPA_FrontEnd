@@ -40,10 +40,11 @@ function Auth() {
         });
       })
       .catch((err) =>
-        // eslint-disable-next-line no-alert
         err === 'Error: 500'
-          ? alert('Не корректный логин или пароль')
-          : alert(err));
+          // eslint-disable-next-line no-alert
+          ? alert('Ошибка на стороне сервера, попробуйте еще раз')
+          // eslint-disable-next-line no-alert
+          : alert('Неверный логин или пароль'));
   };
 
   const togglePassword = () => {
@@ -90,7 +91,7 @@ function Auth() {
               autoComplete="off"
               required
             />
-            <span>{errors.password}</span>
+            <span>{errors.password} </span>
             <span
               className={styles.eye}
               onClick={togglePassword}

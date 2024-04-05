@@ -4,10 +4,11 @@
   width: 1163px;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 42px;
   border-radius: 28px;
   background-color: $light-gray-base-color;
   margin: 24px 20px 60px 0;
+  height: 876px;
 }
 
 .taskViewPage__header {
@@ -21,7 +22,7 @@
   display: flex;
   gap: 24px;
   align-items: center;
-  padding: 52px 0 38px 66.75px;
+  padding: 44px 0 38px 66.75px;
 }
 
 .taskViewPage__back {
@@ -48,7 +49,8 @@
   color: $black-base-color;
 }
 
-.taskViewPage__number {
+.taskViewPage__id {
+  width: 88px;
   font-size: 16px;
   font-weight: $fw-medium;
   line-height: 19.36px;
@@ -59,7 +61,7 @@
   display: flex;
   gap: 5.88px;
   align-items: center;
-  margin-left: 96px;
+  margin-left: 123px;
   padding: 0;
   font-size: 16px;
   font-weight: $fw-medium;
@@ -96,14 +98,17 @@
 .taskViewPage__block {
   position: relative;
   display: flex;
-  gap: 46px;
+  gap: 45px;
+  max-height: 658px;
 }
 
 .taskViewPage__tasks {
+  box-sizing: border-box;
   width: 673px;
-  padding-right: 46px;
+  padding-right: 47px;
   padding-left: 60px;
   border-right: solid 1px $black-base-color;
+  overflow-y: hidden;
 
   h3 {
     font-size: 26px;
@@ -122,12 +127,18 @@
   }
 }
 
+.taskViewPage__info {
+  position: relative;
+  height: 658px;
+}
+
 .taskViewPage__props {
-  width: 359px;
+  width: 400px;
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 24px;
+  margin-top: 20px;
 
   li {
     display: grid;
@@ -143,12 +154,13 @@
 
 .taskViewPage__value {
   font-weight: $fw-medium;
+  padding-left: 19px;
 }
 
 .taskViewPage__delete {
   position: absolute;
-  bottom: 64px;
-  right: 85px;
+  bottom: 0px;
+  right: 0px;
   width: 240px;
   height: 56px;
   border-radius: 20px;
