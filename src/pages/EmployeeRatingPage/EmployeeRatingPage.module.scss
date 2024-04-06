@@ -71,7 +71,7 @@
 
 .employeeRatingPage__star_out {
   position: relative;
-  z-index: 1;
+  z-index: $zindex-10;
   background-image: url(../../images/star-employee-rating-page-empty.svg);
   width: 40px;
   height: 39px;
@@ -87,7 +87,7 @@
 .employeeRatingPage__star_in {
   background-image: url(../../images/star-employee-rating-page-full.svg);
   position: absolute;
-  z-index: 2;
+  z-index: $zindex-20;
   overflow: hidden;
   width: 0;
   width: 40px;

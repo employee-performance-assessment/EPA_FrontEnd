@@ -6,31 +6,31 @@ function PopupEditTask({ setIsOpenPopup, title }) {
   const arrInput = [
     {
       nameInput: 'Название задачи',
-      type: 'container-input-popup-edit-task__button_empty',
+      className: 'container-input-popup-edit-task__button_empty',
     },
     {
       nameInput: 'Проект к которому относится задача',
-      type: 'container-input-popup-edit-task__button_arrow-down',
+      className: 'container-input-popup-edit-task__button_arrow-down',
     },
     {
       nameInput: 'Дедлайн',
-      type: 'container-input-popup-edit-task__button_calendar',
+      className: 'container-input-popup-edit-task__button_calendar',
     },
     {
       nameInput: 'Исполнитель',
-      type: 'container-input-popup-edit-task__button_arrow-down',
+      className: 'container-input-popup-edit-task__button_arrow-down',
     },
     {
       nameInput: 'Баллы за задачу',
-      type: 'container-input-popup-edit-task__button_empty',
+      className: 'container-input-popup-edit-task__button_empty',
     },
     {
       nameInput: 'Бонусные и штрафные баллы',
-      type: 'container-input-popup-edit-task__button_empty',
+      className: 'container-input-popup-edit-task__button_empty',
     },
     {
       nameInput: 'Описание задачи',
-      type: 'container-input-popup-edit-task__button_big',
+      className: 'container-input-popup-edit-task__button_big',
     },
   ];
 
