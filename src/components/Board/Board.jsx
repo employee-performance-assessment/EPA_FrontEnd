@@ -74,36 +74,37 @@ function Board({
   const sortCard = (a, b) => a - b;
 
   // функция установки цвета поля баллов
-  function getCollor(bord, deadline) {
+  function getCollor(board, deadline) {
     if (deadline - new Date().getTime() <= 0) {
       return 'boardDnD__card-points_red';
     }
-    if (bord === 'К выполнению') {
+    if (board === 'К выполнению') {
       return 'boardDnD__card-points_grey';
     }
-    if (bord === 'В работе') {
+    if (board === 'В работе') {
       return 'boardDnD__card-points_light-green';
     }
-    if (bord === 'На ревью') {
+    if (board === 'На ревью') {
       return 'boardDnD__card-points_violet';
     }
-    if (bord === 'Выполнено') {
+    if (board === 'Выполнено') {
       return 'boardDnD__card-points_green';
     }
     return '';
   }
 
   function settingDateDeadline(unixTime) {
-    const date = new Date(unixTime); // Преобразуем Unix-время в миллисекунды
+    const date = new Date(unixTime);
     return date.toLocaleDateString();
   }
 
   return (
     <div className="boardDnD">
       <h1 className="boardDnD__title">{board.title}</h1>
+      {/* сначала сортируем карты по порядку (order), затем перебираем массив для отрисовки карточек */}
       {board.items.sort(sortCard).map((card) => (
         <div
-          className="boardDnD__card" // сначала сортируем карты по порядку (order), затем перебираем массив для отрисовки карточек
+          className="boardDnD__card"
           draggable
           onDragEnd={(e) => dragEndHandler(e)}
           onDragLeave={(e) => dragEndHandler(e)}
