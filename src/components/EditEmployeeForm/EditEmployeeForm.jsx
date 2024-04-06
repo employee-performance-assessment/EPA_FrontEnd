@@ -144,6 +144,8 @@ function EditEmployeeForm({
             inputClassName="user-form__input"
             placeholder="Имя Фамилия"
             spanClassName="user-form__span"
+            minLength={1}
+            maxLength={255}
             required
           />
           <Input
@@ -164,6 +166,8 @@ function EditEmployeeForm({
             inputClassName="user-form__input"
             placeholder="Должность"
             spanClassName="user-form__span"
+            minLength={1}
+            maxLength={255}
             required
           />
           <Input
@@ -184,6 +188,8 @@ function EditEmployeeForm({
             inputClassName="user-form__input"
             placeholder="Email"
             spanClassName="user-form__span"
+            minLength={3}
+            maxLength={255}
             required
           />
           <>
@@ -192,7 +198,7 @@ function EditEmployeeForm({
                 type={showPassword ? 'text' : 'password'}
                 name="password"
                 inputClassName="user-form__input"
-                value={values.password}
+                value={values.password || ""}
                 onChange={(e) =>
                   handleChangeInput(
                     e,
@@ -206,6 +212,8 @@ function EditEmployeeForm({
                 placeholder="Пароль авторизации"
                 spanClassName="user-form__span"
                 error={errors.password}
+                minLength={8}
+                maxLength={14}
                 required={false}
               />
               <button
@@ -228,7 +236,7 @@ function EditEmployeeForm({
                 type={showConfirmPassword ? 'text' : 'password'}
                 name="confirmPassword"
                 inputClassName="user-form__input"
-                value={values.confirmPassword}
+                value={values.confirmPassword || ""}
                 onChange={(e) =>
                   handleChangeInput(
                     e,
@@ -243,6 +251,8 @@ function EditEmployeeForm({
                 autoComplete="off"
                 spanClassName="user-form__span"
                 error={errors.confirmPassword}
+                minLength={8}
+                maxLength={14}
                 required={false}
               />
               <button

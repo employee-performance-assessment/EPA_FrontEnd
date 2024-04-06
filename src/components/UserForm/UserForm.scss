@@ -94,6 +94,19 @@
   cursor: pointer;
 }
 
+.user-form__submit-button:hover {
+  background: $wrapper;
+}
+
+.user-form__submit-button:active {
+  background: $yellow-base-color;
+}
+
+.user-form__submit-button:disabled {
+  background: $grey-base-color;
+}
+
+
 .user-form__close-icon-block {
   border: none;
   position: absolute;
@@ -104,6 +117,9 @@
   top: 41px;
   right: 80px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .user-form__closeIcon {

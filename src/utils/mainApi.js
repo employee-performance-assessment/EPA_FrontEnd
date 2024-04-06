@@ -1,12 +1,18 @@
 import checkResponse from './checkResponse.js';
 import {
   ADMIN_CRITERIA,
+  ADMIN_QUESTIONNAIRE_LAST,
   USERS,
   ADMIN_USERS,
   ADMIN_CRITERIA_DEFAULT,
   PROJECTS,
+  ADMIN_RESET_TO_DEFAULT_QUESTIONNAIRE,
   ADMIN_PROJECTS,
   ADMIN_TASK,
+  ADMIN_QUESTIONNAIRE_PASSED,
+  EVALUATIONS,
+  ADMIN_EVALUATIONS,
+  RECO,
 } from '../constants/constantAPI.js';
 
 function getToken() {
@@ -54,8 +60,20 @@ export const addNewUser = ({ fullName, position, email, password }) =>
 export const getAllCriterion = () =>
   makeAuthenticatedRequest(ADMIN_CRITERIA, 'GET');
 
-export const addCriterion = (criterionName) =>
-  makeAuthenticatedRequest(ADMIN_CRITERIA, 'POST', { name: criterionName });
+export const getQuestionnaireLast = () =>
+  makeAuthenticatedRequest(ADMIN_QUESTIONNAIRE_LAST, 'GET');
+
+export const updateQuestionnaireLast = (questionnaire) =>
+  makeAuthenticatedRequest(ADMIN_QUESTIONNAIRE_LAST, 'PATCH', questionnaire);
+
+export const resetToDefaultQuestionnaire = () =>
+  makeAuthenticatedRequest(ADMIN_RESET_TO_DEFAULT_QUESTIONNAIRE, 'PATCH');
+
+export const checkActivitySurveyButton = () =>
+  makeAuthenticatedRequest(ADMIN_QUESTIONNAIRE_PASSED, 'GET');
+
+export const doQuestionnaireSurvey = () =>
+  makeAuthenticatedRequest(ADMIN_QUESTIONNAIRE_LAST, 'PUT');
 
 export const getDefaultCriterion = () =>
   makeAuthenticatedRequest(ADMIN_CRITERIA_DEFAULT, 'GET');
@@ -88,4 +106,22 @@ export const setNewProjects = (nameProject) => {
 export const deleteProject = (id) =>
   makeAuthenticatedRequest(`${ADMIN_PROJECTS}/${id}`, 'DELETE');
 
-export const getTasks = () => makeAuthenticatedRequest(ADMIN_TASK, 'GET');
+export const getAllUserTasksByAdmin = (employeeId) =>
+  makeAuthenticatedRequest(
+    `${ADMIN_TASK}/find?employeeId=${employeeId}`,
+    'GET'
+  );
+
+export const getTaskDetailsByAdmin = (taskId) =>
+  makeAuthenticatedRequest(`${ADMIN_TASK}/${taskId}`, 'GET');
+
+export const deleteTaskByAdmin = (taskId) =>
+  makeAuthenticatedRequest(`${ADMIN_TASK}/${taskId}`, 'DELETE');
+
+export const getColleaguesEvaluation = () =>
+  makeAuthenticatedRequest(EVALUATIONS, 'GET');
+
+export const getAdminEvaluation = () =>
+  makeAuthenticatedRequest(ADMIN_EVALUATIONS, 'GET');
+
+export const getReco = (id) => makeAuthenticatedRequest(`${RECO}/${id}`, 'GET');

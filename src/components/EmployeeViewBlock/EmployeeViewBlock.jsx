@@ -1,22 +1,9 @@
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import EmployeeViewCard from '../EmployeeViewCard/EmployeeViewCard.jsx';
-import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
+import EmployeeViewCard from '../EmployeeViewCard/EmployeeViewCard';
 import styles from './EmployeeViewBlock.module.scss';
 
-function EmployeeViewBlock({ tasks, marks }) {
+function EmployeeViewBlock({ tasks, marks, employeeId }) {
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
-  const { ratingCards, taskCards } = ENDPOINT_ROUTES;
-  const navigate = useNavigate();
-
-  function handleClickMarks() {
-    navigate(ratingCards);
-  }
-
-  function handleClickTasks() {
-    navigate(taskCards);
-  }
-
   return (
     <ul className={styles.employeeViewBlock__list}>
       {viewMarks ?
@@ -27,18 +14,14 @@ function EmployeeViewBlock({ tasks, marks }) {
             month={card.month}
             date={card.date}
             rating={card.rating}
-            handleClickMarks={handleClickMarks}
+            employeeId={employeeId}
           />
         )) :
-        tasks.map((card) => (
+        tasks.map((task) => (
           <EmployeeViewCard
             type="tasks"
-            key={card.id}
-            title={card.title}
-            deadline={card.deadline}
-            terms={card.terms}
-            points={card.points}
-            handleClickTasks={handleClickTasks}
+            key={task.id}
+            task={task}
           />
         ))
       }

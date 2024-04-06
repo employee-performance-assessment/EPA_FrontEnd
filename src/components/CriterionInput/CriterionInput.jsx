@@ -1,21 +1,27 @@
-import { useFormValidation } from '../../hooks/useFormValidation';
 import './CriterionInput.scss';
 
-function CriterionInput({ criterion, name, editing, handleDelete }) {
-  const { values, handleChange } = useFormValidation();
+function CriterionInput({
+  criterion,
+  text,
+  editing,
+  handleDelete,
+  values,
+  handleChange,
+  id
+}) {
 
-  if (!values.name) {
-    values.name = name;
+  if (!values[String(id)]) {
+    values[String(id)] = text;
   }
 
   return (
     <div className="criterion">
       <input
         className={`criterion__input ${editing && 'criterion__input_active'}`}
-        name="name"
+        name={String(id)}
         type="text"
         placeholder="Введите новый критерий оценки"
-        value={values.name || ''}
+        value={values[String(id)] || ''}
         disabled={!editing}
         onChange={handleChange}
       />

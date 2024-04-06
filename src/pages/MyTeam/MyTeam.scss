@@ -56,6 +56,15 @@
   justify-content: center;
   max-height: 56px;
   cursor: pointer;
+  transition: 0.5s ease;
+}
+
+.my-team__button:hover{
+  background: $wrapper;
+}
+
+.my-team__button:active{
+  background: $purple-base-color;
 }
 
 .my-team__content_type_empty {

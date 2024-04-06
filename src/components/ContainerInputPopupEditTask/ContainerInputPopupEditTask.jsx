@@ -3,7 +3,7 @@ import './ContainerInputPopupEditTask.scss';
 export default function ContainerInputPopupEditTask({ item }) {
 
   function handleClickClose() {
-    console.log('edit input');
+    // console.log('edit input');
   }
 
   function bigInputSet() {

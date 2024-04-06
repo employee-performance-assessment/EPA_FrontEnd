@@ -1,68 +1,88 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ENDPOINT_ROUTES } from '../../../constants/constantsEndpointRoute';
 import './MenuAdmin.scss';
 
 function MenuAdmin() {
-  const { personalArea, myTeam, board, analytics, estimate } = ENDPOINT_ROUTES;
+  const {
+    personalArea,
+    criteria,
+    myTeam,
+    cardsEmployees,
+    taskCards,
+    ratingCards,
+    board,
+    estimate,
+    questionnaire,
+    analytics
+  } = ENDPOINT_ROUTES;
 
   const { pathname } = useLocation();
+  const [isPersonalArea, setIsPersonalArea] = useState(false);
   const [isMyTeam, setIsMyTeam] = useState(false);
+  const [isBoard, setIsBoard] = useState(false);
+  const [isEstimate, setIsEstimate] = useState(false);
+  const [isAnalytics, setIsAnalytics] = useState(false);
 
   useEffect(() => {
-    if (
-      pathname.includes('cards-employees') ||
-      pathname.includes('task-cards') ||
-      pathname.includes('rating-cards')
-    ) {
-      setIsMyTeam(true);
-    } else {
-      setIsMyTeam(false);
-    }
+    pathname.includes(personalArea) ||
+      pathname.includes(criteria) ?
+      setIsPersonalArea(true) : setIsPersonalArea(false);
+
+    pathname.includes(myTeam) ||
+      pathname.includes(cardsEmployees) ||
+      pathname.includes(taskCards) ||
+      pathname.includes(ratingCards) ?
+      setIsMyTeam(true) : setIsMyTeam(false);
+
+    pathname.includes(board) ?
+      setIsBoard(true) : setIsBoard(false);
+
+    pathname.includes(estimate) ||
+    pathname.includes(questionnaire) ?
+      setIsEstimate(true) : setIsEstimate(false);
+
+    pathname.includes(analytics) ?
+      setIsAnalytics(true) : setIsAnalytics(false);
   }, [pathname]);
 
   return (
     <ul className="side-menu__list">
-      <NavLink
+      <Link
         to={personalArea}
-        className={({ isActive }) =>
-          `side-menu__item side-menu__item-personal ${isActive && 'side-menu__item_active side-menu__item-personal_active'}`
-        }
+        className={`side-menu__item side-menu__item-personal
+        ${isPersonalArea && 'side-menu__item_active side-menu__item-personal_active'}`}
       >
         <p className="side-menu__text">Личный кабинет</p>
-      </NavLink>
-      <NavLink
+      </Link>
+      <Link
         to={myTeam}
-        className={({ isActive }) =>
-          `side-menu__item side-menu__item-my-team ${isActive && 'side-menu__item_active side-menu__item-my-team_active'} ${isMyTeam && 'side-menu__item_active side-menu__item-my-team_active'}`
-        }
+        className={`side-menu__item side-menu__item-my-team
+        ${isMyTeam && 'side-menu__item_active side-menu__item-my-team_active'}`}
       >
         <p className="side-menu__text">Моя команда</p>
-      </NavLink>
-      <NavLink
+      </Link>
+      <Link
         to={board}
-        className={({ isActive }) =>
-          `side-menu__item side-menu__item-kanban ${isActive && 'side-menu__item_active side-menu__item-kanban_active'}`
-        }
+        className={`side-menu__item side-menu__item-kanban
+        ${isBoard && 'side-menu__item_active side-menu__item-kanban_active'}`}
       >
         <p className="side-menu__text">Канбан доска</p>
-      </NavLink>
-      <NavLink
+      </Link>
+      <Link
         to={estimate}
-        className={({ isActive }) =>
-          `side-menu__item side-menu__item-asses ${isActive && 'side-menu__item_active side-menu__item-asses_active'}`
-        }
+        className={`side-menu__item side-menu__item-asses
+        ${isEstimate && 'side-menu__item_active side-menu__item-asses_active'}`}
       >
         <p className="side-menu__text">Оценка ЭС</p>
-      </NavLink>
-      <NavLink
+      </Link>
+      <Link
         to={analytics}
-        className={({ isActive }) =>
-          `side-menu__item side-menu__item-analytics ${isActive && 'side-menu__item_active side-menu__item-analytics_active'}`
-        }
+        className={`side-menu__item side-menu__item-analytics
+        ${isAnalytics && 'side-menu__item_active side-menu__item-analytics_active'}`}
       >
         <p className="side-menu__text"> Аналитика</p>
-      </NavLink>
+      </Link>
     </ul>
   );
 }

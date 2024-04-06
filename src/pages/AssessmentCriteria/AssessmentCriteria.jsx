@@ -1,10 +1,16 @@
 /* eslint-disable no-alert */
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useFormValidation } from '../../hooks/useFormValidation';
 import CriterionInput from '../../components/CriterionInput/CriterionInput.jsx';
 import Switch from '../../components/Switch/Switch.jsx';
-import { getAllCriterion, getDefaultCriterion } from '../../utils/mainApi.js';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
+import {
+  getQuestionnaireLast,
+  updateQuestionnaireLast,
+  getDefaultCriterion,
+  resetToDefaultQuestionnaire
+} from '../../utils/mainApi.js';
 import {
   labelDefaultCriteriaGrade,
   labelEditCriteriaGrade
@@ -16,13 +22,17 @@ function AssessmentCriteria() {
   const [isCheckedEditing, setIsCheckedEditing] = useState(false);
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const { personalArea } = ENDPOINT_ROUTES;
+  const { values, handleChange, setValues } = useFormValidation();
   const navigate = useNavigate();
+  const dataForServer = { criterias: [] };
 
   useEffect(() => {
     if (isCheckedEditing) {
-      getAllCriterion()
+      setCriteria([]);
+      setValues({});
+      getQuestionnaireLast()
         .then((res) => {
-          setCriteria(res);
+          setCriteria(res.criterias);
         })
         .catch((err) => alert(err));
     } else {
@@ -35,24 +45,51 @@ function AssessmentCriteria() {
   }, [isCheckedEditing]);
 
   function handleDelete(criterion) {
+    delete values[criterion.id];
     setCriteria(criteria.filter((item) => item.id !== criterion.id));
   }
 
   function calculateId() {
     if (criteria[0]) {
-      return String(criteria[criteria.length - 1].id + 1);
+      return criteria[criteria.length - 1].id + 1;
+    } else {
+      return 1;
     }
   }
 
   function addNewCriteria(evt) {
     evt.preventDefault();
-    const newCriteria = { name: '', id: calculateId() };
+    const newCriteria = { id: calculateId(), name: '' };
     setCriteria([...criteria, newCriteria]);
+  }
+
+  function createDataForServer() {
+    if (Object.values(values)[0]) {
+      Object.values(values).forEach((item) => {
+        const itemObject = { name: '' };
+        itemObject.name = item;
+        dataForServer.criterias.push(itemObject);
+      })
+    }
+    return dataForServer;
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    setIsOpenPopup(!isOpenPopup);
+    if (isCheckedEditing) {
+      updateQuestionnaireLast(createDataForServer())
+        .then(() => {
+          setIsOpenPopup(!isOpenPopup);
+          dataForServer.criterias = [];
+        })
+        .catch((err) => alert(err));
+    } else {
+      resetToDefaultQuestionnaire()
+        .then(() => {
+          setIsOpenPopup(!isOpenPopup);
+        })
+        .catch((err) => alert(err));
+    }
   }
 
   function handleNavigate() {
@@ -81,9 +118,12 @@ function AssessmentCriteria() {
             <CriterionInput
               key={criterion.id}
               criterion={criterion}
-              name={criterion.name}
+              text={criterion.name}
               editing={isCheckedEditing}
               handleDelete={handleDelete}
+              values={values}
+              handleChange={handleChange}
+              id={criterion.id}
             />
           ))}
           {isCheckedEditing &&

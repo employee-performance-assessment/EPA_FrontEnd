@@ -84,7 +84,7 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
         <Input
           type="text"
           name="name"
-          value={values.name}
+          value={values.name || ""}
           onChange={(e) =>
             handleChangeInput(
               e,
@@ -99,12 +99,14 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
           inputClassName="user-form__input"
           placeholder="Имя Фамилия"
           spanClassName="user-form__span"
+          minLength={1}
+          maxLenght={255}
           required
         />
         <Input
           type="text"
           name="position"
-          value={values.position}
+          value={values.position || ""}
           onChange={(e) =>
             handleChangeInput(
               e,
@@ -119,12 +121,14 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
           inputClassName="user-form__input"
           placeholder="Должность"
           spanClassName="user-form__span"
+          minLength={1}
+          maxLenght={255}
           required
         />
         <Input
           type="email"
           name="email"
-          value={values.email}
+          value={values.email || ""}
           onChange={(e) =>
             handleChangeInput(
               e,
@@ -139,6 +143,8 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
           inputClassName="user-form__input"
           placeholder="Email"
           spanClassName="user-form__span"
+          minLength={3}
+          maxLenght={255}
           required
         />
         <>
@@ -147,7 +153,7 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
               type={showPassword ? 'text' : 'password'}
               name="password"
               inputClassName="user-form__input"
-              value={values.password}
+              value={values.password || ""}
               onChange={(e) =>
                 handleChangeInput(
                   e,
@@ -161,6 +167,8 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
               placeholder="Пароль авторизации"
               spanClassName="user-form__span"
               error={errors.password}
+              minLength={8}
+              maxLenght={14}
               required
             />
             <button
@@ -183,7 +191,7 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
               type={showConfirmPassword ? 'text' : 'password'}
               name="confirmPassword"
               inputClassName="user-form__input"
-              value={values.confirmPassword}
+              value={values.confirmPassword || ""}
               onChange={(e) =>
                 handleChangeInput(
                   e,
@@ -198,6 +206,8 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
               autoComplete="off"
               spanClassName="user-form__span"
               error={errors.confirmPassword}
+              minLength={8}
+              maxLenght={14}
               required
             />
             <button

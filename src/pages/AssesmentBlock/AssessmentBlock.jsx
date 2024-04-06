@@ -1,71 +1,76 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './AssessmentBlock.scss';
 import icon from '../../images/assessmentBlock_icon.svg';
-import image from '../../images/assessmentBlock_image.svg';
 import AssessmentCard from '../../components/AssessmentCard/AssessmentCard.jsx';
+import { checkActivitySurveyButton, doQuestionnaireSurvey, getAllUsers } from '../../utils/mainApi.js';
 
 function AssessmentBlock() {
-  // по клику на кнопку осуществится переход к анкете
-  // const [data, setData] = useState({});
+  const [users, setUsers] = useState([]);
   const [filterState, setFilterState] = useState('asses');
-  const data = [
-    {
-      id: 0,
-      name: 'Creola Katherine Johnson',
-      job: 'mathematician',
-    },
-    {
-      id: 1,
-      name: 'Mario José Molina-Pasquel Henríquez',
-      job: 'chemist',
-    },
-    {
-      id: 2,
-      name: 'Mohammad Abdus Salam',
-      job: 'physicist',
-    },
-    {
-      id: 3,
-      name: 'Percy Lavon Julian',
-      job: 'chemist',
-    },
-    {
-      id: 4,
-      name: 'Subrahmanyan Chandrasekhar',
-      job: 'astrophysicist',
-    },
-  ];
-  const data2 = [
-    {
-      id: 0,
-      name: 'Creola',
-      job: 'chemist',
-    },
-    {
-      id: 1,
-      name: 'Mario José Molina-Pasquel Henríquez',
-      job: 'chemist',
-    },
-    {
-      id: 2,
-      name: 'Mohammad Abdus Salam',
-      job: 'physicist',
-    },
-    {
-      id: 3,
-      name: 'Percy Lavon Julian',
-      job: 'chemist',
-    },
-    {
-      id: 4,
-      name: 'Subrahmanyan Chandrasekhar',
-      job: 'astrophysicist',
-    },
-  ];
-  function handleClick() {}
+  const [isActivitySurveyButton, setIsActivitySurveyButton] = useState(false);
+
+  useEffect(() => {
+    checkActivitySurveyButton()
+      .then((res) => {
+        setIsActivitySurveyButton(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    getAllUsers()
+    .then((res) => {
+      setUsers(res);
+    })
+    .catch((err) => console.log(err));
+  }, []);
+
   function handleChangeFilterState(e) {
     setFilterState(e.target.id);
   }
+
+  function handleClickSurveyButton() {
+    doQuestionnaireSurvey()
+      .then(() => {
+        getAllUsers()
+        .then((res) => {
+          setUsers(res);
+        })
+        .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+      // ответ
+      // {
+      //   "id": 7,
+      //   "author": {
+      //     "id": 19,
+      //     "fullName": "вап",
+      //     "nickName": null,
+      //     "city": null,
+      //     "email": "qw@qw.qw",
+      //     "birthday": null,
+      //     "role": "ROLE_ADMIN",
+      //     "position": null,
+      //     "department": null
+      //   },
+      //   "created": "2024-04-05",
+      //   "criterias": [
+      //     {
+      //       "id": 5,
+      //       "name": " Расставляет приоритеты",
+      //       "isDefault": true
+      //     },
+      //     {
+      //       "id": 20,
+      //       "name": "Любит рыбалку",
+      //       "isDefault": false
+      //     }
+      //   ],
+      //   "status": "SHARED"
+      // }
+  }
+
+  console.log(users);
 
   return (
     <section className="AssessmentBlock">
@@ -79,21 +84,33 @@ function AssessmentBlock() {
             />
             <h3 className="header__text">Оценка эффективности сотрудников</h3>
           </div>
-          <button className={data.length === 0 ? 'header__button' : 'header__button_empty'} onClick={() => handleClick()}>
+          <button
+            className={`header__button ${!isActivitySurveyButton && 'header__button_inactive'}`}
+            onClick={handleClickSurveyButton}
+            disabled={!isActivitySurveyButton}
+          >
             Провести анкетирование
           </button>
         </div>
         <div className="AssessmentBlock__filters">
           <h3 className="filters__text">Фильтры:</h3>
           <button
-            className="filters__items filters__button"
+            className={
+              filterState !== 'asses'
+                ? 'filters__items filters__button'
+                : 'filters__items filters__button filters__button_active'
+            }
             id="asses"
             onClick={(e) => handleChangeFilterState(e)}
           >
             Оценить
           </button>
           <button
-            className="filters__items filters__button filters__button_done"
+            className={
+              filterState === 'asses'
+                ? 'filters__items filters__button filters__button_done'
+                : 'filters__items filters__button filters__button_done filters__button_active'
+            }
             id="asses_done"
             onClick={(e) => handleChangeFilterState(e)}
           >
@@ -106,29 +123,24 @@ function AssessmentBlock() {
           />
           <form className="filters__items filters__calendar">Календарь</form>
         </div>
-        {data.length === 0 ? (
+        {users.length === 0 ? (
           <>
-            <img
-              src={image}
-              alt="картинка фона с изображением человека"
-              className="AssessmentBlock__immage"
-            />
+            <div className="AssessmentBlock__image" />
             <span className="AssessmentBlock__span">
               <p className="">Список пока что пуст.</p>Новые карточки для оценки
               сотрудников можете добавить с помощью кнопки «Провести
               анкетирование»
             </span>
           </>
-        ) : filterState === 'asses' ? (
+        ) : filterState === 'asses' && (
           <ul className="AssessmentBlock__list">
-            {data.map((i) => (
-              <AssessmentCard key={i.id} name={i.name} job={i.job} />
-            ))}
-          </ul>
-        ) : (
-          <ul className="AssessmentBlock__list">
-            {data2.map((i) => (
-              <AssessmentCard key={i.id} name={i.name} job={i.job} />
+            {users.map((user) => (
+              <AssessmentCard
+                key={user.id}
+                fullName={user.fullName}
+                position={user.position}
+                status="asses"
+              />
             ))}
           </ul>
         )}

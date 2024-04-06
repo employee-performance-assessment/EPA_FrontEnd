@@ -1,6 +1,5 @@
-$main-color: black;
-$font-weight: 500;
-$font-size: 18px;
+@import '../../styles/vars';
+@import '../../styles/mixins';
 
 .side-menu {
   padding: 56px 37px 60px 20px;
@@ -8,38 +7,39 @@ $font-size: 18px;
   width: 257px;
   display: flex;
   flex-direction: column;
-}
 
-.sideMenu__button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 20px;
-  background-color: #f5f5f5;
-  padding: 20px 0px;
-  font-size: 20px;
-  font-weight: 600;
-  width: 180px;
-}
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 20px;
+    background-color: $light-gray-base-color;
+    padding: 20px 0px;
+    @include text($font-size: 20px, $font-weight: 600);
+    width: 180px;
+  }
 
-.sideMenu__button_text {
-  margin-left: 8px;
-}
+  &__button-icon {
+    background-image: url(../../images/exit_button.svg);
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-position: center;
+    background-size: contain;
+  }
 
-.sideMenu__button:hover {
-  cursor: pointer;
-  background: linear-gradient(
-    90deg,
-    #c5b6f1 10.6%,
-    #c6b7f2 37.1%,
-    #f6f17b 71.6%,
-    #f5f07a 89.1%,
-    #f5f07a 100%
-  );
-}
+  &__button_text {
+    margin-left: 8px;
+  }
 
-.side-menu__logo {
-  height: 56px;
-  border: 0;
+  &__button:hover {
+    cursor: pointer;
+    background: $wrapper;
+  }
+
+  &__logo {
+    height: 56px;
+    border: 0;
+  }
 }
