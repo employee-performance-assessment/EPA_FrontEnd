@@ -126,10 +126,16 @@ export const deleteTaskByAdmin = (taskId) =>
 export const getColleaguesEvaluation = () =>
   makeAuthenticatedRequest(EVALUATIONS, 'GET');
 
-export const getAdminEvaluation = () =>
-  makeAuthenticatedRequest(ADMIN_EVALUATIONS, 'GET');
-
 export const getEvaluationsList = () =>
   makeAuthenticatedRequest(EVALUATIONS_LIST, 'GET');
+
+export const postEvaluationsList = (data) => {
+  const { questionnaireId, evaluatedId, questionnaireData } = data;
+  return makeAuthenticatedRequest(
+    `${ADMIN_EVALUATIONS}?questionnaireId=${questionnaireId}&evaluatedId=${evaluatedId}`,
+    'POST',
+    questionnaireData
+  );
+}
 
 export const getReco = (id) => makeAuthenticatedRequest(`${RECO}/${id}`, 'GET');

@@ -77,18 +77,23 @@
 }
 
 .Questionnaire-titles__text {
-  margin: 0 413px 0 60px;
+  margin: 0 400px 0 60px;
 }
 
 .Questionnaire-container {
   width: 795px;
   margin-left: 60px;
-  display: grid;
-  grid-template-columns: 420px 275px;
-  gap: 0 100px;
+  display: flex;
+  flex-direction: column;
 }
 
 .Questionnaire__criterion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Questionnaire__criterion-name {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -104,6 +109,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .Questionaire__text {
   font-size: 26px;
   font-weight: 500;
@@ -112,6 +118,7 @@
   display: block;
   margin: 40px 0 24px 60px;
 }
+
 .Questionnaire__input-text {
   width: 864px;
   height: 264px;
@@ -126,13 +133,16 @@
 .Questionnaire__input-text::placeholder {
   color: rgba(166, 166, 166, 1);
 }
+
 .Questionnaire__input-text:focus-visible {
   border: 2px solid rgba(197, 182, 241, 1);
 }
+
 .Questionnaire__input-text:focus-visible {
   border: 2px solid rgba(197, 182, 241, 1);
   outline: 0;
 }
+
 .Questionnaire__button {
   margin: 40px 0 152px 60px;
   width: 188px;
@@ -140,9 +150,23 @@
   top: 1691px;
   padding: 16px 40px;
   border-radius: 20px;
-  background-color: rgba(218, 214, 214, 1);
+  background: $grey-base-color;
   border: none;
   font-size: 20px;
   font-weight: 600;
   line-height: 24.2px;
+  pointer-events: none;
+
+  &:hover {
+    background: $wrapper;
+  }
+
+  &_active {
+    background: $yellow-base-color;
+    pointer-events: all;
+  }
+
+  &:active {
+    background: $purple-base-color;
+  }
 }

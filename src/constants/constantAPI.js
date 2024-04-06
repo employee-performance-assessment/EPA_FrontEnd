@@ -25,5 +25,5 @@ export const LOGIN = `${BASE_URL}/public/auth`;
 
 export const EVALUATIONS = `${BASE_URL}/user/evaluations`;
 export const EVALUATIONS_LIST = `${BASE_URL}/user/evaluations/assess-list`;
-export const ADMIN_EVALUATIONS = `${BASE_URL}/user/evaluations/admin`;
+export const ADMIN_EVALUATIONS = `${BASE_URL}/admin/evaluations`;
 export const RECO = `${BASE_URL}/user/recommendation`;
