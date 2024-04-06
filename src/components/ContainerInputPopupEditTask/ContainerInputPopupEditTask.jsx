@@ -7,7 +7,7 @@ export default function ContainerInputPopupEditTask({ item }) {
   }
 
   function bigInputSet() {
-    return item.type === 'container-input-popup-edit-task__button_big'
+    return item.className === 'container-input-popup-edit-task__button_big'
       ? 'container-input-popup-edit-task__input-container_big'
       : '';
   }
@@ -38,7 +38,7 @@ export default function ContainerInputPopupEditTask({ item }) {
 
       {item.type !== 'container-input-popup-edit-task__button_empty' && (
         <button
-          className={`container-input-popup-edit-task__button ${item.type}`}
+          className={`container-input-popup-edit-task__button ${item.className}`}
           aria-label={`редактировать поле ${item.nameInput}`}
           onClick={handleClickClose}
         />
