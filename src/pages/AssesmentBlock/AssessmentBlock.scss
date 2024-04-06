@@ -29,8 +29,13 @@
 }
 
 .header__icon {
-  padding: 8px;
-  margin-right: 12px;
+  margin: 0 12px 0 10px;
+  background-image: url(../../images/assessmentBlock_icon.svg);
+  min-width: 52px;
+  height: 52px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .header__text {

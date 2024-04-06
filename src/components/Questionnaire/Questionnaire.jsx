@@ -9,25 +9,18 @@ export default function Questionnaire() {
   const { estimate } = ENDPOINT_ROUTES;
   const [criteria, setCriteria] = useState([]);
   const [user, setUser] = useState({ fullName: '', position: '' });
-
-  const params = useParams();
-  const employeeId = params.id;
-
-  useEffect(() => {
-    if (JSON.parse(localStorage.getItem('questionnaire'))) {
-      const questionnaireId = JSON.parse(localStorage.getItem('questionnaire')).id;
-      getQuestionnaire(questionnaireId)
-        .then((res) => {
-          console.log(res);
-          setCriteria(res);
-        })
-        .catch((err) => console.log(err));
-    }
-  }, []);
-
   const navigate = useNavigate();
 
+  const params = useParams();
+  const { monthName, questionnaireId, employeeId } = params;
+
   useEffect(() => {
+    getQuestionnaire(questionnaireId)
+      .then((res) => {
+        setCriteria(res.criterias);
+      })
+      .catch((err) => console.log(err));
+
     getCurrentUser(employeeId)
       .then((res) => {
         setUser({
@@ -38,10 +31,6 @@ export default function Questionnaire() {
       .catch((err) => console.log(err));
   }, []);
 
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-  //   console.log(e.target);
-  // }
 
   function GoBack() {
     navigate(estimate);
@@ -49,22 +38,11 @@ export default function Questionnaire() {
 
   function handleChange() {
     // console.log(e.target.value);
-    // console.log(e.target.name);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    const values = [];
-    const input = '';
 
-    // eslint-disable-next-line no-restricted-syntax
-    // for (const input of inputs) {
-    //   values.push(Number(input.value));
-    // }
-    console.log(values);
-    console.log(input);
-    console.log('user:', user);
-    return values;
   }
 
   return (
@@ -78,9 +56,8 @@ export default function Questionnaire() {
           >
             Назад к списку
           </button>
-          {/* здесть прокинуть пропсом период оценки */}
           <span className="Questionnaire-header__data">
-            Оценка работы за март
+            Оценка работы за {monthName}
           </span>
           <div className="Questionnaire-header__icon" />
           <span className="Questionnaire-header__underscribe">{user.fullName}</span>

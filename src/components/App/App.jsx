@@ -90,7 +90,7 @@ function App() {
           <Route path={`${ratingCards}/:id`} element={<EmployeeRatingPage />} />
           <Route path={`${taskCards}/:id`} element={<TaskViewPage />} />
           <Route path={estimate} element={<AssessmentBlock />} />
-          <Route path={`${questionnaire}/:id`} element={<Questionnaire />} />
+          <Route path={`${questionnaire}/:monthName/:questionnaireId/:employeeId`} element={<Questionnaire />} />
         </Route>
         <Route path="" element={<ProtectedRoute />}>
           <Route path={anyPage} element={<NotFound />} />

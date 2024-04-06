@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
-import './AssessmentBlock.scss';
-import icon from '../../images/assessmentBlock_icon.svg';
 import AssessmentCard from '../../components/AssessmentCard/AssessmentCard.jsx';
-import { checkActivitySurveyButton, doQuestionnaireSurvey, getAllUsers } from '../../utils/mainApi.js';
+import {
+  checkActivitySurveyButton,
+  doQuestionnaireSurvey,
+  getEvaluationsList
+} from '../../utils/mainApi.js';
+import './AssessmentBlock.scss';
 
 function AssessmentBlock() {
   const [users, setUsers] = useState([]);
@@ -15,14 +18,12 @@ function AssessmentBlock() {
         setIsActivitySurveyButton(res);
       })
       .catch((err) => console.log(err));
-  }, []);
 
-  useEffect(() => {
-    getAllUsers()
-    .then((res) => {
-      setUsers(res);
-    })
-    .catch((err) => console.log(err));
+    getEvaluationsList()
+      .then((res) => {
+        setUsers(res);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   function handleChangeFilterState(e) {
@@ -31,44 +32,14 @@ function AssessmentBlock() {
 
   function handleClickSurveyButton() {
     doQuestionnaireSurvey()
-      .then((res) => {
-        localStorage.setItem('questionnaire', JSON.stringify(res));
-        getAllUsers()
-        .then((res) => {
-          setUsers(res);
-        })
-        .catch((err) => console.log(err));
+      .then(() => {
+        getEvaluationsList()
+          .then((res) => {
+            setUsers(res);
+          })
+          .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
-      // ответ
-      // {
-      //   "id": 7,
-      //   "author": {
-      //     "id": 19,
-      //     "fullName": "вап",
-      //     "nickName": null,
-      //     "city": null,
-      //     "email": "qw@qw.qw",
-      //     "birthday": null,
-      //     "role": "ROLE_ADMIN",
-      //     "position": null,
-      //     "department": null
-      //   },
-      //   "created": "2024-04-05",
-      //   "criterias": [
-      //     {
-      //       "id": 5,
-      //       "name": " Расставляет приоритеты",
-      //       "isDefault": true
-      //     },
-      //     {
-      //       "id": 20,
-      //       "name": "Любит рыбалку",
-      //       "isDefault": false
-      //     }
-      //   ],
-      //   "status": "SHARED"
-      // }
   }
 
   return (
@@ -76,11 +47,7 @@ function AssessmentBlock() {
       <div className="AssessmentBlock__container">
         <div className="AssessmentBlock__header">
           <div className="header__wrapper">
-            <img
-              src={icon}
-              alt="иконка изображает лист бумаги и ручку"
-              className="header__icon"
-            />
+            <div className="header__icon" />
             <h3 className="header__text">Оценка эффективности сотрудников</h3>
           </div>
           <button
@@ -129,10 +96,12 @@ function AssessmentBlock() {
           <ul className="AssessmentBlock__list">
             {users.map((user) => (
               <AssessmentCard
-                key={user.id}
-                user={user}
-                fullName={user.fullName}
-                position={user.position}
+                key={user.employeeId}
+                fullName={user.employeeFullName}
+                position={user.employeePosition}
+                date={user.questionnaireCreated}
+                questionnaireId={user.questionnaireId}
+                employeeId={user.employeeId}
                 status="asses"
               />
             ))}

@@ -14,6 +14,7 @@ import {
   ADMIN_EVALUATIONS,
   RECO,
   USER_QUESTIONNAIRE,
+  EVALUATIONS_LIST,
 } from '../constants/constantAPI.js';
 
 function getToken() {
@@ -127,5 +128,8 @@ export const getColleaguesEvaluation = () =>
 
 export const getAdminEvaluation = () =>
   makeAuthenticatedRequest(ADMIN_EVALUATIONS, 'GET');
+
+export const getEvaluationsList = () =>
+  makeAuthenticatedRequest(EVALUATIONS_LIST, 'GET');
 
 export const getReco = (id) => makeAuthenticatedRequest(`${RECO}/${id}`, 'GET');
