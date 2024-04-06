@@ -1,10 +1,8 @@
 import './ContainerInputPopupEditTask.scss';
 
-// import { useState, useEffect } from 'react';
-
 export default function ContainerInputPopupEditTask({ item }) {
   function handleClickClose() {
-    console.log('edit input');
+    // console.log('edit input');
   }
 
   function setBigInput() {
