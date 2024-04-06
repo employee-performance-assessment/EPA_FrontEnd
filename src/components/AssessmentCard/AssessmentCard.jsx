@@ -24,7 +24,7 @@ function AssessmentCard({ user, fullName, position, status }) {
         </p>
       </div>
       <div className={status}>
-        {status === 'asses' ? 'Оценить' : 'Отправлено'}
+        {status === 'isAppreciated' ? 'Оценить' : 'Отправлено'}
       </div>
     </div>
   );

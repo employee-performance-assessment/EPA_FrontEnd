@@ -7,9 +7,7 @@ import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 import { useFormValidation } from '../../hooks/useFormValidation.js';
 import { register } from '../../utils/auth.js';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
-import {
-  isValidPassword,
-} from '../../utils/validationConstants.js';
+import { isValidPassword } from '../../utils/validationConstants.js';
 
 import styles from './Register.module.scss';
 import registerImg from '../../images/register-img.png';
@@ -20,7 +18,8 @@ import logo from '../../images/logo.svg';
 function Register() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { errors, values, isValid, handleChange, setIsValid } = useFormValidation({});
+  const { errors, values, isValid, handleChange, setIsValid } =
+    useFormValidation({});
   const dispatch = useDispatch();
   const { login } = ENDPOINT_ROUTES;
   const [errorPassword, setErrorPassword] = useState(null);
@@ -58,38 +57,36 @@ function Register() {
 
   useEffect(() => {
     const hasError = isValidPassword(values.password);
-    if (!hasError) {
+    if (!hasError && values.password) {
       setIsValid(false);
-      setErrorPassword('Допускается латинский алфавит и минимум одна заглавная буква');
+      setErrorPassword(
+        'Допускается латинский алфавит и минимум одна заглавная буква'
+      );
     } else {
-      setErrorPassword(null)
+      setErrorPassword(null);
     }
   }, [values.password]);
 
   useEffect(() => {
     if (values.name && values.name.trim().length === 0) {
-      setIsValid(false)
-      setErrorName('Пароль не может состоять из пробелов');
+      setIsValid(false);
+      setErrorName('Поле не может состоять из пробелов');
+    } else {
+      setErrorName(null);
     }
-    }, [values.name]);
+  }, [values.name]);
 
   useEffect(() => {
-    if (values.name && values.name.trim().length === 0) {
-      setIsValid(false)
-      setErrorName('Пароль не может состоять из пробелов');
+    if (
+      (values.email && values.email.split('')[0] === '.') ||
+      (values.email && values.email.split('')[0] === '-')
+    ) {
+      setIsValid(false);
+      setErrorEmail('Почта не может начинаться с точки или тире');
     } else {
-      setErrorName(null)
+      setErrorEmail(null);
     }
-    }, [values.name]);
-
-    useEffect(() => {
-      if (values.email && values.email.split('')[0] === '.') {
-        setIsValid(false)
-        setErrorEmail('Почта не может начинаться с точки');
-      } else {
-        setErrorEmail(null)
-      }
-      }, [values.email]);
+  }, [values.email]);
 
   return (
     <section className={styles.wrapper}>
@@ -143,7 +140,7 @@ function Register() {
               className={styles.eye}
               onClick={togglePassword}
               style={{ backgroundImage: `url(${isOpen ? eyeOpen : eyelash})` }}
-             />
+            />
           </label>
           <button type="submit" disabled={!isValid}>
             Подтвердить
