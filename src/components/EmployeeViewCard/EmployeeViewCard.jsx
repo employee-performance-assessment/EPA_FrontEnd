@@ -4,7 +4,7 @@ import styles from './EmployeeViewCard.module.scss';
 import { formatDate, calculatePercentage } from '../../utils/utils';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
-function EmployeeViewCard({ type, task, rating, date }) {
+function EmployeeViewCard({ type, task, rating, date, employeeId }) {
   const options = {
     day: 'numeric',
     month: 'numeric',
@@ -15,7 +15,7 @@ function EmployeeViewCard({ type, task, rating, date }) {
   const month = currentDate.toLocaleString('default', { month: 'long' });
   const day = currentDate.toLocaleString('default', options);
 
-  const lateFine = calculatePercentage(task.penaltyPoints,task.basicPoints);
+  const lateFine = calculatePercentage(task.penaltyPoints, task.basicPoints);
 
   return type === 'tasks' ? (
     <div className={styles.employeeViewCard__container}>
@@ -24,9 +24,9 @@ function EmployeeViewCard({ type, task, rating, date }) {
         <p className={styles.employeeViewCard__deadline}>
           Дедлайн: {formatDate(task.deadLine)}
         </p>
-        <p
-          className={styles.employeeViewCard__terms}
-        >{`-${lateFine}% за просрочку дедлайна`}</p>
+        <p className={styles.employeeViewCard__terms}>
+          {`-${lateFine}% за просрочку дедлайна`}
+        </p>
       </div>
       <div className={styles.employeeViewCard__rating}>
         {task.basicPoints} баллов
@@ -57,7 +57,7 @@ function EmployeeViewCard({ type, task, rating, date }) {
       <button
         type="button"
         className={styles.employeeViewCard__button}
-        onClick={() => navigate(ENDPOINT_ROUTES.ratingCards)}
+        onClick={() => navigate(`${ENDPOINT_ROUTES.ratingCards}/${employeeId}`)}
       >
         Подробнее
       </button>

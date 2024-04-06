@@ -13,6 +13,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: $zindex-10;
 }
 
 .popup-edit-task__title {

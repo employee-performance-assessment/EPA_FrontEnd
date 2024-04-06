@@ -40,7 +40,11 @@ export function PopupKanban({ setIsOpenPopup, projects, setProjects }) {
       <div className="popup-kanban__popup">
         <h1 className="popup-kanban__title">Редактировать</h1>
         {projects.map((item) => (
-          <ContainerInputPopupKanban item={item} key={item.name} />
+          <ContainerInputPopupKanban
+            item={item}
+            key={item.name}
+            setProjects={setProjects}
+          />
         ))}
         {isNewProject && (
           <div className="container-input-popup-kanban__input-conteiner">

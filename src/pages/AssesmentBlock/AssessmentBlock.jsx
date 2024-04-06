@@ -1,40 +1,76 @@
 import { useEffect, useState } from 'react';
 import './AssessmentBlock.scss';
 import icon from '../../images/assessmentBlock_icon.svg';
-import image from '../../images/assessmentBlock_image.svg';
 import AssessmentCard from '../../components/AssessmentCard/AssessmentCard.jsx';
-import { getAllUsers } from '../../utils/mainApi.js';
+import { checkActivitySurveyButton, doQuestionnaireSurvey, getAllUsers } from '../../utils/mainApi.js';
 
 function AssessmentBlock() {
   const [users, setUsers] = useState([]);
-  const [filterState, setFilterState] = useState('asses');
+  const [filterState, setFilterState] = useState('isAppreciated');
+  const [isActivitySurveyButton, setIsActivitySurveyButton] = useState(false);
+
   useEffect(() => {
-    getAllUsers()
+    checkActivitySurveyButton()
       .then((res) => {
-        setUsers(res);
+        setIsActivitySurveyButton(res);
       })
       .catch((err) => console.log(err));
   }, []);
-// осуществить добавление новой анкеты, жду от бека
-  function handleClick() {
-    console.log(users);
-  }
+
+  useEffect(() => {
+    getAllUsers()
+    .then((res) => {
+      setUsers(res);
+    })
+    .catch((err) => console.log(err));
+  }, []);
+
   function handleChangeFilterState(e) {
     setFilterState(e.target.id);
   }
-// временная заглушка, так как список анкет пока не готов на беке
-  const data = [
-    { id: 1, name: 'Василий', job: 'тестировщик' },
-    { id: 2, name: 'Петр', job: 'фронт' },
-    { id: 3, name: 'Мария', job: 'бэк' },
-    { id: 4, name: 'Иван', job: 'дизaйнер' },
-  ];
-  const data2 = [
-    { id: 4, name: 'Иван', job: 'дизaйнер' },
-    { id: 3, name: 'Мария', job: 'бэк' },
-    { id: 2, name: 'Петр', job: 'фронт' },
-    { id: 1, name: 'Василий', job: 'тестировщик' },
-  ];
+
+  function handleClickSurveyButton() {
+    doQuestionnaireSurvey()
+      .then(() => {
+        getAllUsers()
+        .then((res) => {
+          setUsers(res);
+        })
+        .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+      // ответ
+      // {
+      //   "id": 7,
+      //   "author": {
+      //     "id": 19,
+      //     "fullName": "вап",
+      //     "nickName": null,
+      //     "city": null,
+      //     "email": "qw@qw.qw",
+      //     "birthday": null,
+      //     "role": "ROLE_ADMIN",
+      //     "position": null,
+      //     "department": null
+      //   },
+      //   "created": "2024-04-05",
+      //   "criterias": [
+      //     {
+      //       "id": 5,
+      //       "name": " Расставляет приоритеты",
+      //       "isDefault": true
+      //     },
+      //     {
+      //       "id": 20,
+      //       "name": "Любит рыбалку",
+      //       "isDefault": false
+      //     }
+      //   ],
+      //   "status": "SHARED"
+      // }
+  }
+
+  console.log(users);
 
   return (
     <section className="AssessmentBlock">
@@ -49,10 +85,9 @@ function AssessmentBlock() {
             <h3 className="header__text">Оценка эффективности сотрудников</h3>
           </div>
           <button
-            className={
-              data.length === 0 ? 'header__button' : 'header__button_empty'
-            }
-            onClick={() => handleClick()}
+            className={`header__button ${!isActivitySurveyButton && 'header__button_inactive'}`}
+            onClick={handleClickSurveyButton}
+            disabled={!isActivitySurveyButton}
           >
             Провести анкетирование
           </button>
@@ -61,22 +96,22 @@ function AssessmentBlock() {
           <h3 className="filters__text">Фильтры:</h3>
           <button
             className={
-              filterState !== 'asses'
+              filterState !== 'isAppreciated'
                 ? 'filters__items filters__button'
                 : 'filters__items filters__button filters__button_active'
             }
-            id="asses"
+            id="isAppreciated"
             onClick={(e) => handleChangeFilterState(e)}
           >
             Оценить
           </button>
           <button
             className={
-              filterState === 'asses'
+              filterState === 'isAppreciated'
                 ? 'filters__items filters__button filters__button_done'
                 : 'filters__items filters__button filters__button_done filters__button_active'
             }
-            id="asses_done"
+            id="isAppreciated_done"
             onClick={(e) => handleChangeFilterState(e)}
           >
             Оценка поставлена
@@ -86,42 +121,25 @@ function AssessmentBlock() {
             placeholder="Поиск"
             className="filters__items filters__search"
           />
-          <form className="filters__items filters__calendar">
-            Календарь
-          </form>
+          <form className="filters__items filters__calendar">Календарь</form>
         </div>
-        {data.length === 0 ? (
+        {users.length === 0 ? (
           <>
-            <img
-              src={image}
-              alt="картинка фона с изображением человека"
-              className="AssessmentBlock__immage"
-            />
+            <div className="AssessmentBlock__image" />
             <span className="AssessmentBlock__span">
               <p className="">Список пока что пуст.</p>Новые карточки для оценки
               сотрудников можете добавить с помощью кнопки «Провести
               анкетирование»
             </span>
           </>
-        ) : filterState === 'asses' ? (
+        ) : filterState === 'isAppreciated' && (
           <ul className="AssessmentBlock__list">
-            {data.map((i) => (
+            {users.map((user) => (
               <AssessmentCard
-                key={i.id}
-                name={i.name}
-                job={i.job}
-                status="asses"
-              />
-            ))}
-          </ul>
-        ) : (
-          <ul className="AssessmentBlock__list">
-            {data2.map((i) => (
-              <AssessmentCard
-                key={i.id}
-                name={i.name}
-                job={i.job}
-                status="NotAsses"
+                key={user.id}
+                fullName={user.fullName}
+                position={user.position}
+                status="isAppreciated"
               />
             ))}
           </ul>
