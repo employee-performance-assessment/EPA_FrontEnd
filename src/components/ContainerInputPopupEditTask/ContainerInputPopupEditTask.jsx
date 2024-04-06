@@ -1,29 +1,22 @@
 import './ContainerInputPopupEditTask.scss';
 
-// import { useState, useEffect } from 'react';
-
 export default function ContainerInputPopupEditTask({ item }) {
+
   function handleClickClose() {
-    console.log('edit input');
+    // console.log('edit input');
   }
 
-  function setBigInput() {
-    return item.type === 'container-input-popup-edit-task__button_big'
-      ? 'container-input-popup-edit-task__input-conteiner_big'
+  function bigInputSet() {
+    return item.className === 'container-input-popup-edit-task__button_big'
+      ? 'container-input-popup-edit-task__input-container_big'
       : '';
   }
 
   return (
     <div
-      className={`container-input-popup-edit-task__input-conteiner ${setBigInput()}`}
+      className={`container-input-popup-edit-task__input-container ${bigInputSet()}`}
     >
-      {item.type !== 'container-input-popup-edit-task__button_big' ? (
-        <input
-          type="text"
-          className="container-input-popup-edit-task__input "
-          placeholder={item.nameInput}
-        />
-      ) : (
+      {item.type === 'container-input-popup-edit-task__button_big' ? (
         <>
           <span className="container-input-popup-edit-task__span">
             Баллы, которые нужно списать за каждый день нарушения дедлайна или
@@ -35,11 +28,17 @@ export default function ContainerInputPopupEditTask({ item }) {
             placeholder={item.nameInput}
           />
         </>
+      ) : (
+        <input
+          type="text"
+          className="container-input-popup-edit-task__input "
+          placeholder={item.nameInput}
+        />
       )}
 
       {item.type !== 'container-input-popup-edit-task__button_empty' && (
         <button
-          className={`container-input-popup-edit-task__button ${item.type}`}
+          className={`container-input-popup-edit-task__button ${item.className}`}
           aria-label={`редактировать поле ${item.nameInput}`}
           onClick={handleClickClose}
         />

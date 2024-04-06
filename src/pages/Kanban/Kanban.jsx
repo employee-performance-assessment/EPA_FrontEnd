@@ -15,7 +15,6 @@ import './Kanban.scss';
 
 function Kanban() {
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
-  const [isEmpty, setIsEmpty] = useState(1);
   const [isNoProject, setIsNoProject] = useState(true);
   const [isNoTask, setIsNoTask] = useState(true);
   const [isOpenPopup, setIsOpenPopup] = useState(false);
@@ -109,7 +108,11 @@ function Kanban() {
           </div>
         </nav>
         <Boards boardsList={boardsListEmpty} />
-        {isNoProject ? <NotProject /> : isNoTask === true && <NotFoundTask />}
+        {isNoProject ? (
+          <NotProject setProjects={setProjects} />
+        ) : (
+          isNoTask === true && <NotFoundTask />
+        )}
       </div>
       {isOpenPopup && (
         <PopupKanban

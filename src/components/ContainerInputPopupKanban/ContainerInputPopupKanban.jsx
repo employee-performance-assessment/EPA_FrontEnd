@@ -1,18 +1,34 @@
 import { useState } from 'react';
 import './ContainerInputPopupKanban.scss';
-import { setProjectsNewName, deleteProject } from '../../utils/mainApi.js';
+import {
+  setProjectsNewName,
+  deleteProject,
+  getProjectsName,
+} from '../../utils/mainApi.js';
 
-export default function ContainerInputPopupKanban({ item }) {
+export default function ContainerInputPopupKanban({ item, setProjects }) {
   const [nameProject, setProjectName] = useState(item.name);
-  console.log(item);
+
   function handleButtonEditProject() {
-    setProjectsNewName(nameProject, item.id);
+    setProjectsNewName(nameProject, item.id)
+      .then(() => {
+        getProjectsName()
+          .then((res) => {
+            setProjects(res);
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
   }
 
   function handleButtonDeleteProject() {
     deleteProject(item.id)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        getProjectsName()
+          .then((res) => {
+            setProjects(res);
+          })
+          .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
   }
