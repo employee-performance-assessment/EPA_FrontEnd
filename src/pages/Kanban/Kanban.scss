@@ -47,9 +47,6 @@
   margin-right: 10px;
   width: 80px;
 }
-.kanban__button_non-border {
-  padding-left: 10px;
-}
 
 .kanban__button-title_make {
   margin: auto 10px auto 0;
@@ -70,6 +67,11 @@
   background-color: $light-gray-base-color;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.kanban__button_non-border {
+  padding-left: 10px;
+  width: 125px;
 }
 
 .kanban__button_more {
