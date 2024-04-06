@@ -84,7 +84,7 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
         <Input
           type="text"
           name="name"
-          value={values.name}
+          value={values.name || ""}
           onChange={(e) =>
             handleChangeInput(
               e,
@@ -106,7 +106,7 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
         <Input
           type="text"
           name="position"
-          value={values.position}
+          value={values.position || ""}
           onChange={(e) =>
             handleChangeInput(
               e,
@@ -128,7 +128,7 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
         <Input
           type="email"
           name="email"
-          value={values.email}
+          value={values.email || ""}
           onChange={(e) =>
             handleChangeInput(
               e,
@@ -153,7 +153,7 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
               type={showPassword ? 'text' : 'password'}
               name="password"
               inputClassName="user-form__input"
-              value={values.password}
+              value={values.password || ""}
               onChange={(e) =>
                 handleChangeInput(
                   e,
@@ -191,7 +191,7 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
               type={showConfirmPassword ? 'text' : 'password'}
               name="confirmPassword"
               inputClassName="user-form__input"
-              value={values.confirmPassword}
+              value={values.confirmPassword || ""}
               onChange={(e) =>
                 handleChangeInput(
                   e,
