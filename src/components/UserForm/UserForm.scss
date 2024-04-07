@@ -48,6 +48,7 @@
   color: $black-base-color;
   box-sizing: border-box;
   height: 64px;
+  width: 100%;
 }
 
 .user-form__span{
@@ -93,6 +94,19 @@
   cursor: pointer;
 }
 
+.user-form__submit-button:hover {
+  background: $wrapper;
+}
+
+.user-form__submit-button:active {
+  background: $yellow-base-color;
+}
+
+.user-form__submit-button:disabled {
+  background: $grey-base-color;
+}
+
+
 .user-form__close-icon-block {
   border: none;
   position: absolute;
@@ -103,6 +117,16 @@
   top: 41px;
   right: 80px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-form__closeIcon {
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  background-repeat: no-repeat;
 }
 
 .user-form__eye-icon {

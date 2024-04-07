@@ -1,0 +1,72 @@
+@import '../../styles/vars';
+@import '../../styles/mixins';
+
+.popup-edit-task {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #00000033;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: $zindex-10;
+}
+
+.popup-edit-task__title {
+  width: 400px;
+  margin-bottom: 40px;
+}
+
+.popup-edit-task__button {
+  border: none;
+  padding: 16px 20px;
+  font-size: 20px;
+  line-height: 121%;
+  font-weight: $fw-semibold;
+  border-radius: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  max-height: 56px;
+  cursor: pointer;
+  background-color: white;
+}
+
+.popup-edit-task__container-input {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(2, 470px);
+  grid-template-rows: repeat(5, 63px);
+  grid-row-gap: 30px;
+  grid-column-gap: 24px;
+}
+
+.popup-edit-task__button_purple {
+  margin-top: 40px;
+  width: 350px;
+  height: 56px;
+  background-color: $purple-base-color;
+}
+
+.popup-edit-task__popup {
+  width: 1124px;
+  height: 800px;
+  background-color: white;
+  border-radius: 20px;
+  padding: 80px;
+  position: relative;
+}
+
+.popup-edit-task__button_close {
+  padding: 0;
+  background-image: url(../../images/closePopup.svg);
+  width: 56px;
+  height: 56px;
+  position: absolute;
+  top: 40px;
+  right: 80px;
+}

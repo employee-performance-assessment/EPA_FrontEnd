@@ -33,10 +33,10 @@
   cursor: pointer;
 }
 
-.container-input-popup-kanban__button_delet {
-  background-image: url(../../images/TrashSimple.svg);
+.container-input-popup-kanban__button_delete {
+  @include button_delete;
 }
 
 .container-input-popup-kanban__button_edit {
-  background-image: url(../../images/PencilSimple.svg);
+  @include button_edit;
 }

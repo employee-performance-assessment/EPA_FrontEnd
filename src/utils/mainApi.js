@@ -1,12 +1,28 @@
 import checkResponse from './checkResponse.js';
-import { ADMIN_CRITERIA, USERS, ADMIN_USERS } from '../constants/constantAPI.js';
+import {
+  ADMIN_CRITERIA,
+  ADMIN_QUESTIONNAIRE_LAST,
+  USERS,
+  ADMIN_USERS,
+  ADMIN_CRITERIA_DEFAULT,
+  PROJECTS,
+  ADMIN_RESET_TO_DEFAULT_QUESTIONNAIRE,
+  ADMIN_PROJECTS,
+  ADMIN_TASK,
+  ADMIN_QUESTIONNAIRE_PASSED,
+  EVALUATIONS,
+  ADMIN_EVALUATIONS,
+  RECO,
+} from '../constants/constantAPI.js';
 
-const { token } = JSON.parse(localStorage.getItem('token'));
+function getToken() {
+  return JSON.parse(localStorage.getItem('token')).token;
+}
 
-const makeAuthenticatedRequest = (url, method, token, body) => {
+const makeAuthenticatedRequest = (url, method, body) => {
   const headers = {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${getToken()}`,
   };
 
   const options = {
@@ -18,34 +34,94 @@ const makeAuthenticatedRequest = (url, method, token, body) => {
   return fetch(url, options).then((res) => checkResponse(res));
 };
 
-export const getUserData = (token) =>
-  makeAuthenticatedRequest(`${USERS}/me`, 'GET', token);
+export const getUserData = () => makeAuthenticatedRequest(`${USERS}/me`, 'GET');
 
-export const updateAdminData = (id, token, data) =>
-  makeAuthenticatedRequest(`${ADMIN_USERS}/${id}`, 'PATCH', token, {
+export const updateAdminData = (id, data) =>
+  makeAuthenticatedRequest(`${ADMIN_USERS}/${id}`, 'PATCH', {
     fullName: data.fullName,
     position: data.position,
     email: data.email,
     password: data.password,
   });
 
-export const getAllUsers = (token) =>
-  makeAuthenticatedRequest(ADMIN_USERS, 'GET', token);
+export const getAllUsers = () => makeAuthenticatedRequest(ADMIN_USERS, 'GET');
+
+export const getCurrentUser = (id) =>
+  makeAuthenticatedRequest(`${USERS}/${id}`, 'GET');
 
 export const addNewUser = ({ fullName, position, email, password }) =>
-  makeAuthenticatedRequest(ADMIN_USERS, 'POST', token, { fullName, position, email, password });
+  makeAuthenticatedRequest(ADMIN_USERS, 'POST', {
+    fullName,
+    position,
+    email,
+    password,
+  });
 
-export const getAllCriterion = (token) =>
-  makeAuthenticatedRequest(ADMIN_CRITERIA, 'GET', token);
+export const getAllCriterion = () =>
+  makeAuthenticatedRequest(ADMIN_CRITERIA, 'GET');
 
-export const addCriterion = (token, criterionName) =>
-  makeAuthenticatedRequest(ADMIN_CRITERIA, 'POST', token, { name: criterionName });
+export const getQuestionnaireLast = () =>
+  makeAuthenticatedRequest(ADMIN_QUESTIONNAIRE_LAST, 'GET');
+
+export const updateQuestionnaireLast = (questionnaire) =>
+  makeAuthenticatedRequest(ADMIN_QUESTIONNAIRE_LAST, 'PATCH', questionnaire);
+
+export const resetToDefaultQuestionnaire = () =>
+  makeAuthenticatedRequest(ADMIN_RESET_TO_DEFAULT_QUESTIONNAIRE, 'PATCH');
+
+export const checkActivitySurveyButton = () =>
+  makeAuthenticatedRequest(ADMIN_QUESTIONNAIRE_PASSED, 'GET');
+
+export const doQuestionnaireSurvey = () =>
+  makeAuthenticatedRequest(ADMIN_QUESTIONNAIRE_LAST, 'PUT');
+
+export const getDefaultCriterion = () =>
+  makeAuthenticatedRequest(ADMIN_CRITERIA_DEFAULT, 'GET');
 
 export const updateUserData = ({ id, fullName, position, email, password }) => {
   const requestBody = { fullName, position, email };
   if (password) requestBody.password = password;
-  return makeAuthenticatedRequest(`${ADMIN_USERS}/${id}`, 'PATCH', token, requestBody);
+  return makeAuthenticatedRequest(`${ADMIN_USERS}/${id}`, 'PATCH', requestBody);
 };
 
 export const deleteUser = (id) =>
-  makeAuthenticatedRequest(`${ADMIN_USERS}/${id}`, 'DELETE', token);
+  makeAuthenticatedRequest(`${ADMIN_USERS}/${id}`, 'DELETE');
+
+export const getProjectsName = () => makeAuthenticatedRequest(PROJECTS, 'GET');
+
+export const setProjectsNewName = (nameProject, id) => {
+  const requestBody = { name: nameProject };
+  return makeAuthenticatedRequest(
+    `${ADMIN_PROJECTS}/${id}`,
+    'PATCH',
+    requestBody
+  );
+};
+
+export const setNewProjects = (nameProject) => {
+  const requestBody = { name: nameProject };
+  return makeAuthenticatedRequest(ADMIN_PROJECTS, 'POST', requestBody);
+};
+
+export const deleteProject = (id) =>
+  makeAuthenticatedRequest(`${ADMIN_PROJECTS}/${id}`, 'DELETE');
+
+export const getAllUserTasksByAdmin = (employeeId) =>
+  makeAuthenticatedRequest(
+    `${ADMIN_TASK}/find?employeeId=${employeeId}`,
+    'GET'
+  );
+
+export const getTaskDetailsByAdmin = (taskId) =>
+  makeAuthenticatedRequest(`${ADMIN_TASK}/${taskId}`, 'GET');
+
+export const deleteTaskByAdmin = (taskId) =>
+  makeAuthenticatedRequest(`${ADMIN_TASK}/${taskId}`, 'DELETE');
+
+export const getColleaguesEvaluation = () =>
+  makeAuthenticatedRequest(EVALUATIONS, 'GET');
+
+export const getAdminEvaluation = () =>
+  makeAuthenticatedRequest(ADMIN_EVALUATIONS, 'GET');
+
+export const getReco = (id) => makeAuthenticatedRequest(`${RECO}/${id}`, 'GET');

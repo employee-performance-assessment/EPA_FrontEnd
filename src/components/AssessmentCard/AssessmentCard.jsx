@@ -1,23 +1,31 @@
 import { useNavigate } from 'react-router';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import styles from './AssessmentCard.module.scss';
+import './AssessmentCard.css';
 
-function AssessmentCard({ name, job }) {
+function AssessmentCard({ user, fullName, position, status }) {
   const navigate = useNavigate();
+  const { questionnaire } = ENDPOINT_ROUTES;
+
   function handleClick() {
-    navigate('/questionnaire');
+    navigate(`${questionnaire}/${user}`);
   }
+
   return (
-    <div className={styles.assessmentCard__container}>
-      <p className={styles.assessmentCard__name}>{name}</p>
-      <p className={styles.assessmentCard__job}>{job}</p>
-      <div className={styles.assessmentCard__rating}></div>
-      <button
-        type="button"
-        className={styles.assessmentCard__button}
-        onClick={() => handleClick()}
-      >
-        Оценить
-      </button>
+    <div className={styles.assessmentCard}
+      onClick={handleClick}
+    >
+      <p className={styles.assessmentCard__name}>{fullName}</p>
+      <p className={styles.assessmentCard__job}>&frasl; {position}</p>
+      <div className={styles.assessmentCard__rating}>
+        Оценки за март
+        <p className={styles.assessmentCard__data}>
+          Дата анкетирования: 28.03.24
+        </p>
+      </div>
+      <div className={status}>
+        {status === 'isAppreciated' ? 'Оценить' : 'Отправлено'}
+      </div>
     </div>
   );
 }

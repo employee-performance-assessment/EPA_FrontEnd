@@ -31,7 +31,6 @@ import AssessmentBlock from '../../pages/AssesmentBlock/AssessmentBlock.jsx';
 import Questionnaire from '../Questionnaire/Questionnaire.jsx';
 
 function App() {
-  // в cardsList записываем ответ на запрос get от API, задания со всеми параметрами
   const {
     login,
     register,
@@ -41,9 +40,9 @@ function App() {
     anyPage,
     analytics,
     criteria,
-    viewCards,
-    viewRating,
-    viewTask,
+    cardsEmployees,
+    ratingCards,
+    taskCards,
     estimate,
     questionnaire,
   } = ENDPOINT_ROUTES;
@@ -55,7 +54,7 @@ function App() {
     if (localStorage.getItem('token')) {
       const { token } = JSON.parse(localStorage.getItem('token'));
       if (token) {
-        getUserData(token)
+        getUserData()
           .then((res) => {
             if (res) {
               navigate(location.pathname);
@@ -67,7 +66,7 @@ function App() {
           .catch((err) => alert(`Ошибка: ${err}`));
       }
     } else {
-      navigate('/');
+      navigate(login);
     }
   };
 
@@ -87,11 +86,13 @@ function App() {
           <Route path={myTeam} element={<MyTeam />} />
           <Route path={analytics} element={<AnalyticsPage />} />
           <Route path={criteria} element={<AssessmentCriteria />} />
-          <Route path={viewCards} element={<EmployeeViewPage />} />
-          <Route path={viewRating} element={<EmployeeRatingPage />} />
-          <Route path={viewTask} element={<TaskViewPage />} />
+          <Route path={`${cardsEmployees}/:id`} element={<EmployeeViewPage />} />
+          {/* <Route path={ratingCards} element={<EmployeeRatingPage />} /> */}
+          <Route path={`${ratingCards}/:id`} element={<EmployeeRatingPage />} />
+          <Route path={`${taskCards}/:id`} element={<TaskViewPage />} />
           <Route path={estimate} element={<AssessmentBlock />} />
-          <Route path={questionnaire} element={<Questionnaire />} />
+          <Route path={`${questionnaire}/:id`} element={<Questionnaire />} />
+          {/* <Route path={questionnaire} element={<Questionnaire />} /> */}
         </Route>
         <Route path="" element={<ProtectedRoute />}>
           <Route path={anyPage} element={<NotFound />} />

@@ -1,20 +1,14 @@
 @import '../../styles/vars';
 
-.employeeRatingPage__wrapper {
-  width: 100%;
-  display: flex;
-  padding: 0;
-  margin: 24px 0;
-}
-
 .employeeRatingPage__container {
   width: 100%;
-  margin-right: 20px;
+  min-width: 1163px;
   display: flex;
   flex-direction: column;
   gap: 40px;
   border-radius: 28px;
   background-color: $light-gray-base-color;
+  margin: 24px 20px 60px 0;
 }
 
 .employeeRatingPage__header {
@@ -31,11 +25,13 @@
   padding: 52px 0 38px 66.75px;
 }
 
-.employeeRatingPage__link {
+.employeeRatingPage__back {
   display: flex;
   gap: 12.25px;
-  align-items: center;
-  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  background-color: inherit;
+  padding: 0;
 }
 
 .employeeRatingPage__icon {
@@ -75,7 +71,7 @@
 
 .employeeRatingPage__star_out {
   position: relative;
-  z-index: 1;
+  z-index: $zindex-10;
   background-image: url(../../images/star-employee-rating-page-empty.svg);
   width: 40px;
   height: 39px;
@@ -91,7 +87,7 @@
 .employeeRatingPage__star_in {
   background-image: url(../../images/star-employee-rating-page-full.svg);
   position: absolute;
-  z-index: 2;
+  z-index: $zindex-20;
   overflow: hidden;
   width: 0;
   width: 40px;

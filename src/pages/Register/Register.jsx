@@ -1,23 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setAdminData } from '../../store/slices/adminDataSlice.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 
 import { useFormValidation } from '../../hooks/useFormValidation.js';
+import { register } from '../../utils/auth.js';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
+import { isValidPassword } from '../../utils/validationConstants.js';
 
 import styles from './Register.module.scss';
 import registerImg from '../../images/register-img.png';
 import eyelash from '../../images/eye-close.svg';
 import eyeOpen from '../../images/eye-open.svg';
 import logo from '../../images/logo.svg';
-import { register } from '../../utils/auth.js';
 
 function Register() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { errors, values, isValid, handleChange } = useFormValidation();
+  const { errors, values, isValid, handleChange, setIsValid } =
+    useFormValidation({});
   const dispatch = useDispatch();
+  const { login } = ENDPOINT_ROUTES;
+  const [errorPassword, setErrorPassword] = useState(null);
+  const [errorName, setErrorName] = useState(null);
+  const [errorEmail, setErrorEmail] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,7 +35,7 @@ function Register() {
       password: values.password,
     })
       .then((res) => {
-        navigate('/login');
+        navigate(login);
         dispatch(setAdminData(res));
         dispatch(setIsLoggedIn(true));
       })
@@ -47,6 +54,39 @@ function Register() {
     }
     return false;
   };
+
+  useEffect(() => {
+    const hasError = isValidPassword(values.password);
+    if (!hasError && values.password) {
+      setIsValid(false);
+      setErrorPassword(
+        'Допускается латинский алфавит и минимум одна заглавная буква'
+      );
+    } else {
+      setErrorPassword(null);
+    }
+  }, [values.password]);
+
+  useEffect(() => {
+    if (values.name && values.name.trim().length === 0) {
+      setIsValid(false);
+      setErrorName('Поле не может состоять из пробелов');
+    } else {
+      setErrorName(null);
+    }
+  }, [values.name]);
+
+  useEffect(() => {
+    if (
+      (values.email && values.email.split('')[0] === '.') ||
+      (values.email && values.email.split('')[0] === '-')
+    ) {
+      setIsValid(false);
+      setErrorEmail('Почта не может начинаться с точки или тире');
+    } else {
+      setErrorEmail(null);
+    }
+  }, [values.email]);
 
   return (
     <section className={styles.wrapper}>
@@ -67,7 +107,7 @@ function Register() {
               pattern="^[а-яА-Яa-zA-Z\s\-]+$"
               required
             />
-            <span>{errors.name}</span>
+            <span>{errors.name || errorName}</span>
           </label>
           <label>
             <input
@@ -80,7 +120,7 @@ function Register() {
               autoComplete="off"
               required
             />
-            <span>{errors.email}</span>
+            <span>{errors.email || errorEmail}</span>
           </label>
           <label>
             <input
@@ -95,12 +135,12 @@ function Register() {
               autoComplete="off"
               required
             />
-            <span>{errors.password}</span>
+            <span>{errors.password || errorPassword}</span>
             <span
               className={styles.eye}
               onClick={togglePassword}
               style={{ backgroundImage: `url(${isOpen ? eyeOpen : eyelash})` }}
-            ></span>
+            />
           </label>
           <button type="submit" disabled={!isValid}>
             Подтвердить

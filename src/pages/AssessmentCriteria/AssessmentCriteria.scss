@@ -1,21 +1,12 @@
 @import '../../styles/mixins';
 
 .assessment-criteria {
-  margin: 24px 20px 60px;
   display: flex;
-
-  &__sidemenu {
-    margin-top: 35px;
-  }
-
-  &__container {
-    display: flex;
-    flex-direction: column;
-    background-color: $light-gray-base-color;
-    border-radius: 40px;
-    margin-left: 37px;
-    width: 100%;
-  }
+  flex-direction: column;
+  background-color: $light-gray-base-color;
+  border-radius: 40px;
+  margin: 24px 20px 60px 0;
+  width: 100%;
 
   &__header {
     width: 100%;
@@ -56,25 +47,16 @@
     margin-right: 24px;
   }
 
-  &__checkbox-container {
-    display: flex;
-    margin-left: 80px;
-  }
-
-  &__checkbox {
-    width: 350px;
-  }
-
   &__container-criterion {
     display: flex;
     flex-direction: column;
     padding: 0 80px;
+    width: 1163px;
   }
 
   &__title {
     @include text($font-size: 36px, $line-height: 44px);
     margin-bottom: 40px;
-    letter-spacing: 1px;
   }
 
   &__form {
@@ -95,7 +77,7 @@
     cursor: pointer;
     background-color: $light-gray-base-color;
     position: absolute;
-    bottom: 110px;
+    bottom: 240px;
     right: -45px;
   }
 
@@ -107,7 +89,7 @@
     border: none;
     @include text($font-size: 20px, $font-weight: 600, $line-height: 24px);
     cursor: pointer;
-    margin-top: 80px;
+    margin: 60px 0 140px;
 
     &:hover {
       cursor: pointer;

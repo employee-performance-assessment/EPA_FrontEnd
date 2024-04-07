@@ -1,16 +1,23 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './NotFound.scss';
 
 function NotFound() {
-  const history = useNavigate();
+  const navigate = useNavigate();
+
+  function handleClickBack() {
+    navigate(-2);
+  }
 
   return (
     <section className="not-found">
-      <h2 className="not-found__title">404</h2>
-      <p className="not-found__subtitle">Страница не найдена</p>
-      <Link className="not-found__link" onClick={() => history(-1)}>
-        Назад
-      </Link>
+      <div className="not-found__container">
+        <div className="not-found__image" />
+        <h2 className="not-found__title">Страница не найдена</h2>
+        <button type="button" className="not-found__back" onClick={handleClickBack}>
+          Вернуться
+          <div className="not-found__back-image" />
+        </button>
+      </div>
     </section>
   );
 }
