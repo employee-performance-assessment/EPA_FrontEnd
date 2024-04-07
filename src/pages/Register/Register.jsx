@@ -15,16 +15,21 @@ import eyelash from '../../images/eye-close.svg';
 import eyeOpen from '../../images/eye-open.svg';
 import logo from '../../images/logo.svg';
 
+import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+
 function Register() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { errors, values, isValid, handleChange, setIsValid } =
+  const { errors, values, isValid, handleChange, setIsValid, resetForm } =
     useFormValidation({});
   const dispatch = useDispatch();
   const { login } = ENDPOINT_ROUTES;
   const [errorPassword, setErrorPassword] = useState(null);
   const [errorName, setErrorName] = useState(null);
   const [errorEmail, setErrorEmail] = useState(null);
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+    useErrorHandler();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,8 +44,10 @@ function Register() {
         dispatch(setAdminData(res));
         dispatch(setIsLoggedIn(true));
       })
-      // eslint-disable-next-line no-alert
-      .catch((err) => alert(err));
+      .catch((err) => {
+        handleError(err);
+        resetForm();
+      });
   };
 
   const togglePassword = () => {
@@ -89,69 +96,80 @@ function Register() {
   }, [values.email]);
 
   return (
-    <section className={styles.wrapper}>
-      <div className={styles.container}>
-        <form id="register" onSubmit={handleSubmit}>
-          <img className={styles.logo} src={logo} alt="Логотип" />
-          <h1>Сервис для оценки сотрудников</h1>
-          <label>
-            <input
-              type="data"
-              id="user-name"
-              minLength="1"
-              maxLength="255"
-              name="name"
-              value={values.name || ''}
-              onChange={handleChange}
-              placeholder="Имя Фамилия"
-              pattern="^[а-яА-Яa-zA-Z\s\-]+$"
-              required
-            />
-            <span>{errors.name || errorName}</span>
-          </label>
-          <label>
-            <input
-              type="email"
-              pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}"
-              name="email"
-              value={values.email || ''}
-              onChange={handleChange}
-              placeholder="Email"
-              autoComplete="off"
-              required
-            />
-            <span>{errors.email || errorEmail}</span>
-          </label>
-          <label>
-            <input
-              type="password"
-              minLength="8"
-              maxLength="14"
-              name="password"
-              id="password"
-              value={values.password || ''}
-              onChange={handleChange}
-              placeholder="Пароль"
-              autoComplete="off"
-              required
-            />
-            <span>{errors.password || errorPassword}</span>
-            <span
-              className={styles.eye}
-              onClick={togglePassword}
-              style={{ backgroundImage: `url(${isOpen ? eyeOpen : eyelash})` }}
-            />
-          </label>
-          <button type="submit" disabled={!isValid}>
-            Подтвердить
-          </button>
-        </form>
-        <img
-          src={registerImg}
-          alt="Изображение команды на странице регистрации"
+    <>
+      {isPopupOpen && (
+        <InfoPopup
+          title={popupTitle}
+          text={popupText}
+          handleClosePopup={closePopup}
         />
-      </div>
-    </section>
+      )}
+      <section className={styles.wrapper}>
+        <div className={styles.container}>
+          <form id="register" onSubmit={handleSubmit}>
+            <img className={styles.logo} src={logo} alt="Логотип" />
+            <h1>Сервис для оценки сотрудников</h1>
+            <label>
+              <input
+                type="data"
+                id="user-name"
+                minLength="1"
+                maxLength="255"
+                name="name"
+                value={values.name || ''}
+                onChange={handleChange}
+                placeholder="Имя Фамилия"
+                pattern="^[а-яА-Яa-zA-Z\s\-]+$"
+                required
+              />
+              <span>{errors.name || errorName}</span>
+            </label>
+            <label>
+              <input
+                type="email"
+                pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}"
+                name="email"
+                value={values.email || ''}
+                onChange={handleChange}
+                placeholder="Email"
+                autoComplete="off"
+                required
+              />
+              <span>{errors.email || errorEmail}</span>
+            </label>
+            <label>
+              <input
+                type="password"
+                minLength="8"
+                maxLength="14"
+                name="password"
+                id="password"
+                value={values.password || ''}
+                onChange={handleChange}
+                placeholder="Пароль"
+                autoComplete="off"
+                required
+              />
+              <span>{errors.password || errorPassword}</span>
+              <span
+                className={styles.eye}
+                onClick={togglePassword}
+                style={{
+                  backgroundImage: `url(${isOpen ? eyeOpen : eyelash})`,
+                }}
+              />
+            </label>
+            <button type="submit" disabled={!isValid}>
+              Подтвердить
+            </button>
+          </form>
+          <img
+            src={registerImg}
+            alt="Изображение команды на странице регистрации"
+          />
+        </div>
+      </section>
+    </>
   );
 }
 

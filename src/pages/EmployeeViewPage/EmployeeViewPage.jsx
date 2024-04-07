@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import EmployeeViewHeader from '../../components/EmployeeViewHeader/EmployeeViewHeader.jsx';
 import Switch from '../../components/Switch/Switch.jsx';
+import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import EmployeeViewFilter from '../../components/EmployeeViewFilter/EmployeeViewFilter.jsx';
 import EmployeeViewBlock from '../../components/EmployeeViewBlock/EmployeeViewBlock.jsx';
 import { useFormValidation } from '../../hooks/useFormValidation';
@@ -14,6 +15,7 @@ import {
   getAllUserTasksByAdmin,
   getTasksByUser,
 } from '../../utils/mainApi.js';
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 function EmployeeViewPage() {
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
@@ -29,6 +31,8 @@ function EmployeeViewPage() {
   const [employee, setEmployee] = useState({});
   const [tasksStatus, setTasksStatus] = useState('NEW');
   const user = useSelector((state) => state.adminData);
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+    useErrorHandler();
 
   useEffect(() => {
     if (employeeId) {
@@ -47,20 +51,14 @@ function EmployeeViewPage() {
     if (user.role === 'ROLE_ADMIN') {
       employeeId &&
         getAllUserTasksByAdmin(employeeId)
-          .then((res) => {
-            setAllTasks(res);
-          })
-          .catch((err) => {
-            // eslint-disable-next-line no-alert
-            alert(err);
-          });
+          .then((res) => setAllTasks(res))
+          .catch((err) => handleError(err));
     } else {
       employeeId &&
         getTasksByUser(user.email)
           .then((res) => setAllTasks(res))
-          // eslint-disable-next-line no-alert
-          .catch((err) => alert(err));
-      }
+          .catch((err) => handleError(err));
+    }
   }, [employeeId]);
 
   useEffect(() => {
@@ -100,26 +98,35 @@ function EmployeeViewPage() {
   }
 
   return (
-    <section className={styles.employeeViewPage__container}>
-      <EmployeeViewHeader employee={employee} />
-      <Switch
-        labelLeft="Задачи"
-        labelRight="Оценки"
-        isChecked={viewTask}
-        setIsChecked={setViewTask}
-      />
-      <EmployeeViewFilter
-        handleChange={handleChange}
-        showAllCards={showAllCards}
-        version={version}
-        setTasksStatus={setTasksStatus}
-      />
-      <EmployeeViewBlock
-        tasks={currentTasks}
-        marks={marks}
-        employeeId={employeeId}
-      />
-    </section>
+    <>
+      {isPopupOpen && (
+        <InfoPopup
+          title={popupTitle}
+          text={popupText}
+          handleClosePopup={closePopup}
+        />
+      )}
+      <section className={styles.employeeViewPage__container}>
+        <EmployeeViewHeader employee={employee} />
+        <Switch
+          labelLeft="Задачи"
+          labelRight="Оценки"
+          isChecked={viewTask}
+          setIsChecked={setViewTask}
+        />
+        <EmployeeViewFilter
+          handleChange={handleChange}
+          showAllCards={showAllCards}
+          version={version}
+          setTasksStatus={setTasksStatus}
+        />
+        <EmployeeViewBlock
+          tasks={currentTasks}
+          marks={marks}
+          employeeId={employeeId}
+        />
+      </section>
+    </>
   );
 }
 
