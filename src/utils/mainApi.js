@@ -17,7 +17,9 @@ import {
   PROJECTS,
   USERS,
   USER_TASK,
-  RECO,
+  ADMIN_USER_QUESTIONNAIRE_LIST,
+  ADMIN_RATING,
+  ADMIN_STAT_POINTS,
 } from '../constants/constantAPI.js';
 
 function getToken() {
@@ -51,8 +53,7 @@ export const updateAdminData = (id, data) =>
 
 export const getAllUsers = () => request(ADMIN_USERS, 'GET');
 
-export const getCurrentUser = (id) =>
-  request(`${USERS}/${id}`, 'GET');
+export const getCurrentUser = (id) => request(`${USERS}/${id}`, 'GET');
 
 export const addNewUser = ({ fullName, position, email, password }) =>
   request(ADMIN_USERS, 'POST', {
@@ -62,8 +63,7 @@ export const addNewUser = ({ fullName, position, email, password }) =>
     password,
   });
 
-export const getAllCriterion = () =>
-  request(ADMIN_CRITERIA, 'GET');
+export const getAllCriterion = () => request(ADMIN_CRITERIA, 'GET');
 
 export const getQuestionnaireLast = () =>
   request(ADMIN_QUESTIONNAIRE_LAST, 'GET');
@@ -83,8 +83,7 @@ export const checkActivitySurveyButton = () =>
 export const doQuestionnaireSurvey = () =>
   request(ADMIN_QUESTIONNAIRE_LAST, 'PUT');
 
-export const getDefaultCriterion = () =>
-  request(ADMIN_CRITERIA_DEFAULT, 'GET');
+export const getDefaultCriterion = () => request(ADMIN_CRITERIA_DEFAULT, 'GET');
 
 export const updateUserData = ({ id, fullName, position, email, password }) => {
   const requestBody = { fullName, position, email };
@@ -92,18 +91,13 @@ export const updateUserData = ({ id, fullName, position, email, password }) => {
   return request(`${ADMIN_USERS}/${id}`, 'PATCH', requestBody);
 };
 
-export const deleteUser = (id) =>
-  request(`${ADMIN_USERS}/${id}`, 'DELETE');
+export const deleteUser = (id) => request(`${ADMIN_USERS}/${id}`, 'DELETE');
 
 export const getProjectsName = () => request(PROJECTS, 'GET');
 
 export const setProjectsNewName = (nameProject, id) => {
   const requestBody = { name: nameProject };
-  return request(
-    `${ADMIN_PROJECTS}/${id}`,
-    'PATCH',
-    requestBody
-  );
+  return request(`${ADMIN_PROJECTS}/${id}`, 'PATCH', requestBody);
 };
 
 export const setNewProjects = (nameProject) => {
@@ -115,10 +109,7 @@ export const deleteProject = (id) =>
   request(`${ADMIN_PROJECTS}/${id}`, 'DELETE');
 
 export const getAllUserTasksByAdmin = (employeeId) =>
-  request(
-    `${ADMIN_TASK}/find?employeeId=${employeeId}`,
-    'GET'
-  );
+  request(`${ADMIN_TASK}/find?employeeId=${employeeId}`, 'GET');
 
 export const getTaskDetailsByAdmin = (taskId) =>
   request(`${ADMIN_TASK}/${taskId}`, 'GET');
@@ -140,11 +131,9 @@ export const updateTaskByAdmin = (task) => {
   request(`${ADMIN_TASK}/${task.id}`, 'PATCH', requestBody);
 };
 
-export const getTasksByUser = () =>
-  request(USER_TASK, 'GET');
+export const getTasksByUser = () => request(USER_TASK, 'GET');
 
-export const getColleaguesEvaluation = () =>
-  request(EVALUATIONS, 'GET');
+export const getColleaguesEvaluation = () => request(EVALUATIONS, 'GET');
 
 export const getListNewQuestionnaires = () =>
   request(EVALUATIONS_LIST_ASSESS, 'GET');
@@ -159,9 +148,25 @@ export const postEvaluationsList = (data) => {
     'POST',
     questionnaireData
   );
-}
+};
 
-export const getEvaluationsList = (questionnaireId, evaluatedId) => request(
-  `${ADMIN_ASSESSED}?questionnaireId=${questionnaireId}&evaluatedId=${evaluatedId}`, 'GET');
+export const getEvaluationsList = (questionnaireId, evaluatedId) =>
+  request(
+    `${ADMIN_ASSESSED}?questionnaireId=${questionnaireId}&evaluatedId=${evaluatedId}`,
+    'GET'
+  );
 
-export const getReco = (id) => request(`${RECO}/${id}`, 'GET');
+export const getEvaluations = (evaluatedId, questionnaireId) =>
+  request(
+    `${ADMIN_EVALUATIONS}/?evaluatedId=${evaluatedId}&questionnaireId=${questionnaireId}`,
+    'GET'
+  );
+
+export const getQuestionnaireList = (evaluatedId) =>
+  request(`${ADMIN_USER_QUESTIONNAIRE_LIST}?evaluatedId=${evaluatedId}`, 'GET');
+
+export const getRating = (employeeId) =>
+  request(`${ADMIN_RATING}/${employeeId}`, 'GET');
+
+export const getStatPoints = (employeeId) =>
+  request(`${ADMIN_STAT_POINTS}/${employeeId}`, 'GET');

@@ -4,29 +4,49 @@ import { useParams } from 'react-router';
 import EmployeeViewCriteria from '../../components/EmployeeViewCriteria/EmployeeViewCriteria.jsx';
 import SetStars from '../../components/SetStars/SetStars.js';
 import styles from './EmployeeRatingPage.module.scss';
-import criteria from './criteria.json';
-import { getReco } from '../../utils/mainApi.js';
+import { getEvaluations } from '../../utils/mainApi.js';
 
 function EmployeeRatingPage() {
   const navigate = useNavigate();
-  const { id: employeeId } = useParams();
+  const { employeeId, questionnaireId } = useParams();
 
-  // Все рекомендации по ID сотрудника, до фильтрации
-  const [reco, setReco] = useState([]);
+  const [recommendation, setRecommendation] = useState('');
+  const [rating, setRating] = useState(0);
+  const [date, setDate] = useState('');
+  const [initialCriteria, setInitialCriteria] = useState([]);
+  const [criteria, setCriteria] = useState([]);
 
   function handleClickBack() {
     navigate(-1);
   }
 
   useEffect(() => {
-    getReco(employeeId)
-      .then((res) => {
-        setReco(res);
-      })
-      .catch((err) => {
-        // eslint-disable-next-line no-alert
-        alert(err);
-      });
+    if (employeeId && questionnaireId) {
+      getEvaluations(employeeId, questionnaireId)
+        .then((res) => {
+          setRating(res.middleScore);
+          setRecommendation(res.recommendation);
+          setDate(res.createQuestionnaire).split('-').reverse().join('.');
+          setInitialCriteria(res.evaluations);
+          setCriteria(
+            Array.from(
+              Object.keys(initialCriteria).map((key, index) => {
+                const output = {
+                  id: index + 1, // Уникальный идентификатор, начинаем с 1
+                  adminScore: initialCriteria[key].adminScore,
+                  colleaguesScore: initialCriteria[key].colleaguesScore,
+                  text: key, // Текст берем из ключа объекта
+                };
+                return output;
+              })
+            )
+          );
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-alert
+          alert(err);
+        });
+    }
   }, []);
 
   return (
@@ -41,14 +61,11 @@ function EmployeeRatingPage() {
             <div className={styles.employeeRatingPage__icon} />
             <p className={styles.employeeRatingPage__caption}>Назад </p>
           </button>
-          <h2 className={styles.employeeRatingPage__title}>
-            Оценки за Февраль 2024
-          </h2>
+          <h2 className={styles.employeeRatingPage__title}>{date}</h2>
         </div>
         <div className={styles.employeeRatingPage__score}>
-          {/* Захардкодил рейтинг в хедере, будет приходить с бэка */}
           <SetStars
-            rating="4"
+            rating={rating}
             starOut={styles.employeeRatingPage__star_out}
             starIn={styles.employeeRatingPage__star_in}
           />
@@ -61,12 +78,12 @@ function EmployeeRatingPage() {
           <h3>От коллег</h3>
         </div>
         <ul className={styles.employeeRatingPage__list}>
-          {/* Текст карточек пока приходит из json */}
           {criteria.map((card) => (
             <EmployeeViewCriteria
               key={card.id}
               text={card.text}
-              rating={card.rating}
+              adminScore={card.adminScore}
+              colleaguesScore={card.colleaguesScore}
             />
           ))}
         </ul>
@@ -75,20 +92,7 @@ function EmployeeRatingPage() {
           Рекомендации для сотрудника
         </h3>
         <div className={styles.employeeRatingPage__recoText}>
-          <p>
-            {reco}
-            {/* Здравствуй, Иван. Провел оценку твоей работы за неделю, ты молодец
-            все задачи сделаны, но дедлайн часто не соблюдался. <br /> 1. Не
-            стесняйся просить обратную связь у коллег. Это поможет обнаружить
-            области, в которых ты можешь улучшиться. <br /> 2. Работай над
-            коммуникацией: Хорошая коммуникация с коллегами и клиентами играет
-            ключевую роль в успешном проекте. Убедись, что четко понимаешь
-            требования клиента и можешь эффективно общаться с другими
-            участниками команды. <br /> 3. Изучай тенденции в дизайне: Будьте
-            в курсе последних тенденций и инноваций в мире дизайна. Это
-            поможет нам создавать современные и актуальные дизайн-решения.
-            <br /> Удачи в работе!!! */}
-          </p>
+          <p>{recommendation || 'Рекомендаций пока нет'}</p>
         </div>
       </div>
     </section>
