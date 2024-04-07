@@ -18,6 +18,7 @@ export const ADMIN_TASK = `${BASE_URL}/admin/task`;
 
 export const PROJECTS = `${BASE_URL}/user/project`;
 export const USERS = `${BASE_URL}/user/employee`;
+export const USER_TASK = `${BASE_URL}/user/task`;
 export const TASKS = `${BASE_URL}/user/task`;
 
 export const REGISTER = `${BASE_URL}/public/register`;

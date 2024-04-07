@@ -16,6 +16,7 @@ import {
   ADMIN_TASK,
   PROJECTS,
   USERS,
+  USER_TASK,
   RECO,
 } from '../constants/constantAPI.js';
 
@@ -124,6 +125,24 @@ export const getTaskDetailsByAdmin = (taskId) =>
 
 export const deleteTaskByAdmin = (taskId) =>
   request(`${ADMIN_TASK}/${taskId}`, 'DELETE');
+
+export const updateTaskByAdmin = (task) => {
+  const requestBody = {
+    name: task.name,
+    description: task.description,
+    projectId: task.project.id,
+    executorId: task.executor.id,
+    deadLine: task.deadLine,
+    status: task.status,
+    basicPoints: task.basicPoints,
+    penaltyPoints: task.penaltyPoints,
+  };
+  request(`${ADMIN_TASK}/${task.id}`, 'PATCH', requestBody);
+};
+
+export const getTasksByUser = (email) =>
+  request(
+    `${USER_TASK}/`, 'GET', {ststus: email});
 
 export const getColleaguesEvaluation = () =>
   request(EVALUATIONS, 'GET');
