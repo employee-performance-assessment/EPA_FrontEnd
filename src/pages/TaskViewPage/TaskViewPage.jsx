@@ -21,10 +21,6 @@ function TaskViewPage() {
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
-  function handleClickBack() {
-    navigate(-1);
-  }
-
   useEffect(() => {
     if (taskId) {
       getTaskDetailsByAdmin(taskId)
@@ -40,6 +36,7 @@ function TaskViewPage() {
               creationDate: formatDate(res.createDate),
               deadline: formatDate(res.deadLine),
               penalty: res.penaltyPoints,
+              status: res.status
             });
           }
         })
@@ -79,14 +76,14 @@ function TaskViewPage() {
           <div className={styles.taskViewPage__row}>
             <button
               type="button"
-              onClick={handleClickBack}
+              onClick={() => navigate(-1)}
               className={styles.taskViewPage__back}
             >
               <div className={styles.taskViewPage__icon} />
               <p className={styles.taskViewPage__caption}>Назад к задачам</p>
             </button>
             <h4 className={styles.taskViewPage__id}>{task.id}</h4>
-            <CustomSelect />
+            <CustomSelect status={task.status} />
             <button type="button" className={styles.taskViewPage__edit} onClick={() => setIsEditTaskFormOpen(true)}>
               <div />
               Редактировать

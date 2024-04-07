@@ -1,14 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Select from 'react-select';
 
-function CustomSelect() {
+function CustomSelect({status}) {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
-    { value: 'inWork', label: 'В работе' },
-    { value: 'inReview', label: 'На ревью' },
-    { value: 'done', label: 'Выполнено' },
+    { value: 'IN_PROGRESS', label: 'В работе' },
+    { value: 'REVIEW', label: 'На ревью' },
+    { value: 'DONE', label: 'Выполнено' },
   ];
+
+  useEffect(() => {
+    const selectedValue = options.find((option) => option.value === status);
+    setSelectedOption(selectedValue);
+  }, [])
 
   const placeholder = 'К выполнению';
 
