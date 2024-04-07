@@ -21,7 +21,7 @@ function Register() {
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { errors, values, isValid, handleChange, setIsValid } =
+  const { errors, values, isValid, handleChange, setIsValid, resetForm } =
     useFormValidation({});
   const dispatch = useDispatch();
   const { login } = ENDPOINT_ROUTES;
@@ -42,7 +42,10 @@ function Register() {
         dispatch(setAdminData(res));
         dispatch(setIsLoggedIn(true));
       })
-      .catch((err) => handleError(err));
+      .catch((err) => {
+        handleError(err);
+        resetForm();
+      });
   };
 
   const togglePassword = () => {
