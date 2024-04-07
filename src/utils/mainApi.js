@@ -118,6 +118,20 @@ export const getTaskDetailsByAdmin = (taskId) =>
 export const deleteTaskByAdmin = (taskId) =>
   makeAuthenticatedRequest(`${ADMIN_TASK}/${taskId}`, 'DELETE');
 
+export const updateTaskByAdmin = (task) => {
+  const requestBody = {
+    name: task.name,
+    description: task.description,
+    projectId: task.project.id,
+    executorId: task.executor.id,
+    deadLine: task.deadLine,
+    status: task.status,
+    basicPoints: task.basicPoints,
+    penaltyPoints: task.penaltyPoints,
+  };
+  makeAuthenticatedRequest(`${ADMIN_TASK}/${task.id}`, 'PATCH', requestBody);
+};
+
 export const getColleaguesEvaluation = () =>
   makeAuthenticatedRequest(EVALUATIONS, 'GET');
 
