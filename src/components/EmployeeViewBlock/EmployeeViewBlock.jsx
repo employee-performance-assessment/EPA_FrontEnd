@@ -10,10 +10,10 @@ function EmployeeViewBlock({ tasks, marks, employeeId }) {
         marks.map((card) => (
           <EmployeeViewCard
             type="marks"
-            key={card.id}
-            month={card.month}
-            date={card.date}
-            rating={card.rating}
+            key={card.idQuestionnaire}
+            idQuestionnaire={card.idQuestionnaire}
+            date={card.createQuestionnaire}
+            rating={card.middleScore}
             employeeId={employeeId}
           />
         )) :

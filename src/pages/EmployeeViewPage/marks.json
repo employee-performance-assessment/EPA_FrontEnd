@@ -1,20 +1,17 @@
 [
   {
-    "id": "1",
-    "month": "февраль",
-    "date": "2024-02-28",
-    "rating": "3.5"
+    "idQuestionnaire": "1",
+    "createQuestionnaire": "2024-02-28",
+    "middleScore": "3.5"
   },
   {
-    "id": "2",
-    "month": "январь",
-    "date": "2024-01-30",
-    "rating": "4.5"
+    "idQuestionnaire": "2",
+    "createQuestionnaire": "2024-01-30",
+    "middleScore": "4.5"
   },
   {
-    "id": "3",
-    "month": "декабрь",
-    "date": "2023-12-27",
-    "rating": "2.0"
+    "idQuestionnaire": "3",
+    "createQuestionnaire": "2023-12-27",
+    "middleScore": "2.0"
   }
 ]

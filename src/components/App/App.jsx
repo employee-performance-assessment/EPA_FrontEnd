@@ -29,11 +29,12 @@ import { setAdminData } from '../../store/slices/adminDataSlice.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 import AssessmentBlock from '../../pages/AssesmentBlock/AssessmentBlock.jsx';
 import Questionnaire from '../Questionnaire/Questionnaire.jsx';
-import InfoPopup from "../InfoPopup/InfoPopup.jsx";
+import InfoPopup from '../InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 function App() {
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+    useErrorHandler();
   const {
     login,
     register,
@@ -78,7 +79,13 @@ function App() {
 
   return (
     <div className="page">
-      {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
+      {isPopupOpen && (
+        <InfoPopup
+          title={popupTitle}
+          text={popupText}
+          handleClosePopup={closePopup}
+        />
+      )}
       <Routes>
         <Route path="/" element={<Navigate to={login} />} />
         <Route path={register} element={<Register />} />
@@ -89,12 +96,20 @@ function App() {
           <Route path={myTeam} element={<MyTeam />} />
           <Route path={analytics} element={<AnalyticsPage />} />
           <Route path={criteria} element={<AssessmentCriteria />} />
-          <Route path={`${cardsEmployees}/:id`} element={<EmployeeViewPage />} />
-          <Route path={`${ratingCards}/:id`} element={<EmployeeRatingPage />} />
+          <Route
+            path={`${cardsEmployees}/:id`}
+            element={<EmployeeViewPage />}
+          />
+          <Route
+            path={`${ratingCards}/:employeeId/:questionnaireId`}
+            element={<EmployeeRatingPage />}
+          />
           <Route path={`${taskCards}/:id`} element={<TaskViewPage />} />
           <Route path={estimate} element={<AssessmentBlock />} />
-          <Route path={`${questionnaire}/:date/:questionnaireId/:employeeId`}
-            element={<Questionnaire />} />
+          <Route
+            path={`${questionnaire}/:date/:questionnaireId/:employeeId`}
+            element={<Questionnaire />}
+          />
         </Route>
         <Route path="" element={<ProtectedRoute />}>
           <Route path={anyPage} element={<NotFound />} />

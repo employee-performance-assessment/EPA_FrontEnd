@@ -9,11 +9,11 @@ import EmployeeViewBlock from '../../components/EmployeeViewBlock/EmployeeViewBl
 import { useFormValidation } from '../../hooks/useFormValidation';
 import { setViewMarks } from '../../store/slices/viewMarksSlices.js';
 import styles from './EmployeeViewPage.module.scss';
-import initMarks from './marks.json';
 import {
   getCurrentUser,
   getAllUserTasksByAdmin,
   getTasksByUser,
+  getQuestionnaireList,
 } from '../../utils/mainApi.js';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
@@ -26,7 +26,8 @@ function EmployeeViewPage() {
 
   const { values, handleChange, setValues } = useFormValidation();
   const [viewTask, setViewTask] = useState(viewMarks);
-  const [marks, setMarks] = useState([]);
+  const [allMarks, setAllMarks] = useState([]);
+  const [currentMarks, setCurrentMarks] = useState([]);
   const [allTasks, setAllTasks] = useState([]);
   const [currentTasks, setCurrentTasks] = useState([]);
   const [version, setVersion] = useState(0);
@@ -62,7 +63,6 @@ function EmployeeViewPage() {
 
   useEffect(() => {
     if (!allTasks.length) return;
-
     setCurrentTasks(
       allTasks.filter((task) =>
         tasksStatus ? task.status === tasksStatus : true
@@ -71,14 +71,34 @@ function EmployeeViewPage() {
   }, [tasksStatus, allTasks]);
 
   useEffect(() => {
+    getQuestionnaireList(employeeId)
+      .then((res) => {
+        setAllMarks(res);
+        setCurrentMarks(res);
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-alert
+        alert(err);
+      });
+  }, [employeeId]);
+
+  // Сортировка анкет по дате
+  useEffect(() => {
+    const sorted = allMarks.sort((a, b) =>
+      b.createQuestionnaire.localeCompare(a.createQuestionnaire)
+    );
+    setAllMarks(sorted);
+  }, []);
+
+  useEffect(() => {
     if (values.stars) {
-      setMarks(
-        initMarks.filter(
-          (i) => Math.round(Number(i.rating)) === Number(values.stars)
+      setCurrentMarks(
+        allMarks.filter(
+          (i) => Math.round(Number(i.middleScore)) === Number(values.stars)
         )
       );
     } else {
-      setMarks(initMarks);
+      setCurrentMarks(allMarks);
     }
   }, [values]);
 
@@ -87,7 +107,7 @@ function EmployeeViewPage() {
   }, [viewTask]);
 
   function showAllCards() {
-    setMarks(initMarks);
+    setCurrentMarks(allMarks);
     setValues({});
     resetStarsFilter();
   }
@@ -121,7 +141,7 @@ function EmployeeViewPage() {
         />
         <EmployeeViewBlock
           tasks={currentTasks}
-          marks={marks}
+          marks={currentMarks}
           employeeId={employeeId}
         />
       </section>

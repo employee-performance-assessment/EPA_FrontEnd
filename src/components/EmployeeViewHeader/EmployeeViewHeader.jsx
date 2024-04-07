@@ -1,11 +1,41 @@
+import { useEffect, useState } from 'react';
 import SetStars from '../SetStars/SetStars';
 import styles from './EmployeeViewHeader.module.scss';
+import { getRating, getStatPoints } from '../../utils/mainApi.js';
+import { formPointsText } from '../../utils/utils';
 
 function EmployeeViewHeader({ employee }) {
+  const [rating, setRating] = useState(0);
+  const [points, setPoints] = useState(0);
 
-  const month = 'февраль';
-  const rating = '3.5';
-  const point = 1250;
+  const month = new Date().toLocaleString('default', { month: 'long' });
+
+  useEffect(() => {
+    if (employee.id) {
+      getRating(employee.id)
+        .then((res) => {
+          setRating(res);
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-alert
+          alert(err);
+        });
+    }
+  }, [employee]);
+
+  useEffect(() => {
+    if (employee.id) {
+      getStatPoints(employee.id)
+        .then((res) => {
+          setPoints(res);
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-alert
+          alert(err);
+        });
+    }
+  }, [employee]);
+
   return (
     <div className={styles.employeeViewHeader__container}>
       <div className={styles.employeeViewHeader__bio}>
@@ -25,7 +55,9 @@ function EmployeeViewHeader({ employee }) {
           />
         </div>
       </div>
-      <div className={styles.employeeViewHeader__point}>{point} баллов</div>
+      <div className={styles.employeeViewHeader__point}>
+        {points || '0'} {formPointsText(points)}
+      </div>
     </div>
   );
 }
