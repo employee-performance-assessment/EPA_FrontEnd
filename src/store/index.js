@@ -4,6 +4,7 @@ import isLoggedInSlice from './slices/isLoggedInSlice';
 import tokenSlices from './slices/tokenSlices';
 import filterSlice from './slices/filterSlice';
 import viewMarksSlices from './slices/viewMarksSlices';
+import isAppreciatedSlices from './slices/isAppreciatedSlices';
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     token: tokenSlices,
     filter: filterSlice,
     viewMarks: viewMarksSlices,
+    isAppreciated: isAppreciatedSlices,
   },
 });
