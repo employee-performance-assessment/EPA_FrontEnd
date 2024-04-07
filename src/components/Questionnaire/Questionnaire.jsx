@@ -5,6 +5,8 @@ import InputStars from '../InputStars/InputStars.js';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import { useFormValidation } from '../../hooks/useFormValidation';
 import { setIsAppreciated } from '../../store/slices/isAppreciatedSlices.js';
+import InfoPopup from "../InfoPopup/InfoPopup.jsx";
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import SetStars from '../SetStars/SetStars.js';
 import {
   getCurrentUser,
@@ -15,6 +17,7 @@ import {
 import './Questionnaire.scss';
 
 export default function Questionnaire() {
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const isAppreciated = useSelector((state) => state.isAppreciated.isAppreciated);
   const [criteria, setCriteria] = useState([]);
   const [isActiveButton, setIsActiveButton] = useState(false);
@@ -41,14 +44,14 @@ export default function Questionnaire() {
         .then((res) => {
           setCriteria(res.criterias);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => handleError(err));
     } else {
       getEvaluationsList(questionnaireId, employeeId)
         .then((res) => {
           setCriteria(res.adminEvaluations);
           values['recommendation'] = res.recommendation;
         })
-        .catch((err) => console.log(err));
+        .catch((err) => handleError(err));
     }
   }, [])
 
@@ -60,7 +63,7 @@ export default function Questionnaire() {
           position: res.position
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => handleError(err));
   }, []);
 
   function handleActiveButtonSubmit() {
@@ -109,11 +112,12 @@ export default function Questionnaire() {
       .then(() => {
         navigate(estimate);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => handleError(err));
   }
 
   return (
     <div className="questionnaire">
+      {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
       <div className="questionnaire__wrapper">
         <div className="questionnaire__header">
           <button
