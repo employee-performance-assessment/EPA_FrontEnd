@@ -214,7 +214,6 @@ function EditEmployeeForm({
                 error={errors.password}
                 minLength={8}
                 maxLength={14}
-                required={false}
               />
               <button
                 type="button"
@@ -253,7 +252,6 @@ function EditEmployeeForm({
                 error={errors.confirmPassword}
                 minLength={8}
                 maxLength={14}
-                required={false}
               />
               <button
                 type="button"

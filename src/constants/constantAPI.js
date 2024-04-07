@@ -10,17 +10,23 @@ export const ADMIN_QUESTIONNAIRE = `${BASE_URL}/admin/questionnaire/`;
 export const ADMIN_RESET_TO_DEFAULT_QUESTIONNAIRE = `${BASE_URL}/admin/questionnaire/last-with-default`;
 export const ADMIN_QUESTIONNAIRE_PASSED = `${BASE_URL}/admin/questionnaire/is-day-passed`;
 
+export const USER_QUESTIONNAIRE = `${BASE_URL}/user/questionnaire`;
+
 export const ADMIN_PROJECTS = `${BASE_URL}/admin/project`;
 export const ADMIN_USERS = `${BASE_URL}/admin/employee`;
 export const ADMIN_TASK = `${BASE_URL}/admin/task`;
 
 export const PROJECTS = `${BASE_URL}/user/project`;
 export const USERS = `${BASE_URL}/user/employee`;
+export const USER_TASK = `${BASE_URL}/user/task`;
 export const TASKS = `${BASE_URL}/user/task`;
 
 export const REGISTER = `${BASE_URL}/public/register`;
 export const LOGIN = `${BASE_URL}/public/auth`;
 
 export const EVALUATIONS = `${BASE_URL}/user/evaluations`;
-export const ADMIN_EVALUATIONS = `${BASE_URL}/user/evaluations/admin`;
+export const EVALUATIONS_LIST_ASSESS = `${BASE_URL}/user/evaluations/assess-list`;
+export const EVALUATIONS_LIST_ASSESSED = `${BASE_URL}/user/evaluations/assessed-list`;
+export const ADMIN_EVALUATIONS = `${BASE_URL}/admin/evaluations`;
+export const ADMIN_ASSESSED = `${BASE_URL}/admin/assessed`;
 export const RECO = `${BASE_URL}/user/recommendation`;

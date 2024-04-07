@@ -8,6 +8,8 @@ import { useFormValidation } from '../../hooks/useFormValidation.js';
 import { register } from '../../utils/auth.js';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import { isValidPassword } from '../../utils/validationConstants.js';
+import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 import styles from './Register.module.scss';
 import registerImg from '../../images/register-img.png';
@@ -16,9 +18,10 @@ import eyeOpen from '../../images/eye-open.svg';
 import logo from '../../images/logo.svg';
 
 function Register() {
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { errors, values, isValid, handleChange, setIsValid } =
+  const { errors, values, isValid, handleChange, setIsValid, resetForm } =
     useFormValidation({});
   const dispatch = useDispatch();
   const { login } = ENDPOINT_ROUTES;
@@ -39,8 +42,10 @@ function Register() {
         dispatch(setAdminData(res));
         dispatch(setIsLoggedIn(true));
       })
-      // eslint-disable-next-line no-alert
-      .catch((err) => alert(err));
+      .catch((err) => {
+        handleError(err);
+        resetForm();
+      });
   };
 
   const togglePassword = () => {
@@ -90,6 +95,7 @@ function Register() {
 
   return (
     <section className={styles.wrapper}>
+      {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
       <div className={styles.container}>
         <form id="register" onSubmit={handleSubmit}>
           <img className={styles.logo} src={logo} alt="Логотип" />

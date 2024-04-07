@@ -29,8 +29,11 @@ import { setAdminData } from '../../store/slices/adminDataSlice.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 import AssessmentBlock from '../../pages/AssesmentBlock/AssessmentBlock.jsx';
 import Questionnaire from '../Questionnaire/Questionnaire.jsx';
+import InfoPopup from "../InfoPopup/InfoPopup.jsx";
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 function App() {
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const {
     login,
     register,
@@ -62,8 +65,7 @@ function App() {
               dispatch(setIsLoggedIn(true));
             }
           })
-          // eslint-disable-next-line no-alert
-          .catch((err) => alert(`Ошибка: ${err}`));
+          .catch((err) => handleError(err));
       }
     } else {
       navigate(login);
@@ -76,6 +78,7 @@ function App() {
 
   return (
     <div className="page">
+      {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
       <Routes>
         <Route path="/" element={<Navigate to={login} />} />
         <Route path={register} element={<Register />} />
@@ -87,12 +90,11 @@ function App() {
           <Route path={analytics} element={<AnalyticsPage />} />
           <Route path={criteria} element={<AssessmentCriteria />} />
           <Route path={`${cardsEmployees}/:id`} element={<EmployeeViewPage />} />
-          {/* <Route path={ratingCards} element={<EmployeeRatingPage />} /> */}
           <Route path={`${ratingCards}/:id`} element={<EmployeeRatingPage />} />
           <Route path={`${taskCards}/:id`} element={<TaskViewPage />} />
           <Route path={estimate} element={<AssessmentBlock />} />
-          <Route path={`${questionnaire}/:id`} element={<Questionnaire />} />
-          {/* <Route path={questionnaire} element={<Questionnaire />} /> */}
+          <Route path={`${questionnaire}/:date/:questionnaireId/:employeeId`}
+            element={<Questionnaire />} />
         </Route>
         <Route path="" element={<ProtectedRoute />}>
           <Route path={anyPage} element={<NotFound />} />

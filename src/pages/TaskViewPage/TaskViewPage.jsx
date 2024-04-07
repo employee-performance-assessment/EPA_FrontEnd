@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import CustomSelect from '../../components/Filter/Filter.jsx';
+import {useSelector} from 'react-redux';
+import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
 import {
   getTaskDetailsByAdmin,
   deleteTaskByAdmin,
@@ -21,10 +21,6 @@ function TaskViewPage() {
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
-  function handleClickBack() {
-    navigate(-1);
-  }
-
   useEffect(() => {
     if (taskId) {
       getTaskDetailsByAdmin(taskId)
@@ -35,11 +31,14 @@ function TaskViewPage() {
               name: res.name,
               description: res.description,
               projectName: res.project.name,
+              projectId: res.project.id,
               executorName: res.executor.fullName,
               executorId: res.executor.id,
               creationDate: formatDate(res.createDate),
-              deadline: formatDate(res.deadLine),
-              penalty: res.penaltyPoints,
+              deadLine: formatDate(res.deadLine),
+              penaltyPoints: res.penaltyPoints,
+              basicPoints: res.basicPoints,
+              status: res.status
             });
           }
         })
@@ -79,20 +78,20 @@ function TaskViewPage() {
           <div className={styles.taskViewPage__row}>
             <button
               type="button"
-              onClick={handleClickBack}
+              onClick={() => navigate(-1)}
               className={styles.taskViewPage__back}
             >
               <div className={styles.taskViewPage__icon} />
               <p className={styles.taskViewPage__caption}>Назад к задачам</p>
             </button>
             <h4 className={styles.taskViewPage__id}>{task.id}</h4>
-            <CustomSelect />
+            <CustomSelect task={task} />
             <button type="button" className={styles.taskViewPage__edit} onClick={() => setIsEditTaskFormOpen(true)}>
               <div />
               Редактировать
             </button>
           </div>
-          <div className={styles.taskViewPage__score}>800 баллов</div>
+          <div className={styles.taskViewPage__score}>{task.basicPoints} баллов</div>
         </div>
 
         <div className={styles.taskViewPage__block}>
@@ -110,13 +109,13 @@ function TaskViewPage() {
               </li>
               <li>
                 <p className={styles.taskViewPage__name}>Дедлайн до</p>
-                <p className={styles.taskViewPage__value}>{task.deadline}</p>
+                <p className={styles.taskViewPage__value}>{task.deadLine}</p>
               </li>
               <li>
                 <p className={styles.taskViewPage__name}>Бонус/Штраф</p>
                 <p
                   className={styles.taskViewPage__value}
-                >{`«${task.penalty}» баллов за день`}</p>
+                >{`«${task.penaltyPoints}» баллов за день`}</p>
               </li>
               <li>
                 <p className={styles.taskViewPage__name}>Исполнитель:</p>
