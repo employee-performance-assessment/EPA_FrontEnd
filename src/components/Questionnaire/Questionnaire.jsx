@@ -1,33 +1,58 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
 import InputStars from '../InputStars/InputStars.js';
-import { getCurrentUser, getQuestionnaire, postEvaluationsList } from '../../utils/mainApi.js';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import { useFormValidation } from '../../hooks/useFormValidation';
+import { setIsAppreciated } from '../../store/slices/isAppreciatedSlices.js';
+import SetStars from '../SetStars/SetStars.js';
+import {
+  getCurrentUser,
+  getEvaluationsList,
+  getQuestionnaire,
+  postEvaluationsList
+} from '../../utils/mainApi.js';
 import './Questionnaire.scss';
 
 export default function Questionnaire() {
+  const isAppreciated = useSelector((state) => state.isAppreciated.isAppreciated);
   const [criteria, setCriteria] = useState([]);
   const [isActiveButton, setIsActiveButton] = useState(false);
   const { values, handleChange, } = useFormValidation();
   const [user, setUser] = useState({ fullName: '', position: '' });
   const { estimate } = ENDPOINT_ROUTES;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const params = useParams();
   const { date, questionnaireId, employeeId } = params;
+
+  if (localStorage.getItem('isAppreciated')) {
+    dispatch(setIsAppreciated(JSON.parse(localStorage.getItem('isAppreciated'))));
+  }
 
   useEffect(() => {
     handleActiveButtonSubmit();
   }, [values, criteria])
 
   useEffect(() => {
-    getQuestionnaire(questionnaireId)
-      .then((res) => {
-        setCriteria(res.criterias);
-      })
-      .catch((err) => console.log(err));
+    if (isAppreciated) {
+      getQuestionnaire(questionnaireId)
+        .then((res) => {
+          setCriteria(res.criterias);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      getEvaluationsList(questionnaireId, employeeId)
+        .then((res) => {
+          setCriteria(res.adminEvaluations);
+          values['recommendation'] = res.recommendation;
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [])
 
+  useEffect(() => {
     getCurrentUser(employeeId)
       .then((res) => {
         setUser({
@@ -43,7 +68,7 @@ export default function Questionnaire() {
     const lengthValues = objectKeys.length;
     const lengthCriteria = criteria.length;
 
-    if (lengthCriteria + 1 === lengthValues && values['recommendations']) {
+    if (lengthCriteria + 1 === lengthValues && values['recommendation']) {
       setIsActiveButton(true);
     } else {
       setIsActiveButton(false);
@@ -58,7 +83,7 @@ export default function Questionnaire() {
     const resultArr = [];
     // eslint-disable-next-line no-restricted-syntax
     for (const key in values) {
-      if (values[key] && key !== 'recommendations') {
+      if (values[key] && key !== 'recommendation') {
         resultArr.push({
           criteriaId: Number(key),
           score: Number(values[key])
@@ -88,53 +113,59 @@ export default function Questionnaire() {
   }
 
   return (
-    <div className="Questionnaire">
-      <div className="Questionnaire__wrapper">
-        <div className="Questionnaire__header">
+    <div className="questionnaire">
+      <div className="questionnaire__wrapper">
+        <div className="questionnaire__header">
           <button
             type="button"
-            className="Questionnaire-header__back-button"
+            className="questionnaire-header__back-button"
             onClick={GoBack}
           >
             Назад к списку
           </button>
-          <span className="Questionnaire-header__data">{date}</span>
-          <div className="Questionnaire-header__icon" />
-          <span className="Questionnaire-header__underscribe">{user.fullName}</span>
-          <span className="Questionnaire-header__underscribe">&frasl;</span>
-          <span className="Questionnaire-header__underscribe">{user.position}</span>
+          <span className="questionnaire-header__data">{date}</span>
+          <div className="questionnaire-header__icon" />
+          <span className="questionnaire-header__underscribe">{user.fullName}</span>
+          <span className="questionnaire-header__underscribe">&frasl;</span>
+          <span className="questionnaire-header__underscribe">{user.position}</span>
         </div>
-        <div className="Questionnaire-titles">
-          <span className="Questionnaire-titles__text">Критерии</span>
+        <div className="questionnaire-titles">
+          <span className="questionnaire-titles__text">Критерии</span>
           <span>Оценка</span>
         </div>
-        <div className="Questionnaire-container">
+        <div className="questionnaire-container">
           {criteria.map((criterion) => (
-            <div className="Questionnaire__criterion" key={criterion.id}>
-              <p className="Questionnaire__criterion-name">{criterion.name}</p>
-              <div className="Questionnaire__criterion-value">
-                <InputStars handleChange={handleChange} name={criterion.id} />
+            <div className="questionnaire__criterion" key={criterion.id + criterion.name}>
+              <p className="questionnaire__criterion-name">{criterion.name}</p>
+              <div className="questionnaire__criterion-value">
+                {isAppreciated ?
+                  <InputStars handleChange={handleChange} name={criterion.id} /> :
+                  <SetStars
+                    rating={criterion.score}
+                    starOut="questionnaire__star_out"
+                    starIn="questionnaire__star_in" />}
               </div>
             </div>
           ))}
         </div>
-        <form onSubmit={handleSubmit}>
-          <span className="Questionaire__text">
+        <form onSubmit={handleSubmit} className="questionnaire__form">
+          <span className="questionnaire__text">
             Рекомендации для сотрудника
           </span>
           <textarea
-            name="recommendations"
+            name="recommendation"
             type="text"
-            className="Questionnaire__input-text"
+            className="questionnaire__input-text"
             placeholder="Ваши комментарии"
             onChange={handleChange}
-            value={values['recommendations'] || ''}
+            value={values['recommendation'] || ''}
+            disabled={!isAppreciated}
           />
-          <button
-            className={`Questionnaire__button ${isActiveButton && 'Questionnaire__button_active'}`}
+          {isAppreciated && <button
+            className={`questionnaire__button ${isActiveButton && 'questionnaire__button_active'}`}
             type="submit">
             Отправить
-          </button>
+          </button>}
         </form>
       </div>
     </div>
