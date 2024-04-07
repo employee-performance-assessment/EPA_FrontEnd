@@ -140,9 +140,8 @@ export const updateTaskByAdmin = (task) => {
   request(`${ADMIN_TASK}/${task.id}`, 'PATCH', requestBody);
 };
 
-export const getTasksByUser = (email) =>
-  request(
-    `${USER_TASK}/`, 'GET', {ststus: email});
+export const getTasksByUser = () =>
+  request(USER_TASK, 'GET');
 
 export const getColleaguesEvaluation = () =>
   request(EVALUATIONS, 'GET');
