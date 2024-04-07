@@ -58,7 +58,7 @@ function EmployeeViewPage() {
     };
 
     fetchData();
-  }, [employeeId, user, handleError]);
+  }, [employeeId]);
 
   useEffect(() => {
     if (!allTasks.length) return;
