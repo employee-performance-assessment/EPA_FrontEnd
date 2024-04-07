@@ -3,6 +3,7 @@ import {
   ADMIN_CRITERIA,
   ADMIN_QUESTIONNAIRE_LAST,
   USERS,
+  USER_TASK,
   ADMIN_USERS,
   ADMIN_CRITERIA_DEFAULT,
   PROJECTS,
@@ -131,6 +132,10 @@ export const updateTaskByAdmin = (task) => {
   };
   makeAuthenticatedRequest(`${ADMIN_TASK}/${task.id}`, 'PATCH', requestBody);
 };
+
+export const getTasksByUser = (email) =>
+  makeAuthenticatedRequest(
+    `${USER_TASK}/`, 'GET', {ststus: email});
 
 export const getColleaguesEvaluation = () =>
   makeAuthenticatedRequest(EVALUATIONS, 'GET');
