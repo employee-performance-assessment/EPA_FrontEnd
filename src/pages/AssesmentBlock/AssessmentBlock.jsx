@@ -1,13 +1,20 @@
 import { useEffect, useState } from 'react';
-import './AssessmentBlock.scss';
-import icon from '../../images/assessmentBlock_icon.svg';
+import { useDispatch, useSelector } from 'react-redux';
 import AssessmentCard from '../../components/AssessmentCard/AssessmentCard.jsx';
-import { checkActivitySurveyButton, doQuestionnaireSurvey, getAllUsers } from '../../utils/mainApi.js';
+import { setIsAppreciated } from '../../store/slices/isAppreciatedSlices.js';
+import {
+  checkActivitySurveyButton,
+  doQuestionnaireSurvey,
+  getListComplitedQuestionnaires,
+  getListNewQuestionnaires
+} from '../../utils/mainApi.js';
+import './AssessmentBlock.scss';
 
 function AssessmentBlock() {
+  const isAppreciated = useSelector((state) => state.isAppreciated.isAppreciated);
   const [users, setUsers] = useState([]);
-  const [filterState, setFilterState] = useState('isAppreciated');
   const [isActivitySurveyButton, setIsActivitySurveyButton] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     checkActivitySurveyButton()
@@ -18,70 +25,49 @@ function AssessmentBlock() {
   }, []);
 
   useEffect(() => {
-    getAllUsers()
-    .then((res) => {
-      setUsers(res);
-    })
-    .catch((err) => console.log(err));
-  }, []);
+    if (isAppreciated) {
+      getListNewQuestionnaires()
+        .then((res) => {
+          setUsers(res);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      getListComplitedQuestionnaires()
+        .then((res) => {
+          setUsers(res);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [isAppreciated])
 
   function handleChangeFilterState(e) {
-    setFilterState(e.target.id);
+    if (e.target.id === 'isAppreciated') {
+      localStorage.setItem('isAppreciated', true)
+      dispatch(setIsAppreciated(true));
+    } else {
+      localStorage.setItem('isAppreciated', false);
+      dispatch(setIsAppreciated(false));
+    }
   }
 
   function handleClickSurveyButton() {
     doQuestionnaireSurvey()
       .then(() => {
-        getAllUsers()
-        .then((res) => {
-          setUsers(res);
-        })
-        .catch((err) => console.log(err));
+        getListNewQuestionnaires()
+          .then((res) => {
+            setUsers(res);
+          })
+          .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
-      // ответ
-      // {
-      //   "id": 7,
-      //   "author": {
-      //     "id": 19,
-      //     "fullName": "вап",
-      //     "nickName": null,
-      //     "city": null,
-      //     "email": "qw@qw.qw",
-      //     "birthday": null,
-      //     "role": "ROLE_ADMIN",
-      //     "position": null,
-      //     "department": null
-      //   },
-      //   "created": "2024-04-05",
-      //   "criterias": [
-      //     {
-      //       "id": 5,
-      //       "name": " Расставляет приоритеты",
-      //       "isDefault": true
-      //     },
-      //     {
-      //       "id": 20,
-      //       "name": "Любит рыбалку",
-      //       "isDefault": false
-      //     }
-      //   ],
-      //   "status": "SHARED"
-      // }
   }
 
-  console.log(users);
-
   return (
-    <section className="AssessmentBlock">
-      <div className="AssessmentBlock__container">
-        <div className="AssessmentBlock__header">
+    <section className="assessment-block">
+      <div className="assessment-block__container">
+        <div className="assessment-block__header">
           <div className="header__wrapper">
-            <img
-              src={icon}
-              alt="иконка изображает лист бумаги и ручку"
-              className="header__icon"
-            />
+            <div className="header__icon" />
             <h3 className="header__text">Оценка эффективности сотрудников</h3>
           </div>
           <button
@@ -92,27 +78,21 @@ function AssessmentBlock() {
             Провести анкетирование
           </button>
         </div>
-        <div className="AssessmentBlock__filters">
+        <div className="assessment-block__filters">
           <h3 className="filters__text">Фильтры:</h3>
           <button
-            className={
-              filterState !== 'isAppreciated'
-                ? 'filters__items filters__button'
-                : 'filters__items filters__button filters__button_active'
-            }
+            className={`filters__items filters__button
+            ${isAppreciated && 'filters__button_active'}`}
             id="isAppreciated"
-            onClick={(e) => handleChangeFilterState(e)}
+            onClick={handleChangeFilterState}
           >
             Оценить
           </button>
           <button
-            className={
-              filterState === 'isAppreciated'
-                ? 'filters__items filters__button filters__button_done'
-                : 'filters__items filters__button filters__button_done filters__button_active'
-            }
+            className={`filters__items filters__button filters__button_done
+            ${!isAppreciated && 'filters__button_active'}`}
             id="isAppreciated_done"
-            onClick={(e) => handleChangeFilterState(e)}
+            onClick={handleChangeFilterState}
           >
             Оценка поставлена
           </button>
@@ -123,27 +103,38 @@ function AssessmentBlock() {
           />
           <form className="filters__items filters__calendar">Календарь</form>
         </div>
-        {users.length === 0 ? (
+        {users.length === 0 && isActivitySurveyButton && (
           <>
-            <div className="AssessmentBlock__image" />
-            <span className="AssessmentBlock__span">
+            <div className="assessment-block__image_empty" />
+            <span className="assessment-block__span">
               <p className="">Список пока что пуст.</p>Новые карточки для оценки
               сотрудников можете добавить с помощью кнопки «Провести
               анкетирование»
             </span>
           </>
-        ) : filterState === 'isAppreciated' && (
-          <ul className="AssessmentBlock__list">
-            {users.map((user) => (
-              <AssessmentCard
-                key={user.id}
-                fullName={user.fullName}
-                position={user.position}
-                status="isAppreciated"
-              />
-            ))}
-          </ul>
         )}
+        {users.length === 0 && !isActivitySurveyButton && (
+          <>
+            <div className="assessment-block__image_done" />
+            <span className="assessment-block__span">
+              <p className="">Спасибо за ваше мнение!</p>Новые карточки для оценки
+              сотрудников можете добавить с помощью кнопки «Провести
+              анкетирование»
+            </span>
+          </>
+        )}
+        <ul className="assessment-block__list">
+          {users.map((user) => (
+            <AssessmentCard
+              key={user.employeeId + user.questionnaireId}
+              fullName={user.employeeFullName}
+              position={user.employeePosition}
+              date={user.questionnaireCreated}
+              questionnaireId={user.questionnaireId}
+              employeeId={user.employeeId}
+            />
+          ))}
+        </ul>
       </div>
     </section>
   );
