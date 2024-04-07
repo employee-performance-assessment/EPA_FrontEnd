@@ -18,47 +18,46 @@ import {
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 function EmployeeViewPage() {
-  const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
   const dispatch = useDispatch();
+  const { id: employeeId } = useParams();
+
+  const user = useSelector((state) => state.adminData);
+  const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
+
   const { values, handleChange, setValues } = useFormValidation();
   const [viewTask, setViewTask] = useState(viewMarks);
   const [marks, setMarks] = useState([]);
   const [allTasks, setAllTasks] = useState([]);
   const [currentTasks, setCurrentTasks] = useState([]);
   const [version, setVersion] = useState(0);
-  const { id: employeeId } = useParams();
-
   const [employee, setEmployee] = useState({});
   const [tasksStatus, setTasksStatus] = useState('NEW');
-  const user = useSelector((state) => state.adminData);
+
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
   useEffect(() => {
-    if (employeeId) {
-      getCurrentUser(employeeId)
-        .then((res) => {
-          setEmployee(res);
-        })
-        .catch((err) => {
-          // eslint-disable-next-line no-alert
-          alert(err);
-        });
-    }
-  }, [employeeId]);
+    const fetchData = async () => {
+      try {
+        let userData;
+        let tasksData;
 
-  useEffect(() => {
-    if (user.role === 'ROLE_ADMIN') {
-      employeeId &&
-        getAllUserTasksByAdmin(employeeId)
-          .then((res) => setAllTasks(res))
-          .catch((err) => handleError(err));
-    } else {
-      employeeId &&
-        getTasksByUser(user.email)
-          .then((res) => setAllTasks(res))
-          .catch((err) => handleError(err));
-    }
+        if (employeeId && user.role === 'ROLE_ADMIN') {
+          userData = await getCurrentUser(employeeId);
+          tasksData = await getAllUserTasksByAdmin(employeeId);
+        } else {
+          userData = await getCurrentUser(user.id);
+          tasksData = await getTasksByUser();
+        }
+
+        setEmployee(userData);
+        setAllTasks(tasksData);
+      } catch (error) {
+        handleError(error);
+      }
+    };
+
+    fetchData();
   }, [employeeId]);
 
   useEffect(() => {

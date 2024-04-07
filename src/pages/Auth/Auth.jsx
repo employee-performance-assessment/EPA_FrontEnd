@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+// import { jwtDecode } from "jwt-decode";
 import styles from './Auth.module.scss';
 
 import { useFormValidation } from '../../hooks/useFormValidation.js';
@@ -24,7 +25,7 @@ function Auth() {
   const [isOpen, setIsOpen] = useState(false);
   const { errors, values, isValid, handleChange, resetForm } =
     useFormValidation();
-  const { personalArea } = ENDPOINT_ROUTES;
+  const { personalArea, taskCards } = ENDPOINT_ROUTES;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
@@ -41,8 +42,9 @@ function Auth() {
         dispatch(setToken(res.token));
         dispatch(setIsLoggedIn(true));
         getUserData(res.token).then((res) => {
+          console.log('res', res);
           dispatch(setAdminData(res));
-          navigate(personalArea);
+          res.role === 'ROLE_ADMIN' ? navigate(personalArea) : navigate(taskCards);
         });
       })
       .catch((err) => {

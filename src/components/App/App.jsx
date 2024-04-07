@@ -98,6 +98,7 @@ function App() {
         </Route>
         <Route path="" element={<ProtectedRoute />}>
           <Route path={anyPage} element={<NotFound />} />
+          <Route path={taskCards} element={<EmployeeViewPage />} />
         </Route>
       </Routes>
     </div>

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import MenuAdmin from './MenuAdmin/MenuAdmin.jsx';
-// import MenuEmployee from './MenuEmployee/MenuEmployee.jsx';
+import MenuEmployee from './MenuEmployee/MenuEmployee.jsx';
 import logo from '../../images/logo.svg';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 import { setAdminData } from '../../store/slices/adminDataSlice.js';
@@ -27,8 +27,7 @@ function SideMenu() {
   return (
     <div className="side-menu">
       <img className="side-menu__logo" src={logo} alt="Логотип" />
-      {/* {adminData.role === 'ROLE_ADMIN' ? <MenuAdmin /> : <MenuEmployee />} */}
-      {adminData.role === 'ROLE_ADMIN' && <MenuAdmin />}
+      {adminData.role === 'ROLE_ADMIN' ? <MenuAdmin /> : <MenuEmployee />}
       <button onClick={handleLogout} className="side-menu__button">
         <div className="side-menu__button-icon" />
         <p className="side-menu__button_text">Выйти</p>
