@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AssessmentCard from '../../components/AssessmentCard/AssessmentCard.jsx';
 import { setIsAppreciated } from '../../store/slices/isAppreciatedSlices.js';
+import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import {
   checkActivitySurveyButton,
   doQuestionnaireSurvey,
@@ -11,6 +13,7 @@ import {
 import './AssessmentBlock.scss';
 
 function AssessmentBlock() {
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const isAppreciated = useSelector((state) => state.isAppreciated.isAppreciated);
   const [users, setUsers] = useState([]);
   const [isActivitySurveyButton, setIsActivitySurveyButton] = useState(false);
@@ -21,7 +24,7 @@ function AssessmentBlock() {
       .then((res) => {
         setIsActivitySurveyButton(res);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => handleError(err));
   }, []);
 
   useEffect(() => {
@@ -30,13 +33,13 @@ function AssessmentBlock() {
         .then((res) => {
           setUsers(res);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => handleError(err));
     } else {
       getListComplitedQuestionnaires()
         .then((res) => {
           setUsers(res);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => handleError(err));
     }
   }, [isAppreciated])
 
@@ -57,13 +60,14 @@ function AssessmentBlock() {
           .then((res) => {
             setUsers(res);
           })
-          .catch((err) => console.log(err));
+          .catch((err) => handleError(err));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => handleError(err));
   }
 
   return (
     <section className="assessment-block">
+      {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
       <div className="assessment-block__container">
         <div className="assessment-block__header">
           <div className="header__wrapper">
