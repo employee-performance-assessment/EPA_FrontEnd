@@ -108,6 +108,7 @@ export const setNewProjects = (nameProject) => {
 export const deleteProject = (id) =>
   request(`${ADMIN_PROJECTS}/${id}`, 'DELETE');
 
+  // ADMIN TASKS
 export const getUserTasksWithStatusByAdmin = (employeeId, status) =>
   request(`${ADMIN_TASK}/find?employeeId=${employeeId}&status=${status}`, 'GET');
 
@@ -131,7 +132,9 @@ export const updateTaskByAdmin = (task) => {
   request(`${ADMIN_TASK}/${task.id}`, 'PATCH', requestBody);
 };
 
+// USER TASKS
 export const getTasksWithStatusByUser = (status) => request(`${USER_TASK}?status=${status}`, 'GET');
+export const getTaskDetailsByUser = (taskId) => request(`${USER_TASK}/${taskId}`, 'GET');
 
 export const getColleaguesEvaluation = () => request(EVALUATIONS, 'GET');
 
