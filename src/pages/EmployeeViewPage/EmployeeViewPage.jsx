@@ -11,7 +11,7 @@ import { setViewMarks } from '../../store/slices/viewMarksSlices.js';
 import styles from './EmployeeViewPage.module.scss';
 import {
   getCurrentUser,
-  getAllUserTasksByAdmin,
+  getUserTasksWithStatusByAdmin,
   getTasksByUser,
   getQuestionnaireList,
 } from '../../utils/mainApi.js';
@@ -28,11 +28,9 @@ function EmployeeViewPage() {
   const [viewTask, setViewTask] = useState(viewMarks);
   const [allMarks, setAllMarks] = useState([]);
   const [currentMarks, setCurrentMarks] = useState([]);
-  const [allTasks, setAllTasks] = useState([]);
   const [currentTasks, setCurrentTasks] = useState([]);
   const [version, setVersion] = useState(0);
   const [employee, setEmployee] = useState({});
-  const [tasksStatus, setTasksStatus] = useState('NEW');
 
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
@@ -45,14 +43,13 @@ function EmployeeViewPage() {
 
         if (employeeId && user.role === 'ROLE_ADMIN') {
           userData = await getCurrentUser(employeeId);
-          tasksData = await getAllUserTasksByAdmin(employeeId);
+          tasksData = await getUserTasksWithStatusByAdmin(employeeId, 'NEW');
         } else {
           userData = await getCurrentUser(user.id);
           tasksData = await getTasksByUser();
         }
-
         setEmployee(userData);
-        setAllTasks(tasksData);
+        setCurrentTasks(tasksData);
       } catch (error) {
         handleError(error);
       }
@@ -60,15 +57,6 @@ function EmployeeViewPage() {
 
     fetchData();
   }, [employeeId]);
-
-  useEffect(() => {
-    if (!allTasks.length) return;
-    setCurrentTasks(
-      allTasks.filter((task) =>
-        tasksStatus ? task.status === tasksStatus : true
-      )
-    );
-  }, [tasksStatus, allTasks]);
 
   useEffect(() => {
     getQuestionnaireList(employeeId)
@@ -116,6 +104,11 @@ function EmployeeViewPage() {
     setVersion(version + 1);
   }
 
+  async function getTasksByStatus(status) {
+    const tasks = await getUserTasksWithStatusByAdmin(employeeId, status);
+    setCurrentTasks(tasks);
+  }
+
   return (
     <>
       {isPopupOpen && (
@@ -137,7 +130,7 @@ function EmployeeViewPage() {
           handleChange={handleChange}
           showAllCards={showAllCards}
           version={version}
-          setTasksStatus={setTasksStatus}
+          getTasksByStatus={getTasksByStatus}
         />
         <EmployeeViewBlock
           tasks={currentTasks}

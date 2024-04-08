@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import InputStars from '../InputStars/InputStars';
 import styles from './EmployeeViewFilter.module.scss';
 
-function EmployeeViewFilter({ handleChange, showAllCards, version, setTasksStatus }) {
+function EmployeeViewFilter({ handleChange, showAllCards, version, getTasksByStatus }) {
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
 
   return viewMarks ? (
@@ -48,7 +48,7 @@ function EmployeeViewFilter({ handleChange, showAllCards, version, setTasksStatu
           value="new"
           aria-label="К выполнению"
           defaultChecked
-          onClick={() => setTasksStatus('NEW')}
+          onClick={() => getTasksByStatus('NEW')}
         />
         <label htmlFor="new" className={styles.employeeViewFilter__label}>
           К выполнению
@@ -60,7 +60,7 @@ function EmployeeViewFilter({ handleChange, showAllCards, version, setTasksStatu
           id="inProgress"
           value="inProgress"
           aria-label="В работе"
-          onClick={() => setTasksStatus('IN_PROGRESS')}
+          onClick={() => getTasksByStatus('IN_PROGRESS')}
         />
         <label
           htmlFor="inProgress"
@@ -75,7 +75,7 @@ function EmployeeViewFilter({ handleChange, showAllCards, version, setTasksStatu
           id="review"
           value="review"
           aria-label="На ревью"
-          onClick={() => setTasksStatus('REVIEW')}
+          onClick={() => getTasksByStatus('REVIEW')}
         />
         <label htmlFor="review" className={styles.employeeViewFilter__label}>
           На ревью
@@ -87,7 +87,7 @@ function EmployeeViewFilter({ handleChange, showAllCards, version, setTasksStatu
           id="done"
           value="done"
           aria-label="Выполнено"
-          onClick={() => setTasksStatus('DONE')}
+          onClick={() => getTasksByStatus('DONE')}
         />
         <label htmlFor="done" className={styles.employeeViewFilter__label}>
           Выполнено

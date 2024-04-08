@@ -108,8 +108,8 @@ export const setNewProjects = (nameProject) => {
 export const deleteProject = (id) =>
   request(`${ADMIN_PROJECTS}/${id}`, 'DELETE');
 
-export const getAllUserTasksByAdmin = (employeeId) =>
-  request(`${ADMIN_TASK}/find?employeeId=${employeeId}`, 'GET');
+export const getUserTasksWithStatusByAdmin = (employeeId, status) =>
+  request(`${ADMIN_TASK}/find?employeeId=${employeeId}&status=${status}`, 'GET');
 
 export const getTaskDetailsByAdmin = (taskId) =>
   request(`${ADMIN_TASK}/${taskId}`, 'GET');

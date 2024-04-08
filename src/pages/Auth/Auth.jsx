@@ -42,7 +42,6 @@ function Auth() {
         dispatch(setToken(res.token));
         dispatch(setIsLoggedIn(true));
         getUserData(res.token).then((res) => {
-          console.log('res', res);
           dispatch(setAdminData(res));
           res.role === 'ROLE_ADMIN' ? navigate(personalArea) : navigate(taskCards);
         });
