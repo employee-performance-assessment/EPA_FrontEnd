@@ -12,7 +12,7 @@ import styles from './EmployeeViewPage.module.scss';
 import {
   getCurrentUser,
   getUserTasksWithStatusByAdmin,
-  getTasksByUser,
+  getTasksWithStatusByUser,
   getQuestionnaireList,
 } from '../../utils/mainApi.js';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
@@ -46,7 +46,7 @@ function EmployeeViewPage() {
           tasksData = await getUserTasksWithStatusByAdmin(employeeId, 'NEW');
         } else {
           userData = await getCurrentUser(user.id);
-          tasksData = await getTasksByUser();
+          tasksData = await getTasksWithStatusByUser('NEW');
         }
         setEmployee(userData);
         setCurrentTasks(tasksData);
@@ -65,8 +65,8 @@ function EmployeeViewPage() {
         setCurrentMarks(res);
       })
       .catch((err) => {
-        // eslint-disable-next-line no-alert
-        alert(err);
+        // eslint-disable-next-line no-console
+        console.log('err in getQuestionnaireList', err);
       });
   }, [employeeId]);
 
@@ -105,7 +105,11 @@ function EmployeeViewPage() {
   }
 
   async function getTasksByStatus(status) {
-    const tasks = await getUserTasksWithStatusByAdmin(employeeId, status);
+    const tasks =
+      user.role === 'ROLE_ADMIN'
+        ? await getUserTasksWithStatusByAdmin(employeeId, status)
+        : await getTasksWithStatusByUser(status);
+
     setCurrentTasks(tasks);
   }
 
