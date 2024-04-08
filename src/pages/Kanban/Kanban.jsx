@@ -5,12 +5,12 @@ import { NotFoundTask } from '../../components/NotFoundTask/NotFoundTask.jsx';
 import { NotProject } from '../../components/NotProject/NotProject.jsx';
 import PopupKanban from '../../components/PopupKanban/PopupKanban.jsx';
 import PopupAddNewTask from '../../components/PopupAddNewTask/PopupAddNewTask.jsx';
+import PopupEditTask from '../../components/PopupEditTask/PopupEditTask.jsx';
 import PopupProject from '../../components/PopupProject/PopupProject.jsx';
 import plus from '../../images/Plus.svg';
 import edit from '../../images/edit-button-icon.svg';
 import caretDown from '../../images/CaretDown_black.svg';
-import { boardsListEmpty } from '../../constants/boardsList.js';
-import { getProjectsName, getInfoOwnerJWT } from '../../utils/mainApi.js';
+import { getProjectsName, getInfoOwnerJWT, getAdminTask } from '../../utils/mainApi.js';
 import './Kanban.scss';
 
 function Kanban() {
@@ -23,6 +23,7 @@ function Kanban() {
   const [currentProgect, setCurrentProject] = useState({});
   const [isOpenPopupAddTask, setIsOpenPopupAddTask] = useState(false);
   const [isOpenPopupProject, setIsOpenPopupProject] = useState(false);
+  const [tasks, setTasks] = useState([])
 
   useEffect(() => {
     if (projects.length > 0) {
@@ -33,10 +34,14 @@ function Kanban() {
   }, [projects]);
 
   useEffect(() => {
-    Promise.all([getProjectsName(), getInfoOwnerJWT()])
+    Promise.all([getProjectsName(), getInfoOwnerJWT(), getAdminTask()])
       .then((res) => {
         setIdOwnerJWT(res[1].id);
         setProjects(res[0]);
+        setTasks(res[2])
+        if (res[2].length > 0) {
+          setIsNoTask(false)
+        }
       })
       .catch((err) => console.log(err));
   }, []);
@@ -132,7 +137,7 @@ function Kanban() {
             </button>
           </div>
         </nav>
-        <Boards boardsList={boardsListEmpty} />
+        <Boards tasks={tasks} />
         {isNoProject ? (
           <NotProject setProjects={setProjects} />
         ) : (

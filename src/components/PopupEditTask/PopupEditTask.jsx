@@ -2,31 +2,65 @@ import { useState, useEffect } from 'react';
 import './PopupEditTask.scss';
 import DropdownMenu from '../DropDownMenu/DropDownMenu';
 import OneDatePicker from '../OneDatePicker/OneDatePicker.jsx';
-import { getAllUsers, setNewTask } from '../../utils/mainApi.js';
+import { getAllUsers, patchAdminTask } from '../../utils/mainApi.js';
+
+
 
 function PopupEditTask({ setIsOpenPopup, title, projects, taskOldContent }) {
-  const [startDate, setStartDate] = useState(null);
-  const [taskName, setTaskName] = useState('');
-  const [project, setProject] = useState('');
-  const [employee, setEmployee] = useState({ name: '', id: 0 });
-  const [pointTask, setPointTask] = useState(0);
-  const [pointsPenalty, setPointsPenalty] = useState(0);
-  const [taskContent, setTaskContent] = useState('');
+
+  /* так должны выглядеть пропсы. 
+<PopupEditTask
+          setIsOpenPopup={setIsOpenPopupAddTask}
+          idProject={currentProgect.id}
+          title="Редактировать здачу"
+          projects={projects}
+          taskOldContent={{
+            name: "fp8JzvbDEU4OA",
+            description: "Jzj5tXmoFRO1",
+            project: { name: 'projectfdsfsf', id: 9 },
+            employee: { name: 'employeedfssfs', id: 133 },
+            deadLine: "2024-04-08",
+            status: "NEW",
+            basicPoints: 11110,
+            penaltyPoints: 10,
+            taskId: 48
+          }
+          }
+        />
+       */
+
+  const [startDate, setStartDate] = useState(taskOldContent.deadLine);
+  const [taskName, setTaskName] = useState(taskOldContent.name);
+  const [project, setProject] = useState(taskOldContent.project);
+  const [employee, setEmployee] = useState(taskOldContent.employee);
+  const [pointTask, setPointTask] = useState(taskOldContent.basicPoints);
+  const [pointsPenalty, setPointsPenalty] = useState(taskOldContent.penaltyPoints);
+  const [taskContent, setTaskContent] = useState(taskOldContent.description);
   const [employees, setEmployees] = useState([]);
   const [isOpenDropMenuProjects, setIsOpenDropMenuProjects] = useState(false);
   const [isOpenDropMenuEmployees, setIsOpenDropMenuEmployees] = useState(false);
 
   function handleClickSubmit() {
-    setNewTask({
+    console.log(JSON.stringify({
       name: taskName,
       description: taskContent,
       projectId: project.id,
       executorId: employee.id,
       deadLine: convertDate(startDate),
-      status: 'TODO',
-      basicPoints: pointTask,
+      status: taskOldContent.status,
+      basicPoints: pointTask * 1,
       penaltyPoints: pointsPenalty,
-    }).catch((err) => console.log(err));
+    }))
+    patchAdminTask(taskOldContent.taskId, {
+      name: taskName,
+      description: taskContent,
+      projectId: project.id,
+      executorId: employee.id,
+      deadLine: convertDate(startDate),
+      status: taskOldContent.status,
+      basicPoints: pointTask * 1,
+      penaltyPoints: pointsPenalty,
+    }).then(res => setIsOpenPopup(false)).catch((err) => console.log(err));
   }
 
   function convertDate(dateStr) {
@@ -54,6 +88,7 @@ function PopupEditTask({ setIsOpenPopup, title, projects, taskOldContent }) {
               className="popup-edit-task__input "
               placeholder="Название задачи"
               onChange={(e) => setTaskName(e.target.value)}
+              value={taskName}
             />
           </div>
           <div className="popup-edit-task__input-container">
@@ -121,6 +156,7 @@ function PopupEditTask({ setIsOpenPopup, title, projects, taskOldContent }) {
               className="popup-edit-task__input "
               placeholder="Баллы за задачу"
               onChange={(e) => setPointTask(e.target.value)}
+              value={pointTask}
             />
           </div>
           <div className="popup-edit-task__input-container">
@@ -129,7 +165,7 @@ function PopupEditTask({ setIsOpenPopup, title, projects, taskOldContent }) {
               className="popup-edit-task__input "
               placeholder="Бонусные и штрафные баллы"
               onChange={(e) => setPointsPenalty(e.target.value)}
-              employee
+              value={pointsPenalty}
             />
           </div>
           <div className="popup-edit-task__input-container popup-edit-task__input-container_big">
@@ -142,6 +178,7 @@ function PopupEditTask({ setIsOpenPopup, title, projects, taskOldContent }) {
               className="popup-edit-task__input_textarea"
               placeholder="Описание задачи"
               onChange={(e) => setTaskContent(e.target.value)}
+              value={taskContent}
             />
           </div>
         </form>

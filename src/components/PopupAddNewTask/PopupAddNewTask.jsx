@@ -133,7 +133,6 @@ function PopupEditTask({ setIsOpenPopup, title, projects }) {
               className="popup-edit-task__input "
               placeholder="Бонусные и штрафные баллы"
               onChange={(e) => setPointsPenalty(e.target.value)}
-              employee
             />
           </div>
           <div className="popup-edit-task__input-container popup-edit-task__input-container_big">

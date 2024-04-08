@@ -133,4 +133,13 @@ export const getInfoOwnerJWT = () =>
 export const setNewTask = (requestBody) =>
   makeAuthenticatedRequest(ADMIN_TASK, 'POST', requestBody);
 
-export const getAdminTask = () => makeAuthenticatedRequest(ADMIN_TASK, 'GET');
+export const getAdminTask = () => makeAuthenticatedRequest(ADMIN_TASK, 'GET'); // взять все задачи админа
+
+export const patchAdminTask = (taskId, requestBody) => {
+  console.log(taskId, requestBody);
+  return makeAuthenticatedRequest(
+    `${ADMIN_TASK}/${taskId}`,
+    'PATCH',
+    requestBody
+  );
+};
