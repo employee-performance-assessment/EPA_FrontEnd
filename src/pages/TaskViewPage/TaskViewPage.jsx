@@ -48,7 +48,6 @@ function TaskViewPage() {
     } else {
       getTaskDetailsByUser(taskId)
         .then((res) => {
-          console.log('get task details by user', res);
           setTask({
             id: res.id,
             name: res.name,
@@ -108,14 +107,16 @@ function TaskViewPage() {
             </button>
             <h4 className={styles.taskViewPage__id}>{task.id}</h4>
             <CustomSelect task={task} />
-            <button
-              type="button"
-              className={styles.taskViewPage__edit}
-              onClick={() => setIsEditTaskFormOpen(true)}
-            >
-              <div />
-              Редактировать
-            </button>
+            {role === 'ROLE_ADMIN' && (
+              <button
+                type="button"
+                className={styles.taskViewPage__edit}
+                onClick={() => setIsEditTaskFormOpen(true)}
+              >
+                <div />
+                Редактировать
+              </button>
+            )}
           </div>
           <div className={styles.taskViewPage__score}>
             {task.basicPoints} баллов
