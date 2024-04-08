@@ -135,6 +135,7 @@ export const updateTaskByAdmin = (task) => {
 // USER TASKS
 export const getTasksWithStatusByUser = (status) => request(`${USER_TASK}?status=${status}`, 'GET');
 export const getTaskDetailsByUser = (taskId) => request(`${USER_TASK}/${taskId}`, 'GET');
+export const updateTaskStatusByUser = (taskId, status) => request(`${USER_TASK}/${taskId}?status=${status}`, 'PATCH');
 
 export const getColleaguesEvaluation = () => request(EVALUATIONS, 'GET');
 

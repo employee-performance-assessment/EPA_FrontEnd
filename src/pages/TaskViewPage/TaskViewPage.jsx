@@ -5,7 +5,7 @@ import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
 import {
   getTaskDetailsByAdmin,
   deleteTaskByAdmin,
-  getTaskDetailsByUser,
+  getTaskDetailsByUser
 } from '../../utils/mainApi.js';
 import { formatDate } from '../../utils/utils.js';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
