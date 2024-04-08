@@ -47,9 +47,11 @@ function AssessmentBlock() {
     if (e.target.id === 'isAppreciated') {
       localStorage.setItem('isAppreciated', true)
       dispatch(setIsAppreciated(true));
+      setUsers([]);
     } else {
       localStorage.setItem('isAppreciated', false);
       dispatch(setIsAppreciated(false));
+      setUsers([]);
     }
   }
 
