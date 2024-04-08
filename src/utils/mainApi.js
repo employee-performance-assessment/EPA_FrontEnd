@@ -108,8 +108,8 @@ export const setNewProjects = (nameProject) => {
 export const deleteProject = (id) =>
   request(`${ADMIN_PROJECTS}/${id}`, 'DELETE');
 
-export const getAllUserTasksByAdmin = (employeeId) =>
-  request(`${ADMIN_TASK}/find?employeeId=${employeeId}`, 'GET');
+export const getUserTasksWithStatusByAdmin = (employeeId, status) =>
+  request(`${ADMIN_TASK}/find?employeeId=${employeeId}&status=${status}`, 'GET');
 
 export const getTaskDetailsByAdmin = (taskId) =>
   request(`${ADMIN_TASK}/${taskId}`, 'GET');
@@ -131,7 +131,7 @@ export const updateTaskByAdmin = (task) => {
   request(`${ADMIN_TASK}/${task.id}`, 'PATCH', requestBody);
 };
 
-export const getTasksByUser = () => request(USER_TASK, 'GET');
+export const getTasksWithStatusByUser = (status) => request(`${USER_TASK}?status=${status}`, 'GET');
 
 export const getColleaguesEvaluation = () => request(EVALUATIONS, 'GET');
 
