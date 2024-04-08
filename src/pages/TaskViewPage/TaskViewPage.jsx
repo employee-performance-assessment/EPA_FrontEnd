@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
 import {
   getTaskDetailsByAdmin,
   deleteTaskByAdmin,
+  getTaskDetailsByUser,
 } from '../../utils/mainApi.js';
 import { formatDate } from '../../utils/utils.js';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
@@ -17,12 +18,12 @@ function TaskViewPage() {
   const [isEditTaskFormOpen, setIsEditTaskFormOpen] = useState(false);
   const { id: taskId } = useParams();
   const navigate = useNavigate();
-  const { fullName: adminName } = useSelector((state) => state.adminData);
+  const { fullName: adminName, role } = useSelector((state) => state.adminData);
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
   useEffect(() => {
-    if (taskId) {
+    if (taskId && role === 'ROLE_ADMIN') {
       getTaskDetailsByAdmin(taskId)
         .then((res) => {
           if (res) {
@@ -38,12 +39,30 @@ function TaskViewPage() {
               deadLine: formatDate(res.deadLine),
               penaltyPoints: res.penaltyPoints,
               basicPoints: res.basicPoints,
-              status: res.status
+              status: res.status,
+              admin: adminName,
             });
           }
         })
-        // eslint-disable-next-line no-alert
-        .catch((err) => alert(err));
+        .catch((err) => handleError(err));
+    } else {
+      getTaskDetailsByUser(taskId)
+        .then((res) => {
+          console.log('get task details by user', res);
+          setTask({
+            id: res.id,
+            name: res.name,
+            description: res.description,
+            creationDate: formatDate(res.createDate),
+            deadLine: formatDate(res.deadLine),
+            penaltyPoints: res.penaltyPoints,
+            basicPoints: res.basicPoints,
+            executorName: res.executor.fullName,
+            admin: res.owner.fullName,
+            projectName: res.project.name,
+          });
+        })
+        .catch((err) => handleError(err));
     }
   }, [taskId]);
 
@@ -71,7 +90,10 @@ function TaskViewPage() {
         />
       )}
       {isEditTaskFormOpen && (
-        <PopupEditTask title='Редактировать' setIsOpenPopup={setIsEditTaskFormOpen}/>
+        <PopupEditTask
+          title="Редактировать"
+          setIsOpenPopup={setIsEditTaskFormOpen}
+        />
       )}
       <section className={styles.taskViewPage__container}>
         <div className={styles.taskViewPage__header}>
@@ -86,12 +108,18 @@ function TaskViewPage() {
             </button>
             <h4 className={styles.taskViewPage__id}>{task.id}</h4>
             <CustomSelect task={task} />
-            <button type="button" className={styles.taskViewPage__edit} onClick={() => setIsEditTaskFormOpen(true)}>
+            <button
+              type="button"
+              className={styles.taskViewPage__edit}
+              onClick={() => setIsEditTaskFormOpen(true)}
+            >
               <div />
               Редактировать
             </button>
           </div>
-          <div className={styles.taskViewPage__score}>{task.basicPoints} баллов</div>
+          <div className={styles.taskViewPage__score}>
+            {task.basicPoints} баллов
+          </div>
         </div>
 
         <div className={styles.taskViewPage__block}>
@@ -125,20 +153,22 @@ function TaskViewPage() {
               </li>
               <li>
                 <p className={styles.taskViewPage__name}>Админ:</p>
-                <p className={styles.taskViewPage__value}>{adminName}</p>
+                <p className={styles.taskViewPage__value}>{task.admin}</p>
               </li>
               <li>
                 <p className={styles.taskViewPage__name}>Проект:</p>
                 <p className={styles.taskViewPage__value}>{task.projectName}</p>
               </li>
             </ul>
-            <button
-              type="button"
-              className={styles.taskViewPage__delete}
-              onClick={handleDeleteTask}
-            >
-              Удалить задачу
-            </button>
+            {role === 'ROLE_ADMIN' && (
+              <button
+                type="button"
+                className={styles.taskViewPage__delete}
+                onClick={handleDeleteTask}
+              >
+                Удалить задачу
+              </button>
+            )}
           </div>
         </div>
       </section>

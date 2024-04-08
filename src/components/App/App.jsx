@@ -104,7 +104,6 @@ function App() {
             path={`${ratingCards}/:employeeId/:questionnaireId`}
             element={<EmployeeRatingPage />}
           />
-          <Route path={`${taskCards}/:id`} element={<TaskViewPage />} />
           <Route path={estimate} element={<AssessmentBlock />} />
           <Route
             path={`${questionnaire}/:date/:questionnaireId/:employeeId`}
@@ -114,6 +113,7 @@ function App() {
         <Route path="" element={<ProtectedRoute />}>
           <Route path={anyPage} element={<NotFound />} />
           <Route path={taskCards} element={<EmployeeViewPage />} />
+          <Route path={`${taskCards}/:id`} element={<TaskViewPage />} />
         </Route>
       </Routes>
     </div>
