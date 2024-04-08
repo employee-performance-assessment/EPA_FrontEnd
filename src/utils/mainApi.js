@@ -158,7 +158,7 @@ export const getEvaluationsList = (questionnaireId, evaluatedId) =>
 
 export const getEvaluations = (evaluatedId, questionnaireId) =>
   request(
-    `${ADMIN_EVALUATIONS}/?evaluatedId=${evaluatedId}&questionnaireId=${questionnaireId}`,
+    `${ADMIN_EVALUATIONS}?evaluatedId=${evaluatedId}&questionnaireId=${questionnaireId}`,
     'GET'
   );
 
