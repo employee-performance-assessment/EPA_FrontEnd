@@ -8,6 +8,10 @@ import {
   ADMIN_CRITERIA_DEFAULT,
   USER_QUESTIONNAIRE,
   ADMIN_EVALUATIONS,
+<<<<<<< HEAD
+  RECO,
+  EMPLOYEE_ME,
+=======
   ADMIN_PROJECTS,
   ADMIN_CRITERIA,
   ADMIN_ASSESSED,
@@ -20,6 +24,7 @@ import {
   ADMIN_USER_QUESTIONNAIRE_LIST,
   ADMIN_RATING,
   ADMIN_STAT_POINTS,
+>>>>>>> e0a737114c06c07dea091515e75ccdea2e780221
 } from '../constants/constantAPI.js';
 
 function getToken() {
@@ -172,5 +177,24 @@ export const getQuestionnaireList = (evaluatedId) =>
 export const getRating = (employeeId) =>
   request(`${ADMIN_RATING}/${employeeId}`, 'GET');
 
+export const getAdminEvaluation = () =>
+  makeAuthenticatedRequest(ADMIN_EVALUATIONS, 'GET');
+
+export const getReco = (id) => makeAuthenticatedRequest(`${RECO}/${id}`, 'GET');
+
+export const getInfoOwnerJWT = () =>
+  makeAuthenticatedRequest(EMPLOYEE_ME, 'GET');
+
+export const setNewTask = (requestBody) =>
+  makeAuthenticatedRequest(ADMIN_TASK, 'POST', requestBody);
+
+export const getAdminTask = () => makeAuthenticatedRequest(ADMIN_TASK, 'GET'); // взять все задачи админа
+
+export const patchAdminTask = (taskId, requestBody) =>  makeAuthenticatedRequest(
+    `${ADMIN_TASK}/${taskId}`,
+    'PATCH',
+    requestBody
+  );
+  
 export const getStatPoints = (employeeId) =>
   request(`${ADMIN_STAT_POINTS}/${employeeId}`, 'GET');
