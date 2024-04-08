@@ -3,72 +3,90 @@ import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import EmployeeViewHeader from '../../components/EmployeeViewHeader/EmployeeViewHeader.jsx';
 import Switch from '../../components/Switch/Switch.jsx';
+import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import EmployeeViewFilter from '../../components/EmployeeViewFilter/EmployeeViewFilter.jsx';
 import EmployeeViewBlock from '../../components/EmployeeViewBlock/EmployeeViewBlock.jsx';
 import { useFormValidation } from '../../hooks/useFormValidation';
 import { setViewMarks } from '../../store/slices/viewMarksSlices.js';
 import styles from './EmployeeViewPage.module.scss';
-import initMarks from './marks.json';
-import { getCurrentUser, getAllUserTasksByAdmin } from '../../utils/mainApi.js';
+import {
+  getCurrentUser,
+  getUserTasksWithStatusByAdmin,
+  getTasksWithStatusByUser,
+  getQuestionnaireList,
+} from '../../utils/mainApi.js';
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 function EmployeeViewPage() {
-  const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
   const dispatch = useDispatch();
-  const { values, handleChange, setValues } = useFormValidation();
-  const [viewTask, setViewTask] = useState(viewMarks);
-  const [marks, setMarks] = useState([]);
-  const [allTasks, setAllTasks] = useState([]);
-  const [currentTasks, setCurrentTasks] = useState([]);
-  const [version, setVersion] = useState(0);
   const { id: employeeId } = useParams();
 
+  const user = useSelector((state) => state.adminData);
+  const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
+
+  const { values, handleChange, setValues } = useFormValidation();
+  const [viewTask, setViewTask] = useState(viewMarks);
+  const [allMarks, setAllMarks] = useState([]);
+  const [currentMarks, setCurrentMarks] = useState([]);
+  const [currentTasks, setCurrentTasks] = useState([]);
+  const [version, setVersion] = useState(0);
   const [employee, setEmployee] = useState({});
-  const [tasksStatus, setTasksStatus] = useState('NEW');
+
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+    useErrorHandler();
 
   useEffect(() => {
-    if (employeeId) {
-      getCurrentUser(employeeId)
-        .then((res) => {
-          setEmployee(res);
-        })
-        .catch((err) => {
-          // eslint-disable-next-line no-alert
-          alert(err);
-        });
-    }
+    const fetchData = async () => {
+      try {
+        let userData;
+        let tasksData;
+
+        if (employeeId && user.role === 'ROLE_ADMIN') {
+          userData = await getCurrentUser(employeeId);
+          tasksData = await getUserTasksWithStatusByAdmin(employeeId, 'NEW');
+        } else {
+          userData = await getCurrentUser(user.id);
+          tasksData = await getTasksWithStatusByUser('NEW');
+        }
+        setEmployee(userData);
+        setCurrentTasks(tasksData);
+      } catch (error) {
+        handleError(error);
+      }
+    };
+
+    fetchData();
   }, [employeeId]);
 
   useEffect(() => {
-    if (employeeId) {
-      getAllUserTasksByAdmin(employeeId)
-        .then((res) => {
-          setAllTasks(res);
-        })
-        .catch((err) => {
-          // eslint-disable-next-line no-alert
-          alert(err);
-        });
-    }
+    getQuestionnaireList(employeeId)
+      .then((res) => {
+        setAllMarks(res);
+        setCurrentMarks(res);
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log('err in getQuestionnaireList', err);
+      });
   }, [employeeId]);
 
-
+  // Сортировка анкет по дате
   useEffect(() => {
-    if (!allTasks.length) return;
-
-    setCurrentTasks(
-      allTasks.filter((task) => tasksStatus ? task.status === tasksStatus : true)
+    const sorted = allMarks.sort((a, b) =>
+      b.createQuestionnaire.localeCompare(a.createQuestionnaire)
     );
-  }, [tasksStatus, allTasks]);
+    setAllMarks(sorted);
+  }, []);
 
   useEffect(() => {
     if (values.stars) {
-      setMarks(
-        initMarks.filter(
-          (i) => Math.round(Number(i.rating)) === Number(values.stars)
+      setCurrentMarks(
+        allMarks.filter(
+          (i) => Math.round(Number(i.middleScore)) === Number(values.stars)
         )
       );
     } else {
-      setMarks(initMarks);
+      setCurrentMarks(allMarks);
     }
   }, [values]);
 
@@ -77,7 +95,7 @@ function EmployeeViewPage() {
   }, [viewTask]);
 
   function showAllCards() {
-    setMarks(initMarks);
+    setCurrentMarks(allMarks);
     setValues({});
     resetStarsFilter();
   }
@@ -86,23 +104,45 @@ function EmployeeViewPage() {
     setVersion(version + 1);
   }
 
+  async function getTasksByStatus(status) {
+    const tasks =
+      user.role === 'ROLE_ADMIN'
+        ? await getUserTasksWithStatusByAdmin(employeeId, status)
+        : await getTasksWithStatusByUser(status);
+
+    setCurrentTasks(tasks);
+  }
+
   return (
-    <section className={styles.employeeViewPage__container}>
-      <EmployeeViewHeader employee={employee} />
-      <Switch
-        labelLeft="Задачи"
-        labelRight="Оценки"
-        isChecked={viewTask}
-        setIsChecked={setViewTask}
-      />
-      <EmployeeViewFilter
-        handleChange={handleChange}
-        showAllCards={showAllCards}
-        version={version}
-        setTasksStatus={setTasksStatus}
-      />
-      <EmployeeViewBlock tasks={currentTasks} marks={marks} employeeId={employeeId}/>
-    </section>
+    <>
+      {isPopupOpen && (
+        <InfoPopup
+          title={popupTitle}
+          text={popupText}
+          handleClosePopup={closePopup}
+        />
+      )}
+      <section className={styles.employeeViewPage__container}>
+        <EmployeeViewHeader employee={employee} />
+        <Switch
+          labelLeft="Задачи"
+          labelRight="Оценки"
+          isChecked={viewTask}
+          setIsChecked={setViewTask}
+        />
+        <EmployeeViewFilter
+          handleChange={handleChange}
+          showAllCards={showAllCards}
+          version={version}
+          getTasksByStatus={getTasksByStatus}
+        />
+        <EmployeeViewBlock
+          tasks={currentTasks}
+          marks={currentMarks}
+          employeeId={employeeId}
+        />
+      </section>
+    </>
   );
 }
 

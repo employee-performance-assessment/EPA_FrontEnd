@@ -39,7 +39,7 @@ function MenuAdmin() {
       setIsBoard(true) : setIsBoard(false);
 
     pathname.includes(estimate) ||
-    pathname.includes(questionnaire) ?
+      pathname.includes(questionnaire) ?
       setIsEstimate(true) : setIsEstimate(false);
 
     pathname.includes(analytics) ?
@@ -48,40 +48,30 @@ function MenuAdmin() {
 
   return (
     <ul className="side-menu__list">
-      <Link
-        to={personalArea}
-        className={`side-menu__item side-menu__item-personal
-        ${isPersonalArea && 'side-menu__item_active side-menu__item-personal_active'}`}
-      >
-        <p className="side-menu__text">Личный кабинет</p>
+      <Link to={personalArea} className="side-menu__item">
+        <div className={`side-menu__icon side-menu__icon-personal
+          ${isPersonalArea && 'side-menu__icon-personal_active'}`} />
+        <p className={`side-menu__text ${isPersonalArea && 'side-menu__text_active'}`}>Личный кабинет</p>
       </Link>
-      <Link
-        to={myTeam}
-        className={`side-menu__item side-menu__item-my-team
-        ${isMyTeam && 'side-menu__item_active side-menu__item-my-team_active'}`}
-      >
-        <p className="side-menu__text">Моя команда</p>
+      <Link to={myTeam} className="side-menu__item">
+        <div className={`side-menu__icon side-menu__icon-my-team
+          ${isMyTeam && 'side-menu__icon-my-team_active'}`} />
+        <p className={`side-menu__text ${isMyTeam && 'side-menu__text_active'}`}>Моя команда</p>
       </Link>
-      <Link
-        to={board}
-        className={`side-menu__item side-menu__item-kanban
-        ${isBoard && 'side-menu__item_active side-menu__item-kanban_active'}`}
-      >
-        <p className="side-menu__text">Канбан доска</p>
+      <Link to={board} className="side-menu__item">
+        <div className={`side-menu__icon side-menu__icon-kanban
+          ${isBoard && 'side-menu__icon-kanban_active'}`} />
+        <p className={`side-menu__text ${isBoard && 'side-menu__text_active'}`}>Канбан доска</p>
       </Link>
-      <Link
-        to={estimate}
-        className={`side-menu__item side-menu__item-asses
-        ${isEstimate && 'side-menu__item_active side-menu__item-asses_active'}`}
-      >
-        <p className="side-menu__text">Оценка ЭС</p>
+      <Link to={estimate} className="side-menu__item">
+        <div className={`side-menu__icon side-menu__icon-assessments
+          ${isEstimate && 'side-menu__icon-assessments_active'}`} />
+        <p className={`side-menu__text ${isEstimate && 'side-menu__text_active'}`}>Оценка ЭС</p>
       </Link>
-      <Link
-        to={analytics}
-        className={`side-menu__item side-menu__item-analytics
-        ${isAnalytics && 'side-menu__item_active side-menu__item-analytics_active'}`}
-      >
-        <p className="side-menu__text"> Аналитика</p>
+      <Link to={analytics} className="side-menu__item">
+        <div className={`side-menu__icon side-menu__icon-analytics
+          ${isAnalytics && 'side-menu__icon-analytics_active'}`} />
+        <p className={`side-menu__text ${isAnalytics && 'side-menu__text_active'}`}>Аналитика</p>
       </Link>
     </ul>
   );

@@ -1,117 +1,175 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import './Questionnaire.scss';
-import icon from '../../images/Questionnaire_user.svg';
+import { useSelector, useDispatch } from 'react-redux';
 import InputStars from '../InputStars/InputStars.js';
-import '../InputStars/InputStars.scss';
-import { getAllCriterion, getCurrentUser } from '../../utils/mainApi.js';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
+import { useFormValidation } from '../../hooks/useFormValidation';
+import { setIsAppreciated } from '../../store/slices/isAppreciatedSlices.js';
+import InfoPopup from "../InfoPopup/InfoPopup.jsx";
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import SetStars from '../SetStars/SetStars.js';
+import {
+  getCurrentUser,
+  getEvaluationsList,
+  getQuestionnaire,
+  postEvaluationsList
+} from '../../utils/mainApi.js';
+import './Questionnaire.scss';
 
 export default function Questionnaire() {
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const isAppreciated = useSelector((state) => state.isAppreciated.isAppreciated);
   const [criteria, setCriteria] = useState([]);
-  const [user, setUser] = useState();
+  const [isActiveButton, setIsActiveButton] = useState(false);
+  const { values, handleChange, } = useFormValidation();
+  const [user, setUser] = useState({ fullName: '', position: '' });
+  const { estimate } = ENDPOINT_ROUTES;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const params = useParams();
-  const employeeId = params.id;
+  const { date, questionnaireId, employeeId } = params;
 
-  const name = 'ssss';
-  const job = 'cccc';
+  if (localStorage.getItem('isAppreciated')) {
+    dispatch(setIsAppreciated(JSON.parse(localStorage.getItem('isAppreciated'))));
+  }
 
   useEffect(() => {
-    getAllCriterion()
-      .then((res) => {
-        setCriteria(res);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    handleActiveButtonSubmit();
+  }, [values, criteria])
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (isAppreciated) {
+      getQuestionnaire(questionnaireId)
+        .then((res) => {
+          setCriteria(res.criterias);
+        })
+        .catch((err) => handleError(err));
+    } else {
+      getEvaluationsList(questionnaireId, employeeId)
+        .then((res) => {
+          setCriteria(res.adminEvaluations);
+          values['recommendation'] = res.recommendation;
+        })
+        .catch((err) => handleError(err));
+    }
+  }, [])
 
   useEffect(() => {
     getCurrentUser(employeeId)
       .then((res) => {
-        setUser(res);
+        setUser({
+          fullName: res.fullName,
+          position: res.position
+        });
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [setUser]);
+      .catch((err) => handleError(err));
+  }, []);
 
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-  //   console.log(e.target);
-  // }
+  function handleActiveButtonSubmit() {
+    const objectKeys = Object.keys(values);
+    const lengthValues = objectKeys.length;
+    const lengthCriteria = criteria.length;
+
+    if (lengthCriteria + 1 === lengthValues && values['recommendation']) {
+      setIsActiveButton(true);
+    } else {
+      setIsActiveButton(false);
+    }
+  }
 
   function GoBack() {
-    navigate('/estimate');
+    navigate(estimate);
   }
 
-  function handleChange() {
-    // console.log(e.target.value);
-    // console.log(e.target.name);
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    const values = [];
-    const input = '';
-
+  function transformValues() {
+    const resultArr = [];
     // eslint-disable-next-line no-restricted-syntax
-    // for (const input of inputs) {
-    //   values.push(Number(input.value));
-    // }
-    console.log(values);
-    console.log(input);
-    console.log('user:', user);
-    return values;
+    for (const key in values) {
+      if (values[key] && key !== 'recommendation') {
+        resultArr.push({
+          criteriaId: Number(key),
+          score: Number(values[key])
+        });
+      }
+    }
+    return resultArr;
+  }
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    const recommendationValue = evt.target[0].value;
+    const resultData = {
+      questionnaireId,
+      evaluatedId: employeeId,
+      questionnaireData: {
+        evaluationDtoList: transformValues(),
+        recommendation: recommendationValue,
+      }
+    }
+
+    postEvaluationsList(resultData)
+      .then(() => {
+        navigate(estimate);
+      })
+      .catch((err) => handleError(err));
   }
 
   return (
-    <div className="Questionnaire">
-      <div className="Questionnaire__wrapper">
-        <div className="Questionnaire__header">
+    <div className="questionnaire">
+      {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
+      <div className="questionnaire__wrapper">
+        <div className="questionnaire__header">
           <button
-            className="Questionnaire-header__back-button"
-            onClick={() => GoBack()}
+            type="button"
+            className="questionnaire-header__back-button"
+            onClick={GoBack}
           >
             Назад к списку
           </button>
-          {/* здесть прокинуть пропсом период оценки */}
-          <span className="Questionnaire-header__data">
-            Оценка работы за март
-          </span>
-          <img
-            src={icon}
-            alt="иконка с символическим изображением аватара пользователя"
-            className="Questionnaire-header__icon"
-          />
-          <span className="Questionnaire-header__underscribe">{name}</span>
-          <span className="Questionnaire-header__underscribe">&frasl;</span>
-          <span className="Questionnaire-header__underscribe">{job}</span>
+          <span className="questionnaire-header__data">{date}</span>
+          <div className="questionnaire-header__icon" />
+          <span className="questionnaire-header__underscribe">{user.fullName}</span>
+          <span className="questionnaire-header__underscribe">&frasl;</span>
+          <span className="questionnaire-header__underscribe">{user.position}</span>
         </div>
-        <div className="Questionnaire-titles">
-          <span className="Questionnaire-titles__text">Критерии</span>
+        <div className="questionnaire-titles">
+          <span className="questionnaire-titles__text">Критерии</span>
           <span>Оценка</span>
         </div>
-        <form action="" onSubmit={(e) => handleSubmit(e)}>
-          <div className="Questionnaire-container">
-            {criteria.map((item) => (
-              <>
-                <p className="Questionnaire__criterion">{item.name}</p>
-                <div className="Questionnaire__value">
-                  <InputStars handleChange={handleChange} name={item.name} />
-                </div>
-              </>
-            ))}
-          </div>
-          <span className="Questionaire__text">
+        <div className="questionnaire-container">
+          {criteria.map((criterion) => (
+            <div className="questionnaire__criterion" key={criterion.id + criterion.name}>
+              <p className="questionnaire__criterion-name">{criterion.name}</p>
+              <div className="questionnaire__criterion-value">
+                {isAppreciated ?
+                  <InputStars handleChange={handleChange} name={criterion.id} /> :
+                  <SetStars
+                    rating={criterion.score}
+                    starOut="questionnaire__star_out"
+                    starIn="questionnaire__star_in" />}
+              </div>
+            </div>
+          ))}
+        </div>
+        <form onSubmit={handleSubmit} className="questionnaire__form">
+          <span className="questionnaire__text">
             Рекомендации для сотрудника
           </span>
           <textarea
+            name="recommendation"
             type="text"
-            className="Questionnaire__input-text"
+            className="questionnaire__input-text"
             placeholder="Ваши комментарии"
+            onChange={handleChange}
+            value={values['recommendation'] || ''}
+            disabled={!isAppreciated}
           />
-          <button className="Questionnaire__button">Отправить</button>
+          {isAppreciated && <button
+            className={`questionnaire__button ${isActiveButton && 'questionnaire__button_active'}`}
+            type="submit">
+            Отправить
+          </button>}
         </form>
       </div>
     </div>

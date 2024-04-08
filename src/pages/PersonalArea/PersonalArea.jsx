@@ -4,9 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFormValidation } from '../../hooks/useFormValidation.js';
 import { updateAdminData } from '../../utils/mainApi.js';
 import { setAdminData } from '../../store/slices/adminDataSlice.js';
+import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import './PersonalArea.scss';
 
 function PersonalArea() {
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const [editing, setEditing] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { errors, values, isValid, handleChange } = useFormValidation();
@@ -59,8 +62,7 @@ function PersonalArea() {
         values.repeatPassword = '';
         values.newPassword = '';
       })
-      // eslint-disable-next-line no-alert
-      .catch((err) => alert(err));
+      .catch((err) => handleError(err));
   }
 
   function handleEditing() {
@@ -73,6 +75,7 @@ function PersonalArea() {
 
   return (
     <section className="personal-area">
+      {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
       <div className="personal-area__header">
         <div className="personal-area__header-icon" />
         <h2 className="personal-area__header-title">{adminData.fullName}</h2>
@@ -146,7 +149,7 @@ function PersonalArea() {
                 className={`personal-area__password-eye ${passwordVisible
                   ? 'personal-area__password-eye_open'
                   : 'personal-area__password-eye_close'
-                }`}
+                  }`}
                 onClick={handlePasswordVisibility}
               />
               <span className="personal-area__input-error">
@@ -169,7 +172,7 @@ function PersonalArea() {
                 className={`personal-area__password-eye ${passwordVisible
                   ? 'personal-area__password-eye_open'
                   : 'personal-area__password-eye_close'
-                }`}
+                  }`}
                 onClick={handlePasswordVisibility}
               />
               <span className="personal-area__input-error">

@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import CustomSelect from '../../components/Filter/Filter.jsx';
+import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
 import {
   getTaskDetailsByAdmin,
   deleteTaskByAdmin,
+  getTaskDetailsByUser
 } from '../../utils/mainApi.js';
 import { formatDate } from '../../utils/utils.js';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
@@ -17,16 +18,12 @@ function TaskViewPage() {
   const [isEditTaskFormOpen, setIsEditTaskFormOpen] = useState(false);
   const { id: taskId } = useParams();
   const navigate = useNavigate();
-  const { fullName: adminName } = useSelector((state) => state.adminData);
+  const { fullName: adminName, role } = useSelector((state) => state.adminData);
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
-  function handleClickBack() {
-    navigate(-1);
-  }
-
   useEffect(() => {
-    if (taskId) {
+    if (taskId && role === 'ROLE_ADMIN') {
       getTaskDetailsByAdmin(taskId)
         .then((res) => {
           if (res) {
@@ -35,16 +32,36 @@ function TaskViewPage() {
               name: res.name,
               description: res.description,
               projectName: res.project.name,
+              projectId: res.project.id,
               executorName: res.executor.fullName,
               executorId: res.executor.id,
               creationDate: formatDate(res.createDate),
-              deadline: formatDate(res.deadLine),
-              penalty: res.penaltyPoints,
+              deadLine: formatDate(res.deadLine),
+              penaltyPoints: res.penaltyPoints,
+              basicPoints: res.basicPoints,
+              status: res.status,
+              admin: adminName,
             });
           }
         })
-        // eslint-disable-next-line no-alert
-        .catch((err) => alert(err));
+        .catch((err) => handleError(err));
+    } else {
+      getTaskDetailsByUser(taskId)
+        .then((res) => {
+          setTask({
+            id: res.id,
+            name: res.name,
+            description: res.description,
+            creationDate: formatDate(res.createDate),
+            deadLine: formatDate(res.deadLine),
+            penaltyPoints: res.penaltyPoints,
+            basicPoints: res.basicPoints,
+            executorName: res.executor.fullName,
+            admin: res.owner.fullName,
+            projectName: res.project.name,
+          });
+        })
+        .catch((err) => handleError(err));
     }
   }, [taskId]);
 
@@ -82,24 +99,28 @@ function TaskViewPage() {
           <div className={styles.taskViewPage__row}>
             <button
               type="button"
-              onClick={handleClickBack}
+              onClick={() => navigate(-1)}
               className={styles.taskViewPage__back}
             >
               <div className={styles.taskViewPage__icon} />
               <p className={styles.taskViewPage__caption}>Назад к задачам</p>
             </button>
             <h4 className={styles.taskViewPage__id}>{task.id}</h4>
-            <CustomSelect />
-            <button
-              type="button"
-              className={styles.taskViewPage__edit}
-              onClick={() => setIsEditTaskFormOpen(true)}
-            >
-              <div />
-              Редактировать
-            </button>
+            <CustomSelect task={task} />
+            {role === 'ROLE_ADMIN' && (
+              <button
+                type="button"
+                className={styles.taskViewPage__edit}
+                onClick={() => setIsEditTaskFormOpen(true)}
+              >
+                <div />
+                Редактировать
+              </button>
+            )}
           </div>
-          <div className={styles.taskViewPage__score}>800 баллов</div>
+          <div className={styles.taskViewPage__score}>
+            {task.basicPoints} баллов
+          </div>
         </div>
 
         <div className={styles.taskViewPage__block}>
@@ -117,13 +138,13 @@ function TaskViewPage() {
               </li>
               <li>
                 <p className={styles.taskViewPage__name}>Дедлайн до</p>
-                <p className={styles.taskViewPage__value}>{task.deadline}</p>
+                <p className={styles.taskViewPage__value}>{task.deadLine}</p>
               </li>
               <li>
                 <p className={styles.taskViewPage__name}>Бонус/Штраф</p>
                 <p
                   className={styles.taskViewPage__value}
-                >{`«${task.penalty}» баллов за день`}</p>
+                >{`«${task.penaltyPoints}» баллов за день`}</p>
               </li>
               <li>
                 <p className={styles.taskViewPage__name}>Исполнитель:</p>
@@ -133,20 +154,22 @@ function TaskViewPage() {
               </li>
               <li>
                 <p className={styles.taskViewPage__name}>Админ:</p>
-                <p className={styles.taskViewPage__value}>{adminName}</p>
+                <p className={styles.taskViewPage__value}>{task.admin}</p>
               </li>
               <li>
                 <p className={styles.taskViewPage__name}>Проект:</p>
                 <p className={styles.taskViewPage__value}>{task.projectName}</p>
               </li>
             </ul>
-            <button
-              type="button"
-              className={styles.taskViewPage__delete}
-              onClick={handleDeleteTask}
-            >
-              Удалить задачу
-            </button>
+            {role === 'ROLE_ADMIN' && (
+              <button
+                type="button"
+                className={styles.taskViewPage__delete}
+                onClick={handleDeleteTask}
+              >
+                Удалить задачу
+              </button>
+            )}
           </div>
         </div>
       </section>

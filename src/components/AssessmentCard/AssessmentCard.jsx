@@ -1,30 +1,34 @@
 import { useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import styles from './AssessmentCard.module.scss';
-import './AssessmentCard.css';
 
-function AssessmentCard({ user, fullName, position, status }) {
+function AssessmentCard({
+  fullName,
+  position,
+  date,
+  questionnaireId,
+  employeeId
+}) {
+  const isAppreciated = useSelector((state) => state.isAppreciated.isAppreciated);
   const navigate = useNavigate();
   const { questionnaire } = ENDPOINT_ROUTES;
+  const currentDate = date.split('-').reverse().join('.');
 
   function handleClick() {
-    navigate(`${questionnaire}/${user}`);
+    navigate(`${questionnaire}/${currentDate}/${questionnaireId}/${employeeId}`);
   }
 
   return (
-    <div className={styles.assessmentCard}
-      onClick={handleClick}
-    >
+    <div className={styles.assessmentCard} onClick={handleClick}>
       <p className={styles.assessmentCard__name}>{fullName}</p>
       <p className={styles.assessmentCard__job}>&frasl; {position}</p>
       <div className={styles.assessmentCard__rating}>
-        Оценки за март
-        <p className={styles.assessmentCard__data}>
-          Дата анкетирования: 28.03.24
-        </p>
+        <p className={styles.assessmentCard__date}>Дата анкетирования:</p>
+        <p className={styles.assessmentCard__date}>{currentDate}</p>
       </div>
-      <div className={status}>
-        {status === 'asses' ? 'Оценить' : 'Отправлено'}
+      <div className={isAppreciated ? styles.assessmentCard_asses : styles.assessmentCard_notAsses}>
+        {isAppreciated ? 'Оценить' : 'Отправлено'}
       </div>
     </div>
   );
