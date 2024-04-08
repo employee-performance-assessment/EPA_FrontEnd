@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Select from 'react-select';
-import { getTaskDetailsByAdmin, updateTaskByAdmin } from '../../utils/mainApi';
+import {
+  getTaskDetailsByAdmin,
+  updateTaskByAdmin,
+  updateTaskStatusByUser,
+} from '../../utils/mainApi';
 import InfoPopup from '../InfoPopup/InfoPopup';
 import { useErrorHandler } from '../../hooks/useErrorHandler';
 
@@ -8,6 +13,8 @@ function CustomSelect({ task }) {
   const [selectedOption, setSelectedOption] = useState(null);
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
+
+  const { role } = useSelector((state) => state.adminData);
 
   const options = [
     { value: 'IN_PROGRESS', label: 'В работе' },
@@ -99,9 +106,16 @@ function CustomSelect({ task }) {
 
   const handleChange = async (selectedOption) => {
     try {
-      const updatedTask = await getTaskDetailsByAdmin(task.id);
-      updatedTask.status = selectedOption.value;
-      await updateTaskByAdmin(updatedTask);
+      const newStatus = selectedOption.value;
+
+      if (role === 'ROLE_ADMIN') {
+        const updatedTask = await getTaskDetailsByAdmin(task.id);
+        updatedTask.status = newStatus;
+        await updateTaskByAdmin(updatedTask);
+      } else {
+        await updateTaskStatusByUser(task.id, newStatus);
+      }
+
       setSelectedOption(selectedOption);
     } catch (error) {
       handleError(error);
