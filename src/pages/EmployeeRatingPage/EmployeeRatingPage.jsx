@@ -13,7 +13,6 @@ function EmployeeRatingPage() {
   const [recommendation, setRecommendation] = useState('');
   const [rating, setRating] = useState(0);
   const [date, setDate] = useState('');
-  const [initialCriteria, setInitialCriteria] = useState([]);
   const [criteria, setCriteria] = useState([]);
 
   function handleClickBack() {
@@ -21,32 +20,34 @@ function EmployeeRatingPage() {
   }
 
   useEffect(() => {
-    if (employeeId && questionnaireId) {
-      getEvaluations(employeeId, questionnaireId)
-        .then((res) => {
-          setRating(res.middleScore);
-          setRecommendation(res.recommendation);
-          setDate(res.createQuestionnaire).split('-').reverse().join('.');
-          setInitialCriteria(res.evaluations);
-          setCriteria(
-            Array.from(
-              Object.keys(initialCriteria).map((key, index) => {
-                const output = {
-                  id: index + 1, // Уникальный идентификатор, начинаем с 1
-                  adminScore: initialCriteria[key].adminScore,
-                  colleaguesScore: initialCriteria[key].colleaguesScore,
-                  text: key, // Текст берем из ключа объекта
-                };
-                return output;
-              })
-            )
-          );
-        })
-        .catch((err) => {
-          // eslint-disable-next-line no-alert
-          alert(err);
-        });
-    }
+    getEvaluations(employeeId, questionnaireId)
+      .then((res) => {
+        setRating(res.middleScore);
+        setRecommendation(res.recommendation);
+        const initialDate = res.createQuestionnaire
+          .split('-')
+          .reverse()
+          .join('.');
+        setDate(initialDate);
+        const initialCriteria = res.evaluations;
+        setCriteria(
+          Array.from(
+            Object.keys(initialCriteria).map((key, index) => {
+              const output = {
+                id: index + 1, // Уникальный идентификатор, начинаем с 1
+                adminScore: initialCriteria[key].adminScore,
+                colleaguesScore: initialCriteria[key].colleaguesScore,
+                text: key, // Текст берем из ключа объекта
+              };
+              return output;
+            })
+          )
+        );
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-alert
+        alert(err);
+      });
   }, []);
 
   return (
