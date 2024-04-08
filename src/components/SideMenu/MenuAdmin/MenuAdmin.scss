@@ -1,7 +1,5 @@
 @import '../../../styles/vars';
-
-$font-weight: 500;
-$font-size: 18px;
+@import '../../../styles/mixins';
 
 .side-menu__list {
   padding: 80px 0 0 0;
@@ -11,116 +9,93 @@ $font-size: 18px;
 }
 
 .side-menu__item {
-  color: $black-base-color;
-  display: flex;
-  text-decoration: none;
-  flex-direction: row;
   margin-bottom: 40px;
-  font-weight: $font-weight;
-  font-size: $font-size;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+
+  &:hover .side-menu__icon-personal {
+    background-image: url(../../../images/UserCircle_active.svg);
+  }
+
+  &:hover .side-menu__icon-my-team {
+    background-image: url(../../../images/my-team_active.svg);
+  }
+
+  &:hover .side-menu__icon-kanban {
+    background-image: url(../../../images/KanbanBoard_active.svg);
+  }
+
+  &:hover .side-menu__icon-assessments {
+    background-image: url(../../../images/assessment_active.svg);
+  }
+
+  &:hover .side-menu__icon-analytics {
+    background-image: url(../../../images/analytics_active.svg);
+  }
+
+  &:hover .side-menu__text {
+    color: $dark-green-base-color;
+  }
 }
 
-.side-menu__item:hover {
-  color: $dark-green-base-color;
+.side-menu__icon {
+  width: 32px;
+  height: 32px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
-.side-menu__item_active {
-  color: $dark-green-base-color;
-}
-
-.side-menu__item-personal::before {
-  content: '';
-  padding: 16px;
+.side-menu__icon-personal {
   background-image: url(../../../images/UserCircle.svg);
+
+  &_active {
+    background-image: url(../../../images/UserCircle_active.svg);
+  }
 }
 
-.side-menu__item-personal_active::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/UserCircle_active.svg);
-}
-
-.side-menu__item-personal:hover::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/UserCircle_active.svg);
-}
-
-.side-menu__item-my-team::before {
-  content: '';
-  padding: 16px;
+.side-menu__icon-my-team {
   background-image: url(../../../images/my-team.svg);
+
+  &_active {
+    background-image: url(../../../images/my-team_active.svg);
+  }
 }
 
-.side-menu__item-my-team_active::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/my-team_active.svg);
-}
-
-.side-menu__item-my-team:hover::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/my-team_active.svg);
-}
-
-.side-menu__item-kanban::before {
-  content: '';
-  padding: 16px;
+.side-menu__icon-kanban {
   background-image: url(../../../images/KanbanBoard.svg);
+
+  &_active {
+    background-image: url(../../../images/KanbanBoard_active.svg);
+  }
 }
 
-.side-menu__item-kanban_active::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/KanbanBoard_active.svg);
-}
-
-.side-menu__item-kanban:hover::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/KanbanBoard_active.svg);
-}
-
-.side-menu__item-asses::before {
-  content: '';
-  padding: 16px;
+.side-menu__icon-assessments {
   background-image: url(../../../images/assessment.svg);
+
+  &_active {
+    background-image: url(../../../images/assessment_active.svg);
+  }
 }
 
-.side-menu__item-asses_active::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/assessment_active.svg);
-}
-
-.side-menu__item-asses:hover::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/assessment_active.svg);
-}
-
-.side-menu__item-analytics::before {
-  content: '';
-  padding: 16px;
+.side-menu__icon-analytics {
   background-image: url(../../../images/analytics.svg);
-}
 
-.side-menu__item-analytics_active::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/analytics_active.svg);
-}
-
-.side-menu__item-analytics:hover::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/analytics_active.svg);
+  &_active {
+    background-image: url(../../../images/analytics_active.svg);
+  }
 }
 
 .side-menu__text {
   align-self: center;
   padding-left: 8px;
+  padding-top: 3px;
+  @include text($font-size: 18px, $line-height: 22px);
+
+  &_active {
+    color: $dark-green-base-color;
+  }
 }
 
 .side-menu__button-exit {
