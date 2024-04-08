@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import './PopupEditTask.scss';
+import './PopupAddNewTask.scss';
 import DropdownMenu from '../DropDownMenu/DropDownMenu';
 import OneDatePicker from '../OneDatePicker/OneDatePicker.jsx';
 import { getAllUsers, setNewTask } from '../../utils/mainApi.js';
 
-function PopupEditTask({ setIsOpenPopup, title, projects, taskOldContent }) {
+function PopupEditTask({ setIsOpenPopup, title, projects }) {
   const [startDate, setStartDate] = useState(null);
   const [taskName, setTaskName] = useState('');
-  const [project, setProject] = useState('');
+  const [project, setProject] = useState({ name: '', id: 0 });
   const [employee, setEmployee] = useState({ name: '', id: 0 });
   const [pointTask, setPointTask] = useState(0);
   const [pointsPenalty, setPointsPenalty] = useState(0);
@@ -28,6 +28,10 @@ function PopupEditTask({ setIsOpenPopup, title, projects, taskOldContent }) {
       penaltyPoints: pointsPenalty,
     }).catch((err) => console.log(err));
   }
+
+  useEffect(() => {
+    console.log(employee);
+  }, [employee]);
 
   function convertDate(dateStr) {
     const dateObj = new Date(Date.parse(dateStr));

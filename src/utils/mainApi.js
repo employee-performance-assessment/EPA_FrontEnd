@@ -13,6 +13,7 @@ import {
   EVALUATIONS,
   ADMIN_EVALUATIONS,
   RECO,
+  EMPLOYEE_ME,
 } from '../constants/constantAPI.js';
 
 function getToken() {
@@ -125,3 +126,11 @@ export const getAdminEvaluation = () =>
   makeAuthenticatedRequest(ADMIN_EVALUATIONS, 'GET');
 
 export const getReco = (id) => makeAuthenticatedRequest(`${RECO}/${id}`, 'GET');
+
+export const getInfoOwnerJWT = () =>
+  makeAuthenticatedRequest(EMPLOYEE_ME, 'GET');
+
+export const setNewTask = (requestBody) =>
+  makeAuthenticatedRequest(ADMIN_TASK, 'POST', requestBody);
+
+export const getAdminTask = () => makeAuthenticatedRequest(ADMIN_TASK, 'GET');

@@ -72,7 +72,10 @@ function TaskViewPage() {
         />
       )}
       {isEditTaskFormOpen && (
-        <PopupEditTask title='Редактировать' setIsOpenPopup={setIsEditTaskFormOpen}/>
+        <PopupEditTask
+          title="Редактировать"
+          setIsOpenPopup={setIsEditTaskFormOpen}
+        />
       )}
       <section className={styles.taskViewPage__container}>
         <div className={styles.taskViewPage__header}>
@@ -87,7 +90,11 @@ function TaskViewPage() {
             </button>
             <h4 className={styles.taskViewPage__id}>{task.id}</h4>
             <CustomSelect />
-            <button type="button" className={styles.taskViewPage__edit} onClick={() => setIsEditTaskFormOpen(true)}>
+            <button
+              type="button"
+              className={styles.taskViewPage__edit}
+              onClick={() => setIsEditTaskFormOpen(true)}
+            >
               <div />
               Редактировать
             </button>

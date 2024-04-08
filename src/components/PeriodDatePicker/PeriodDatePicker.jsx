@@ -31,10 +31,6 @@ export default function PeriodDatePicker() {
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
 
-  useEffect(() => {
-    console.log(startDate);
-  }, [startDate]);
-
   return (
     <div className="datepicker__input-conteiner">
       <DatePicker
