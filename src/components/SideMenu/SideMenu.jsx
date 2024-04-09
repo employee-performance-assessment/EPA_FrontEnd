@@ -4,7 +4,7 @@ import MenuAdmin from './MenuAdmin/MenuAdmin.jsx';
 import MenuEmployee from './MenuEmployee/MenuEmployee.jsx';
 import logo from '../../images/logo.svg';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
-import { setAdminData } from '../../store/slices/adminDataSlice.js';
+import { setUser } from '../../store/slices/userSlice.js';
 import { setToken } from '../../store/slices/tokenSlices.js';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import './SideMenu.scss';
@@ -12,7 +12,7 @@ import './SideMenu.scss';
 function SideMenu() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const adminData = useSelector((state) => state.adminData);
+  const user = useSelector((state) => state.user);
   const { login } = ENDPOINT_ROUTES;
 
   const handleLogout = (e) => {
@@ -20,14 +20,14 @@ function SideMenu() {
     localStorage.clear();
     dispatch(setToken(''));
     dispatch(setIsLoggedIn(false));
-    dispatch(setAdminData({}));
+    dispatch(setUser({}));
     navigate(login);
   };
 
   return (
     <div className="side-menu">
       <img className="side-menu__logo" src={logo} alt="Логотип" />
-      {adminData.role === 'ROLE_ADMIN' ? <MenuAdmin /> : <MenuEmployee />}
+      {user.role === 'ROLE_ADMIN' ? <MenuAdmin /> : <MenuEmployee />}
       <button onClick={handleLogout} className="side-menu__button">
         <div className="side-menu__button-icon" />
         <p className="side-menu__button_text">Выйти</p>

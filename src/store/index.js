@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import adminDataSlices from './slices/adminDataSlice';
+import userSlice from './slices/userSlice';
 import isLoggedInSlice from './slices/isLoggedInSlice';
 import tokenSlices from './slices/tokenSlices';
 import filterSlice from './slices/filterSlice';
@@ -9,7 +9,7 @@ import isAppreciatedSlices from './slices/isAppreciatedSlices';
 export default configureStore({
   reducer: {
     isLoggedIn: isLoggedInSlice,
-    adminData: adminDataSlices,
+    user: userSlice,
     token: tokenSlices,
     filter: filterSlice,
     viewMarks: viewMarksSlices,
