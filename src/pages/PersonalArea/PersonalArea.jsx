@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormValidation } from '../../hooks/useFormValidation.js';
 import { updateAdminData } from '../../utils/mainApi.js';
-import { setAdminData } from '../../store/slices/adminDataSlice.js';
+import { setUser } from '../../store/slices/userSlice.js';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import './PersonalArea.scss';
@@ -13,15 +13,15 @@ function PersonalArea() {
   const [editing, setEditing] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { errors, values, isValid, handleChange } = useFormValidation();
-  const adminData = useSelector((state) => state.adminData);
+  const admin = useSelector((state) => state.user);
   const [isDisabledButton, setIsDisabledButton] = useState(false);
   const dispatch = useDispatch();
 
   function setVisibleInputData() {
     if (!values.name && !editing) {
-      values.name = adminData.fullName;
-      values.email = adminData.email;
-      values.job = adminData.position || 'Руководитель';
+      values.name = admin.fullName;
+      values.email = admin.email;
+      values.job = admin.position || 'Руководитель';
       values.repeatPassword = '';
       values.newPassword = '';
     }
@@ -55,10 +55,10 @@ function PersonalArea() {
       password: values.repeatPassword || null,
     };
 
-    updateAdminData(adminData.id, newUserDataForServer)
+    updateAdminData(admin.id, newUserDataForServer)
       .then(() => {
         setEditing(false);
-        dispatch(setAdminData({ ...adminData, ...newUserData }));
+        dispatch(setUser({ ...admin, ...newUserData }));
         values.repeatPassword = '';
         values.newPassword = '';
       })
@@ -78,9 +78,9 @@ function PersonalArea() {
       {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
       <div className="personal-area__header">
         <div className="personal-area__header-icon" />
-        <h2 className="personal-area__header-title">{adminData.fullName}</h2>
+        <h2 className="personal-area__header-title">{admin.fullName}</h2>
         <div className="personal-area__header-job">
-          {adminData.position || 'Руководитель'}
+          {admin.position || 'Руководитель'}
         </div>
       </div>
       <div className="personal-area__section">

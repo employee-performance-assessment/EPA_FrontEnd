@@ -25,7 +25,7 @@ import TaskViewPage from '../../pages/TaskViewPage/TaskViewPage.jsx';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
 import { getUserData } from '../../utils/mainApi.js';
-import { setAdminData } from '../../store/slices/adminDataSlice.js';
+import { setUser } from '../../store/slices/userSlice.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 import AssessmentBlock from '../../pages/AssesmentBlock/AssessmentBlock.jsx';
 import Questionnaire from '../Questionnaire/Questionnaire.jsx';
@@ -62,7 +62,7 @@ function App() {
           .then((res) => {
             if (res) {
               navigate(location.pathname);
-              dispatch(setAdminData(res));
+              dispatch(setUser(res));
               dispatch(setIsLoggedIn(true));
             }
           })

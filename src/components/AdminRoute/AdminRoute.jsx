@@ -5,7 +5,7 @@ import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
 function AdminRoute() {
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
-  const role = useSelector((state) => state.adminData.role);
+  const role = useSelector((state) => state.user.role);
 
   return isLoggedIn && role === 'ROLE_ADMIN' ? (
     <div className="page-container">

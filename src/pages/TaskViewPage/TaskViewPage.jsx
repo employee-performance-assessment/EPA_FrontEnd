@@ -18,7 +18,7 @@ function TaskViewPage() {
   const [isEditTaskFormOpen, setIsEditTaskFormOpen] = useState(false);
   const { id: taskId } = useParams();
   const navigate = useNavigate();
-  const { fullName: adminName, role } = useSelector((state) => state.adminData);
+  const { fullName: adminName, role } = useSelector((state) => state.user);
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 

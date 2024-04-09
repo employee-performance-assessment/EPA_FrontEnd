@@ -14,7 +14,7 @@ function CustomSelect({ task }) {
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
-  const { role } = useSelector((state) => state.adminData);
+  const { role } = useSelector((state) => state.user);
 
   const options = [
     { value: 'IN_PROGRESS', label: 'В работе' },
