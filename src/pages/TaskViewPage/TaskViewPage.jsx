@@ -18,12 +18,12 @@ function TaskViewPage() {
   const [isEditTaskFormOpen, setIsEditTaskFormOpen] = useState(false);
   const { id: taskId } = useParams();
   const navigate = useNavigate();
-  const { fullName: adminName, role } = useSelector((state) => state.user);
+  const { fullName: adminName, isAdmin } = useSelector((state) => state.user);
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
   useEffect(() => {
-    if (taskId && role === 'ROLE_ADMIN') {
+    if (taskId && isAdmin) {
       getTaskDetailsByAdmin(taskId)
         .then((res) => {
           if (res) {
@@ -107,7 +107,7 @@ function TaskViewPage() {
             </button>
             <h4 className={styles.taskViewPage__id}>{task.id}</h4>
             <CustomSelect task={task} />
-            {role === 'ROLE_ADMIN' && (
+            {isAdmin && (
               <button
                 type="button"
                 className={styles.taskViewPage__edit}
@@ -161,7 +161,7 @@ function TaskViewPage() {
                 <p className={styles.taskViewPage__value}>{task.projectName}</p>
               </li>
             </ul>
-            {role === 'ROLE_ADMIN' && (
+            {isAdmin && (
               <button
                 type="button"
                 className={styles.taskViewPage__delete}
