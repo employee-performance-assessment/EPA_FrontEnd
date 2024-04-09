@@ -8,6 +8,8 @@ import {
   ADMIN_CRITERIA_DEFAULT,
   USER_QUESTIONNAIRE,
   ADMIN_EVALUATIONS,
+  RECO,
+  EMPLOYEE_ME,
   ADMIN_PROJECTS,
   ADMIN_CRITERIA,
   ADMIN_ASSESSED,
@@ -171,6 +173,25 @@ export const getQuestionnaireList = (evaluatedId) =>
 
 export const getRating = (employeeId) =>
   request(`${ADMIN_RATING}/${employeeId}`, 'GET');
+
+export const getAdminEvaluation = () =>
+  request(ADMIN_EVALUATIONS, 'GET');
+
+export const getReco = (id) => request(`${RECO}/${id}`, 'GET');
+
+export const getInfoOwnerJWT = () =>
+  request(EMPLOYEE_ME, 'GET');
+
+export const setNewTask = (requestBody) =>
+  request(ADMIN_TASK, 'POST', requestBody);
+
+export const getAdminTask = () => request(ADMIN_TASK, 'GET'); // взять все задачи админа
+
+export const patchAdminTask = (taskId, requestBody) =>  request(
+    `${ADMIN_TASK}/${taskId}`,
+    'PATCH',
+    requestBody
+  );
 
 export const getStatPoints = (employeeId) =>
   request(`${ADMIN_STAT_POINTS}/${employeeId}`, 'GET');

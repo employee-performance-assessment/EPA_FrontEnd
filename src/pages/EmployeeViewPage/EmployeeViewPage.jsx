@@ -21,7 +21,7 @@ function EmployeeViewPage() {
   const dispatch = useDispatch();
   const { id: employeeId } = useParams();
 
-  const user = useSelector((state) => state.adminData);
+  const user = useSelector((state) => state.user);
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
 
   const { values, handleChange, setValues } = useFormValidation();
@@ -41,7 +41,7 @@ function EmployeeViewPage() {
         let userData;
         let tasksData;
 
-        if (employeeId && user.role === 'ROLE_ADMIN') {
+        if (employeeId && user.isAdmin) {
           userData = await getCurrentUser(employeeId);
           tasksData = await getUserTasksWithStatusByAdmin(employeeId, 'NEW');
         } else {
@@ -106,7 +106,7 @@ function EmployeeViewPage() {
 
   async function getTasksByStatus(status) {
     const tasks =
-      user.role === 'ROLE_ADMIN'
+      user.isAdmin
         ? await getUserTasksWithStatusByAdmin(employeeId, status)
         : await getTasksWithStatusByUser(status);
 

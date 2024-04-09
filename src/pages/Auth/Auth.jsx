@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-// import { jwtDecode } from "jwt-decode";
 import styles from './Auth.module.scss';
 
 import { useFormValidation } from '../../hooks/useFormValidation.js';
@@ -11,7 +10,7 @@ import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
 import { setToken } from '../../store/slices/tokenSlices.js';
 import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
-import { setAdminData } from '../../store/slices/adminDataSlice.js';
+import { setUser } from '../../store/slices/userSlice.js';
 
 import registerImg from '../../images/register-img.png';
 import eyelash from '../../images/eye-close.svg';
@@ -42,7 +41,7 @@ function Auth() {
         dispatch(setToken(res.token));
         dispatch(setIsLoggedIn(true));
         getUserData(res.token).then((res) => {
-          dispatch(setAdminData(res));
+          dispatch(setUser(res));
           res.role === 'ROLE_ADMIN' ? navigate(personalArea) : navigate(taskCards);
         });
       })

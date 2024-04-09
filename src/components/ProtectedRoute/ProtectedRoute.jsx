@@ -5,9 +5,9 @@ import SideMenu from '../SideMenu/SideMenu.jsx';
 
 function ProtectedRoute() {
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
-  const role = useSelector((state) => state.adminData.role);
+  const isAdmin = useSelector((state) => state.user.isAdmin);
 
-  return isLoggedIn && role === 'ROLE_USER' ? (
+  return isLoggedIn && !isAdmin ? (
     <div className="page-container">
     <div className="page-container__sidemenu">
       <SideMenu />

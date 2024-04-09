@@ -3,7 +3,7 @@ import './PopupKanban.scss';
 import ContainerInputPopupKanban from '../ContainerInputPopupKanban/ContainerInputPopupKanban.jsx';
 import { setNewProjects, getProjectsName } from '../../utils/mainApi.js';
 
-export function PopupKanban({ setIsOpenPopup, projects, setProjects }) {
+export default function PopupKanban({ setIsOpenPopup, projects, setProjects }) {
   const [isNewProject, setIsNewProject] = useState(false);
   const [nameProject, setProjectName] = useState('');
 
@@ -26,6 +26,7 @@ export function PopupKanban({ setIsOpenPopup, projects, setProjects }) {
       })
       .catch((err) => console.log(err))
       .finally(() => {
+        setProjectName('');
         setIsNewProject(false);
         getProjectsName()
           .then((res) => {

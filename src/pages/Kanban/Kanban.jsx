@@ -1,16 +1,16 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Boards from '../../components/Boards/Boards.jsx';
 import { NotFoundTask } from '../../components/NotFoundTask/NotFoundTask.jsx';
 import { NotProject } from '../../components/NotProject/NotProject.jsx';
-import { PopupKanban } from '../../components/PopupKanban/PopupKanban.jsx';
-// import { PopupEditTask } from '../../components/PopupEditTask/PopupEditTask.jsx';
+import PopupKanban from '../../components/PopupKanban/PopupKanban.jsx';
+import PopupAddNewTask from '../../components/PopupAddNewTask/PopupAddNewTask.jsx';
+import PopupEditTask from '../../components/PopupEditTask/PopupEditTask.jsx';
+import PopupProject from '../../components/PopupProject/PopupProject.jsx';
 import plus from '../../images/Plus.svg';
 import edit from '../../images/edit-button-icon.svg';
 import caretDown from '../../images/CaretDown_black.svg';
-import { boardsListEmpty } from '../../constants/boardsList.js';
-import { getProjectsName } from '../../utils/mainApi.js';
+import { getProjectsName, getInfoOwnerJWT, getAdminTask } from '../../utils/mainApi.js';
 import './Kanban.scss';
 
 function Kanban() {
@@ -19,6 +19,11 @@ function Kanban() {
   const [isNoTask, setIsNoTask] = useState(true);
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const [projects, setProjects] = useState([]);
+  const [idOwnerJWT, setIdOwnerJWT] = useState(0);
+  const [currentProgect, setCurrentProject] = useState({});
+  const [isOpenPopupAddTask, setIsOpenPopupAddTask] = useState(false);
+  const [isOpenPopupProject, setIsOpenPopupProject] = useState(false);
+  const [tasks, setTasks] = useState([])
 
   useEffect(() => {
     if (projects.length > 0) {
@@ -29,9 +34,14 @@ function Kanban() {
   }, [projects]);
 
   useEffect(() => {
-    getProjectsName()
+    Promise.all([getProjectsName(), getInfoOwnerJWT(), getAdminTask()])
       .then((res) => {
-        setProjects(res);
+        setIdOwnerJWT(res[1].id);
+        setProjects(res[0]);
+        setTasks(res[2])
+        if (res[2].length > 0) {
+          setIsNoTask(false)
+        }
       })
       .catch((err) => console.log(err));
   }, []);
@@ -71,12 +81,23 @@ function Kanban() {
             <button
               type="button"
               className="kanban__button kanban__button_more"
+              onClick={() => {
+                setIsOpenPopupProject(true);
+              }}
             >
               <p className="kanban__button-title">
                 ...ещё {projects.length > 2 && projects.length - 2}
               </p>
               <img src={caretDown} alt="Раскрыть список проектов" />
             </button>
+            {isOpenPopupProject && (
+              <PopupProject
+                projects={projects}
+                onClick={() => {
+                  setIsOpenPopupProject(false);
+                }}
+              />
+            )}
             <button
               type="button"
               className={`kanban__button ${projects.length < 1 ? 'kanban__button_grey' : 'kanban__button_purple'} kanban__button_all`}
@@ -85,6 +106,14 @@ function Kanban() {
             >
               <p className="kanban__button-title_all">Все</p>
             </button>
+            {/* {isOpenPopupAddTask && (
+              <PopupEditTask
+                setIsOpenPopup={setIsOpenPopupAddTask}
+                idProject={currentProgect.id}
+                title="Создать здачу"
+                projects={projects}
+              />
+            )} */}
             <button
               type="button"
               className="kanban__button kanban__button_project"
@@ -97,6 +126,7 @@ function Kanban() {
               type="button"
               className={`kanban__button ${projects.length < 1 ? 'kanban__button_grey' : 'kanban__button_purple'} kanban__button_task`}
               disabled={projects.length < 1}
+              onClick={() => setIsOpenPopupAddTask(true)}
             >
               <p className="kanban__button-title_make">Создать задачу</p>
               <img
@@ -107,7 +137,7 @@ function Kanban() {
             </button>
           </div>
         </nav>
-        <Boards boardsList={boardsListEmpty} />
+        <Boards tasks={tasks} />
         {isNoProject ? (
           <NotProject setProjects={setProjects} />
         ) : (
@@ -119,6 +149,14 @@ function Kanban() {
           setIsOpenPopup={setIsOpenPopup}
           projects={projects}
           setProjects={setProjects}
+        />
+      )}
+      {isOpenPopupAddTask && (
+        <PopupAddNewTask
+          setIsOpenPopup={setIsOpenPopupAddTask}
+          idProject={currentProgect.id}
+          title="Создать здачу"
+          projects={projects}
         />
       )}
     </section>
