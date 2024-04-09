@@ -13,7 +13,7 @@ import {
   getCurrentUser,
   getUserTasksWithStatusByAdmin,
   getTasksWithStatusByUser,
-  getQuestionnaireList,
+  getQuestionnaireListByAdmin,
 } from '../../utils/mainApi.js';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
@@ -59,7 +59,7 @@ function EmployeeViewPage() {
   }, [employeeId]);
 
   useEffect(() => {
-    getQuestionnaireList(employeeId)
+    getQuestionnaireListByAdmin(employeeId)
       .then((res) => {
         setAllMarks(res);
         setCurrentMarks(res);
@@ -105,10 +105,9 @@ function EmployeeViewPage() {
   }
 
   async function getTasksByStatus(status) {
-    const tasks =
-      user.isAdmin
-        ? await getUserTasksWithStatusByAdmin(employeeId, status)
-        : await getTasksWithStatusByUser(status);
+    const tasks = user.isAdmin
+      ? await getUserTasksWithStatusByAdmin(employeeId, status)
+      : await getTasksWithStatusByUser(status);
 
     setCurrentTasks(tasks);
   }

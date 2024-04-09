@@ -47,7 +47,6 @@ function EmployeeViewCard({
     <div className={styles.employeeViewCard__container}>
       <h2 className={styles.employeeViewCard__title}>
         Дата анкетирования: <p>{currentDate}</p>
-        1234
       </h2>
       <div className={styles.employeeViewCard__stars}>
         <SetStars
