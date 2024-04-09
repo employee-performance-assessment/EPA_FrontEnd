@@ -85,8 +85,10 @@ function EditEmployeeForm({
   useEffect(() => {
     if (values.confirmPassword !== values.password) {
       setErrors({ confirmPassword: VALIDATION_MESSAGES.passwordsNotMatch });
+      setIsValid(false);
     } else {
       setErrors({ confirmPassword: '' });
+      setIsValid(true);
     }
   }, [values.confirmPassword, values.password]);
 
