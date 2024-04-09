@@ -36,7 +36,8 @@ function TaskViewPage() {
               executorName: res.executor.fullName,
               executorId: res.executor.id,
               creationDate: formatDate(res.createDate),
-              deadLine: formatDate(res.deadLine),
+              deadLine: res.deadLine,
+              deadLineFormated: formatDate(res.deadLine),
               penaltyPoints: res.penaltyPoints,
               basicPoints: res.basicPoints,
               status: res.status,
@@ -53,7 +54,7 @@ function TaskViewPage() {
             name: res.name,
             description: res.description,
             creationDate: formatDate(res.createDate),
-            deadLine: formatDate(res.deadLine),
+            deadLineFormated: formatDate(res.deadLine),
             penaltyPoints: res.penaltyPoints,
             basicPoints: res.basicPoints,
             executorName: res.executor.fullName,
@@ -92,6 +93,18 @@ function TaskViewPage() {
         <PopupEditTask
           title="Редактировать"
           setIsOpenPopup={setIsEditTaskFormOpen}
+          projects={['1', '2']} // исправить, жду ответа бэка
+          taskOldContent={{
+            name: task.name,
+            description: task.description,
+            project: { name: task.projectName, id: task.projectId },
+            employee: { name: task.executorName, id: task.executorId },
+            deadLine: task.deadLine,
+            status: task.status,
+            basicPoints: task.basicPoints,
+            penaltyPoints: task.penaltyPoints,
+            taskId: task.id
+          }}
         />
       )}
       <section className={styles.taskViewPage__container}>
@@ -138,7 +151,7 @@ function TaskViewPage() {
               </li>
               <li>
                 <p className={styles.taskViewPage__name}>Дедлайн до</p>
-                <p className={styles.taskViewPage__value}>{task.deadLine}</p>
+                <p className={styles.taskViewPage__value}>{task.deadLineFormated}</p>
               </li>
               <li>
                 <p className={styles.taskViewPage__name}>Бонус/Штраф</p>

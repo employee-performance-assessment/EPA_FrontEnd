@@ -120,7 +120,7 @@ export const getTaskDetailsByAdmin = (taskId) =>
 export const deleteTaskByAdmin = (taskId) =>
   request(`${ADMIN_TASK}/${taskId}`, 'DELETE');
 
-export const updateTaskByAdmin = (task) => {
+export const updateTaskStatusByAdmin = (task) => {
   const requestBody = {
     name: task.name,
     description: task.description,
