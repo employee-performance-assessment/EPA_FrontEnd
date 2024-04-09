@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import SetStars from '../SetStars/SetStars';
 import styles from './EmployeeViewHeader.module.scss';
-import { getRating, getStatPoints } from '../../utils/mainApi.js';
+import { getRatingByAdmin, getStatPointsByAdmin } from '../../utils/mainApi.js';
 import { formPointsText } from '../../utils/utils';
 import IconUser from '../../images/icon-user-header.svg';
 
@@ -13,7 +13,7 @@ function EmployeeViewHeader({ employee }) {
 
   useEffect(() => {
     if (employee.id) {
-      getRating(employee.id)
+      getRatingByAdmin(employee.id)
         .then((res) => {
           setRating(res);
         })
@@ -26,7 +26,7 @@ function EmployeeViewHeader({ employee }) {
 
   useEffect(() => {
     if (employee.id) {
-      getStatPoints(employee.id)
+      getStatPointsByAdmin(employee.id)
         .then((res) => {
           setPoints(res);
         })
@@ -40,7 +40,11 @@ function EmployeeViewHeader({ employee }) {
   return (
     <div className={styles.employeeViewHeader__container}>
       <div className={styles.employeeViewHeader__bio}>
-        <img className={styles.employeeViewHeader__image} alt='иконка пользователя' src={IconUser}/>
+        <img
+          className={styles.employeeViewHeader__image}
+          alt="иконка пользователя"
+          src={IconUser}
+        />
         <p className={styles.employeeViewHeader__name}>{employee.fullName}</p>
         <p className={styles.employeeViewHeader__job}>
           {employee.position || 'Должность неизвестна'}
