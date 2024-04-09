@@ -3,6 +3,7 @@ import SetStars from '../SetStars/SetStars';
 import styles from './EmployeeViewHeader.module.scss';
 import { getRating, getStatPoints } from '../../utils/mainApi.js';
 import { formPointsText } from '../../utils/utils';
+import IconUser from '../../images/icon-user-header.svg';
 
 function EmployeeViewHeader({ employee }) {
   const [rating, setRating] = useState(0);
@@ -39,7 +40,7 @@ function EmployeeViewHeader({ employee }) {
   return (
     <div className={styles.employeeViewHeader__container}>
       <div className={styles.employeeViewHeader__bio}>
-        <div className={styles.employeeViewHeader__image} />
+        <img className={styles.employeeViewHeader__image} alt='иконка пользователя' src={IconUser}/>
         <p className={styles.employeeViewHeader__name}>{employee.fullName}</p>
         <p className={styles.employeeViewHeader__job}>
           {employee.position || 'Должность неизвестна'}
