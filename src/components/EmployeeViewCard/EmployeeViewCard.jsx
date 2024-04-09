@@ -12,7 +12,7 @@ function EmployeeViewCard({
   employeeId,
   idQuestionnaire,
 }) {
-  const currentDate = date.split('-').reverse().join('.');
+  // const currentDate = date.split('-').reverse().join('.');
 
   const navigate = useNavigate();
 
