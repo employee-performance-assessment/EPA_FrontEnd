@@ -12,7 +12,7 @@ import './SideMenu.scss';
 function SideMenu() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const isAdmin = useSelector((state) => state.user.isAdmin);
   const { login } = ENDPOINT_ROUTES;
 
   const handleLogout = (e) => {
@@ -27,7 +27,7 @@ function SideMenu() {
   return (
     <div className="side-menu">
       <img className="side-menu__logo" src={logo} alt="Логотип" />
-      {user.role === 'ROLE_ADMIN' ? <MenuAdmin /> : <MenuEmployee />}
+      {isAdmin ? <MenuAdmin /> : <MenuEmployee />}
       <button onClick={handleLogout} className="side-menu__button">
         <div className="side-menu__button-icon" />
         <p className="side-menu__button_text">Выйти</p>
