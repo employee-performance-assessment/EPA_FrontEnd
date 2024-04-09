@@ -2,9 +2,9 @@ import './PopupProject.scss';
 
 function PopupProject({ projects, onClick }) {
   console.log(projects);
-  function handleClickProject(e) {
-    console.log('cheise project');
-  }
+  // function handleClickProject(e) {
+  //   console.log('cheise project');
+  // }
 
   return (
     <div className="popup-project" onClick={onClick}>

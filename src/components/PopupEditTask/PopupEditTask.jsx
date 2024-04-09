@@ -8,7 +8,7 @@ import { getAllUsers, patchAdminTask } from '../../utils/mainApi.js';
 
 function PopupEditTask({ setIsOpenPopup, title, projects, taskOldContent }) {
 
-  /* так должны выглядеть пропсы. 
+  /* так должны выглядеть пропсы.
 <PopupEditTask
           setIsOpenPopup={setIsOpenPopupAddTask}
           idProject={currentProgect.id}
@@ -60,7 +60,7 @@ function PopupEditTask({ setIsOpenPopup, title, projects, taskOldContent }) {
       status: taskOldContent.status,
       basicPoints: pointTask * 1,
       penaltyPoints: pointsPenalty,
-    }).then(res => setIsOpenPopup(false)).catch((err) => console.log(err));
+    }).then(() => setIsOpenPopup(false)).catch((err) => console.log(err));
   }
 
   function convertDate(dateStr) {

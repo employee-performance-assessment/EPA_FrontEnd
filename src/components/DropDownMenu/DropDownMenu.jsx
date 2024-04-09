@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import './DropDownMenu.scss';
 
 export default function DropDownMenu({ items, onSelect, setIsOpen }) {

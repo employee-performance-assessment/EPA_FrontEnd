@@ -5,7 +5,7 @@ import { NotFoundTask } from '../../components/NotFoundTask/NotFoundTask.jsx';
 import { NotProject } from '../../components/NotProject/NotProject.jsx';
 import PopupKanban from '../../components/PopupKanban/PopupKanban.jsx';
 import PopupAddNewTask from '../../components/PopupAddNewTask/PopupAddNewTask.jsx';
-import PopupEditTask from '../../components/PopupEditTask/PopupEditTask.jsx';
+// import PopupEditTask from '../../components/PopupEditTask/PopupEditTask.jsx';
 import PopupProject from '../../components/PopupProject/PopupProject.jsx';
 import plus from '../../images/Plus.svg';
 import edit from '../../images/edit-button-icon.svg';
@@ -19,8 +19,8 @@ function Kanban() {
   const [isNoTask, setIsNoTask] = useState(true);
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const [projects, setProjects] = useState([]);
-  const [idOwnerJWT, setIdOwnerJWT] = useState(0);
-  const [currentProgect, setCurrentProject] = useState({});
+  // const [idOwnerJWT, setIdOwnerJWT] = useState(0);
+  // const [currentProgect, setCurrentProject] = useState({});
   const [isOpenPopupAddTask, setIsOpenPopupAddTask] = useState(false);
   const [isOpenPopupProject, setIsOpenPopupProject] = useState(false);
   const [tasks, setTasks] = useState([])
@@ -36,7 +36,7 @@ function Kanban() {
   useEffect(() => {
     Promise.all([getProjectsName(), getInfoOwnerJWT(), getAdminTask()])
       .then((res) => {
-        setIdOwnerJWT(res[1].id);
+        // setIdOwnerJWT(res[1].id);
         setProjects(res[0]);
         setTasks(res[2])
         if (res[2].length > 0) {
@@ -154,7 +154,7 @@ function Kanban() {
       {isOpenPopupAddTask && (
         <PopupAddNewTask
           setIsOpenPopup={setIsOpenPopupAddTask}
-          idProject={currentProgect.id}
+          // idProject={currentProgect.id}
           title="Создать здачу"
           projects={projects}
         />
