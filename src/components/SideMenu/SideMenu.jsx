@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import MenuAdmin from './MenuAdmin/MenuAdmin.jsx';
 import MenuEmployee from './MenuEmployee/MenuEmployee.jsx';
 import logo from '../../images/logo.svg';
-import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 import { setUser } from '../../store/slices/userSlice.js';
 import { setToken } from '../../store/slices/tokenSlices.js';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
@@ -19,7 +18,6 @@ function SideMenu() {
     e.preventDefault();
     localStorage.clear();
     dispatch(setToken(''));
-    dispatch(setIsLoggedIn(false));
     dispatch(setUser({}));
     navigate(login);
   };

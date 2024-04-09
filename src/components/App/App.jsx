@@ -26,7 +26,6 @@ import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
 import { getUserData } from '../../utils/mainApi.js';
 import { setUser } from '../../store/slices/userSlice.js';
-import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 import AssessmentBlock from '../../pages/AssesmentBlock/AssessmentBlock.jsx';
 import Questionnaire from '../Questionnaire/Questionnaire.jsx';
 import InfoPopup from '../InfoPopup/InfoPopup.jsx';
@@ -63,7 +62,6 @@ function App() {
             if (res) {
               navigate(location.pathname);
               dispatch(setUser(res));
-              dispatch(setIsLoggedIn(true));
             }
           })
           .catch((err) => handleError(err));
