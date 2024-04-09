@@ -14,6 +14,10 @@ import {
   getUserTasksWithStatusByAdmin,
   getTasksWithStatusByUser,
   getQuestionnaireListByAdmin,
+  getRatingByAdmin,
+  getRatingByUser,
+  getStatPointsByAdmin,
+  getStatPointsByUser,
 } from '../../utils/mainApi.js';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
@@ -32,6 +36,9 @@ function EmployeeViewPage() {
   const [version, setVersion] = useState(0);
   const [employee, setEmployee] = useState({});
 
+  const [rating, setRating] = useState(0);
+  const [points, setPoints] = useState(0);
+
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
@@ -40,16 +47,24 @@ function EmployeeViewPage() {
       try {
         let userData;
         let tasksData;
+        let ratingData;
+        let pointsData;
 
         if (employeeId && user.isAdmin) {
           userData = await getCurrentUser(employeeId);
           tasksData = await getUserTasksWithStatusByAdmin(employeeId, 'NEW');
+          ratingData = await getRatingByAdmin(employeeId);
+          pointsData = await getStatPointsByAdmin(employeeId);
         } else {
           userData = await getCurrentUser(user.id);
           tasksData = await getTasksWithStatusByUser('NEW');
+          ratingData = await getRatingByUser();
+          pointsData = await getStatPointsByUser();
         }
         setEmployee(userData);
         setCurrentTasks(tasksData);
+        setRating(ratingData);
+        setPoints(pointsData);
       } catch (error) {
         handleError(error);
       }
@@ -122,7 +137,11 @@ function EmployeeViewPage() {
         />
       )}
       <section className={styles.employeeViewPage__container}>
-        <EmployeeViewHeader employee={employee} />
+        <EmployeeViewHeader
+          employee={employee}
+          rating={rating}
+          points={points}
+        />
         <Switch
           labelLeft="Задачи"
           labelRight="Оценки"
