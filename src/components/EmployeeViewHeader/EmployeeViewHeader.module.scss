@@ -19,7 +19,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  width: 461px;
+  width: 479px;
 }
 
 .employeeViewHeader__image {
@@ -37,8 +37,10 @@
   color: $black-base-color;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: 166px;
-  text-wrap: nowrap;
+  width: 210px;
+  text-wrap: wrap;
+  min-height: 31px;
+  max-height: 62px;
 }
 
 .employeeViewHeader__job {
