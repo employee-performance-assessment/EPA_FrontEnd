@@ -7,8 +7,8 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
-import AdminRoute from '../AdminRoute/AdminRoute.jsx';
+import UserRoutes from '../UserRoutes/UserRoutes.jsx';
+import AdminRoutes from '../AdminRoutes/AdminRoutes.jsx';
 
 import Auth from '../../pages/Auth/Auth.jsx';
 import Register from '../../pages/Register/Register.jsx';
@@ -90,7 +90,7 @@ function App() {
         <Route path="/" element={<Navigate to={login} />} />
         <Route path={register} element={<Register />} />
         <Route path={login} element={<Auth />} />
-        <Route path="" element={<AdminRoute />}>
+        <Route path="" element={<AdminRoutes />}>
           <Route path={personalArea} element={<PersonalArea />} />
           <Route path={board} element={<Kanban />} />
           <Route path={myTeam} element={<MyTeam />} />
@@ -104,16 +104,16 @@ function App() {
             path={`${ratingCards}/:employeeId/:questionnaireId`}
             element={<EmployeeRatingPage />}
           />
-          <Route path={estimate} element={<AssessmentBlock />} />
           <Route
             path={`${questionnaire}/:date/:questionnaireId/:employeeId`}
             element={<Questionnaire />}
           />
         </Route>
-        <Route path="" element={<ProtectedRoute />}>
+        <Route path="" element={<UserRoutes />}>
           <Route path={anyPage} element={<NotFound />} />
           <Route path={taskCards} element={<EmployeeViewPage />} />
           <Route path={`${taskCards}/:id`} element={<TaskViewPage />} />
+          <Route path={estimate} element={<AssessmentBlock />} />
         </Route>
       </Routes>
     </div>

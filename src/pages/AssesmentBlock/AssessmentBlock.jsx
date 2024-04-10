@@ -15,16 +15,19 @@ import './AssessmentBlock.scss';
 function AssessmentBlock() {
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const isAppreciated = useSelector((state) => state.isAppreciated.isAppreciated);
+  const isAdmin = useSelector((state) => state.user.isAdmin);
   const [users, setUsers] = useState([]);
   const [isActivitySurveyButton, setIsActivitySurveyButton] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    checkActivitySurveyButton()
-      .then((res) => {
-        setIsActivitySurveyButton(res);
-      })
-      .catch((err) => handleError(err));
+    if (isAdmin) {
+      checkActivitySurveyButton()
+        .then((res) => {
+          setIsActivitySurveyButton(res);
+        })
+        .catch((err) => handleError(err));
+    }
   }, []);
 
   useEffect(() => {
@@ -71,18 +74,24 @@ function AssessmentBlock() {
     <section className="assessment-block">
       {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
       <div className="assessment-block__container">
-        <div className="assessment-block__header">
+        <div className={`assessment-block__header ${!isAdmin && "assessment-block__header_is-user"}`}>
           <div className="header__wrapper">
             <div className="header__icon" />
-            <h3 className="header__text">Оценка эффективности сотрудников</h3>
+            <h3 className="header__title">
+              {`${isAdmin ? 'Оценка эффективности сотрудников' : 'Оцени коллегу'}`}
+            </h3>
           </div>
-          <button
+          {!isAdmin &&
+            <p className="header__subtitle">
+              Анкеты анонимные. Постарайся быть объективным и внимательным при оценке коллег.
+            </p>}
+          {isAdmin && <button
             className={`header__button ${!isActivitySurveyButton && 'header__button_inactive'}`}
             onClick={handleClickSurveyButton}
             disabled={!isActivitySurveyButton}
           >
             Провести анкетирование
-          </button>
+          </button>}
         </div>
         <div className="assessment-block__filters">
           <h3 className="filters__text">Фильтры:</h3>
@@ -112,27 +121,29 @@ function AssessmentBlock() {
         {users.length === 0 && isActivitySurveyButton && (
           <>
             <div className="assessment-block__image_empty" />
-            <span className="assessment-block__span">
-              <p className="">Список пока что пуст.</p>Новые карточки для оценки
-              сотрудников можете добавить с помощью кнопки «Провести
-              анкетирование»
-            </span>
+            <p className="assessment-block__span">Список пока что пуст.</p>
+            <p className="assessment-block__span">
+              {isAdmin ? `Новые карточки для оценки сотрудников можете
+              добавить с помощью кнопки «Провести анкетирование»` :
+                `Уточнить дату анкетирования Вы можете у руководителя.`}
+            </p>
           </>
         )}
         {users.length === 0 && !isActivitySurveyButton && (
           <>
             <div className="assessment-block__image_done" />
-            <span className="assessment-block__span">
-              <p className="">Спасибо за ваше мнение!</p>Новые карточки для оценки
-              сотрудников можете добавить с помощью кнопки «Провести
-              анкетирование»
-            </span>
+            <p className="assessment-block__span">Спасибо за ваше мнение!</p>
+            <p className="assessment-block__span">
+              {isAdmin ? `Новые карточки для оценки сотрудников можете
+              добавить с помощью кнопки «Провести анкетирование»` :
+                `Уточнить дату следующего анкетирования Вы можете у руководителя.`}
+            </p>
           </>
         )}
         <ul className="assessment-block__list">
           {users.map((user) => (
             <AssessmentCard
-              key={user.employeeId + user.questionnaireId}
+              key={user.employeeId + user.questionnaireId + user.questionnaireCreated}
               fullName={user.employeeFullName}
               position={user.employeePosition}
               date={user.questionnaireCreated}

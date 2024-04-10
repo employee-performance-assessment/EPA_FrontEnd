@@ -8,11 +8,11 @@ function EmployeeViewCard({
   type,
   task,
   rating,
-  date,
+  // date,
   employeeId,
   idQuestionnaire,
 }) {
-  const currentDate = date.split('-').reverse().join('.');
+  // const currentDate = date.split('-').reverse().join('.');
 
   const navigate = useNavigate();
 
@@ -46,7 +46,7 @@ function EmployeeViewCard({
   ) : (
     <div className={styles.employeeViewCard__container}>
       <h2 className={styles.employeeViewCard__title}>
-        Дата анкетирования: <p>{currentDate}</p>
+        {/* Дата анкетирования: <p>{currentDate}</p> */}
         1234
       </h2>
       <div className={styles.employeeViewCard__stars}>

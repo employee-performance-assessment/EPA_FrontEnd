@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import SideMenu from '../SideMenu/SideMenu.jsx';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
+import SideMenu from '../SideMenu/SideMenu.jsx';
 
 function AdminRoute() {
   const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
@@ -14,9 +14,7 @@ function AdminRoute() {
       </div>
       <Outlet />
     </div>
-  ) : (
-    <Navigate to={ENDPOINT_ROUTES.login} />
-  );
+  ) : <Navigate to={ENDPOINT_ROUTES.login} />;
 }
 
 export default AdminRoute;

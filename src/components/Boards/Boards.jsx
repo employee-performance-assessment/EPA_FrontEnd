@@ -4,7 +4,7 @@ import './Boards.scss';
 import { boardsData } from '../../constants/boardsList.js';
 
 function Boards({ tasks }) {
-  console.log(tasks)
+  // console.log(tasks)
   const [cardsLists, setCardsLists] = useState([]);
   const [dropCard, setDropCard] = useState(null);
   const [startBoard, setStartBoard] = useState(null);
