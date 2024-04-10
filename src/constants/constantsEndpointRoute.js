@@ -9,6 +9,7 @@ export const ENDPOINT_ROUTES = {
   questionnaire: '/questionnaire',
   criteria: '/criteria-setting',
   cardsEmployees: '/cards-employees',
+  userArea: '/user-area',
   ratingCards: '/rating-cards',
   taskCards: '/task-cards',
   anyPage: '/*',
