@@ -69,7 +69,7 @@ function PopupEditTask({
       penaltyPoints: pointsPenalty,
     })
       .then(() => {
-        setIsTaskEdited(true);
+        setIsTaskEdited && setIsTaskEdited(true);
         setIsOpenPopup(false);
       })
       .catch((err) => console.log(err));

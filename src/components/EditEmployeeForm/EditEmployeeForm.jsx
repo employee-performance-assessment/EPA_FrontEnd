@@ -24,7 +24,8 @@ function EditEmployeeForm({
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+    useErrorHandler();
 
   const {
     values,
@@ -76,14 +77,14 @@ function EditEmployeeForm({
     } else {
       setIsValid(true);
     }
-
-    return () => {
-      setErrors({});
-    };
-  }, [values]);
+  }, [errors]);
 
   useEffect(() => {
-    if (values.confirmPassword !== values.password) {
+    if (
+      values.password &&
+      values.confirmPassword &&
+      values.confirmPassword !== values.password
+    ) {
       setErrors({ confirmPassword: VALIDATION_MESSAGES.passwordsNotMatch });
       setIsValid(false);
     } else {
@@ -131,7 +132,7 @@ function EditEmployeeForm({
           <Input
             type="text"
             name="name"
-            value={values.name || ""}
+            value={values.name || ''}
             onChange={(e) =>
               handleChangeInput(
                 e,
@@ -146,14 +147,12 @@ function EditEmployeeForm({
             inputClassName="user-form__input"
             placeholder="Имя Фамилия"
             spanClassName="user-form__span"
-            minLength={1}
-            maxLength={255}
             required
           />
           <Input
             type="text"
             name="position"
-            value={values.position || ""}
+            value={values.position || ''}
             onChange={(e) =>
               handleChangeInput(
                 e,
@@ -168,14 +167,12 @@ function EditEmployeeForm({
             inputClassName="user-form__input"
             placeholder="Должность"
             spanClassName="user-form__span"
-            minLength={1}
-            maxLength={255}
             required
           />
           <Input
             type="email"
             name="email"
-            value={values.email || ""}
+            value={values.email || ''}
             onChange={(e) =>
               handleChangeInput(
                 e,
@@ -190,8 +187,6 @@ function EditEmployeeForm({
             inputClassName="user-form__input"
             placeholder="Email"
             spanClassName="user-form__span"
-            minLength={3}
-            maxLength={255}
             required
           />
           <>
@@ -200,7 +195,7 @@ function EditEmployeeForm({
                 type={showPassword ? 'text' : 'password'}
                 name="password"
                 inputClassName="user-form__input"
-                value={values.password || ""}
+                value={values.password || ''}
                 onChange={(e) =>
                   handleChangeInput(
                     e,
@@ -215,7 +210,6 @@ function EditEmployeeForm({
                 spanClassName="user-form__span"
                 error={errors.password}
                 minLength={8}
-                maxLength={14}
               />
               <button
                 type="button"
@@ -237,7 +231,7 @@ function EditEmployeeForm({
                 type={showConfirmPassword ? 'text' : 'password'}
                 name="confirmPassword"
                 inputClassName="user-form__input"
-                value={values.confirmPassword || ""}
+                value={values.confirmPassword || ''}
                 onChange={(e) =>
                   handleChangeInput(
                     e,
@@ -253,7 +247,6 @@ function EditEmployeeForm({
                 spanClassName="user-form__span"
                 error={errors.confirmPassword}
                 minLength={8}
-                maxLength={14}
               />
               <button
                 type="button"
