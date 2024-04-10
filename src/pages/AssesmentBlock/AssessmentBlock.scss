@@ -1,4 +1,5 @@
 @import '../../styles/vars';
+@import '../../styles/mixins';
 
 .assessment-block {
   display: flex;
@@ -25,6 +26,11 @@
   border-radius: 40px;
   background-color: rgba(245, 245, 245, 1);
   box-shadow: 0px 4px 20px rgba(166, 166, 166, 0.4);
+
+  &_is-user {
+    justify-content: start;
+    gap: 44px;
+  }
 }
 
 .header__wrapper {
@@ -42,11 +48,14 @@
   background-size: cover;
 }
 
-.header__text {
-  font-size: 26px;
-  font-weight: 500;
-  line-height: 31.47px;
+.header__title {
+  @include text($font-size: 26px, $line-height: 31px);
   text-align: left;
+}
+
+.header__subtitle {
+  width: 425px;
+  @include text($font-size: 16px, $line-height: 19px);
 }
 
 .header__button {
@@ -55,9 +64,7 @@
   background: $yellow-base-color;
   border-radius: 20px;
   border: none;
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 24.2px;
+  @include text($font-size: 20px, $font-weight: 600, $line-height: 24px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,16 +97,12 @@
 }
 
 .filters__text {
-  font-size: 26px;
-  font-weight: 500;
-  line-height: 31.47px;
+  @include text($font-size: 26px, $line-height: 31px);
   margin-right: 29px;
 }
 
 .filters__items {
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 24.2px;
+  @include text($font-size: 20px, $line-height: 24px);
   margin-right: 19px;
   border-radius: 20px;
   border: 2px solid rgba(218, 214, 214, 1);
@@ -172,13 +175,11 @@
 }
 
 .assessment-block__span {
+  @include text($font-size: 22px, $font-weight: 400, $line-height: 27px);
   display: block;
   margin: 0 auto;
   text-align: center;
   max-width: 757px;
-  font-size: 22px;
-  font-weight: 400;
-  line-height: 26.63px;
 }
 
 .assessment-block__list {
