@@ -4,10 +4,13 @@ import DropdownMenu from '../DropDownMenu/DropDownMenu';
 import OneDatePicker from '../OneDatePicker/OneDatePicker.jsx';
 import { getAllUsers, patchAdminTask } from '../../utils/mainApi.js';
 
-
-
-function PopupEditTask({ setIsOpenPopup, title, projects, taskOldContent }) {
-
+function PopupEditTask({
+  setIsOpenPopup,
+  title,
+  projects,
+  taskOldContent,
+  setIsTaskEdited
+}) {
   /* так должны выглядеть пропсы.
 <PopupEditTask
           setIsOpenPopup={setIsOpenPopupAddTask}
@@ -34,23 +37,27 @@ function PopupEditTask({ setIsOpenPopup, title, projects, taskOldContent }) {
   const [project, setProject] = useState(taskOldContent.project);
   const [employee, setEmployee] = useState(taskOldContent.employee);
   const [pointTask, setPointTask] = useState(taskOldContent.basicPoints);
-  const [pointsPenalty, setPointsPenalty] = useState(taskOldContent.penaltyPoints);
+  const [pointsPenalty, setPointsPenalty] = useState(
+    taskOldContent.penaltyPoints
+  );
   const [taskContent, setTaskContent] = useState(taskOldContent.description);
   const [employees, setEmployees] = useState([]);
   const [isOpenDropMenuProjects, setIsOpenDropMenuProjects] = useState(false);
   const [isOpenDropMenuEmployees, setIsOpenDropMenuEmployees] = useState(false);
 
   function handleClickSubmit() {
-    console.log(JSON.stringify({
-      name: taskName,
-      description: taskContent,
-      projectId: project.id,
-      executorId: employee.id,
-      deadLine: convertDate(startDate),
-      status: taskOldContent.status,
-      basicPoints: pointTask * 1,
-      penaltyPoints: pointsPenalty,
-    }))
+    console.log(
+      JSON.stringify({
+        name: taskName,
+        description: taskContent,
+        projectId: project.id,
+        executorId: employee.id,
+        deadLine: convertDate(startDate),
+        status: taskOldContent.status,
+        basicPoints: pointTask * 1,
+        penaltyPoints: pointsPenalty,
+      })
+    );
     patchAdminTask(taskOldContent.taskId, {
       name: taskName,
       description: taskContent,
@@ -60,7 +67,12 @@ function PopupEditTask({ setIsOpenPopup, title, projects, taskOldContent }) {
       status: taskOldContent.status,
       basicPoints: pointTask * 1,
       penaltyPoints: pointsPenalty,
-    }).then(() => setIsOpenPopup(false)).catch((err) => console.log(err));
+    })
+      .then(() => {
+        setIsTaskEdited(true);
+        setIsOpenPopup(false);
+      })
+      .catch((err) => console.log(err));
   }
 
   function convertDate(dateStr) {
