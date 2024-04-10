@@ -131,7 +131,7 @@ function EditEmployeeForm({
           <Input
             type="text"
             name="name"
-            value={values.name}
+            value={values.name || ""}
             onChange={(e) =>
               handleChangeInput(
                 e,
@@ -153,7 +153,7 @@ function EditEmployeeForm({
           <Input
             type="text"
             name="position"
-            value={values.position}
+            value={values.position || ""}
             onChange={(e) =>
               handleChangeInput(
                 e,
@@ -175,7 +175,7 @@ function EditEmployeeForm({
           <Input
             type="email"
             name="email"
-            value={values.email}
+            value={values.email || ""}
             onChange={(e) =>
               handleChangeInput(
                 e,

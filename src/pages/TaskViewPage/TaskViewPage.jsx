@@ -6,7 +6,7 @@ import {
   getTaskDetailsByAdmin,
   deleteTaskByAdmin,
   getTaskDetailsByUser,
-  getProjectsName
+  getProjectsName,
 } from '../../utils/mainApi.js';
 import { formatDate } from '../../utils/utils.js';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
@@ -26,12 +26,12 @@ function TaskViewPage() {
     useErrorHandler();
 
   useEffect(() => {
-    const fetchData = async() => {
+    const fetchData = async () => {
       try {
         if (taskId) {
-          if(isAdmin) {
-            const res = await  getTaskDetailsByAdmin(taskId);
-            if(res) {
+          if (isAdmin) {
+            const res = await getTaskDetailsByAdmin(taskId);
+            res &&
               setTask({
                 id: res.id,
                 name: res.name,
@@ -48,9 +48,13 @@ function TaskViewPage() {
                 status: res.status,
                 admin: adminName,
               });
-            } else {
-              const res = await getTaskDetailsByUser(taskId);
-              res && setTask({
+
+            const projectsRes = await getProjectsName();
+            setProjects(projectsRes);
+          } else {
+            const res = await getTaskDetailsByUser(taskId);
+            res &&
+              setTask({
                 id: res.id,
                 name: res.name,
                 description: res.description,
@@ -62,15 +66,12 @@ function TaskViewPage() {
                 admin: res.owner.fullName,
                 projectName: res.project.name,
               });
-            }
           }
         }
-        const projectsRes = await getProjectsName();
-        setProjects(projectsRes);
       } catch (err) {
         handleError(err);
       }
-    }
+    };
     fetchData();
   }, [taskId, isAdmin, isTaskEdited]);
 
@@ -111,7 +112,7 @@ function TaskViewPage() {
             status: task.status,
             basicPoints: task.basicPoints,
             penaltyPoints: task.penaltyPoints,
-            taskId: task.id
+            taskId: task.id,
           }}
           setIsTaskEdited={setIsTaskEdited}
         />
@@ -160,7 +161,9 @@ function TaskViewPage() {
               </li>
               <li>
                 <p className={styles.taskViewPage__name}>Дедлайн до</p>
-                <p className={styles.taskViewPage__value}>{task.deadLineFormated}</p>
+                <p className={styles.taskViewPage__value}>
+                  {task.deadLineFormated}
+                </p>
               </li>
               <li>
                 <p className={styles.taskViewPage__name}>Бонус/Штраф</p>
