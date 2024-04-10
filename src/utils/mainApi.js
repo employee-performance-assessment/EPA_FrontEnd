@@ -22,6 +22,7 @@ import {
   USER_RATING,
   ADMIN_STAT_POINTS,
   USER_STAT_POINTS,
+  USER_QUESTIONNAIRE_LIST,
 } from '../constants/constantAPI.js';
 
 function getToken() {
@@ -153,7 +154,8 @@ export const getListNewQuestionnaires = () =>
 export const getListComplitedQuestionnaires = () =>
   request(EVALUATIONS_LIST_ASSESSED, 'GET');
 
-export const postEvaluationsList = (path, questionnaireId, employeeId, data) => request(
+export const postEvaluationsList = (path, questionnaireId, employeeId, data) =>
+  request(
     `${path}?questionnaireId=${questionnaireId}&evaluatedId=${employeeId}`,
     'POST',
     data
@@ -178,6 +180,9 @@ export const getEvaluationsByUser = (questionnaireId) =>
 // Получение списка заполненных анкет по конкретному сотруднику админом и сотрудником
 export const getQuestionnaireListByAdmin = (evaluatedId) =>
   request(`${ADMIN_USER_QUESTIONNAIRE_LIST}?evaluatedId=${evaluatedId}`, 'GET');
+
+export const getQuestionnaireListByUser = () =>
+  request(USER_QUESTIONNAIRE_LIST, 'GET');
 
 // Получение рейтинга за месяц по конкретному сотруднику админом и сотрудником
 export const getRatingByAdmin = (employeeId) =>
