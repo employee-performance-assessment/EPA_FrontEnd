@@ -5,7 +5,6 @@ import { NotFoundTask } from '../../components/NotFoundTask/NotFoundTask.jsx';
 import { NotProject } from '../../components/NotProject/NotProject.jsx';
 import PopupKanban from '../../components/PopupKanban/PopupKanban.jsx';
 import PopupAddNewTask from '../../components/PopupAddNewTask/PopupAddNewTask.jsx';
-// import PopupEditTask from '../../components/PopupEditTask/PopupEditTask.jsx';
 import PopupProject from '../../components/PopupProject/PopupProject.jsx';
 import plus from '../../images/Plus.svg';
 import edit from '../../images/edit-button-icon.svg';
@@ -24,6 +23,7 @@ function Kanban() {
   const [isOpenPopupAddTask, setIsOpenPopupAddTask] = useState(false);
   const [isOpenPopupProject, setIsOpenPopupProject] = useState(false);
   const [tasks, setTasks] = useState([])
+  const [isLoad, setIsLoad] = useState(true)
 
   useEffect(() => {
     if (projects.length > 0) {
@@ -36,14 +36,14 @@ function Kanban() {
   useEffect(() => {
     Promise.all([getProjectsName(), getInfoOwnerJWT(), getAdminTask()])
       .then((res) => {
-        // setIdOwnerJWT(res[1].id);
         setProjects(res[0]);
         setTasks(res[2])
+        console.log(res[2])
         if (res[2].length > 0) {
           setIsNoTask(false)
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err)).finally(() => setIsLoad(false));
   }, []);
 
   function handleClickOpenPopup() {
@@ -106,14 +106,6 @@ function Kanban() {
             >
               <p className="kanban__button-title_all">Все</p>
             </button>
-            {/* {isOpenPopupAddTask && (
-              <PopupEditTask
-                setIsOpenPopup={setIsOpenPopupAddTask}
-                idProject={currentProgect.id}
-                title="Создать здачу"
-                projects={projects}
-              />
-            )} */}
             <button
               type="button"
               className="kanban__button kanban__button_project"
@@ -137,7 +129,7 @@ function Kanban() {
             </button>
           </div>
         </nav>
-        <Boards tasks={tasks} />
+        {!isLoad && <Boards tasks={tasks} />}
         {isNoProject ? (
           <NotProject setProjects={setProjects} />
         ) : (

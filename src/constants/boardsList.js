@@ -163,7 +163,7 @@ export const boardsData = [
   {
     id: 2,
     title: 'В работе',
-    status: 'INPOGRESS',
+    status: 'IN_PROGRESS',
     items: [],
   },
   {

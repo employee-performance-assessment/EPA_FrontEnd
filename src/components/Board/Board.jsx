@@ -93,15 +93,11 @@ function Board({
     return '';
   }
 
-  function settingDateDeadline(unixTime) {
-    const date = new Date(unixTime);
-    return date.toLocaleDateString();
-  }
-
   return (
     <div className="boardDnD">
       <h1 className="boardDnD__title">{board.title}</h1>
       {/* сначала сортируем карты по порядку (order), затем перебираем массив для отрисовки карточек */}
+      {console.log(board)}
       {board.items.sort(sortCard).map((card) => (
         <div
           className="boardDnD__card"
@@ -116,15 +112,13 @@ function Board({
           <p className="boardDnD__card-number">{card.id}</p>
           <p
             className={`boardDnD__card-points ${getCollor(board.title, card.deadline)}`}
-          >
-            {card.points} баллов
-          </p>
-          <h3 className="boardDnD__card-board.title">{card.title}</h3>
+          >{card.basicPoints} баллов </p>
+          <h3 className="boardDnD__card-board.title">{card.name}</h3>
           <p className="boardDnD__card-deadline">
-            Дедлайн: {settingDateDeadline(card.deadline)}
+            Дедлайн: {card.deadLine}
           </p>
           <p className="boardDnD__card-forfeit">
-            {card.forfeit} за просрочку дедлайна
+            Бонус/Штраф «{card.basicPoints}» баллов за день
           </p>
           <div className="boardDnD__card-deadline-timer">
             <TimerDeadline deadline={card.deadline} />
