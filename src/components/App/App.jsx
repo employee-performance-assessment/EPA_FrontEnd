@@ -102,15 +102,15 @@ function App() {
             path={`${ratingCards}/:employeeId/:questionnaireId`}
             element={<EmployeeRatingPage />}
           />
-          <Route
-            path={`${questionnaire}/:date/:questionnaireId/:employeeId`}
-            element={<Questionnaire />}
-          />
         </Route>
         <Route path="" element={<UserRoutes />}>
           <Route path={taskCards} element={<EmployeeViewPage />} />
           <Route path={`${taskCards}/:id`} element={<TaskViewPage />} />
           <Route path={estimate} element={<AssessmentBlock />} />
+          <Route
+            path={`${questionnaire}/:date/:questionnaireId/:employeeId`}
+            element={<Questionnaire />}
+          />
         </Route>
         <Route path={anyPage} element={<NotFound />} />
       </Routes>

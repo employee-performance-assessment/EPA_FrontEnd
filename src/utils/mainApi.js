@@ -154,14 +154,11 @@ export const getListNewQuestionnaires = () =>
 export const getListComplitedQuestionnaires = () =>
   request(EVALUATIONS_LIST_ASSESSED, 'GET');
 
-export const postEvaluationsList = (data) => {
-  const { questionnaireId, evaluatedId, questionnaireData } = data;
-  return request(
-    `${ADMIN_EVALUATIONS}?questionnaireId=${questionnaireId}&evaluatedId=${evaluatedId}`,
+export const postEvaluationsList = (path, questionnaireId, employeeId, data) => request(
+    `${path}?questionnaireId=${questionnaireId}&evaluatedId=${employeeId}`,
     'POST',
-    questionnaireData
+    data
   );
-};
 
 export const getEvaluationsList = (questionnaireId, evaluatedId) =>
   request(

@@ -14,9 +14,14 @@ import {
   getQuestionnaire,
   postEvaluationsList
 } from '../../utils/mainApi.js';
+import {
+  ADMIN_EVALUATIONS,
+  USER_EVALUATIONS
+} from '../../constants/constantAPI.js';
 import './Questionnaire.scss';
 
 export default function Questionnaire() {
+  const isAdmin = useSelector((state) => state.user.isAdmin);
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const isAppreciated = useSelector((state) => state.isAppreciated.isAppreciated);
   const [criteria, setCriteria] = useState([]);
@@ -71,10 +76,14 @@ export default function Questionnaire() {
     const lengthValues = objectKeys.length;
     const lengthCriteria = criteria.length;
 
-    if (lengthCriteria + 1 === lengthValues && values['recommendation']) {
-      setIsActiveButton(true);
+    if (isAdmin) {
+      lengthCriteria + 1 === lengthValues && values['recommendation'] ?
+        setIsActiveButton(true) :
+        setIsActiveButton(false);
     } else {
-      setIsActiveButton(false);
+      lengthCriteria === lengthValues ?
+        setIsActiveButton(true) :
+        setIsActiveButton(false);
     }
   }
 
@@ -99,16 +108,23 @@ export default function Questionnaire() {
   function handleSubmit(evt) {
     evt.preventDefault();
     const recommendationValue = evt.target[0].value;
-    const resultData = {
-      questionnaireId,
-      evaluatedId: employeeId,
-      questionnaireData: {
-        evaluationDtoList: transformValues(),
-        recommendation: recommendationValue,
-      }
+    const path = isAdmin ? ADMIN_EVALUATIONS : USER_EVALUATIONS;
+
+    const dataAdmin = {
+      evaluationDtoList: transformValues(),
+      recommendation: recommendationValue,
     }
 
-    postEvaluationsList(resultData)
+    const dataUser = transformValues();
+
+    const resultData = isAdmin ? dataAdmin : dataUser;
+
+    postEvaluationsList(
+      path,
+      questionnaireId,
+      employeeId,
+      resultData
+    )
       .then(() => {
         navigate(estimate);
       })
@@ -153,18 +169,18 @@ export default function Questionnaire() {
           ))}
         </div>
         <form onSubmit={handleSubmit} className="questionnaire__form">
-          <span className="questionnaire__text">
-            Рекомендации для сотрудника
-          </span>
-          <textarea
-            name="recommendation"
-            type="text"
-            className="questionnaire__input-text"
-            placeholder="Ваши комментарии"
-            onChange={handleChange}
-            value={values['recommendation'] || ''}
-            disabled={!isAppreciated}
-          />
+          {isAdmin && <>
+            <span className="questionnaire__text">
+              Рекомендации для сотрудника
+            </span><textarea
+              name="recommendation"
+              type="text"
+              className="questionnaire__input-text"
+              placeholder="Ваши комментарии"
+              onChange={handleChange}
+              value={values['recommendation'] || ''}
+              disabled={!isAppreciated} />
+          </>}
           {isAppreciated && <button
             className={`questionnaire__button ${isActiveButton && 'questionnaire__button_active'}`}
             type="submit">
