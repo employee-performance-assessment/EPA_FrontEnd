@@ -4,9 +4,9 @@ import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import SideMenu from '../SideMenu/SideMenu.jsx';
 
 function UserRoutes() {
-  const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
+  const user = useSelector((state) => state.user);
 
-  return isLoggedIn ? (
+  return user ? (
     <div className="page-container">
       <div className="page-container__sidemenu">
         <SideMenu />

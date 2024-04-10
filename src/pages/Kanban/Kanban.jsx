@@ -14,7 +14,7 @@ import { getProjectsName, getInfoOwnerJWT, getAdminTask } from '../../utils/main
 import './Kanban.scss';
 
 function Kanban() {
-  const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
+  const user = useSelector((state) => state.user);
   const [isNoProject, setIsNoProject] = useState(true);
   const [isNoTask, setIsNoTask] = useState(true);
   const [isOpenPopup, setIsOpenPopup] = useState(false);
@@ -54,7 +54,7 @@ function Kanban() {
     console.log('показать все таски');
   }
 
-  return isLoggedIn ? (
+  return user ? (
     <section className="kanban_page">
       <div className="kanban__main">
         <nav className="kanban__nav">

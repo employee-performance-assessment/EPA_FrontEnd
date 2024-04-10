@@ -29,10 +29,12 @@ export const EVALUATIONS_LIST_ASSESS = `${BASE_URL}/user/evaluations/assess-list
 export const EVALUATIONS_LIST_ASSESSED = `${BASE_URL}/user/evaluations/assessed-list`;
 export const ADMIN_EVALUATIONS = `${BASE_URL}/admin/evaluations`;
 export const ADMIN_ASSESSED = `${BASE_URL}/admin/assessed`;
-export const RECO = `${BASE_URL}/user/recommendation`;
 
 export const ADMIN_USER_QUESTIONNAIRE_LIST = `${BASE_URL}/admin/list-questionnaire`;
 export const ADMIN_RATING = `${BASE_URL}/admin/rating`;
 export const ADMIN_STAT_POINTS = `${BASE_URL}/admin/stat/points/employee`;
+
+export const USER_RATING = `${BASE_URL}/user/evaluations/rating`;
+export const USER_STAT_POINTS = `${BASE_URL}/user/stat/points`;
 
 export const EMPLOYEE_ME = `${BASE_URL}/user/employee/me`;

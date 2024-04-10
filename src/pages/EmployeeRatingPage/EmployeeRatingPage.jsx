@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 import EmployeeViewCriteria from '../../components/EmployeeViewCriteria/EmployeeViewCriteria.jsx';
 import SetStars from '../../components/SetStars/SetStars.js';
 import styles from './EmployeeRatingPage.module.scss';
-import { getEvaluations } from '../../utils/mainApi.js';
+import { getEvaluationsByAdmin } from '../../utils/mainApi.js';
 
 function EmployeeRatingPage() {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ function EmployeeRatingPage() {
   }
 
   useEffect(() => {
-    getEvaluations(employeeId, questionnaireId)
+    getEvaluationsByAdmin(employeeId, questionnaireId)
       .then((res) => {
         setRating(res.middleScore);
         setRecommendation(res.recommendation);

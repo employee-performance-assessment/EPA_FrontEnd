@@ -8,7 +8,6 @@ import {
   ADMIN_CRITERIA_DEFAULT,
   USER_QUESTIONNAIRE,
   ADMIN_EVALUATIONS,
-  RECO,
   EMPLOYEE_ME,
   ADMIN_PROJECTS,
   ADMIN_CRITERIA,
@@ -21,7 +20,9 @@ import {
   USER_TASK,
   ADMIN_USER_QUESTIONNAIRE_LIST,
   ADMIN_RATING,
+  USER_RATING,
   ADMIN_STAT_POINTS,
+  USER_STAT_POINTS,
 } from '../constants/constantAPI.js';
 
 function getToken() {
@@ -110,9 +111,12 @@ export const setNewProjects = (nameProject) => {
 export const deleteProject = (id) =>
   request(`${ADMIN_PROJECTS}/${id}`, 'DELETE');
 
-  // ADMIN TASKS
+// ADMIN TASKS
 export const getUserTasksWithStatusByAdmin = (employeeId, status) =>
-  request(`${ADMIN_TASK}/find?employeeId=${employeeId}&status=${status}`, 'GET');
+  request(
+    `${ADMIN_TASK}/find?employeeId=${employeeId}&status=${status}`,
+    'GET'
+  );
 
 export const getTaskDetailsByAdmin = (taskId) =>
   request(`${ADMIN_TASK}/${taskId}`, 'GET');
@@ -120,7 +124,7 @@ export const getTaskDetailsByAdmin = (taskId) =>
 export const deleteTaskByAdmin = (taskId) =>
   request(`${ADMIN_TASK}/${taskId}`, 'DELETE');
 
-export const updateTaskByAdmin = (task) => {
+export const updateTaskStatusByAdmin = (task) => {
   const requestBody = {
     name: task.name,
     description: task.description,
@@ -135,9 +139,12 @@ export const updateTaskByAdmin = (task) => {
 };
 
 // USER TASKS
-export const getTasksWithStatusByUser = (status) => request(`${USER_TASK}?status=${status}`, 'GET');
-export const getTaskDetailsByUser = (taskId) => request(`${USER_TASK}/${taskId}`, 'GET');
-export const updateTaskStatusByUser = (taskId, status) => request(`${USER_TASK}/${taskId}?status=${status}`, 'PATCH');
+export const getTasksWithStatusByUser = (status) =>
+  request(`${USER_TASK}?status=${status}`, 'GET');
+export const getTaskDetailsByUser = (taskId) =>
+  request(`${USER_TASK}/${taskId}`, 'GET');
+export const updateTaskStatusByUser = (taskId, status) =>
+  request(`${USER_TASK}/${taskId}?status=${status}`, 'PATCH');
 
 export const getColleaguesEvaluation = () => request(EVALUATIONS, 'GET');
 
@@ -162,36 +169,40 @@ export const getEvaluationsList = (questionnaireId, evaluatedId) =>
     'GET'
   );
 
-export const getEvaluations = (evaluatedId, questionnaireId) =>
+// Получение подробных результатов анкеты админом и сотрудником
+export const getEvaluationsByAdmin = (evaluatedId, questionnaireId) =>
   request(
     `${ADMIN_EVALUATIONS}?evaluatedId=${evaluatedId}&questionnaireId=${questionnaireId}`,
     'GET'
   );
 
-export const getQuestionnaireList = (evaluatedId) =>
+export const getEvaluationsByUser = (questionnaireId) =>
+  request(`${EVALUATIONS}?questionnaireId=${questionnaireId}`, 'GET');
+
+// Получение списка заполненных анкет по конкретному сотруднику админом и сотрудником
+export const getQuestionnaireListByAdmin = (evaluatedId) =>
   request(`${ADMIN_USER_QUESTIONNAIRE_LIST}?evaluatedId=${evaluatedId}`, 'GET');
 
-export const getRating = (employeeId) =>
+// Получение рейтинга за месяц по конкретному сотруднику админом и сотрудником
+export const getRatingByAdmin = (employeeId) =>
   request(`${ADMIN_RATING}/${employeeId}`, 'GET');
 
-export const getAdminEvaluation = () =>
-  request(ADMIN_EVALUATIONS, 'GET');
+export const getRatingByUser = () => request(USER_RATING, 'GET');
 
-export const getReco = (id) => request(`${RECO}/${id}`, 'GET');
+// Получение баллов за выполненные задачи в текущем месяце по конкретному сотруднику админом и сотрудником
+export const getStatPointsByAdmin = (employeeId) =>
+  request(`${ADMIN_STAT_POINTS}/${employeeId}`, 'GET');
 
-export const getInfoOwnerJWT = () =>
-  request(EMPLOYEE_ME, 'GET');
+export const getStatPointsByUser = () => request(USER_STAT_POINTS, 'GET');
+
+export const getAdminEvaluation = () => request(ADMIN_EVALUATIONS, 'GET');
+
+export const getInfoOwnerJWT = () => request(EMPLOYEE_ME, 'GET');
 
 export const setNewTask = (requestBody) =>
   request(ADMIN_TASK, 'POST', requestBody);
 
 export const getAdminTask = () => request(ADMIN_TASK, 'GET'); // взять все задачи админа
 
-export const patchAdminTask = (taskId, requestBody) =>  request(
-    `${ADMIN_TASK}/${taskId}`,
-    'PATCH',
-    requestBody
-  );
-
-export const getStatPoints = (employeeId) =>
-  request(`${ADMIN_STAT_POINTS}/${employeeId}`, 'GET');
+export const patchAdminTask = (taskId, requestBody) =>
+  request(`${ADMIN_TASK}/${taskId}`, 'PATCH', requestBody);

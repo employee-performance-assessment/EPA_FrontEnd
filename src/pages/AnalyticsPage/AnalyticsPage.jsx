@@ -12,7 +12,7 @@ import flyMan from '../../images/fly-man.svg';
 import styles from './AnalyticsPage.module.scss';
 
 function AnalyticsPage() {
-  const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
+  const user = useSelector((state) => state.user);
   const [isPrivate, setIsPrivate] = useState(false);
   const [isEstimate, setIsEstimate] = useState(false);
   const [users, setUsers] = useState([]);
@@ -29,7 +29,7 @@ function AnalyticsPage() {
     console.log('handleSubmitUser');
   };
 
-  return isLoggedIn ? (
+  return user ? (
     <section className={styles.page}>
       <div
         style={isEstimate ? { background: 'white' } : null}

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../store/slices/userSlice.js';
-import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 
 import { useFormValidation } from '../../hooks/useFormValidation.js';
 import { register } from '../../utils/auth.js';
@@ -40,7 +39,6 @@ function Register() {
       .then((res) => {
         navigate(login);
         dispatch(setUser(res));
-        dispatch(setIsLoggedIn(true));
       })
       .catch((err) => {
         handleError(err);

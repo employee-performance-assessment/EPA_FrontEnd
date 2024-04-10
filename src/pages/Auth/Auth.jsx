@@ -9,7 +9,6 @@ import { getUserData } from '../../utils/mainApi.js';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
 import { setToken } from '../../store/slices/tokenSlices.js';
-import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
 import { setUser } from '../../store/slices/userSlice.js';
 
 import registerImg from '../../images/register-img.png';
@@ -39,7 +38,6 @@ function Auth() {
       .then((res) => {
         localStorage.setItem('token', JSON.stringify(res));
         dispatch(setToken(res.token));
-        dispatch(setIsLoggedIn(true));
         getUserData(res.token).then((res) => {
           dispatch(setUser(res));
           res.role === 'ROLE_ADMIN' ? navigate(personalArea) : navigate(taskCards);

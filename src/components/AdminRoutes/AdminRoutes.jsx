@@ -4,10 +4,9 @@ import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import SideMenu from '../SideMenu/SideMenu.jsx';
 
 function AdminRoute() {
-  const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
-  const isAdmin = useSelector((state) => state.user.isAdmin);
+  const user = useSelector((state) => state.user);
 
-  return isLoggedIn && isAdmin ? (
+  return user && user.isAdmin ? (
     <div className="page-container">
       <div className="page-container__sidemenu">
         <SideMenu />

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import Select from 'react-select';
 import {
   getTaskDetailsByAdmin,
-  updateTaskByAdmin,
+  updateTaskStatusByAdmin,
   updateTaskStatusByUser,
 } from '../../utils/mainApi';
 import InfoPopup from '../InfoPopup/InfoPopup';
@@ -111,7 +111,7 @@ function CustomSelect({ task }) {
       if (isAdmin) {
         const updatedTask = await getTaskDetailsByAdmin(task.id);
         updatedTask.status = newStatus;
-        await updateTaskByAdmin(updatedTask);
+        await updateTaskStatusByAdmin(updatedTask);
       } else {
         await updateTaskStatusByUser(task.id, newStatus);
       }
