@@ -4,6 +4,7 @@ import styles from './EmployeeViewBlock.module.scss';
 
 function EmployeeViewBlock({ tasks, marks, employeeId }) {
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
+
   return (
     <ul className={styles.employeeViewBlock__list}>
       {viewMarks

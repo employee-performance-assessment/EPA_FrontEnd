@@ -14,6 +14,7 @@ import {
   getUserTasksWithStatusByAdmin,
   getTasksWithStatusByUser,
   getQuestionnaireListByAdmin,
+  getQuestionnaireListByUser,
   getRatingByAdmin,
   getRatingByUser,
   getStatPointsByAdmin,
@@ -49,40 +50,33 @@ function EmployeeViewPage() {
         let tasksData;
         let ratingData;
         let pointsData;
+        let questionnaireList;
 
         if (employeeId && user.isAdmin) {
           userData = await getCurrentUser(employeeId);
           tasksData = await getUserTasksWithStatusByAdmin(employeeId, 'NEW');
           ratingData = await getRatingByAdmin(employeeId);
           pointsData = await getStatPointsByAdmin(employeeId);
+          questionnaireList = await getQuestionnaireListByAdmin(employeeId);
         } else {
           userData = await getCurrentUser(user.id);
           tasksData = await getTasksWithStatusByUser('NEW');
           ratingData = await getRatingByUser();
           pointsData = await getStatPointsByUser();
+          questionnaireList = await getQuestionnaireListByUser();
         }
         setEmployee(userData);
         setCurrentTasks(tasksData);
         setRating(ratingData);
         setPoints(pointsData);
+        setAllMarks(questionnaireList);
+        setCurrentMarks(questionnaireList);
       } catch (error) {
         handleError(error);
       }
     };
 
     fetchData();
-  }, [employeeId]);
-
-  useEffect(() => {
-    getQuestionnaireListByAdmin(employeeId)
-      .then((res) => {
-        setAllMarks(res);
-        setCurrentMarks(res);
-      })
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log('err in getQuestionnaireList', err);
-      });
   }, [employeeId]);
 
   // Сортировка анкет по дате

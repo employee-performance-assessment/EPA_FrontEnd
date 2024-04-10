@@ -105,6 +105,10 @@ function App() {
         </Route>
         <Route path="" element={<UserRoutes />}>
           <Route path={taskCards} element={<EmployeeViewPage />} />
+          <Route
+            path={`${ratingCards}/:questionnaireId`}
+            element={<EmployeeRatingPage />}
+          />
           <Route path={`${taskCards}/:id`} element={<TaskViewPage />} />
           <Route path={estimate} element={<AssessmentBlock />} />
           <Route

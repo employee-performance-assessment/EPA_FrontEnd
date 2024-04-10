@@ -60,7 +60,9 @@ function EmployeeViewCard({
         className={styles.employeeViewCard__button}
         onClick={() =>
           navigate(
-            `${ENDPOINT_ROUTES.ratingCards}/${employeeId}/${idQuestionnaire}`
+            employeeId
+              ? `${ENDPOINT_ROUTES.ratingCards}/${employeeId}/${idQuestionnaire}`
+              : `${ENDPOINT_ROUTES.ratingCards}/${idQuestionnaire}`
           )
         }
       >
