@@ -15,8 +15,10 @@ import {
   postEvaluationsList
 } from '../../utils/mainApi.js';
 import {
+  ADMIN_ASSESSED,
   ADMIN_EVALUATIONS,
-  USER_EVALUATIONS
+  USER_EVALUATIONS,
+  USER_EVALUATIONS_ASSESSED
 } from '../../constants/constantAPI.js';
 import './Questionnaire.scss';
 
@@ -51,9 +53,11 @@ export default function Questionnaire() {
         })
         .catch((err) => handleError(err));
     } else {
-      getEvaluationsList(questionnaireId, employeeId)
+      const path = isAdmin ? ADMIN_ASSESSED : USER_EVALUATIONS_ASSESSED;
+
+      getEvaluationsList(path, questionnaireId, employeeId)
         .then((res) => {
-          setCriteria(res.adminEvaluations);
+          setCriteria(isAdmin ? res.adminEvaluations : res);
           values['recommendation'] = res.recommendation;
         })
         .catch((err) => handleError(err));
