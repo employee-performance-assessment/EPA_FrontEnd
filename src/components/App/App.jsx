@@ -108,11 +108,11 @@ function App() {
           />
         </Route>
         <Route path="" element={<UserRoutes />}>
-          <Route path={anyPage} element={<NotFound />} />
           <Route path={taskCards} element={<EmployeeViewPage />} />
           <Route path={`${taskCards}/:id`} element={<TaskViewPage />} />
           <Route path={estimate} element={<AssessmentBlock />} />
         </Route>
+        <Route path={anyPage} element={<NotFound />} />
       </Routes>
     </div>
   );
