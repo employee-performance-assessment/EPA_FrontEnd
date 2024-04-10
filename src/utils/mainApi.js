@@ -11,7 +11,6 @@ import {
   EMPLOYEE_ME,
   ADMIN_PROJECTS,
   ADMIN_CRITERIA,
-  ADMIN_ASSESSED,
   EVALUATIONS,
   ADMIN_USERS,
   ADMIN_TASK,
@@ -160,9 +159,9 @@ export const postEvaluationsList = (path, questionnaireId, employeeId, data) => 
     data
   );
 
-export const getEvaluationsList = (questionnaireId, evaluatedId) =>
+export const getEvaluationsList = (path, questionnaireId, evaluatedId) =>
   request(
-    `${ADMIN_ASSESSED}?questionnaireId=${questionnaireId}&evaluatedId=${evaluatedId}`,
+    `${path}?questionnaireId=${questionnaireId}&evaluatedId=${evaluatedId}`,
     'GET'
   );
 

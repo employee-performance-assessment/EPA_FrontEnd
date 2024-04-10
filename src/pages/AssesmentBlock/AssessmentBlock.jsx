@@ -18,6 +18,8 @@ function AssessmentBlock() {
   const isAdmin = useSelector((state) => state.user.isAdmin);
   const [users, setUsers] = useState([]);
   const [isActivitySurveyButton, setIsActivitySurveyButton] = useState(false);
+  const [visiblePictureBoy, setVisiblePictureBoy] = useState(false);
+  const [visiblePictureGirl, setVisiblePictureGirl] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,18 +37,32 @@ function AssessmentBlock() {
       getListNewQuestionnaires()
         .then((res) => {
           setUsers(res);
+          showPictureEmptyList(res);
         })
         .catch((err) => handleError(err));
     } else {
       getListComplitedQuestionnaires()
         .then((res) => {
           setUsers(res);
+          showPictureEmptyList(res);
         })
         .catch((err) => handleError(err));
     }
   }, [isAppreciated])
 
+  function showPictureEmptyList(arrayUsers) {
+    arrayUsers.length === 0 && isActivitySurveyButton ?
+      setVisiblePictureBoy(true) :
+      setVisiblePictureBoy(false);
+    arrayUsers.length === 0 && !isActivitySurveyButton ?
+      setVisiblePictureGirl(true) :
+      setVisiblePictureGirl(false);
+  }
+
   function handleChangeFilterState(e) {
+    setVisiblePictureBoy(false);
+    setVisiblePictureGirl(false);
+
     if (e.target.id === 'isAppreciated') {
       localStorage.setItem('isAppreciated', true)
       dispatch(setIsAppreciated(true));
@@ -118,7 +134,7 @@ function AssessmentBlock() {
           />
           <form className="filters__items filters__calendar">Календарь</form>
         </div>
-        {users.length === 0 && isActivitySurveyButton && (
+        {visiblePictureBoy && (
           <>
             <div className="assessment-block__image_empty" />
             <p className="assessment-block__span">Список пока что пуст.</p>
@@ -129,7 +145,7 @@ function AssessmentBlock() {
             </p>
           </>
         )}
-        {users.length === 0 && !isActivitySurveyButton && (
+        {visiblePictureGirl && (
           <>
             <div className="assessment-block__image_done" />
             <p className="assessment-block__span">Спасибо за ваше мнение!</p>
