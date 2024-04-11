@@ -71,7 +71,6 @@ function App() {
       navigate(login);
     }
   };
-
   useEffect(() => {
     tokenCheck();
   }, []);
@@ -116,6 +115,7 @@ function App() {
             path={`${questionnaire}/:date/:questionnaireId/:employeeId`}
             element={<Questionnaire />}
           />
+          <Route path={anyPage} element={<NotFound />} />
         </Route>
         <Route path={anyPage} element={<NotFound />} />
       </Routes>
