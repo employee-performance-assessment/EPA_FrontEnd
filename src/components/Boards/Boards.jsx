@@ -4,7 +4,6 @@ import './Boards.scss';
 import { boardsData } from '../../constants/boardsList.js';
 
 function Boards({ tasks }) {
-  console.log(tasks)
   const [cardsLists, setCardsLists] = useState([]);
   const [dropCard, setDropCard] = useState(null);
   const [startBoard, setStartBoard] = useState(null);
@@ -16,12 +15,10 @@ function Boards({ tasks }) {
         return task.status === board.status;
       }
       board.items = tasks.filter(filterTask);
-      return board
+      return board;
     });
-    console.log(arrBords)
-    setCardsLists(arrBords)
-  }, [])
-
+    setCardsLists(arrBords);
+  }, []);
 
   return (
     <div className="boards">
@@ -37,6 +34,7 @@ function Boards({ tasks }) {
           setStartBoard={setStartBoard}
           currentBoard={currentBoard}
           setCurrentBoard={setCurrentBoard}
+          // boardsData={boardsData}
         />
       ))}
     </div>

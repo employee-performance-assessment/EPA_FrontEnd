@@ -2,26 +2,37 @@ import { useState, useEffect } from 'react';
 import { LinearProgress } from '@mui/material';
 import styles from './TimerDeadline.module.scss';
 
-function TimerDeadline() {
-  const taskData = {
-    dateValue: 7,
-    progressValue: 70,
-    status: 'Done',
-  };
-  const [progress, setProgress] = useState(0);
+function TimerDeadline({ card }) {
+  const [progress, setProgress] = useState(50); // дождаться даты создания задичи от бэк
   const [colorButton, setColorButton] = useState('');
   const [textButton, setTextButton] = useState('');
 
+  // Функция для вычисления количества дней между двумя датами
+  function calculateDaysBetweenDates(startDate, endDate) {
+    // Разница в миллисекундах
+    const diffTime = endDate - startDate;
+    // Переводим миллисекунды в дни
+    const diffDays = diffTime / (1000 * 60 * 60 * 24);
+    return card.status === 'REVIEW' || card.status === 'DONE'
+      ? 0
+      : Math.floor(diffDays);
+  }
+
+  const taskData = {
+    dateValue: calculateDaysBetweenDates(new Date(), new Date(card.deadLine)),
+    progressValue: progress,
+  };
+
   const handleButtonType = (status) => {
-    if (status === 'Complete') {
+    if (status === 'needReview') {
       setColorButton('rgb(242, 72, 34)');
       setTextButton('Пора сдавать на ревью');
     }
-    if (status === 'Done') {
+    if (status === 'DONE') {
       setColorButton('rgb(0, 211, 127)');
       setTextButton('Well done');
     }
-    if (status === 'InWork') {
+    if (status === 'REVIEW') {
       setColorButton('rgb(197, 182, 241)');
       setTextButton('На ревью');
     }
@@ -34,9 +45,9 @@ function TimerDeadline() {
         return Math.min(100 + diff, taskData.progressValue);
       });
     }, 500);
-
-    handleButtonType(taskData.status);
-
+    taskData.dateValue < 0
+      ? handleButtonType('needReview')
+      : handleButtonType(card.status);
     return () => {
       clearInterval(timer);
     };
@@ -56,7 +67,7 @@ function TimerDeadline() {
 
   return (
     <div className={styles.container}>
-      {taskData.dateValue === 0 ? (
+      {taskData.dateValue <= 0 ? (
         <button
           style={{ backgroundColor: colorButton }}
           className={styles.progress}
@@ -69,7 +80,7 @@ function TimerDeadline() {
             color="inherit"
             className={styles.range}
             variant="determinate"
-            value={progress}
+            value={taskData.progressValue}
           />
           <span className={styles.text}>
             {handleDateValue(taskData.dateValue)}

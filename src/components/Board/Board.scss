@@ -84,9 +84,16 @@
 
 .boardDnD__card-deadline {
   grid-column-start: span 2;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19.36px;
 }
+
 .boardDnD__card-forfeit {
   grid-column-start: span 2;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 16px;
 }
 
 .boardDnD__card-deadline-timer {
