@@ -5,7 +5,7 @@ import '../MenuAdmin/MenuAdmin.scss';
 
 function MenuEmployee() {
   const {
-    cardsEmployees,
+    userArea,
     taskCards,
     ratingCards,
     board,
@@ -21,7 +21,7 @@ function MenuEmployee() {
   const [isAnalytics, setIsAnalytics] = useState(false);
 
   useEffect(() => {
-    pathname.includes(cardsEmployees) ||
+    pathname.includes(userArea) ||
       pathname.includes(taskCards) ||
       pathname.includes(ratingCards) ?
       setIsPersonalArea(true) : setIsPersonalArea(false);
@@ -39,7 +39,7 @@ function MenuEmployee() {
 
   return (
     <ul className="side-menu__list">
-      <Link to={cardsEmployees} className="side-menu__item">
+      <Link to={userArea} className="side-menu__item">
         <div className={`side-menu__icon side-menu__icon-personal
           ${isPersonalArea && 'side-menu__icon-personal_active'}`} />
         <p className={`side-menu__text ${isPersonalArea && 'side-menu__text_active'}`}>Личный кабинет</p>

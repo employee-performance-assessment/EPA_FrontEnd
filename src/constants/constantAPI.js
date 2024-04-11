@@ -36,6 +36,7 @@ export const ADMIN_STAT_POINTS = `${BASE_URL}/admin/stat/points/employee`;
 
 export const USER_RATING = `${BASE_URL}/user/evaluations/rating`;
 export const USER_STAT_POINTS = `${BASE_URL}/user/stat/points`;
+export const USER_QUESTIONNAIRE_LIST = `${BASE_URL}/user/evaluations/list-questionnaire`;
 export const USER_EVALUATIONS = `${BASE_URL}/user/evaluations`;
 export const USER_EVALUATIONS_ASSESSED = `${BASE_URL}/user/evaluations/assessed`;
 

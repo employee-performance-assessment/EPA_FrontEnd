@@ -23,7 +23,7 @@ function Auth() {
   const [isOpen, setIsOpen] = useState(false);
   const { errors, values, isValid, handleChange, resetForm } =
     useFormValidation();
-  const { personalArea, taskCards } = ENDPOINT_ROUTES;
+  const { personalArea, userArea } = ENDPOINT_ROUTES;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
@@ -40,7 +40,7 @@ function Auth() {
         dispatch(setToken(res.token));
         getUserData(res.token).then((res) => {
           dispatch(setUser(res));
-          res.role === 'ROLE_ADMIN' ? navigate(personalArea) : navigate(taskCards);
+          res.role === 'ROLE_ADMIN' ? navigate(personalArea) : navigate(userArea);
         });
       })
       .catch((err) => {

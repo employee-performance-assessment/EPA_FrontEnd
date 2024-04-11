@@ -44,6 +44,7 @@ function App() {
     analytics,
     criteria,
     cardsEmployees,
+    userArea,
     ratingCards,
     taskCards,
     estimate,
@@ -104,7 +105,11 @@ function App() {
           />
         </Route>
         <Route path="" element={<UserRoutes />}>
-          <Route path={taskCards} element={<EmployeeViewPage />} />
+          <Route path={userArea} element={<EmployeeViewPage />} />
+          <Route
+            path={`${ratingCards}/:questionnaireId`}
+            element={<EmployeeRatingPage />}
+          />
           <Route path={`${taskCards}/:id`} element={<TaskViewPage />} />
           <Route path={estimate} element={<AssessmentBlock />} />
           <Route
