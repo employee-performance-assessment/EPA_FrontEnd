@@ -1,6 +1,6 @@
 export const PATTERN_EMAIL =
   /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,63}$/;
-export const PATTERN_PASSWORD = /^(?=.*[A-Z])[A-Za-z0-9.,:;?!*+%<>[\]/\\_{}$#-]{8,14}$/;
+export const PATTERN_PASSWORD = /^(?=.*[A-Z])[A-Za-z0-9.,:;?!*+%<>@[\]/\\_{}$#-]{8,14}$/;
 export const PATTERN_USERNAME = /^[a-zA-Zа-яА-Я\s-]{1,255}$/;
 export const PATTERN_JOB_TITLE = /^[a-zA-Zа-яА-Я\s-]{1,255}$/;
 export const isValidEmail = (email) => PATTERN_EMAIL.test(email);
