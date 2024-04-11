@@ -6,6 +6,7 @@ import { updateAdminData } from '../../utils/mainApi.js';
 import { setUser } from '../../store/slices/userSlice.js';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import './PersonalArea.scss';
 
 function PersonalArea() {
@@ -16,6 +17,7 @@ function PersonalArea() {
   const admin = useSelector((state) => state.user);
   const [isDisabledButton, setIsDisabledButton] = useState(false);
   const dispatch = useDispatch();
+  const { criteria } = ENDPOINT_ROUTES;
 
   function setVisibleInputData() {
     if (!values.name && !editing) {
@@ -211,7 +213,7 @@ function PersonalArea() {
               Анкета для оценки
             </h3>
             <Link
-              to="/criteria-setting"
+              to={criteria}
               className="personal-area__questionnaire-link"
             >
               <div className="personal-area__questionnaire-container">
