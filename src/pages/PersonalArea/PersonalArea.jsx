@@ -100,6 +100,7 @@ function PersonalArea() {
             placeholder="Имя Фамилия"
             pattern="^[а-яА-Яa-zA-Z\s\-]+$"
             disabled={!editing}
+            required
           />
           <span className="personal-area__input-error">{errors.name}</span>
           <input
@@ -114,6 +115,7 @@ function PersonalArea() {
             placeholder="Должность"
             pattern="^[а-яА-Яa-zA-Z\s\-]+$"
             disabled={!editing}
+            required
           />
           <span className="personal-area__input-error">{errors.job}</span>
           <input
@@ -128,6 +130,7 @@ function PersonalArea() {
             placeholder="Email"
             pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}"
             disabled={!editing}
+            required
           />
           <span className="personal-area__input-error">{errors.email}</span>
           {editing && (
@@ -145,11 +148,12 @@ function PersonalArea() {
                 autoComplete="new-password"
                 disabled={!editing}
               />
-              <span
-                className={`personal-area__password-eye ${passwordVisible
-                  ? 'personal-area__password-eye_open'
-                  : 'personal-area__password-eye_close'
-                  }`}
+              <button
+                type="button"
+                className={`personal-area__password-eye
+                  ${passwordVisible ?
+                    'personal-area__password-eye_open' :
+                    'personal-area__password-eye_close'}`}
                 onClick={handlePasswordVisibility}
               />
               <span className="personal-area__input-error">
@@ -168,11 +172,12 @@ function PersonalArea() {
                 autoComplete="new-password"
                 disabled={!editing}
               />
-              <span
-                className={`personal-area__password-eye ${passwordVisible
-                  ? 'personal-area__password-eye_open'
-                  : 'personal-area__password-eye_close'
-                  }`}
+              <button
+                type="button"
+                className={`personal-area__password-eye
+                  ${passwordVisible ?
+                    'personal-area__password-eye_open' :
+                    'personal-area__password-eye_close'}`}
                 onClick={handlePasswordVisibility}
               />
               <span className="personal-area__input-error">

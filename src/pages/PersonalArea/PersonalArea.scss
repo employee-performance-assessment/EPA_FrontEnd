@@ -97,6 +97,8 @@
     margin-top: -43px;
     margin-bottom: 19px;
     cursor: pointer;
+    border: none;
+    background-color: $white-base-color;
 
     &_open {
       background-image: url(../../images/eye-open.svg);
