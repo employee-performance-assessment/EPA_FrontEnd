@@ -1,115 +1,115 @@
 @import '../../../styles/vars';
 @import '../../../styles/mixins';
 
-.side-menu__list {
+.menu {
   padding: 80px 0 0 0;
   display: flex;
   flex-direction: column;
   flex: 1 0 auto;
-}
 
-.side-menu__item {
-  margin-bottom: 40px;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
+  &__item {
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
 
-  &:hover .side-menu__icon-personal {
-    background-image: url(../../../images/UserCircle_active.svg);
+    &:hover .menu__icon-personal {
+      background-image: url(../../../images/UserCircle_active.svg);
+    }
+
+    &:hover .menu__icon-my-team {
+      background-image: url(../../../images/my-team_active.svg);
+    }
+
+    &:hover .menu__icon-kanban {
+      background-image: url(../../../images/KanbanBoard_active.svg);
+    }
+
+    &:hover .menu__icon-assessments {
+      background-image: url(../../../images/assessment_active.svg);
+    }
+
+    &:hover .menu__icon-analytics {
+      background-image: url(../../../images/analytics_active.svg);
+    }
+
+    &:hover .menu__text {
+      color: $dark-green-base-color;
+    }
   }
 
-  &:hover .side-menu__icon-my-team {
-    background-image: url(../../../images/my-team_active.svg);
+  &__icon {
+    width: 32px;
+    height: 32px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
   }
 
-  &:hover .side-menu__icon-kanban {
-    background-image: url(../../../images/KanbanBoard_active.svg);
+  &__icon-personal {
+    background-image: url(../../../images/UserCircle.svg);
+
+    &_active {
+      background-image: url(../../../images/UserCircle_active.svg);
+    }
   }
 
-  &:hover .side-menu__icon-assessments {
-    background-image: url(../../../images/assessment_active.svg);
+  &__icon-my-team {
+    background-image: url(../../../images/my-team.svg);
+
+    &_active {
+      background-image: url(../../../images/my-team_active.svg);
+    }
   }
 
-  &:hover .side-menu__icon-analytics {
-    background-image: url(../../../images/analytics_active.svg);
+  &__icon-kanban {
+    background-image: url(../../../images/KanbanBoard.svg);
+
+    &_active {
+      background-image: url(../../../images/KanbanBoard_active.svg);
+    }
   }
 
-  &:hover .side-menu__text {
-    color: $dark-green-base-color;
+  &__icon-assessments {
+    background-image: url(../../../images/assessment.svg);
+
+    &_active {
+      background-image: url(../../../images/assessment_active.svg);
+    }
   }
-}
 
-.side-menu__icon {
-  width: 32px;
-  height: 32px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-}
+  &__icon-analytics {
+    background-image: url(../../../images/analytics.svg);
 
-.side-menu__icon-personal {
-  background-image: url(../../../images/UserCircle.svg);
-
-  &_active {
-    background-image: url(../../../images/UserCircle_active.svg);
+    &_active {
+      background-image: url(../../../images/analytics_active.svg);
+    }
   }
-}
 
-.side-menu__icon-my-team {
-  background-image: url(../../../images/my-team.svg);
+  &__text {
+    align-self: center;
+    padding-left: 8px;
+    padding-top: 3px;
+    @include text($font-size: 18px, $line-height: 22px);
 
-  &_active {
-    background-image: url(../../../images/my-team_active.svg);
+    &_active {
+      color: $dark-green-base-color;
+    }
   }
-}
 
-.side-menu__icon-kanban {
-  background-image: url(../../../images/KanbanBoard.svg);
-
-  &_active {
-    background-image: url(../../../images/KanbanBoard_active.svg);
+  &__button-exit {
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    border: none;
+    color: $black-base-color;
+    padding: 20px 0px;
+    font-size: 20px;
+    font-weight: 600;
+    width: 180px;
+    background-image: url(../../../images/exit_button.svg);
+    background-repeat: no-repeat;
+    background-position: 26px center;
   }
-}
-
-.side-menu__icon-assessments {
-  background-image: url(../../../images/assessment.svg);
-
-  &_active {
-    background-image: url(../../../images/assessment_active.svg);
-  }
-}
-
-.side-menu__icon-analytics {
-  background-image: url(../../../images/analytics.svg);
-
-  &_active {
-    background-image: url(../../../images/analytics_active.svg);
-  }
-}
-
-.side-menu__text {
-  align-self: center;
-  padding-left: 8px;
-  padding-top: 3px;
-  @include text($font-size: 18px, $line-height: 22px);
-
-  &_active {
-    color: $dark-green-base-color;
-  }
-}
-
-.side-menu__button-exit {
-  flex: 0 0 auto;
-  box-sizing: border-box;
-  background-color: #f5f5f5;
-  border-radius: 20px;
-  border: none;
-  color: $black-base-color;
-  padding: 20px 0px;
-  font-size: 20px;
-  font-weight: 600;
-  width: 180px;
-  background-image: url(../../../images/exit_button.svg);
-  background-repeat: no-repeat;
-  background-position: 26px center;
 }
