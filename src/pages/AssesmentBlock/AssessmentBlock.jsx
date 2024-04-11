@@ -79,6 +79,7 @@ function AssessmentBlock() {
       .then(() => {
         getListNewQuestionnaires()
           .then((res) => {
+            showPictureEmptyList(res);
             setUsers(res);
           })
           .catch((err) => handleError(err));
