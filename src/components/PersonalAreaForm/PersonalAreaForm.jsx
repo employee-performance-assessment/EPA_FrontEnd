@@ -5,6 +5,7 @@ import { setUser } from '../../store/slices/userSlice.js';
 import { useFormValidation } from '../../hooks/useFormValidation.js';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import { updateAdminData } from '../../utils/mainApi.js';
+import { VALIDATION_MESSAGES } from '../../utils/validationConstants.js';
 import './PersonalAreaForm.scss';
 
 function PersonalAreaForm({ handleError }) {
@@ -89,11 +90,13 @@ function PersonalAreaForm({ handleError }) {
         value={values.name || ''}
         onChange={handleChange}
         placeholder="Имя Фамилия"
-        pattern="^[а-яА-Яa-zA-Z\s\-]+$"
+        pattern="^[a-zA-Zа-яА-ЯёЁ\s\-]{1,255}$"
         disabled={!editing}
         required
       />
-      <span className="personal-area-form__input-error">{errors.name}</span>
+      <span className="personal-area-form__input-error">
+        {errors.name && VALIDATION_MESSAGES.invalidNameOrPosition}
+      </span>
       <input
         className={`personal-area-form__input ${errors.job ? 'personal-area-form__input_type-error' : ''}`}
         type="text"
@@ -104,17 +107,19 @@ function PersonalAreaForm({ handleError }) {
         value={values.job || ''}
         onChange={handleChange}
         placeholder="Должность"
-        pattern="^[а-яА-Яa-zA-Z\s\-]+$"
+        pattern="^[a-zA-Zа-яА-ЯёЁ\s\-]{1,255}$"
         disabled={!editing}
         required
       />
-      <span className="personal-area-form__input-error">{errors.job}</span>
+      <span className="personal-area-form__input-error">
+        {errors.job && VALIDATION_MESSAGES.invalidNameOrPosition}
+      </span>
       <input
         className={`personal-area-form__input ${errors.email ? 'personal-area-form__input_type-error' : ''}`}
         type="email"
         id="email"
-        minLength="2"
-        maxLength="30"
+        minLength="3"
+        maxLength="255"
         name="email"
         value={values.email || ''}
         onChange={handleChange}
@@ -123,7 +128,9 @@ function PersonalAreaForm({ handleError }) {
         disabled={!editing}
         required
       />
-      <span className="personal-area-form__input-error">{errors.email}</span>
+      <span className="personal-area-form__input-error">
+        {errors.email && VALIDATION_MESSAGES.invalidEmail}
+      </span>
       {editing && (
         <>
           <input
@@ -136,6 +143,7 @@ function PersonalAreaForm({ handleError }) {
             value={values.newPassword || ''}
             onChange={handleChange}
             placeholder="Новый пароль"
+            pattern="^(?=.*[A-Z])[A-Za-z0-9.,:;?!*+%\-<>@\[\]\/\\_\{\}\$\#]{8,14}$"
             autoComplete="new-password"
             disabled={!editing}
           />
@@ -148,7 +156,7 @@ function PersonalAreaForm({ handleError }) {
             onClick={handlePasswordVisibility}
           />
           <span className="personal-area-form__input-error">
-            {errors.newPassword}
+            {errors.newPassword && VALIDATION_MESSAGES.invalidPassword}
           </span>
           <input
             className={`personal-area-form__input ${errors.repeatPassword ? 'personal-area-form__input_type-error' : ''}`}
@@ -160,6 +168,7 @@ function PersonalAreaForm({ handleError }) {
             value={values.repeatPassword || ''}
             onChange={handleChange}
             placeholder="Повторите пароль"
+            pattern="^(?=.*[A-Z])[A-Za-z0-9.,:;?!*+%\-<>@\[\]\/\\_\{\}\$\#]{8,14}$"
             autoComplete="new-password"
             disabled={!editing}
           />
@@ -172,7 +181,7 @@ function PersonalAreaForm({ handleError }) {
             onClick={handlePasswordVisibility}
           />
           <span className="personal-area-form__input-error">
-            {errors.repeatPassword}
+            {values.repeatPassword && isDisabledButton && 'Пароли не совпадают'}
           </span>
         </>
       )}
