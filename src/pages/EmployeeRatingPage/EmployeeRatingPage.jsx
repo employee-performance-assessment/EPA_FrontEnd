@@ -4,7 +4,10 @@ import { useParams } from 'react-router';
 import EmployeeViewCriteria from '../../components/EmployeeViewCriteria/EmployeeViewCriteria.jsx';
 import SetStars from '../../components/SetStars/SetStars.js';
 import styles from './EmployeeRatingPage.module.scss';
-import { getEvaluations } from '../../utils/mainApi.js';
+import {
+  getEvaluationsByAdmin,
+  getEvaluationsByUser,
+} from '../../utils/mainApi.js';
 
 function EmployeeRatingPage() {
   const navigate = useNavigate();
@@ -20,34 +23,36 @@ function EmployeeRatingPage() {
   }
 
   useEffect(() => {
-    getEvaluations(employeeId, questionnaireId)
-      .then((res) => {
-        setRating(res.middleScore);
-        setRecommendation(res.recommendation);
-        const initialDate = res.createQuestionnaire
-          .split('-')
-          .reverse()
-          .join('.');
-        setDate(initialDate);
-        const initialCriteria = res.evaluations;
-        setCriteria(
-          Array.from(
-            Object.keys(initialCriteria).map((key, index) => {
-              const output = {
-                id: index + 1, // Уникальный идентификатор, начинаем с 1
-                adminScore: initialCriteria[key].adminScore,
-                colleaguesScore: initialCriteria[key].colleaguesScore,
-                text: key, // Текст берем из ключа объекта
-              };
-              return output;
-            })
-          )
-        );
-      })
-      .catch((err) => {
-        // eslint-disable-next-line no-alert
-        alert(err);
-      });
+    employeeId
+      ? getEvaluationsByAdmin(employeeId, questionnaireId)
+      : getEvaluationsByUser(questionnaireId)
+          .then((res) => {
+            setRating(res.middleScore);
+            setRecommendation(res.recommendation);
+            const initialDate = res.createQuestionnaire
+              .split('-')
+              .reverse()
+              .join('.');
+            setDate(initialDate);
+            const initialCriteria = res.evaluations;
+            setCriteria(
+              Array.from(
+                Object.keys(initialCriteria).map((key, index) => {
+                  const output = {
+                    id: index + 1, // Уникальный идентификатор, начинаем с 1
+                    adminScore: initialCriteria[key].adminScore,
+                    colleaguesScore: initialCriteria[key].colleaguesScore,
+                    text: key, // Текст берем из ключа объекта
+                  };
+                  return output;
+                })
+              )
+            );
+          })
+          .catch((err) => {
+            // eslint-disable-next-line no-alert
+            alert(err);
+          });
   }, []);
 
   return (

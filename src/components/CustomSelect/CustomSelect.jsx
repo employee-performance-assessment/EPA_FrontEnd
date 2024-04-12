@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import Select from 'react-select';
 import {
   getTaskDetailsByAdmin,
-  updateTaskByAdmin,
+  updateTaskStatusByAdmin,
   updateTaskStatusByUser,
 } from '../../utils/mainApi';
 import InfoPopup from '../InfoPopup/InfoPopup';
@@ -14,7 +14,7 @@ function CustomSelect({ task }) {
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
-  const { role } = useSelector((state) => state.adminData);
+  const { isAdmin } = useSelector((state) => state.user);
 
   const options = [
     { value: 'IN_PROGRESS', label: 'В работе' },
@@ -108,10 +108,10 @@ function CustomSelect({ task }) {
     try {
       const newStatus = selectedOption.value;
 
-      if (role === 'ROLE_ADMIN') {
+      if (isAdmin) {
         const updatedTask = await getTaskDetailsByAdmin(task.id);
         updatedTask.status = newStatus;
-        await updateTaskByAdmin(updatedTask);
+        await updateTaskStatusByAdmin(updatedTask);
       } else {
         await updateTaskStatusByUser(task.id, newStatus);
       }

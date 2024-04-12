@@ -103,7 +103,7 @@ function AssessmentCriteria() {
     <section className="assessment-criteria">
       {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
       <div className="assessment-criteria__header">
-        <Link to="/admin-person-area" className="assessment-criteria__link">
+        <Link to={personalArea} className="assessment-criteria__link">
           <div className="assessment-criteria__link-arroy" />
           Вернуться
         </Link>

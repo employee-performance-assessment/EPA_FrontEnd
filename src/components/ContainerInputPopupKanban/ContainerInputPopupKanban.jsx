@@ -5,10 +5,13 @@ import {
   deleteProject,
   getProjectsName,
 } from '../../utils/mainApi.js';
+import InfoPopup from '../InfoPopup/InfoPopup.jsx';
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 export default function ContainerInputPopupKanban({ item, setProjects }) {
   const [nameProject, setProjectName] = useState(item.name);
-
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+    useErrorHandler();
   function handleButtonEditProject() {
     setProjectsNewName(nameProject, item.id)
       .then(() => {
@@ -16,9 +19,9 @@ export default function ContainerInputPopupKanban({ item, setProjects }) {
           .then((res) => {
             setProjects(res);
           })
-          .catch((err) => console.log(err));
+          .catch((err) => handleError(err));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => handleError(err));
   }
 
   function handleButtonDeleteProject() {
@@ -28,9 +31,9 @@ export default function ContainerInputPopupKanban({ item, setProjects }) {
           .then((res) => {
             setProjects(res);
           })
-          .catch((err) => console.log(err));
+          .catch((err) => handleError(err));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => handleError(err));
   }
 
   function handleNameProject(e) {
@@ -56,6 +59,13 @@ export default function ContainerInputPopupKanban({ item, setProjects }) {
         aria-label="кнопка удаления проекта"
         onClick={handleButtonDeleteProject}
       />
+      {isPopupOpen && (
+        <InfoPopup
+          title={popupTitle}
+          text={popupText}
+          handleClosePopup={closePopup}
+        />
+      )}
     </div>
   );
 }

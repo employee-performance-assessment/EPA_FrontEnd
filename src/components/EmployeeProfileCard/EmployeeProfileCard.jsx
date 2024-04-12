@@ -4,7 +4,11 @@ import IconDots from '../../images/3dots.svg';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import './EmployeeProfileCard.scss';
 
-function EmployeeProfileCard({ user, handleOpenEditEmployeeForm, handleDeleteEmployee }) {
+function EmployeeProfileCard({
+  user,
+  handleOpenEditEmployeeForm,
+  handleDeleteEmployee,
+}) {
   const { cardsEmployees } = ENDPOINT_ROUTES;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -20,16 +24,20 @@ function EmployeeProfileCard({ user, handleOpenEditEmployeeForm, handleDeleteEmp
 
   const deleteUser = () => {
     handleDeleteEmployee(user.id);
+    setIsMenuOpen(false);
   };
 
   return (
-    <div className="profile-card">
+    <div className="profile-card" onMouseLeave={() => setIsMenuOpen(false)}>
       <div className="profile-card__info-block">
-        <div className='profile-card__name-block'>
+        <div className="profile-card__name-block">
           <p className="profile-card__name">{user.fullName}</p>
         </div>
-        <div className='profile-card__position-block'>
-          <p className="profile-card__position">/ {user.position}</p>
+        <div className="profile-card__position-block">
+          <p className="profile-card__position">
+            <span className="profile-card__position-span">/</span>
+            {user.position}
+          </p>
         </div>
       </div>
       <div className="profile-card__email">{user.email}</div>
@@ -55,10 +63,7 @@ function EmployeeProfileCard({ user, handleOpenEditEmployeeForm, handleDeleteEmp
           >
             Перейти в ЛК
           </button>
-          <button
-            className="profile-card__menu-option"
-            onClick={deleteUser}
-          >
+          <button className="profile-card__menu-option" onClick={deleteUser}>
             Удалить
           </button>
         </div>

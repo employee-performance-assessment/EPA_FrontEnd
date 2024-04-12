@@ -11,9 +11,10 @@
     display: flex;
     flex-direction: column;
     width: 1163px;
-    height: 100%;
+    height: 100vh;
     border-radius: 40px;
     background: $light-gray-base-color;
+    overflow: hidden;
 
     .header {
       display: flex;
@@ -220,6 +221,8 @@
       min-height: 622px;
       padding: 40px;
       border-radius: 28px;
+      overflow-y: auto;
+      overflow-x: hidden;
 
       .img_block {
         display: flex;

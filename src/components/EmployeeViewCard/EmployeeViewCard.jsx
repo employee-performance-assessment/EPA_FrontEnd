@@ -12,7 +12,7 @@ function EmployeeViewCard({
   employeeId,
   idQuestionnaire,
 }) {
-  const currentDate = date.split('-').reverse().join('.');
+  const currentDate = date && date.split('-').reverse().join('.');
 
   const navigate = useNavigate();
 
@@ -47,7 +47,6 @@ function EmployeeViewCard({
     <div className={styles.employeeViewCard__container}>
       <h2 className={styles.employeeViewCard__title}>
         Дата анкетирования: <p>{currentDate}</p>
-        1234
       </h2>
       <div className={styles.employeeViewCard__stars}>
         <SetStars
@@ -61,7 +60,9 @@ function EmployeeViewCard({
         className={styles.employeeViewCard__button}
         onClick={() =>
           navigate(
-            `${ENDPOINT_ROUTES.ratingCards}/${employeeId}/${idQuestionnaire}`
+            employeeId
+              ? `${ENDPOINT_ROUTES.ratingCards}/${employeeId}/${idQuestionnaire}`
+              : `${ENDPOINT_ROUTES.ratingCards}/${idQuestionnaire}`
           )
         }
       >

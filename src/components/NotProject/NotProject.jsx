@@ -3,9 +3,13 @@ import './NotProject.scss';
 import empty from '../../images/about-our-team.svg';
 import trashSimple from '../../images/TrashSimple.svg';
 import { setNewProjects, getProjectsName } from '../../utils/mainApi.js';
+import InfoPopup from '../InfoPopup/InfoPopup.jsx';
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 export function NotProject({ setProjects }) {
   const [nameProject, setProjectName] = useState('');
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+    useErrorHandler();
 
   function handleClickNewProject() {
     setNewProjects(nameProject)
@@ -14,9 +18,9 @@ export function NotProject({ setProjects }) {
           .then((res) => {
             setProjects(res);
           })
-          .catch((err) => console.log(err));
+          .catch((err) => handleError(err));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => handleError(err));
   }
 
   function handleNameProject(e) {
@@ -50,6 +54,13 @@ export function NotProject({ setProjects }) {
       <button className="not-project__button not-project__button_purple">
         Подтвердить
       </button>
+      {isPopupOpen && (
+        <InfoPopup
+          title={popupTitle}
+          text={popupText}
+          handleClosePopup={closePopup}
+        />
+      )}
     </div>
   );
 }

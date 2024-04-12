@@ -78,7 +78,7 @@ function Board({
     if (deadline - new Date().getTime() <= 0) {
       return 'boardDnD__card-points_red';
     }
-    if (board === 'К выполнению') {
+    if (board === 'NEW') {
       return 'boardDnD__card-points_grey';
     }
     if (board === 'В работе') {
@@ -91,11 +91,6 @@ function Board({
       return 'boardDnD__card-points_green';
     }
     return '';
-  }
-
-  function settingDateDeadline(unixTime) {
-    const date = new Date(unixTime);
-    return date.toLocaleDateString();
   }
 
   return (
@@ -117,17 +112,15 @@ function Board({
           <p
             className={`boardDnD__card-points ${getCollor(board.title, card.deadline)}`}
           >
-            {card.points} баллов
+            {card.basicPoints} баллов{' '}
           </p>
-          <h3 className="boardDnD__card-board.title">{card.title}</h3>
-          <p className="boardDnD__card-deadline">
-            Дедлайн: {settingDateDeadline(card.deadline)}
-          </p>
+          <h3 className="boardDnD__card-title">{card.name}</h3>
+          <p className="boardDnD__card-deadline">Дедлайн: {card.deadLine}</p>
           <p className="boardDnD__card-forfeit">
-            {card.forfeit} за просрочку дедлайна
+            Бонус/Штраф «{card.basicPoints}» баллов за день
           </p>
           <div className="boardDnD__card-deadline-timer">
-            <TimerDeadline deadline={card.deadline} />
+            <TimerDeadline deadLine={card.deadLine} card={card} />
           </div>
         </div>
       ))}

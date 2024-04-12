@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setAdminData } from '../../store/slices/adminDataSlice.js';
-import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
+import { setUser } from '../../store/slices/userSlice.js';
 
 import { useFormValidation } from '../../hooks/useFormValidation.js';
 import { register } from '../../utils/auth.js';
@@ -39,8 +38,7 @@ function Register() {
     })
       .then((res) => {
         navigate(login);
-        dispatch(setAdminData(res));
-        dispatch(setIsLoggedIn(true));
+        dispatch(setUser(res));
       })
       .catch((err) => {
         handleError(err);

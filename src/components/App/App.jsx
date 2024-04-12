@@ -7,8 +7,8 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
-import AdminRoute from '../AdminRoute/AdminRoute.jsx';
+import UserRoutes from '../UserRoutes/UserRoutes.jsx';
+import AdminRoutes from '../AdminRoutes/AdminRoutes.jsx';
 
 import Auth from '../../pages/Auth/Auth.jsx';
 import Register from '../../pages/Register/Register.jsx';
@@ -21,12 +21,12 @@ import AssessmentCriteria from '../../pages/AssessmentCriteria/AssessmentCriteri
 import EmployeeViewPage from '../../pages/EmployeeViewPage/EmployeeViewPage.jsx';
 import EmployeeRatingPage from '../../pages/EmployeeRatingPage/EmployeeRatingPage.jsx';
 import TaskViewPage from '../../pages/TaskViewPage/TaskViewPage.jsx';
+import PersonalAreaEditing from '../../pages/PersonalAreaEditing/PersonalAreaEditing.jsx';
 
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
 import { getUserData } from '../../utils/mainApi.js';
-import { setAdminData } from '../../store/slices/adminDataSlice.js';
-import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
+import { setUser } from '../../store/slices/userSlice.js';
 import AssessmentBlock from '../../pages/AssesmentBlock/AssessmentBlock.jsx';
 import Questionnaire from '../Questionnaire/Questionnaire.jsx';
 import InfoPopup from '../InfoPopup/InfoPopup.jsx';
@@ -39,12 +39,14 @@ function App() {
     login,
     register,
     personalArea,
+    personalAreaEditing,
     myTeam,
     board,
     anyPage,
     analytics,
     criteria,
     cardsEmployees,
+    userArea,
     ratingCards,
     taskCards,
     estimate,
@@ -62,8 +64,7 @@ function App() {
           .then((res) => {
             if (res) {
               navigate(location.pathname);
-              dispatch(setAdminData(res));
-              dispatch(setIsLoggedIn(true));
+              dispatch(setUser(res));
             }
           })
           .catch((err) => handleError(err));
@@ -72,7 +73,6 @@ function App() {
       navigate(login);
     }
   };
-
   useEffect(() => {
     tokenCheck();
   }, []);
@@ -90,9 +90,9 @@ function App() {
         <Route path="/" element={<Navigate to={login} />} />
         <Route path={register} element={<Register />} />
         <Route path={login} element={<Auth />} />
-        <Route path="" element={<AdminRoute />}>
+        <Route path="" element={<AdminRoutes />}>
           <Route path={personalArea} element={<PersonalArea />} />
-          <Route path={board} element={<Kanban />} />
+          <Route path={personalAreaEditing} element={<PersonalAreaEditing />} />
           <Route path={myTeam} element={<MyTeam />} />
           <Route path={analytics} element={<AnalyticsPage />} />
           <Route path={criteria} element={<AssessmentCriteria />} />
@@ -104,17 +104,23 @@ function App() {
             path={`${ratingCards}/:employeeId/:questionnaireId`}
             element={<EmployeeRatingPage />}
           />
+        </Route>
+        <Route path="" element={<UserRoutes />}>
+          <Route path={userArea} element={<EmployeeViewPage />} />
+          <Route
+            path={`${ratingCards}/:questionnaireId`}
+            element={<EmployeeRatingPage />}
+          />
+          <Route path={board} element={<Kanban />} />
+          <Route path={`${taskCards}/:id`} element={<TaskViewPage />} />
           <Route path={estimate} element={<AssessmentBlock />} />
           <Route
             path={`${questionnaire}/:date/:questionnaireId/:employeeId`}
             element={<Questionnaire />}
           />
-        </Route>
-        <Route path="" element={<ProtectedRoute />}>
           <Route path={anyPage} element={<NotFound />} />
-          <Route path={taskCards} element={<EmployeeViewPage />} />
-          <Route path={`${taskCards}/:id`} element={<TaskViewPage />} />
         </Route>
+        <Route path={anyPage} element={<NotFound />} />
       </Routes>
     </div>
   );

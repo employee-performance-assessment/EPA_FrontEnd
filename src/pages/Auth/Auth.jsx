@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-// import { jwtDecode } from "jwt-decode";
 import styles from './Auth.module.scss';
 
 import { useFormValidation } from '../../hooks/useFormValidation.js';
@@ -10,8 +9,7 @@ import { getUserData } from '../../utils/mainApi.js';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
 import { setToken } from '../../store/slices/tokenSlices.js';
-import { setIsLoggedIn } from '../../store/slices/isLoggedInSlice.js';
-import { setAdminData } from '../../store/slices/adminDataSlice.js';
+import { setUser } from '../../store/slices/userSlice.js';
 
 import registerImg from '../../images/register-img.png';
 import eyelash from '../../images/eye-close.svg';
@@ -25,7 +23,7 @@ function Auth() {
   const [isOpen, setIsOpen] = useState(false);
   const { errors, values, isValid, handleChange, resetForm } =
     useFormValidation();
-  const { personalArea, taskCards } = ENDPOINT_ROUTES;
+  const { personalArea, userArea } = ENDPOINT_ROUTES;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
@@ -40,10 +38,9 @@ function Auth() {
       .then((res) => {
         localStorage.setItem('token', JSON.stringify(res));
         dispatch(setToken(res.token));
-        dispatch(setIsLoggedIn(true));
         getUserData(res.token).then((res) => {
-          dispatch(setAdminData(res));
-          res.role === 'ROLE_ADMIN' ? navigate(personalArea) : navigate(taskCards);
+          dispatch(setUser(res));
+          res.role === 'ROLE_ADMIN' ? navigate(personalArea) : navigate(userArea);
         });
       })
       .catch((err) => {

@@ -13,7 +13,12 @@ import {
   getCurrentUser,
   getUserTasksWithStatusByAdmin,
   getTasksWithStatusByUser,
-  getQuestionnaireList,
+  getQuestionnaireListByAdmin,
+  getQuestionnaireListByUser,
+  getRatingByAdmin,
+  getRatingByUser,
+  getStatPointsByAdmin,
+  getStatPointsByUser,
 } from '../../utils/mainApi.js';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
@@ -21,7 +26,7 @@ function EmployeeViewPage() {
   const dispatch = useDispatch();
   const { id: employeeId } = useParams();
 
-  const user = useSelector((state) => state.adminData);
+  const user = useSelector((state) => state.user);
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
 
   const { values, handleChange, setValues } = useFormValidation();
@@ -32,6 +37,9 @@ function EmployeeViewPage() {
   const [version, setVersion] = useState(0);
   const [employee, setEmployee] = useState({});
 
+  const [rating, setRating] = useState(0);
+  const [points, setPoints] = useState(0);
+
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
@@ -40,34 +48,35 @@ function EmployeeViewPage() {
       try {
         let userData;
         let tasksData;
+        let ratingData;
+        let pointsData;
+        let questionnaireList;
 
-        if (employeeId && user.role === 'ROLE_ADMIN') {
+        if (employeeId && user.isAdmin) {
           userData = await getCurrentUser(employeeId);
           tasksData = await getUserTasksWithStatusByAdmin(employeeId, 'NEW');
+          ratingData = await getRatingByAdmin(employeeId);
+          pointsData = await getStatPointsByAdmin(employeeId);
+          questionnaireList = await getQuestionnaireListByAdmin(employeeId);
         } else {
           userData = await getCurrentUser(user.id);
           tasksData = await getTasksWithStatusByUser('NEW');
+          ratingData = await getRatingByUser();
+          pointsData = await getStatPointsByUser();
+          questionnaireList = await getQuestionnaireListByUser();
         }
         setEmployee(userData);
         setCurrentTasks(tasksData);
+        setRating(ratingData);
+        setPoints(pointsData);
+        setAllMarks(questionnaireList);
+        setCurrentMarks(questionnaireList);
       } catch (error) {
         handleError(error);
       }
     };
 
     fetchData();
-  }, [employeeId]);
-
-  useEffect(() => {
-    getQuestionnaireList(employeeId)
-      .then((res) => {
-        setAllMarks(res);
-        setCurrentMarks(res);
-      })
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log('err in getQuestionnaireList', err);
-      });
   }, [employeeId]);
 
   // Сортировка анкет по дате
@@ -105,10 +114,9 @@ function EmployeeViewPage() {
   }
 
   async function getTasksByStatus(status) {
-    const tasks =
-      user.role === 'ROLE_ADMIN'
-        ? await getUserTasksWithStatusByAdmin(employeeId, status)
-        : await getTasksWithStatusByUser(status);
+    const tasks = user.isAdmin
+      ? await getUserTasksWithStatusByAdmin(employeeId, status)
+      : await getTasksWithStatusByUser(status);
 
     setCurrentTasks(tasks);
   }
@@ -123,7 +131,11 @@ function EmployeeViewPage() {
         />
       )}
       <section className={styles.employeeViewPage__container}>
-        <EmployeeViewHeader employee={employee} />
+        <EmployeeViewHeader
+          employee={employee}
+          rating={rating}
+          points={points}
+        />
         <Switch
           labelLeft="Задачи"
           labelRight="Оценки"

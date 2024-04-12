@@ -25,7 +25,7 @@ body {
   &__sidemenu {
     height: 100vh;
     position: fixed;
-    left: calc((100% - 1440px)/2);
+    left: calc((100vw - 1440px)/2);
   }
 }
 
