@@ -21,6 +21,7 @@ import AssessmentCriteria from '../../pages/AssessmentCriteria/AssessmentCriteri
 import EmployeeViewPage from '../../pages/EmployeeViewPage/EmployeeViewPage.jsx';
 import EmployeeRatingPage from '../../pages/EmployeeRatingPage/EmployeeRatingPage.jsx';
 import TaskViewPage from '../../pages/TaskViewPage/TaskViewPage.jsx';
+import PersonalAreaEditing from '../../pages/PersonalAreaEditing/PersonalAreaEditing.jsx';
 
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
@@ -38,6 +39,7 @@ function App() {
     login,
     register,
     personalArea,
+    personalAreaEditing,
     myTeam,
     board,
     anyPage,
@@ -90,7 +92,7 @@ function App() {
         <Route path={login} element={<Auth />} />
         <Route path="" element={<AdminRoutes />}>
           <Route path={personalArea} element={<PersonalArea />} />
-          {/* <Route path={board} element={<Kanban />} /> */}
+          <Route path={personalAreaEditing} element={<PersonalAreaEditing />} />
           <Route path={myTeam} element={<MyTeam />} />
           <Route path={analytics} element={<AnalyticsPage />} />
           <Route path={criteria} element={<AssessmentCriteria />} />

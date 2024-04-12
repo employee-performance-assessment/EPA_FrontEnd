@@ -27,7 +27,10 @@ function CriterionInput({
         onChange={handleChange}
       />
       {editing &&
-        <div className="criterion__button" onClick={() => handleDelete(criterion)} />}
+        <button
+          type="button"
+          className="criterion__button"
+          onClick={() => handleDelete(criterion)} />}
     </div>
   );
 }
