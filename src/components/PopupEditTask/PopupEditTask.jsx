@@ -3,13 +3,15 @@ import './PopupEditTask.scss';
 import DropdownMenu from '../DropDownMenu/DropDownMenu';
 import OneDatePicker from '../OneDatePicker/OneDatePicker.jsx';
 import { getAllUsers, patchAdminTask } from '../../utils/mainApi.js';
+import InfoPopup from '../InfoPopup/InfoPopup.jsx';
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 function PopupEditTask({
   setIsOpenPopup,
   title,
   projects,
   taskOldContent,
-  setIsTaskEdited
+  setIsTaskEdited,
 }) {
   /* так должны выглядеть пропсы.
 <PopupEditTask
@@ -31,7 +33,8 @@ function PopupEditTask({
           }
         />
        */
-
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+    useErrorHandler();
   const [startDate, setStartDate] = useState(taskOldContent.deadLine);
   const [taskName, setTaskName] = useState(taskOldContent.name);
   const [project, setProject] = useState(taskOldContent.project);
@@ -46,18 +49,6 @@ function PopupEditTask({
   const [isOpenDropMenuEmployees, setIsOpenDropMenuEmployees] = useState(false);
 
   function handleClickSubmit() {
-    console.log(
-      JSON.stringify({
-        name: taskName,
-        description: taskContent,
-        projectId: project.id,
-        executorId: employee.id,
-        deadLine: convertDate(startDate),
-        status: taskOldContent.status,
-        basicPoints: pointTask * 1,
-        penaltyPoints: pointsPenalty,
-      })
-    );
     patchAdminTask(taskOldContent.taskId, {
       name: taskName,
       description: taskContent,
@@ -72,7 +63,7 @@ function PopupEditTask({
         setIsTaskEdited && setIsTaskEdited(true);
         setIsOpenPopup(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => handleError(err));
   }
 
   function convertDate(dateStr) {
@@ -86,7 +77,7 @@ function PopupEditTask({
       .then((res) => {
         setEmployees(res.map((item) => ({ id: item.id, name: item.fullName })));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => handleError(err));
   }, []);
 
   return (
@@ -207,6 +198,13 @@ function PopupEditTask({
           onClick={() => setIsOpenPopup(false)}
         />
       </div>
+      {isPopupOpen && (
+        <InfoPopup
+          title={popupTitle}
+          text={popupText}
+          handleClosePopup={closePopup}
+        />
+      )}
     </div>
   );
 }

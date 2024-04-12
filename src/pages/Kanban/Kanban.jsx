@@ -16,9 +16,11 @@ import {
   getUserTask,
 } from '../../utils/mainApi.js';
 import './Kanban.scss';
+import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 function Kanban() {
-  const isAdmin = false; //заглушка, заменить на это: useSelector((state) => state.user.isAdmin);
+  const isAdmin = useSelector((state) => state.user.isAdmin);
   const user = useSelector((state) => state.user);
   const [isNoProject, setIsNoProject] = useState(true);
   const [isNoTask, setIsNoTask] = useState(true);
@@ -28,6 +30,8 @@ function Kanban() {
   const [isOpenPopupProject, setIsOpenPopupProject] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [isLoad, setIsLoad] = useState(true);
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+    useErrorHandler();
 
   useEffect(() => {
     if (projects.length > 0) {
@@ -50,7 +54,7 @@ function Kanban() {
           setIsNoTask(false);
         }
       })
-      .catch((err) => console.log(err))
+      .catch((err) => handleError(err))
       .finally(() => setIsLoad(false));
   }, []);
 
@@ -162,6 +166,13 @@ function Kanban() {
           setIsOpenPopup={setIsOpenPopupAddTask}
           title="Создать здачу"
           projects={projects}
+        />
+      )}
+      {isPopupOpen && (
+        <InfoPopup
+          title={popupTitle}
+          text={popupText}
+          handleClosePopup={closePopup}
         />
       )}
     </section>

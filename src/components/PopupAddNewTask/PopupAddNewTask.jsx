@@ -3,6 +3,8 @@ import './PopupAddNewTask.scss';
 import DropdownMenu from '../DropDownMenu/DropDownMenu';
 import OneDatePicker from '../OneDatePicker/OneDatePicker.jsx';
 import { getAllUsers, setNewTask } from '../../utils/mainApi.js';
+import InfoPopup from '../InfoPopup/InfoPopup.jsx';
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 function PopupEditTask({ setIsOpenPopup, title, projects }) {
   const [startDate, setStartDate] = useState(null);
@@ -15,6 +17,8 @@ function PopupEditTask({ setIsOpenPopup, title, projects }) {
   const [employees, setEmployees] = useState([]);
   const [isOpenDropMenuProjects, setIsOpenDropMenuProjects] = useState(false);
   const [isOpenDropMenuEmployees, setIsOpenDropMenuEmployees] = useState(false);
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+    useErrorHandler();
 
   function handleClickSubmit() {
     setNewTask({
@@ -26,17 +30,19 @@ function PopupEditTask({ setIsOpenPopup, title, projects }) {
       status: 'TODO',
       basicPoints: pointTask,
       penaltyPoints: pointsPenalty,
-    }).catch((err) => console.log(err));
+    })
+      .then(() => setIsOpenPopup(false))
+      .catch((err) => handleError(err));
   }
 
-  useEffect(() => {
-    console.log(employee);
-  }, [employee]);
-
   function convertDate(dateStr) {
-    const dateObj = new Date(Date.parse(dateStr));
-    const isoDate = dateObj.toISOString().split('T')[0];
-    return isoDate;
+    if (dateStr) {
+      const dateObj = new Date(Date.parse(dateStr));
+      const isoDate = dateObj.toISOString().split('T')[0];
+      return isoDate;
+    } else {
+      handleError(400);
+    }
   }
 
   useEffect(() => {
@@ -44,7 +50,7 @@ function PopupEditTask({ setIsOpenPopup, title, projects }) {
       .then((res) => {
         setEmployees(res.map((item) => ({ id: item.id, name: item.fullName })));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => handleError(err));
   }, []);
 
   return (
@@ -161,6 +167,13 @@ function PopupEditTask({ setIsOpenPopup, title, projects }) {
           onClick={() => setIsOpenPopup(false)}
         />
       </div>
+      {isPopupOpen && (
+        <InfoPopup
+          title={popupTitle}
+          text={popupText}
+          handleClosePopup={closePopup}
+        />
+      )}
     </div>
   );
 }

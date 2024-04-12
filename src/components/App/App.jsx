@@ -93,7 +93,6 @@ function App() {
         <Route path="" element={<AdminRoutes />}>
           <Route path={personalArea} element={<PersonalArea />} />
           <Route path={personalAreaEditing} element={<PersonalAreaEditing />} />
-          <Route path={board} element={<Kanban />} />
           <Route path={myTeam} element={<MyTeam />} />
           <Route path={analytics} element={<AnalyticsPage />} />
           <Route path={criteria} element={<AssessmentCriteria />} />
@@ -112,6 +111,7 @@ function App() {
             path={`${ratingCards}/:questionnaireId`}
             element={<EmployeeRatingPage />}
           />
+          <Route path={board} element={<Kanban />} />
           <Route path={`${taskCards}/:id`} element={<TaskViewPage />} />
           <Route path={estimate} element={<AssessmentBlock />} />
           <Route
