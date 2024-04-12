@@ -4,7 +4,6 @@ function PopupProject({ projects, setIsOpenPopupProject }) {
   const projectsName = projects.map((i) => i);
 
   projectsName.splice(0, 2);
-  console.log(projectsName);
   const handkeClickProject = () => {
     setIsOpenPopupProject(false);
   };
