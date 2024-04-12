@@ -137,4 +137,21 @@
 
 .kanban__container-project {
   display: flex;
+  position: relative;
+}
+
+.kanban-header__point {
+  position: absolute;
+  top: -52px;
+  right: -13px;
+  width: 187px;
+  height: 60px;
+  background: $wrapper;
+  border-radius: 28px;
+  padding: 18px 31px;
+  font-size: 20px;
+  font-weight: $fw-medium;
+  line-height: 24.2px;
+  color: $black-base-color;
+  text-align: center;
 }

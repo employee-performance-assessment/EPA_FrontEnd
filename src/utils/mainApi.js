@@ -154,7 +154,8 @@ export const getListNewQuestionnaires = () =>
 export const getListComplitedQuestionnaires = () =>
   request(EVALUATIONS_LIST_ASSESSED, 'GET');
 
-export const postEvaluationsList = (path, questionnaireId, employeeId, data) => request(
+export const postEvaluationsList = (path, questionnaireId, employeeId, data) =>
+  request(
     `${path}?questionnaireId=${questionnaireId}&evaluatedId=${employeeId}`,
     'POST',
     data
@@ -203,3 +204,5 @@ export const getAdminTask = () => request(ADMIN_TASK, 'GET'); // взять вс
 
 export const patchAdminTask = (taskId, requestBody) =>
   request(`${ADMIN_TASK}/${taskId}`, 'PATCH', requestBody);
+
+export const getUserTask = () => request(USER_TASK, 'GET');

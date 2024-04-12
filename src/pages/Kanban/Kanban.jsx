@@ -13,10 +13,12 @@ import {
   getProjectsName,
   getInfoOwnerJWT,
   getAdminTask,
+  getUserTask,
 } from '../../utils/mainApi.js';
 import './Kanban.scss';
 
 function Kanban() {
+  const isAdmin = false; //заглушка, заменить на это: useSelector((state) => state.user.isAdmin);
   const user = useSelector((state) => state.user);
   const [isNoProject, setIsNoProject] = useState(true);
   const [isNoTask, setIsNoTask] = useState(true);
@@ -36,7 +38,11 @@ function Kanban() {
   }, [projects]);
 
   useEffect(() => {
-    Promise.all([getProjectsName(), getInfoOwnerJWT(), getAdminTask()])
+    Promise.all([
+      getProjectsName(),
+      getInfoOwnerJWT(),
+      isAdmin ? getAdminTask() : getUserTask(),
+    ])
       .then((res) => {
         setProjects(res[0]);
         setTasks(res[2]);
@@ -51,7 +57,7 @@ function Kanban() {
   function handleClickOpenPopup() {
     setIsOpenPopup(true);
   }
-
+  // заглушка. не потеряется. в место неё будет наполенение переменной projects
   function handleClickViewAllTask() {
     console.log('показать все таски');
   }
@@ -98,36 +104,43 @@ function Kanban() {
               />
             )}
           </div>
+
           <div className="kanban__container-project">
-            <button
-              type="button"
-              className={`kanban__button ${projects.length < 1 ? 'kanban__button_grey' : 'kanban__button_purple'} kanban__button_all`}
-              onClick={handleClickViewAllTask}
-              disabled={projects.length < 1}
-            >
-              <p className="kanban__button-title_all">Все</p>
-            </button>
-            <button
-              type="button"
-              className="kanban__button kanban__button_project"
-              onClick={handleClickOpenPopup}
-            >
-              <p className="kanban__button-title_make">Проекты</p>{' '}
-              <img src={edit} alt="Редактировать проект" />
-            </button>
-            <button
-              type="button"
-              className={`kanban__button ${projects.length < 1 ? 'kanban__button_grey' : 'kanban__button_purple'} kanban__button_task`}
-              disabled={projects.length < 1}
-              onClick={() => setIsOpenPopupAddTask(true)}
-            >
-              <p className="kanban__button-title_make">Создать задачу</p>
-              <img
-                className="kanban__button-img"
-                src={plus}
-                alt="Добавить новую задачу"
-              />
-            </button>
+            {isAdmin ? (
+              <>
+                <button
+                  type="button"
+                  className={`kanban__button ${projects.length < 1 ? 'kanban__button_grey' : 'kanban__button_purple'} kanban__button_all`}
+                  onClick={handleClickViewAllTask}
+                  disabled={projects.length < 1}
+                >
+                  <p className="kanban__button-title_all">Все</p>
+                </button>
+                <button
+                  type="button"
+                  className="kanban__button kanban__button_project"
+                  onClick={handleClickOpenPopup}
+                >
+                  <p className="kanban__button-title_make">Проекты</p>{' '}
+                  <img src={edit} alt="Редактировать проект" />
+                </button>
+                <button
+                  type="button"
+                  className={`kanban__button ${projects.length < 1 ? 'kanban__button_grey' : 'kanban__button_purple'} kanban__button_task`}
+                  disabled={projects.length < 1}
+                  onClick={() => setIsOpenPopupAddTask(true)}
+                >
+                  <p className="kanban__button-title_make">Создать задачу</p>
+                  <img
+                    className="kanban__button-img"
+                    src={plus}
+                    alt="Добавить новую задачу"
+                  />
+                </button>
+              </>
+            ) : (
+              <div className="kanban-header__point">0 Баллов</div>
+            )}{' '}
           </div>
         </nav>
         {!isLoad && <Boards tasks={tasks} />}
