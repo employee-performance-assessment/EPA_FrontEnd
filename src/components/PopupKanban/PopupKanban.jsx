@@ -21,9 +21,6 @@ export default function PopupKanban({ setIsOpenPopup, projects, setProjects }) {
 
   function handleButtonNewProject() {
     setNewProjects(nameProject)
-      .then((res) => {
-        console.log(res);
-      })
       .catch((err) => console.log(err))
       .finally(() => {
         setProjectName('');

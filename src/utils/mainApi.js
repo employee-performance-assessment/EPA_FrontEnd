@@ -207,3 +207,5 @@ export const getAdminTask = () => request(ADMIN_TASK, 'GET'); // взять вс
 
 export const patchAdminTask = (taskId, requestBody) =>
   request(`${ADMIN_TASK}/${taskId}`, 'PATCH', requestBody);
+
+export const getUserTask = () => request(USER_TASK, 'GET');
