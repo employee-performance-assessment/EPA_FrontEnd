@@ -38,7 +38,7 @@ function MenuEmployee() {
       <Link to={estimate} className="menu__item">
         <div className={`menu__icon menu__icon-assessments
           ${isEstimate && 'menu__icon-assessments_active'}`} />
-        <p className={`menu__text ${isEstimate && 'menu__text_active'}`}>Оценки коллегу</p>
+        <p className={`menu__text ${isEstimate && 'menu__text_active'}`}>Оцени коллегу</p>
       </Link>
       <Link to={analytics} className="menu__item">
         <div className={`menu__icon menu__icon-analytics

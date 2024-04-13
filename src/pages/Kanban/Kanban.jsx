@@ -20,7 +20,7 @@ import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 function Kanban() {
-  const isAdmin = useSelector((state) => state.user.isAdmin);
+  // const isAdmin = useSelector((state) => state.user.isAdmin);
   const user = useSelector((state) => state.user);
   const [isNoProject, setIsNoProject] = useState(true);
   const [isNoTask, setIsNoTask] = useState(true);
@@ -42,21 +42,24 @@ function Kanban() {
   }, [projects]);
 
   useEffect(() => {
-    Promise.all([
-      getProjectsName(),
-      getInfoOwnerJWT(),
-      isAdmin ? getAdminTask() : getUserTask(),
-    ])
-      .then((res) => {
-        setProjects(res[0]);
-        setTasks(res[2]);
-        if (res[2].length > 0) {
-          setIsNoTask(false);
-        }
-      })
-      .catch((err) => handleError(err))
-      .finally(() => setIsLoad(false));
-  }, []);
+    if(user) {
+      setIsLoad(true);
+      Promise.all([
+        getProjectsName(),
+        getInfoOwnerJWT(),
+        user.isAdmin ? getAdminTask() : getUserTask(),
+      ])
+        .then((res) => {
+          setProjects(res[0]);
+          setTasks(res[2]);
+          if (res[2].length > 0) {
+            setIsNoTask(false);
+          }
+        })
+        .catch((err) => handleError(err))
+        .finally(() => setIsLoad(false));
+    }
+  }, [user]);
 
   function handleClickOpenPopup() {
     setIsOpenPopup(true);
@@ -110,7 +113,7 @@ function Kanban() {
           </div>
 
           <div className="kanban__container-project">
-            {isAdmin ? (
+            {!isLoad && user.isAdmin ? (
               <>
                 <button
                   type="button"
