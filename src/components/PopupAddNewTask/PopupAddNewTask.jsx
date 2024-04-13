@@ -40,8 +40,6 @@ function PopupEditTask({ setIsOpenPopup, title, projects }) {
       const dateObj = new Date(Date.parse(dateStr));
       const isoDate = dateObj.toISOString().split('T')[0];
       return isoDate;
-    } else {
-      handleError(400);
     }
   }
 
