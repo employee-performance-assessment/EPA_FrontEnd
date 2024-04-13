@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import './PopupAddNewTask.scss';
 import DropdownMenu from '../DropDownMenu/DropDownMenu';
 import OneDatePicker from '../OneDatePicker/OneDatePicker.jsx';
-import { getAllUsers, setNewTask } from '../../utils/mainApi.js';
+import { getAllUsers, setNewTask, getAdminTask } from '../../utils/mainApi.js';
 import InfoPopup from '../InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
-function PopupEditTask({ setIsOpenPopup, title, projects }) {
+function PopupEditTask({ setIsOpenPopup, title, projects, setTasks, setCurrentTasks }) {
   const [startDate, setStartDate] = useState(null);
   const [taskName, setTaskName] = useState('');
   const [project, setProject] = useState({ name: '', id: 0 });
@@ -31,7 +31,13 @@ function PopupEditTask({ setIsOpenPopup, title, projects }) {
       basicPoints: pointTask,
       penaltyPoints: pointsPenalty,
     })
-      .then(() => setIsOpenPopup(false))
+      .then(() => {
+        setIsOpenPopup(false)
+        getAdminTask().then(res => {
+          setCurrentTasks(res)
+          setTasks(res)
+        })
+      })
       .catch((err) => handleError(err));
   }
 

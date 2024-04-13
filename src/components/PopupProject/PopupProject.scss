@@ -3,8 +3,7 @@
 .popup-project {
   top: 50px;
   left: 305px;
-  width: 100vw;
-  height: 100vh;
+
   height: min-content;
   z-index: map-get($zIndexes, popup);
   position: absolute;
@@ -27,11 +26,16 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 22px;
-  width: 200px;
-  height: 50px;
   list-style-type: none;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 12px 16px;
   cursor: pointer;
+}
+
+.popup-project__button-project {
+  border: none;
+  margin: auto 10px;
+  width: 180px;
+  height: 50px;
+  background-color: white;
 }

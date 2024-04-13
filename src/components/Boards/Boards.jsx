@@ -18,7 +18,7 @@ function Boards({ tasks }) {
       return board;
     });
     setCardsLists(arrBords);
-  }, []);
+  }, [tasks]);
 
   return (
     <div className="boards">
@@ -34,7 +34,6 @@ function Boards({ tasks }) {
           setStartBoard={setStartBoard}
           currentBoard={currentBoard}
           setCurrentBoard={setCurrentBoard}
-          // boardsData={boardsData}
         />
       ))}
     </div>
