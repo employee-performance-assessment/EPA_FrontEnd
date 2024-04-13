@@ -1,118 +1,130 @@
 import { useEffect, useState } from 'react';
-import './AssessmentBlock.scss';
-import icon from '../../images/assessmentBlock_icon.svg';
+import { useDispatch, useSelector } from 'react-redux';
 import AssessmentCard from '../../components/AssessmentCard/AssessmentCard.jsx';
-import { checkActivitySurveyButton, doQuestionnaireSurvey, getAllUsers } from '../../utils/mainApi.js';
+import { setIsAppreciated } from '../../store/slices/isAppreciatedSlices.js';
+import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import {
+  checkActivitySurveyButton,
+  doQuestionnaireSurvey,
+  getListComplitedQuestionnaires,
+  getListNewQuestionnaires
+} from '../../utils/mainApi.js';
+import './AssessmentBlock.scss';
 
 function AssessmentBlock() {
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const isAppreciated = useSelector((state) => state.isAppreciated.isAppreciated);
+  const isAdmin = useSelector((state) => state.user.isAdmin);
   const [users, setUsers] = useState([]);
-  const [filterState, setFilterState] = useState('isAppreciated');
   const [isActivitySurveyButton, setIsActivitySurveyButton] = useState(false);
+  const [visiblePictureBoy, setVisiblePictureBoy] = useState(false);
+  const [visiblePictureGirl, setVisiblePictureGirl] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    checkActivitySurveyButton()
-      .then((res) => {
-        setIsActivitySurveyButton(res);
-      })
-      .catch((err) => console.log(err));
+    if (isAdmin) {
+      checkActivitySurveyButton()
+        .then((res) => {
+          setIsActivitySurveyButton(res);
+        })
+        .catch((err) => handleError(err));
+    }
   }, []);
 
   useEffect(() => {
-    getAllUsers()
-    .then((res) => {
-      setUsers(res);
-    })
-    .catch((err) => console.log(err));
-  }, []);
+    if (isAppreciated) {
+      getListNewQuestionnaires()
+        .then((res) => {
+          setUsers(res);
+          showPictureEmptyList(res);
+        })
+        .catch((err) => handleError(err));
+    } else {
+      getListComplitedQuestionnaires()
+        .then((res) => {
+          setUsers(res);
+          showPictureEmptyList(res);
+        })
+        .catch((err) => handleError(err));
+    }
+  }, [isAppreciated])
+
+  function showPictureEmptyList(arrayUsers) {
+    arrayUsers.length === 0 && isActivitySurveyButton ?
+      setVisiblePictureBoy(true) :
+      setVisiblePictureBoy(false);
+    arrayUsers.length === 0 && !isActivitySurveyButton ?
+      setVisiblePictureGirl(true) :
+      setVisiblePictureGirl(false);
+  }
 
   function handleChangeFilterState(e) {
-    setFilterState(e.target.id);
+    setVisiblePictureBoy(false);
+    setVisiblePictureGirl(false);
+
+    if (e.target.id === 'isAppreciated') {
+      localStorage.setItem('isAppreciated', true)
+      dispatch(setIsAppreciated(true));
+      setUsers([]);
+    } else {
+      localStorage.setItem('isAppreciated', false);
+      dispatch(setIsAppreciated(false));
+      setUsers([]);
+    }
   }
 
   function handleClickSurveyButton() {
     doQuestionnaireSurvey()
       .then(() => {
-        getAllUsers()
-        .then((res) => {
-          setUsers(res);
-        })
-        .catch((err) => console.log(err));
+        getListNewQuestionnaires()
+          .then((res) => {
+            showPictureEmptyList(res);
+            setUsers(res);
+          })
+          .catch((err) => handleError(err));
       })
-      .catch((err) => console.log(err));
-      // ответ
-      // {
-      //   "id": 7,
-      //   "author": {
-      //     "id": 19,
-      //     "fullName": "вап",
-      //     "nickName": null,
-      //     "city": null,
-      //     "email": "qw@qw.qw",
-      //     "birthday": null,
-      //     "role": "ROLE_ADMIN",
-      //     "position": null,
-      //     "department": null
-      //   },
-      //   "created": "2024-04-05",
-      //   "criterias": [
-      //     {
-      //       "id": 5,
-      //       "name": " Расставляет приоритеты",
-      //       "isDefault": true
-      //     },
-      //     {
-      //       "id": 20,
-      //       "name": "Любит рыбалку",
-      //       "isDefault": false
-      //     }
-      //   ],
-      //   "status": "SHARED"
-      // }
+      .catch((err) => handleError(err));
   }
 
-  console.log(users);
-
   return (
-    <section className="AssessmentBlock">
-      <div className="AssessmentBlock__container">
-        <div className="AssessmentBlock__header">
+    <section className="assessment-block">
+      {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
+      <div className="assessment-block__container">
+        <div className={`assessment-block__header ${!isAdmin && "assessment-block__header_is-user"}`}>
           <div className="header__wrapper">
-            <img
-              src={icon}
-              alt="иконка изображает лист бумаги и ручку"
-              className="header__icon"
-            />
-            <h3 className="header__text">Оценка эффективности сотрудников</h3>
+            <div className="header__icon" />
+            <h3 className="header__title">
+              {`${isAdmin ? 'Оценка эффективности сотрудников' : 'Оцени коллегу'}`}
+            </h3>
           </div>
-          <button
+          {!isAdmin &&
+            <p className="header__subtitle">
+              Анкеты анонимные. Постарайся быть объективным и внимательным при оценке коллег.
+            </p>}
+          {isAdmin && <button
             className={`header__button ${!isActivitySurveyButton && 'header__button_inactive'}`}
             onClick={handleClickSurveyButton}
             disabled={!isActivitySurveyButton}
           >
             Провести анкетирование
-          </button>
+          </button>}
         </div>
-        <div className="AssessmentBlock__filters">
+        <div className="assessment-block__filters">
           <h3 className="filters__text">Фильтры:</h3>
           <button
-            className={
-              filterState !== 'isAppreciated'
-                ? 'filters__items filters__button'
-                : 'filters__items filters__button filters__button_active'
-            }
+            className={`filters__items filters__button
+            ${isAppreciated && 'filters__button_active'}`}
             id="isAppreciated"
-            onClick={(e) => handleChangeFilterState(e)}
+            onClick={handleChangeFilterState}
           >
             Оценить
           </button>
           <button
-            className={
-              filterState === 'isAppreciated'
-                ? 'filters__items filters__button filters__button_done'
-                : 'filters__items filters__button filters__button_done filters__button_active'
-            }
+            className={`filters__items filters__button filters__button_done
+            ${!isAppreciated && 'filters__button_active'}`}
             id="isAppreciated_done"
-            onClick={(e) => handleChangeFilterState(e)}
+            onClick={handleChangeFilterState}
           >
             Оценка поставлена
           </button>
@@ -123,27 +135,40 @@ function AssessmentBlock() {
           />
           <form className="filters__items filters__calendar">Календарь</form>
         </div>
-        {users.length === 0 ? (
+        {visiblePictureBoy && (
           <>
-            <div className="AssessmentBlock__image" />
-            <span className="AssessmentBlock__span">
-              <p className="">Список пока что пуст.</p>Новые карточки для оценки
-              сотрудников можете добавить с помощью кнопки «Провести
-              анкетирование»
-            </span>
+            <div className="assessment-block__image_empty" />
+            <p className="assessment-block__span">Список пока что пуст.</p>
+            <p className="assessment-block__span">
+              {isAdmin ? `Новые карточки для оценки сотрудников можете
+              добавить с помощью кнопки «Провести анкетирование»` :
+                `Уточнить дату анкетирования Вы можете у руководителя.`}
+            </p>
           </>
-        ) : filterState === 'isAppreciated' && (
-          <ul className="AssessmentBlock__list">
-            {users.map((user) => (
-              <AssessmentCard
-                key={user.id}
-                fullName={user.fullName}
-                position={user.position}
-                status="isAppreciated"
-              />
-            ))}
-          </ul>
         )}
+        {visiblePictureGirl && (
+          <>
+            <div className="assessment-block__image_done" />
+            <p className="assessment-block__span">Спасибо за ваше мнение!</p>
+            <p className="assessment-block__span">
+              {isAdmin ? `Новые карточки для оценки сотрудников можете
+              добавить с помощью кнопки «Провести анкетирование»` :
+                `Уточнить дату следующего анкетирования Вы можете у руководителя.`}
+            </p>
+          </>
+        )}
+        <ul className="assessment-block__list">
+          {users.map((user) => (
+            <AssessmentCard
+              key={user.employeeId + user.questionnaireId + user.questionnaireCreated}
+              fullName={user.employeeFullName}
+              position={user.employeePosition}
+              date={user.questionnaireCreated}
+              questionnaireId={user.questionnaireId}
+              employeeId={user.employeeId}
+            />
+          ))}
+        </ul>
       </div>
     </section>
   );

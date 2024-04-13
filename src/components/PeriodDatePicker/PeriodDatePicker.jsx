@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import './PeriodDatePicker.scss';
 
@@ -30,10 +30,6 @@ export default function PeriodDatePicker() {
 
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
-
-  useEffect(() => {
-    console.log(startDate);
-  }, [startDate]);
 
   return (
     <div className="datepicker__input-conteiner">

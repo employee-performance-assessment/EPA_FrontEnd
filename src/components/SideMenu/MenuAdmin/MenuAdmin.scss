@@ -1,140 +1,115 @@
 @import '../../../styles/vars';
+@import '../../../styles/mixins';
 
-$font-weight: 500;
-$font-size: 18px;
-
-.side-menu__list {
+.menu {
   padding: 80px 0 0 0;
   display: flex;
   flex-direction: column;
   flex: 1 0 auto;
-}
 
-.side-menu__item {
-  color: $black-base-color;
-  display: flex;
-  text-decoration: none;
-  flex-direction: row;
-  margin-bottom: 40px;
-  font-weight: $font-weight;
-  font-size: $font-size;
-}
+  &__item {
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
 
-.side-menu__item:hover {
-  color: $dark-green-base-color;
-}
+    &:hover .menu__icon-personal {
+      background-image: url(../../../images/UserCircle_active.svg);
+    }
 
-.side-menu__item_active {
-  color: $dark-green-base-color;
-}
+    &:hover .menu__icon-my-team {
+      background-image: url(../../../images/my-team_active.svg);
+    }
 
-.side-menu__item-personal::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/UserCircle.svg);
-}
+    &:hover .menu__icon-kanban {
+      background-image: url(../../../images/KanbanBoard_active.svg);
+    }
 
-.side-menu__item-personal_active::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/UserCircle_active.svg);
-}
+    &:hover .menu__icon-assessments {
+      background-image: url(../../../images/assessment_active.svg);
+    }
 
-.side-menu__item-personal:hover::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/UserCircle_active.svg);
-}
+    &:hover .menu__icon-analytics {
+      background-image: url(../../../images/analytics_active.svg);
+    }
 
-.side-menu__item-my-team::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/my-team.svg);
-}
+    &:hover .menu__text {
+      color: $dark-green-base-color;
+    }
+  }
 
-.side-menu__item-my-team_active::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/my-team_active.svg);
-}
+  &__icon {
+    width: 32px;
+    height: 32px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
 
-.side-menu__item-my-team:hover::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/my-team_active.svg);
-}
+  &__icon-personal {
+    background-image: url(../../../images/UserCircle.svg);
 
-.side-menu__item-kanban::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/KanbanBoard.svg);
-}
+    &_active {
+      background-image: url(../../../images/UserCircle_active.svg);
+    }
+  }
 
-.side-menu__item-kanban_active::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/KanbanBoard_active.svg);
-}
+  &__icon-my-team {
+    background-image: url(../../../images/my-team.svg);
 
-.side-menu__item-kanban:hover::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/KanbanBoard_active.svg);
-}
+    &_active {
+      background-image: url(../../../images/my-team_active.svg);
+    }
+  }
 
-.side-menu__item-asses::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/assessment.svg);
-}
+  &__icon-kanban {
+    background-image: url(../../../images/KanbanBoard.svg);
 
-.side-menu__item-asses_active::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/assessment_active.svg);
-}
+    &_active {
+      background-image: url(../../../images/KanbanBoard_active.svg);
+    }
+  }
 
-.side-menu__item-asses:hover::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/assessment_active.svg);
-}
+  &__icon-assessments {
+    background-image: url(../../../images/assessment.svg);
 
-.side-menu__item-analytics::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/analytics.svg);
-}
+    &_active {
+      background-image: url(../../../images/assessment_active.svg);
+    }
+  }
 
-.side-menu__item-analytics_active::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/analytics_active.svg);
-}
+  &__icon-analytics {
+    background-image: url(../../../images/analytics.svg);
 
-.side-menu__item-analytics:hover::before {
-  content: '';
-  padding: 16px;
-  background-image: url(../../../images/analytics_active.svg);
-}
+    &_active {
+      background-image: url(../../../images/analytics_active.svg);
+    }
+  }
 
-.side-menu__text {
-  align-self: center;
-  padding-left: 8px;
-}
+  &__text {
+    align-self: center;
+    padding-left: 8px;
+    padding-top: 3px;
+    @include text($font-size: 18px, $line-height: 22px);
 
-.side-menu__button-exit {
-  flex: 0 0 auto;
-  box-sizing: border-box;
-  background-color: #f5f5f5;
-  border-radius: 20px;
-  border: none;
-  color: $black-base-color;
-  padding: 20px 0px;
-  font-size: 20px;
-  font-weight: 600;
-  width: 180px;
-  background-image: url(../../../images/exit_button.svg);
-  background-repeat: no-repeat;
-  background-position: 26px center;
+    &_active {
+      color: $dark-green-base-color;
+    }
+  }
+
+  &__button-exit {
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    border: none;
+    color: $black-base-color;
+    padding: 20px 0px;
+    font-size: 20px;
+    font-weight: 600;
+    width: 180px;
+    background-image: url(../../../images/exit_button.svg);
+    background-repeat: no-repeat;
+    background-position: 26px center;
+  }
 }

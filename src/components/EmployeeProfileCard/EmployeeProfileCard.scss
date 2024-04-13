@@ -39,6 +39,7 @@
 .profile-card__name {
   width: 175px;
   margin: 0;
+  max-height: 52px;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -53,8 +54,13 @@
 .profile-card__position {
   margin: 0;
   width: 265px;
+  max-height: 52px;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.profile-card__position-span{
+  padding-right: 10px;
 }
 
 .profile-card__email {

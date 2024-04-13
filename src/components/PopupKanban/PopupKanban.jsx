@@ -2,10 +2,14 @@ import { useState } from 'react';
 import './PopupKanban.scss';
 import ContainerInputPopupKanban from '../ContainerInputPopupKanban/ContainerInputPopupKanban.jsx';
 import { setNewProjects, getProjectsName } from '../../utils/mainApi.js';
+import InfoPopup from '../InfoPopup/InfoPopup.jsx';
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
-export function PopupKanban({ setIsOpenPopup, projects, setProjects }) {
+export default function PopupKanban({ setIsOpenPopup, projects, setProjects }) {
   const [isNewProject, setIsNewProject] = useState(false);
   const [nameProject, setProjectName] = useState('');
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+    useErrorHandler();
 
   function handleClickClose() {
     setIsOpenPopup(false);
@@ -21,17 +25,15 @@ export function PopupKanban({ setIsOpenPopup, projects, setProjects }) {
 
   function handleButtonNewProject() {
     setNewProjects(nameProject)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err))
+      .catch((err) => handleError(err))
       .finally(() => {
+        setProjectName('');
         setIsNewProject(false);
         getProjectsName()
           .then((res) => {
             setProjects(res);
           })
-          .catch((err) => console.log(err));
+          .catch((err) => handleError(err));
       });
   }
 
@@ -79,6 +81,13 @@ export function PopupKanban({ setIsOpenPopup, projects, setProjects }) {
           onClick={handleClickClose}
         />
       </div>
+      {isPopupOpen && (
+        <InfoPopup
+          title={popupTitle}
+          text={popupText}
+          handleClosePopup={closePopup}
+        />
+      )}
     </div>
   );
 }

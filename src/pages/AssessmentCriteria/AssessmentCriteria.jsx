@@ -1,10 +1,11 @@
-/* eslint-disable no-alert */
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormValidation } from '../../hooks/useFormValidation';
 import CriterionInput from '../../components/CriterionInput/CriterionInput.jsx';
 import Switch from '../../components/Switch/Switch.jsx';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
+import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import {
   getQuestionnaireLast,
   updateQuestionnaireLast,
@@ -18,6 +19,7 @@ import {
 import './AssessmentCriteria.scss';
 
 function AssessmentCriteria() {
+  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const [criteria, setCriteria] = useState([]);
   const [isCheckedEditing, setIsCheckedEditing] = useState(false);
   const [isOpenPopup, setIsOpenPopup] = useState(false);
@@ -34,13 +36,13 @@ function AssessmentCriteria() {
         .then((res) => {
           setCriteria(res.criterias);
         })
-        .catch((err) => alert(err));
+        .catch((err) => handleError(err));
     } else {
       getDefaultCriterion()
         .then((res) => {
           setCriteria(res);
         })
-        .catch((err) => alert(err));
+        .catch((err) => handleError(err));
     }
   }, [isCheckedEditing]);
 
@@ -82,13 +84,13 @@ function AssessmentCriteria() {
           setIsOpenPopup(!isOpenPopup);
           dataForServer.criterias = [];
         })
-        .catch((err) => alert(err));
+        .catch((err) => handleError(err));
     } else {
       resetToDefaultQuestionnaire()
         .then(() => {
           setIsOpenPopup(!isOpenPopup);
         })
-        .catch((err) => alert(err));
+        .catch((err) => handleError(err));
     }
   }
 
@@ -99,8 +101,9 @@ function AssessmentCriteria() {
 
   return (
     <section className="assessment-criteria">
+      {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
       <div className="assessment-criteria__header">
-        <Link to="/admin-person-area" className="assessment-criteria__link">
+        <Link to={personalArea} className="assessment-criteria__link">
           <div className="assessment-criteria__link-arroy" />
           Вернуться
         </Link>
