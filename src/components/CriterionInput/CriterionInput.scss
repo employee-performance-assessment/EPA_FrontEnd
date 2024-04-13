@@ -16,10 +16,10 @@
     color: $black-base-color;
     text-overflow: ellipsis;
     background-color: $light-gray-base-color;
-    padding-left: 24px;
+    padding: 0 24px;
 
     &_active {
-      border: 2px solid $black-base-color;
+      border: 2px solid $grey-base-color;
     }
 
     &:focus {
@@ -28,6 +28,7 @@
 
     &:disabled {
       color: $black-base-color;
+      pointer-events: none;
     }
   }
 

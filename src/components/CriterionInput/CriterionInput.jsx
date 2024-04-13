@@ -2,35 +2,32 @@ import './CriterionInput.scss';
 
 function CriterionInput({
   criterion,
-  text,
   editing,
   handleDelete,
   values,
   handleChange,
   id
 }) {
-  const inputId = String(id);
-
-  if (!values[inputId]) {
-    values[inputId] = text;
-  }
-
   return (
     <div className="criterion">
       <input
         className={`criterion__input ${editing && 'criterion__input_active'}`}
-        name={inputId}
+        name={id}
         type="text"
         placeholder="Введите новый критерий оценки"
-        value={values[inputId] || ''}
+        value={values || ''}
         disabled={!editing}
         onChange={handleChange}
+        pattern="^[A-Za-zА-Яа-яЁё0-9.,:;?!*+%\-<>@\[\]\/\\_\{\}\$\#\s]{1,100}$"
+        minLength={1}
+        maxLength={100}
+        required
       />
       {editing &&
         <button
           type="button"
           className="criterion__button"
-          onClick={() => handleDelete(criterion)} />}
+          onClick={(e) => handleDelete(criterion, e)} />}
     </div>
   );
 }
