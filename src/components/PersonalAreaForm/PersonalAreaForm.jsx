@@ -156,7 +156,7 @@ function PersonalAreaForm({ handleError }) {
             onClick={handlePasswordVisibility}
           />
           <span className="personal-area-form__input-error">
-            {errors.newPassword && VALIDATION_MESSAGES.invalidPassword}
+            {VALIDATION_MESSAGES.invalidPassword}
           </span>
           <input
             className={`personal-area-form__input ${errors.repeatPassword ? 'personal-area-form__input_type-error' : ''}`}
@@ -181,7 +181,9 @@ function PersonalAreaForm({ handleError }) {
             onClick={handlePasswordVisibility}
           />
           <span className="personal-area-form__input-error">
-            {values.repeatPassword && isDisabledButton && VALIDATION_MESSAGES.passwordsNotMatch}
+            {values.repeatPassword && isDisabledButton ?
+            VALIDATION_MESSAGES.passwordsNotMatch :
+            VALIDATION_MESSAGES.invalidPassword}
           </span>
         </>
       )}
