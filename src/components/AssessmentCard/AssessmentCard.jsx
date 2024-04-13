@@ -27,7 +27,7 @@ function AssessmentCard({
         <p className={styles.assessmentCard__date}>Дата анкетирования:</p>
         <p className={styles.assessmentCard__date}>{currentDate}</p>
       </div>
-      <div className={isAppreciated ? styles.assessmentCard_asses : styles.assessmentCard_notAsses}>
+      <div className={isAppreciated ? styles.assessmentCard_appreciated : styles.assessmentCard_notAppreciated}>
         {isAppreciated ? 'Оценить' : 'Отправлено'}
       </div>
     </div>
