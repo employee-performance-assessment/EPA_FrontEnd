@@ -14,7 +14,8 @@ export const VALIDATION_MESSAGES = {
   invalidPassword: 'Допускаются цифры, спецсимволы и латиница, хотя бы одна заглавная буква, от 8 до 14 симв.',
   passwordsNotMatch: 'Пароли не совпадают',
   emptyConfirmPassword: 'Пожалуйста, подтвердите пароль',
-  emptyInput: 'Поле обязательно для заполнения'
+  emptyInput: 'Поле обязательно для заполнения',
+  invalidCriterion: 'Допускается кириллица, латиница, цифры и спецсимволы, от 1 до 100 симв.'
 };
 
 export const validateInput = (

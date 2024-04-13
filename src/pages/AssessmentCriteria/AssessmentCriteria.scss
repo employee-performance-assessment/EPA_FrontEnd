@@ -63,15 +63,21 @@
     margin-top: 40px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
     position: relative;
+  }
+
+  &__input-error {
+    @include text($font-size: 15px, $font-weight: 400, $line-height: 20px);
+    padding-left: 24px;
+    width: 900px;
+    min-height: 20px;
   }
 
   &__add-button {
     align-self: flex-end;
     text-align: end;
     padding: 0;
-    @include text($font-size: 20px, $font-weight: 600, $line-height: 24px);
+    @include text($font-size: 20px, $font-weight: 600, $line-height: 20px);
     border: none;
     margin: 12px 114px 0 0;
     cursor: pointer;
@@ -99,6 +105,11 @@
     &:active {
       cursor: pointer;
       background: $yellow-base-color;
+    }
+
+    &:disabled {
+      background: $grey-base-color;
+      pointer-events: none;
     }
   }
 
