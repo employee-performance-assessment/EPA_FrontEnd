@@ -6,6 +6,7 @@ import Switch from '../../components/Switch/Switch.jsx';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import { VALIDATION_MESSAGES } from '../../utils/validationConstants.js';
 import {
   getQuestionnaireLast,
   updateQuestionnaireLast,
@@ -23,32 +24,60 @@ function AssessmentCriteria() {
   const [criteria, setCriteria] = useState([]);
   const [isCheckedEditing, setIsCheckedEditing] = useState(false);
   const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [disabledButton, setDisabledButton] = useState(false);
   const { personalArea } = ENDPOINT_ROUTES;
-  const { values, handleChange, setValues } = useFormValidation();
+  const { values, handleChange, errors, isValid, setIsValid } = useFormValidation();
   const navigate = useNavigate();
   const dataForServer = { criterias: [] };
 
   useEffect(() => {
     if (isCheckedEditing) {
-      setCriteria([]);
-      setValues({});
       getQuestionnaireLast()
         .then((res) => {
           setCriteria(res.criterias);
+          insertCriteriaNames(res.criterias);
         })
         .catch((err) => handleError(err));
     } else {
       getDefaultCriterion()
         .then((res) => {
           setCriteria(res);
+          insertCriteriaNames(res);
         })
         .catch((err) => handleError(err));
     }
   }, [isCheckedEditing]);
 
-  function handleDelete(criterion) {
+  useEffect(() => {
+    if (criteria[0]) {
+        criteria[0].name ? setDisabledButton(false) : setDisabledButton(true);
+      if (values[1]) {
+        values[1] ? setDisabledButton(false) : setDisabledButton(true);
+      }
+    } else {
+      setDisabledButton(true);
+    }
+  }, [criteria, values])
+
+  function insertCriteriaNames(arrayCriteria) {
+    if (Object.keys(values)[0]) {
+      Object.keys(values).forEach((key) => {
+        delete values[key];
+      })
+    }
+
+    arrayCriteria.forEach((criterion) => {
+      const inputId = String(criterion.id);
+      if (!values[inputId]) {
+        values[inputId] = criterion.name;
+      }
+    })
+  }
+
+  function handleDelete(criterion, e) {
     delete values[criterion.id];
     setCriteria(criteria.filter((item) => item.id !== criterion.id));
+    setIsValid(e.target.validity.valid);
   }
 
   function calculateId() {
@@ -69,7 +98,7 @@ function AssessmentCriteria() {
     if (Object.values(values)[0]) {
       Object.values(values).forEach((item) => {
         const itemObject = { name: '' };
-        itemObject.name = item;
+        itemObject.name = item.trim();
         dataForServer.criterias.push(itemObject);
       })
     }
@@ -118,22 +147,31 @@ function AssessmentCriteria() {
         />
         <form className="assessment-criteria__form">
           {criteria.map((criterion) => (
-            <CriterionInput
-              key={criterion.id}
-              criterion={criterion}
-              text={criterion.name}
-              editing={isCheckedEditing}
-              handleDelete={handleDelete}
-              values={values}
-              handleChange={handleChange}
-              id={criterion.id}
-            />
+            <div key={criterion.id}>
+              <CriterionInput
+                criterion={criterion}
+                editing={isCheckedEditing}
+                handleDelete={handleDelete}
+                values={values[String(criterion.id)]}
+                handleChange={handleChange}
+                id={criterion.id}
+              />
+              <span className="assessment-criteria__input-error">
+                {errors[criterion.id] && VALIDATION_MESSAGES.invalidCriterion}
+              </span>
+            </div>
           ))}
           {isCheckedEditing &&
             <button className="assessment-criteria__add-button" onClick={(evt) => addNewCriteria(evt)}>
               <span>+ </span>Добавить критерий
             </button>}
-          <button className="assessment-criteria__submit" onClick={(evt) => handleSubmit(evt)}>Подтвердить</button>
+          <button
+            className="assessment-criteria__submit"
+            onClick={(evt) => handleSubmit(evt)}
+            disabled={!isValid || disabledButton}
+          >
+            Подтвердить
+          </button>
         </form >
       </div>
       {
