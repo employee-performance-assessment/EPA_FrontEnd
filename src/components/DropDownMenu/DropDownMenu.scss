@@ -1,6 +1,8 @@
+@import '../../styles/vars';
+
 .dropdown-menu {
   height: min-content;
-  z-index: 10;
+  z-index: map-get($zIndexes, dropdown);
   position: absolute;
 
   & .dropdown-menu__list {
