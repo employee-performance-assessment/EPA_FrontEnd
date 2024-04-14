@@ -14,8 +14,7 @@ function Boards({ tasks }) {
       function filterTask(task) {
         return task.status === board.status;
       }
-      board.items = tasks.filter(filterTask);
-      return board;
+      return { ...board, items: tasks.filter(filterTask) };
     });
     setCardsLists(arrBords);
   }, [tasks]);
