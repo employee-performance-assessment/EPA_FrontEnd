@@ -89,7 +89,6 @@ function Kanban() {
     setCurrentTasks(tasks.filter((item) => item.project.id === project.id))
     const arrProject = projects.map(i => i)
     moveElementByNameToStart(arrProject, project.name);
-    console.log(arrProject)
     setProjects(arrProject)
   }
 
@@ -99,7 +98,6 @@ function Kanban() {
         <nav className="kanban__nav">
           <div className="kanban__container-project">
             <p className="kanban__label">Проект:</p>
-            {console.log(projects)}
             {projects[0] && (
               <button
                 type="button"
