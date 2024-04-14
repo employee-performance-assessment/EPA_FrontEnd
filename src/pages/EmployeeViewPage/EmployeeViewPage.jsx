@@ -21,12 +21,13 @@ import {
   getStatPointsByUser,
 } from '../../utils/mainApi.js';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import { getFromLocalStorage } from '../../utils/localStorageFunctions.js';
 
 function EmployeeViewPage() {
   const dispatch = useDispatch();
   const { id: employeeId } = useParams();
 
-  const user = useSelector((state) => state.user);
+  const user = getFromLocalStorage('user')
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
 
   const { values, handleChange, setValues } = useFormValidation();

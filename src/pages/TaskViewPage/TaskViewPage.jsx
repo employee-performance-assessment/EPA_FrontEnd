@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
 import {
   getTaskDetailsByAdmin,
@@ -13,6 +12,7 @@ import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import PopupEditTask from '../../components/PopupEditTask/PopupEditTask.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import styles from './TaskViewPage.module.scss';
+import { getFromLocalStorage } from '../../utils/localStorageFunctions.js';
 
 function TaskViewPage() {
   const [task, setTask] = useState(null);
@@ -21,7 +21,7 @@ function TaskViewPage() {
   const [isTaskEdited, setIsTaskEdited] = useState(false);
   const { id: taskId } = useParams();
   const navigate = useNavigate();
-  const { fullName: adminName, isAdmin } = useSelector((state) => state.user);
+  const user = getFromLocalStorage('user')
   const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
@@ -29,7 +29,7 @@ function TaskViewPage() {
     const fetchData = async () => {
       try {
         if (taskId) {
-          if (isAdmin) {
+          if (user.isAdmin) {
             const res = await getTaskDetailsByAdmin(taskId);
             res &&
               setTask({
@@ -46,7 +46,7 @@ function TaskViewPage() {
                 penaltyPoints: res.penaltyPoints,
                 basicPoints: res.basicPoints,
                 status: res.status,
-                admin: adminName,
+                admin: user.fullName,
               });
 
             const projectsRes = await getProjectsName();
@@ -73,7 +73,7 @@ function TaskViewPage() {
       }
     };
     fetchData();
-  }, [taskId, isAdmin, isTaskEdited]);
+  }, [taskId, user.isAdmin, isTaskEdited]);
 
   function handleDeleteTask() {
     deleteTaskByAdmin(taskId)
@@ -130,7 +130,7 @@ function TaskViewPage() {
             </button>
             <h4 className={styles.taskViewPage__id}>{task.id}</h4>
             <CustomSelect task={task} />
-            {isAdmin && (
+            {user.isAdmin && (
               <button
                 type="button"
                 className={styles.taskViewPage__edit}
@@ -186,7 +186,7 @@ function TaskViewPage() {
                 <p className={styles.taskViewPage__value}>{task.projectName}</p>
               </li>
             </ul>
-            {isAdmin && (
+            {user.isAdmin && (
               <button
                 type="button"
                 className={styles.taskViewPage__delete}
