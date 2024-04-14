@@ -20,7 +20,12 @@ function EmployeeViewCard({
     task && calculatePercentage(task.penaltyPoints, task.basicPoints);
 
   return type === 'tasks' ? (
-    <div className={styles.employeeViewCard__container}>
+    <div
+      className={styles.employeeViewCard__container}
+      role='button'
+      onClick={() => navigate(`${ENDPOINT_ROUTES.taskCards}/${task.id}`)}
+      tabIndex={0}
+    >
       <div className={styles.employeeViewCard__text}>
         <h2 className={styles.employeeViewCard__title}>{task.name}</h2>
         <p className={styles.employeeViewCard__deadline}>
@@ -34,11 +39,7 @@ function EmployeeViewCard({
         {task.basicPoints} баллов
       </div>
       <button
-        type="button"
         className={styles.employeeViewCard__button}
-        onClick={() => {
-          navigate(`${ENDPOINT_ROUTES.taskCards}/${task.id}`);
-        }}
       >
         Подробнее
       </button>

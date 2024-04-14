@@ -1,6 +1,6 @@
 import './PopupProject.scss';
 
-function PopupProject({ projects, setIsOpenPopupProject }) {
+function PopupProject({ projects, setIsOpenPopupProject, handleClickProject }) {
   const projectsName = projects.map((i) => i);
 
   projectsName.splice(0, 2);
@@ -12,9 +12,16 @@ function PopupProject({ projects, setIsOpenPopupProject }) {
     <div className="popup-project">
       <ul className="popup-project__popup">
         {projectsName.map((project) => (
-          <li className="popup-project__item" onClick={handkeClickProject}>
-            {project.name}
-          </li>
+          <button 
+          type="button"
+           key={project.id}
+           className='popup-project__button-project'
+            onClick={() => handleClickProject(project)}
+          >
+            <li className="popup-project__item" onClick={handkeClickProject}>
+              {project.name}
+            </li>
+          </button>
         ))}
       </ul>
     </div>
