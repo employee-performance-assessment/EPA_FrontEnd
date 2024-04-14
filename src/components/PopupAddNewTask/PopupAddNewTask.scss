@@ -1,7 +1,7 @@
 @import '../../styles/vars';
 @import '../../styles/mixins';
 
-.popup-edit-task {
+.popup-add-task {
   position: fixed;
   top: 0;
   right: 0;
@@ -16,12 +16,12 @@
   z-index: map-get($zIndexes, popup);
 }
 
-.popup-edit-task__title {
+.popup-add-task__title {
   width: 400px;
   margin-bottom: 40px;
 }
 
-.popup-edit-task__button {
+.popup-add-task__button {
   border: none;
   padding: 16px 20px;
   font-size: 20px;
@@ -36,7 +36,7 @@
   background-color: white;
 }
 
-.popup-edit-task__container-inputs {
+.popup-add-task__container-inputs {
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: repeat(2, 470px);
@@ -45,14 +45,14 @@
   grid-column-gap: 24px;
 }
 
-.popup-edit-task__button_purple {
+.popup-add-task__button_purple {
   margin-top: 40px;
   width: 350px;
   height: 56px;
   background-color: $purple-base-color;
 }
 
-.popup-edit-task__popup {
+.popup-add-task__popup {
   width: 1124px;
   height: 800px;
   background-color: white;
@@ -61,7 +61,7 @@
   position: relative;
 }
 
-.popup-edit-task__button_close {
+.popup-add-task__button_close {
   padding: 0;
   background-image: url(../../images/closePopup.svg);
   width: 56px;
@@ -71,7 +71,7 @@
   right: 80px;
 }
 
-.popup-edit-task__input-container {
+.popup-add-task__input-container {
   height: 64px;
   width: 470px;
   margin-bottom: 20px;
@@ -85,27 +85,27 @@
   box-sizing: border-box;
 }
 
-.popup-edit-task__input {
+.popup-add-task__input {
   color: black;
-  width: 350px;
+  width: 371px;
   margin: 18px auto auto 0;
   border: none;
   font-size: 20px;
   outline: none;
 }
 
-.popup-edit-task__input-container_big {
+.popup-add-task__input-container_big {
   position: relative;
   align-items: flex-start;
   height: 346px;
 }
 
-.popup-edit-task__button-input {
+.popup-add-task__button-input {
   border: none;
   cursor: pointer;
 }
 
-.popup-edit-task__button-input_arrow-down {
+.popup-add-task__button-input_arrow-down {
   width: 24px;
   height: 24px;
   margin-right: 20px;
@@ -113,7 +113,7 @@
   background: url(../../images/CaretDown-black.svg) no-repeat center center;
 }
 
-.popup-edit-task__button-input_calendar {
+.popup-add-task__button-input_calendar {
   width: 32px;
   height: 32px;
   margin-right: 20px;
@@ -121,11 +121,11 @@
   background: url(../../images/Calendar-icon-popup.svg) no-repeat center center;
 }
 
-.popup-edit-task__button_big {
+.popup-add-task__button_big {
   visibility: hidden;
 }
 
-.popup-edit-task__input_textarea {
+.popup-add-task__input_textarea {
   margin: 18px auto auto 0;
   border: none;
   font-size: 20px;
@@ -134,11 +134,11 @@
   outline: none;
 }
 
-.popup-edit-task__input_textarea:focus {
+.popup-add-task__input_textarea:focus {
   border: none;
 }
 
-.popup-edit-task__span {
+.popup-add-task__span {
   position: absolute;
   top: -29px;
   font-weight: 400;
