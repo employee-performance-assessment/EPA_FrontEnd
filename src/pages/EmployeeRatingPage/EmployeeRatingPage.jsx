@@ -23,7 +23,7 @@ function EmployeeRatingPage() {
   const [date, setDate] = useState('');
   const [criteria, setCriteria] = useState([]);
 
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+  const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
   function handleClickBack() {
@@ -72,7 +72,6 @@ function EmployeeRatingPage() {
     <>
       {isPopupOpen && (
         <InfoPopup
-          title={popupTitle}
           text={popupText}
           handleClosePopup={closePopup}
         />

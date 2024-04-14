@@ -17,7 +17,7 @@ import eyeOpen from '../../images/eye-open.svg';
 import logo from '../../images/logo.svg';
 
 function Register() {
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { errors, values, isValid, handleChange, setIsValid, resetForm } =
@@ -93,7 +93,7 @@ function Register() {
 
   return (
     <section className={styles.wrapper}>
-      {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
+      {isPopupOpen && <InfoPopup text={popupText} handleClosePopup={closePopup} />}
       <div className={styles.container}>
         <form id="register" onSubmit={handleSubmit}>
           <img className={styles.logo} src={logo} alt="Логотип" />

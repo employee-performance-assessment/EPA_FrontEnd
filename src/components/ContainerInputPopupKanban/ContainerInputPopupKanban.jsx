@@ -10,7 +10,7 @@ import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 export default function ContainerInputPopupKanban({ item, setProjects }) {
   const [nameProject, setProjectName] = useState(item.name);
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+  const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
   function handleButtonEditProject() {
     setProjectsNewName(nameProject, item.id)
@@ -61,7 +61,6 @@ export default function ContainerInputPopupKanban({ item, setProjects }) {
       />
       {isPopupOpen && (
         <InfoPopup
-          title={popupTitle}
           text={popupText}
           handleClosePopup={closePopup}
         />

@@ -31,7 +31,7 @@ function Kanban() {
   const [currentTasks, setCurrentTasks] = useState([]);
   const [isLoad, setIsLoad] = useState(true);
   const [currenProject, setCurrentProject] = useState('all');
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+  const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
   useEffect(() => {
@@ -219,7 +219,6 @@ function Kanban() {
         )}
         {isPopupOpen && (
           <InfoPopup
-            title={popupTitle}
             text={popupText}
             handleClosePopup={closePopup}
           />

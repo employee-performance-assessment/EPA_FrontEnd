@@ -41,7 +41,7 @@ function EmployeeViewPage() {
   const [rating, setRating] = useState(0);
   const [points, setPoints] = useState(0);
 
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+  const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
   useEffect(() => {
@@ -126,7 +126,6 @@ function EmployeeViewPage() {
     <>
       {isPopupOpen && (
         <InfoPopup
-          title={popupTitle}
           text={popupText}
           handleClosePopup={closePopup}
         />

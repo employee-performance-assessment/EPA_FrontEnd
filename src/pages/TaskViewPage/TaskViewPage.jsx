@@ -22,7 +22,7 @@ function TaskViewPage() {
   const { id: taskId } = useParams();
   const navigate = useNavigate();
   const user = getFromLocalStorage('user')
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+  const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
   useEffect(() => {
@@ -93,7 +93,6 @@ function TaskViewPage() {
     <>
       {isPopupOpen && (
         <InfoPopup
-          title={popupTitle}
           text={popupText}
           handleClosePopup={closePopup}
         />
