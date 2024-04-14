@@ -42,20 +42,20 @@
   color: #000000;
 }
 
-.boardDnD__card-points_grey {
-  background-color: #a6a6a6;
+.boardDnD__card-points_yellow {
+  background-color: $yellow-base-color;
 }
 
 .boardDnD__card-points_red {
-  background-color: #f24822;
+  background-color: $red-base-color;
 }
 
 .boardDnD__card-points_violet {
-  background-color: #c5b6f1;
+  background-color: $purple-base-color;
 }
 
 .boardDnD__card-points_green {
-  background-color: #00d37f;
+  background-color: $green-base-color;
 }
 
 .boardDnD__card-number {

@@ -35,9 +35,8 @@ function Board({
     setStartBoard(board);
   }
 
-  function dropHandler(e, board, card) {
+  function dropHandler(e, board) {
     e.preventDefault();
-    console.log(dropCard.id, board.status);
     getNewTasks(dropCard.id, board.status);
     e.currentTarget.classList.remove('boardDnD__card_OverHandler');
   }
@@ -46,15 +45,12 @@ function Board({
   const sortCard = (a, b) => a - b;
 
   // функция установки цвета поля баллов
-  function getCollor(board, deadline) {
-    if (deadline - new Date().getTime() <= 0) {
-      return 'boardDnD__card-points_red';
-    }
-    if (board === 'NEW') {
-      return 'boardDnD__card-points_grey';
+  function getCollor(board) {
+    if (board === 'К выполнению') {
+      return 'boardDnD__card-points_yellow';
     }
     if (board === 'В работе') {
-      return 'boardDnD__card-points_light-green';
+      return 'boardDnD__card-points_violet';
     }
     if (board === 'На ревью') {
       return 'boardDnD__card-points_violet';
@@ -66,7 +62,7 @@ function Board({
   }
 
   return (
-    <div className="boardDnD">
+    <div className="boardDnD" onDrop={(e) => dropHandler(e, board)}>
       <h1 className="boardDnD__title">{board.title}</h1>
       {/* сначала сортируем карты по порядку (order), затем перебираем массив для отрисовки карточек */}
       {board.items.sort(sortCard).map((card) => (
@@ -81,9 +77,7 @@ function Board({
           key={card.id}
         >
           <p className="boardDnD__card-number">{card.id}</p>
-          <p
-            className={`boardDnD__card-points ${getCollor(board.title, card.deadline)}`}
-          >
+          <p className={`boardDnD__card-points ${getCollor(board.title)}`}>
             {card.basicPoints} баллов{' '}
           </p>
           <h3 className="boardDnD__card-title">{card.name}</h3>

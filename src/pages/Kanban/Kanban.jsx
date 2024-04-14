@@ -15,7 +15,6 @@ import {
   getAdminTask,
   getUserTask,
   patchUserTask,
-  patchAdminTask,
 } from '../../utils/mainApi.js';
 import './Kanban.scss';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
@@ -45,6 +44,7 @@ function Kanban() {
   }, [projects]);
 
   useEffect(() => {
+    console.log(currenProject);
     if (tasks.length > 0) {
       setIsNoTask(false);
       setCurrentTasks(
@@ -77,19 +77,14 @@ function Kanban() {
   }, [user]);
 
   function getNewTasks(taskId, statusTask) {
-    console.log(tasks.filter((item) => item.id === taskId));
-    (user.isAdmin
-      ? patchAdminTask(
-          taskId,
-          tasks.filter((item) => item.id === taskId)
-        )
-      : patchUserTask(taskId, statusTask)
-    )
-      .then(
-        user.isAdmin
-          ? getAdminTask()
-          : getUserTask().then((res) => setTasks(res))
-      )
+    console.log(taskId, statusTask);
+    patchUserTask(taskId, statusTask)
+      .then(() => {
+        console.log(taskId, statusTask);
+        (user.isAdmin ? getAdminTask() : getUserTask())
+          .then((res) => setTasks(res))
+          .catch((err) => handleError(err));
+      })
       .catch((err) => handleError(err));
   }
 

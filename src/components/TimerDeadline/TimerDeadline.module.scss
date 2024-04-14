@@ -1,3 +1,5 @@
+@import '../../styles/vars';
+
 .progress {
   display: flex;
   position: relative;
@@ -8,7 +10,7 @@
   cursor: pointer;
   transition: ease-in-out 0.3s;
   overflow: hidden;
-  background-color: white;
+  background-color: $white-base-color;
   padding: 0;
   align-items: center;
   justify-content: center;
@@ -23,7 +25,7 @@
     color: rgb(198, 242, 33);
 
     &::before {
-      background-color: white;
+      background-color: $white-base-color;
     }
   }
 
@@ -43,7 +45,7 @@
     font-weight: 500;
     font-size: 16px;
     line-height: 19px;
-    color: white;
+    color: black;
     margin: 0;
     padding: 0;
   }
