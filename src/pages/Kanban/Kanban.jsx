@@ -28,9 +28,9 @@ function Kanban() {
   const [isOpenPopupAddTask, setIsOpenPopupAddTask] = useState(false);
   const [isOpenPopupProject, setIsOpenPopupProject] = useState(false);
   const [tasks, setTasks] = useState([]);
-  const [currentTasks, setCurrentTasks] = useState([])
+  const [currentTasks, setCurrentTasks] = useState([]);
   const [isLoad, setIsLoad] = useState(true);
-  const [currenProject, setCurrentProject] = useState('all')
+  const [currenProject, setCurrentProject] = useState('all');
   const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
@@ -43,8 +43,15 @@ function Kanban() {
   }, [projects]);
 
   useEffect(() => {
+    if (tasks.length > 0) {
+      setIsNoTask(false);
+    } else {
+      setIsNoTask(true);
+    }
+  }, [tasks]);
+
+  useEffect(() => {
     if (user) {
-      setIsLoad(true);
       Promise.all([
         getProjectsName(),
         getInfoOwnerJWT(),
@@ -53,7 +60,7 @@ function Kanban() {
         .then((res) => {
           setProjects(res[0]);
           setTasks(res[2]);
-          setCurrentTasks(res[2])
+          setCurrentTasks(res[2]);
           if (res[2].length > 0) {
             setIsNoTask(false);
           }
@@ -68,15 +75,25 @@ function Kanban() {
   }
 
   function handleClickViewAllTask() {
-    getAdminTask().then((res) => {
-      setTasks(res);
-      setCurrentTasks(res)
-      setCurrentProject('all')
-    }).catch((err) => handleError(err))
+    user.isAdmin
+      ? getAdminTask()
+          .then((res) => {
+            setTasks(res);
+            setCurrentTasks(res);
+            setCurrentProject('all');
+          })
+          .catch((err) => handleError(err))
+      : getUserTask()
+          .then((res) => {
+            setTasks(res);
+            setCurrentTasks(res);
+            setCurrentProject('all');
+          })
+          .catch((err) => handleError(err));
   }
 
   function moveElementByNameToStart(array, name) {
-    const index = array.findIndex(item => item.name === name);
+    const index = array.findIndex((item) => item.name === name);
     if (index !== -1) {
       // Перемещаем элемент в начало массива
       array.splice(0, 0, array.splice(index, 1)[0]);
@@ -84,125 +101,130 @@ function Kanban() {
   }
 
   function handleClickProject(project) {
-    setCurrentProject(project.name)
-    setCurrentTasks(tasks.filter((item) => item.project.id === project.id))
-    const arrProject = projects.map(i => i)
+    setCurrentProject(project.name);
+    setCurrentTasks(tasks.filter((item) => item.project.id === project.id));
+    const arrProject = projects.map((i) => i);
     moveElementByNameToStart(arrProject, project.name);
-    setProjects(arrProject)
+    setProjects(arrProject);
   }
 
   return user ? (
-    <section className="kanban_page">
-      <div className="kanban__main">
-        <nav className="kanban__nav">
-          <div className="kanban__container-project">
-            <p className="kanban__label">Проект:</p>
-            {projects[0] && (
+    isLoad ? (
+      <div className="kanban__main" />
+    ) : (
+      <section className="kanban_page">
+        <div className="kanban__main">
+          <nav className="kanban__nav">
+            <div className="kanban__container-project">
+              <p className="kanban__label">Проект:</p>
+              {projects[0] && (
+                <button
+                  type="button"
+                  className={`kanban__button ${currenProject === projects[0].name ? 'kanban__button_border' : 'kanban__button_non-border'}`}
+                  onClick={() => handleClickProject(projects[0])}
+                >
+                  <p className="kanban__button-title">{projects[0].name} </p>
+                </button>
+              )}
+              {projects[1] && (
+                <button
+                  type="button"
+                  className={`kanban__button ${currenProject === projects[1].name ? 'kanban__button_border' : 'kanban__button_non-border'}`}
+                  onClick={() => handleClickProject(projects[1])}
+                >
+                  <p className="kanban__button-title">{projects[1].name} </p>
+                </button>
+              )}
               <button
                 type="button"
-                className={`kanban__button ${currenProject === projects[0].name ? 'kanban__button_border' : 'kanban__button_non-border'}`}
-                onClick={() => handleClickProject(projects[0])}
+                className="kanban__button kanban__button_more"
+                onClick={() => {
+                  setIsOpenPopupProject(true);
+                }}
+                disabled={projects.length < 3}
               >
-                <p className="kanban__button-title">{projects[0].name} </p>
+                <p className="kanban__button-title">
+                  ...ещё {projects.length > 2 && projects.length - 2}
+                </p>
+                <img src={caretDown} alt="Раскрыть список проектов" />
               </button>
-            )}
-            {projects[1] && (
               <button
                 type="button"
-                className={`kanban__button ${currenProject === projects[1].name ? 'kanban__button_border' : 'kanban__button_non-border'}`}
-                onClick={() => handleClickProject(projects[1])}
+                className={`kanban__button ${projects.length < 1 ? 'kanban__button_grey' : currenProject === 'all' ? 'kanban__button_purple' : 'kanban__button_grey'} kanban__button_all`}
+                onClick={handleClickViewAllTask}
+                disabled={projects.length < 1}
               >
-                <p className="kanban__button-title">{projects[1].name} </p>
+                <p className="kanban__button-title_all">Все</p>
               </button>
-            )}
-            <button
-              type="button"
-              className="kanban__button kanban__button_more"
-              onClick={() => {
-                setIsOpenPopupProject(true);
-              }}
-            >
-              <p className="kanban__button-title">
-                ...ещё {projects.length > 2 && projects.length - 2}
-              </p>
-              <img src={caretDown} alt="Раскрыть список проектов" />
-            </button>
-            {isOpenPopupProject && (
-              <PopupProject
-                projects={projects}
-                setIsOpenPopupProject={setIsOpenPopupProject}
-                handleClickProject={handleClickProject}
-              />
-            )}
-          </div>
-          <div className="kanban__container-project">
-            {!isLoad && user.isAdmin ? (
-              <>
-                <button
-                  type="button"
-                  className={`kanban__button ${projects.length < 1 ? 'kanban__button_grey' : currenProject === 'all' ? 'kanban__button_purple' : 'kanban__button_grey'} kanban__button_all`}
-                  onClick={handleClickViewAllTask}
-                  disabled={projects.length < 1}
-                >
-                  <p className="kanban__button-title_all">Все</p>
-                </button>
-                <button
-                  type="button"
-                  className="kanban__button kanban__button_project"
-                  onClick={handleClickOpenPopup}
-                >
-                  <p className="kanban__button-title_make">Проекты</p>{' '}
-                  <img src={edit} alt="Редактировать проект" />
-                </button>
-                <button
-                  type="button"
-                  className={`kanban__button ${projects.length < 1 ? 'kanban__button_grey' : 'kanban__button_purple'} kanban__button_task`}
-                  disabled={projects.length < 1}
-                  onClick={() => setIsOpenPopupAddTask(true)}
-                >
-                  <p className="kanban__button-title_make">Создать задачу</p>
-                  <img
-                    className="kanban__button-img"
-                    src={plus}
-                    alt="Добавить новую задачу"
-                  />
-                </button>
-              </>
-            ) : (
-              <div className="kanban-header__point">0 Баллов</div>
-            )}{' '}
-          </div>
-        </nav>
-        {!isLoad && <Boards tasks={currentTasks} />}
-        {isNoProject ? (
-          <NotProject setProjects={setProjects} />
-        ) : (
-          isNoTask === true && <NotFoundTask />
+              {isOpenPopupProject && (
+                <PopupProject
+                  projects={projects}
+                  setIsOpenPopupProject={setIsOpenPopupProject}
+                  handleClickProject={handleClickProject}
+                />
+              )}
+            </div>
+            <div className="kanban__container-project">
+              {!isLoad && user.isAdmin ? (
+                <>
+                  <button
+                    type="button"
+                    className="kanban__button kanban__button_project"
+                    onClick={handleClickOpenPopup}
+                  >
+                    <p className="kanban__button-title_make">Проекты</p>{' '}
+                    <img src={edit} alt="Редактировать проект" />
+                  </button>
+                  <button
+                    type="button"
+                    className={`kanban__button ${projects.length < 1 ? 'kanban__button_grey' : 'kanban__button_purple'} kanban__button_task`}
+                    disabled={projects.length < 1}
+                    onClick={() => setIsOpenPopupAddTask(true)}
+                  >
+                    <p className="kanban__button-title_make">Создать задачу</p>
+                    <img
+                      className="kanban__button-img"
+                      src={plus}
+                      alt="Добавить новую задачу"
+                    />
+                  </button>
+                </>
+              ) : (
+                <div className="kanban-header__point">0 Баллов</div>
+              )}
+            </div>
+          </nav>
+          {!isLoad && <Boards tasks={currentTasks} />}
+          {isNoProject ? (
+            <NotProject setProjects={setProjects} />
+          ) : (
+            isNoTask === true && <NotFoundTask />
+          )}
+        </div>
+        {isOpenPopup && (
+          <PopupKanban
+            setIsOpenPopup={setIsOpenPopup}
+            projects={projects}
+            setProjects={setProjects}
+          />
         )}
-      </div>
-      {isOpenPopup && (
-        <PopupKanban
-          setIsOpenPopup={setIsOpenPopup}
-          projects={projects}
-          setProjects={setProjects}
-        />
-      )}
-      {isOpenPopupAddTask && (
-        <PopupAddNewTask
-          setIsOpenPopup={setIsOpenPopupAddTask}
-          title="Создать здачу"
-          projects={projects}
-          setTasks={setTasks}
-          setCurrentTasks={setCurrentTasks}
-        />
-      )}
-      {isPopupOpen && (
-        <InfoPopup
-          text={popupText}
-          handleClosePopup={closePopup}
-        />
-      )}
-    </section>
+        {isOpenPopupAddTask && (
+          <PopupAddNewTask
+            setIsOpenPopup={setIsOpenPopupAddTask}
+            title="Создать здачу"
+            projects={projects}
+            setTasks={setTasks}
+            setCurrentTasks={setCurrentTasks}
+          />
+        )}
+        {isPopupOpen && (
+          <InfoPopup
+            text={popupText}
+            handleClosePopup={closePopup}
+          />
+        )}
+      </section>
+    )
   ) : (
     ''
   );

@@ -10,10 +10,13 @@ import {
 } from '../../utils/mainApi.js';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import { getFromLocalStorage } from '../../utils/localStorageFunctions.js';
 
 function EmployeeRatingPage() {
   const navigate = useNavigate();
   const { employeeId, questionnaireId } = useParams();
+
+  const user = getFromLocalStorage('user');
 
   const [recommendation, setRecommendation] = useState('');
   const [rating, setRating] = useState(0);
@@ -28,35 +31,41 @@ function EmployeeRatingPage() {
   }
 
   useEffect(() => {
-    employeeId
-      ? getEvaluationsByAdmin(employeeId, questionnaireId)
-      : getEvaluationsByUser(questionnaireId)
-          .then((res) => {
-            setRating(res.middleScore);
-            setRecommendation(res.recommendation);
-            const initialDate = res.createQuestionnaire
-              .split('-')
-              .reverse()
-              .join('.');
-            setDate(initialDate);
-            const initialCriteria = res.evaluations;
-            setCriteria(
-              Array.from(
-                Object.keys(initialCriteria).map((key, index) => {
-                  const output = {
-                    id: index + 1, // Уникальный идентификатор, начинаем с 1
-                    adminScore: initialCriteria[key].adminScore,
-                    colleaguesScore: initialCriteria[key].colleaguesScore,
-                    text: key, // Текст берем из ключа объекта
-                  };
-                  return output;
-                })
-              )
-            );
-          })
-          .catch((err) => {
-            handleError(err);
-          });
+    const fetchData = async () => {
+      try {
+        let data;
+
+        if (employeeId && user.isAdmin) {
+          data = await getEvaluationsByAdmin(employeeId, questionnaireId);
+        } else {
+          data = await getEvaluationsByUser(questionnaireId);
+        }
+        setRating(data.middleScore);
+        setRecommendation(data.recommendation);
+        const initialDate = data.createQuestionnaire
+          .split('-')
+          .reverse()
+          .join('.');
+        setDate(initialDate);
+        const initialCriteria = data.evaluations;
+        setCriteria(
+          Array.from(
+            Object.keys(initialCriteria).map((key, index) => {
+              const output = {
+                id: index + 1, // Уникальный идентификатор, начинаем с 1
+                adminScore: initialCriteria[key].adminScore,
+                colleaguesScore: initialCriteria[key].colleaguesScore,
+                text: key, // Текст берем из ключа объекта
+              };
+              return output;
+            })
+          )
+        );
+      } catch (error) {
+        handleError(error);
+      }
+    };
+    fetchData();
   }, []);
 
   return (

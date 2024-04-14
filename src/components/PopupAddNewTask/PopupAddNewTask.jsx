@@ -6,7 +6,13 @@ import { getAllUsers, setNewTask, getAdminTask } from '../../utils/mainApi.js';
 import InfoPopup from '../InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
-function PopupEditTask({ setIsOpenPopup, title, projects, setTasks, setCurrentTasks }) {
+function PopupAddTask({
+  setIsOpenPopup,
+  title,
+  projects,
+  setTasks,
+  setCurrentTasks,
+}) {
   const [startDate, setStartDate] = useState(null);
   const [taskName, setTaskName] = useState('');
   const [project, setProject] = useState({ name: '', id: 0 });
@@ -32,11 +38,11 @@ function PopupEditTask({ setIsOpenPopup, title, projects, setTasks, setCurrentTa
       penaltyPoints: pointsPenalty,
     })
       .then(() => {
-        setIsOpenPopup(false)
-        getAdminTask().then(res => {
-          setCurrentTasks(res)
-          setTasks(res)
-        })
+        setIsOpenPopup(false);
+        getAdminTask().then((res) => {
+          setCurrentTasks(res);
+          setTasks(res);
+        });
       })
       .catch((err) => handleError(err));
   }
@@ -181,4 +187,4 @@ function PopupEditTask({ setIsOpenPopup, title, projects, setTasks, setCurrentTa
   );
 }
 
-export default PopupEditTask;
+export default PopupAddTask;
