@@ -84,7 +84,6 @@ function AnalyticsPage() {
                 typeSelect="month"
                 list={['Январь', 'Февраль', 'Март', 'Апрель']}
                 buttonText="Февраль"
-                // query={handleSubmitUser}
                 selectStyle={styles.month_select}
                 buttonStyle={styles.month_button}
                 listStyle={styles.month_ul}

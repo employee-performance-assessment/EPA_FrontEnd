@@ -17,12 +17,12 @@ $wrapper: linear-gradient(
   rgb(245, 240, 122) 100%
 );
 
-/* font */
+// font-weight
 $fw-regular: 400;
 $fw-medium: 500;
 $fw-semibold: 600;
 
-// настройки трансформаций // есть вопросы, нет ответа
+// настройки трансформаций
 $transition-hover: all 0.3s ease-in-out;
 $transition-click: all 0.5s ease-in-out;
 

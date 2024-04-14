@@ -8,7 +8,6 @@ export const ERRORS = {
 };
 
 export const RESPONSE_TITLES = {
-  // email: 'Пользователь с таким email уже существует',
   email: 'Ошибка электронной почты',
   server: 'Ошибка сервера',
   login: 'Неверная почта или пароль',
