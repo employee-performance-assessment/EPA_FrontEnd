@@ -63,9 +63,7 @@ function EmployeeViewCard({
           starIn={styles.cardRating__star_in}
         />
       </div>
-      <div className={styles.employeeViewCard__button}>
-        Подробнее
-      </div>
+      <div className={styles.employeeViewCard__button}>Подробнее</div>
     </div>
   );
 }
