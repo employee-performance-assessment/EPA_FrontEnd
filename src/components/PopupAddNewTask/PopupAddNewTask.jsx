@@ -17,7 +17,7 @@ function PopupEditTask({ setIsOpenPopup, title, projects, setTasks, setCurrentTa
   const [employees, setEmployees] = useState([]);
   const [isOpenDropMenuProjects, setIsOpenDropMenuProjects] = useState(false);
   const [isOpenDropMenuEmployees, setIsOpenDropMenuEmployees] = useState(false);
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+  const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
   function handleClickSubmit() {
@@ -173,7 +173,6 @@ function PopupEditTask({ setIsOpenPopup, title, projects, setTasks, setCurrentTa
       </div>
       {isPopupOpen && (
         <InfoPopup
-          title={popupTitle}
           text={popupText}
           handleClosePopup={closePopup}
         />

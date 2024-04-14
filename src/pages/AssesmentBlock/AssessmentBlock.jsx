@@ -13,7 +13,7 @@ import {
 import './AssessmentBlock.scss';
 
 function AssessmentBlock() {
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const isAppreciated = useSelector((state) => state.isAppreciated.isAppreciated);
   const isAdmin = useSelector((state) => state.user.isAdmin);
   const [users, setUsers] = useState([]);
@@ -89,7 +89,7 @@ function AssessmentBlock() {
 
   return (
     <section className="assessment-block">
-      {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
+      {isPopupOpen && <InfoPopup text={popupText} handleClosePopup={closePopup} />}
       <div className="assessment-block__container">
         <div className={`assessment-block__header ${!isAdmin && "assessment-block__header_is-user"}`}>
           <div className="header__wrapper">

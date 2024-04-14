@@ -27,7 +27,7 @@ function Auth() {
   const { personalArea, userArea } = ENDPOINT_ROUTES;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+  const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
   const handleSubmit = (e) => {
@@ -72,7 +72,6 @@ function Auth() {
     <>
       {isPopupOpen && (
         <InfoPopup
-          title={popupTitle}
           text={popupText}
           handleClosePopup={closePopup}
         />

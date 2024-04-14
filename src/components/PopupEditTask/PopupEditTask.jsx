@@ -14,7 +14,7 @@ function PopupEditTask({
   setIsTaskEdited,
 }) {
 
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+  const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
   const [startDate, setStartDate] = useState(taskOldContent.deadLine);
   const [taskName, setTaskName] = useState(taskOldContent.name);
@@ -181,7 +181,6 @@ function PopupEditTask({
       </div>
       {isPopupOpen && (
         <InfoPopup
-          title={popupTitle}
           text={popupText}
           handleClosePopup={closePopup}
         />

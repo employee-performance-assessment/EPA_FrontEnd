@@ -20,7 +20,7 @@ import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
 
   const { values, handleChange, errors, setErrors, isValid, setIsValid } =
     useFormValidation({
@@ -73,7 +73,7 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
 
   return (
     <>
-    {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup}/>}
+    {isPopupOpen && <InfoPopup text={popupText} handleClosePopup={closePopup}/>}
     <section className="add-employee-form">
       <UserForm
         formTitle="Регистрация сотрудника"
