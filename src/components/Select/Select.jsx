@@ -73,8 +73,7 @@ function Select({
               className={optionStyle}
               value={
                 (typeSelect === 'users' && item.fullName) ||
-                (typeSelect === 'year' && item)/*  ||
-                (typeSelect === 'month' && item) */
+                (typeSelect === 'year' && item)
               }
               id={
                 typeSelect === 'users' ? item.fullName : '' ||
