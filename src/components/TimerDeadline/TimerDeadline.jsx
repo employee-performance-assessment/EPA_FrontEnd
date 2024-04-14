@@ -45,7 +45,7 @@ function TimerDeadline({ card }) {
         return Math.min(100 + diff, taskData.progressValue);
       });
     }, 500);
-    taskData.dateValue < 0
+    taskData.dateValue <= 0
       ? handleButtonType('needReview')
       : handleButtonType(card.status);
     return () => {

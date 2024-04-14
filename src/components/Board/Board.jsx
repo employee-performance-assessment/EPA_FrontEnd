@@ -117,7 +117,7 @@ function Board({
           <h3 className="boardDnD__card-title">{card.name}</h3>
           <p className="boardDnD__card-deadline">Дедлайн: {card.deadLine}</p>
           <p className="boardDnD__card-forfeit">
-            Бонус/Штраф «{card.basicPoints}» баллов за день
+            Бонус/Штраф «{card.penaltyPoints}» баллов за день
           </p>
           <div className="boardDnD__card-deadline-timer">
             <TimerDeadline deadLine={card.deadLine} card={card} />
