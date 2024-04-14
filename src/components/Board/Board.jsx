@@ -7,6 +7,7 @@ function Board({
   dropCard,
   setDropCard,
   setStartBoard,
+  getNewTasks,
 }) {
   // События, возникающие в перемещаемом объекте (исходный элемент):
   // ondragstart – возникает, когда пользователь начинает перемещать элемент
@@ -36,8 +37,8 @@ function Board({
 
   function dropHandler(e, board, card) {
     e.preventDefault();
-    console.log(e, board, card, dropCard);
-
+    console.log(dropCard.id, board.status);
+    getNewTasks(dropCard.id, board.status);
     e.currentTarget.classList.remove('boardDnD__card_OverHandler');
   }
 

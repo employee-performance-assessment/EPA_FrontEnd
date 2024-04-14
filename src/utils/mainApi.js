@@ -209,4 +209,7 @@ export const getAdminTask = () => request(ADMIN_TASK, 'GET'); // взять вс
 export const patchAdminTask = (taskId, requestBody) =>
   request(`${ADMIN_TASK}/${taskId}`, 'PATCH', requestBody);
 
+export const patchUserTask = (taskId, status) =>
+  request(`${USER_TASK}/${taskId}?status=${status}`, 'PATCH');
+
 export const getUserTask = () => request(USER_EMPLOYEE_ME, 'GET');

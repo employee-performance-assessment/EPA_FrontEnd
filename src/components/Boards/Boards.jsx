@@ -3,7 +3,7 @@ import Board from '../Board/Board.jsx';
 import './Boards.scss';
 import { boardsData } from '../../constants/boardsList.js';
 
-function Boards({ tasks }) {
+function Boards({ tasks, getNewTasks }) {
   const [cardsLists, setCardsLists] = useState([]);
   const [dropCard, setDropCard] = useState(null);
   const [startBoard, setStartBoard] = useState(null);
@@ -33,6 +33,7 @@ function Boards({ tasks }) {
           setStartBoard={setStartBoard}
           currentBoard={currentBoard}
           setCurrentBoard={setCurrentBoard}
+          getNewTasks={getNewTasks}
         />
       ))}
     </div>
