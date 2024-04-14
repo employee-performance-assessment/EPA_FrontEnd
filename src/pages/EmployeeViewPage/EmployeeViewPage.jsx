@@ -27,7 +27,7 @@ function EmployeeViewPage() {
   const dispatch = useDispatch();
   const { id: employeeId } = useParams();
 
-  const user = getFromLocalStorage('user')
+  const user = getFromLocalStorage('user');
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
 
   const { values, handleChange, setValues } = useFormValidation();
