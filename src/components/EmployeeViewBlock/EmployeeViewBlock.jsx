@@ -35,7 +35,7 @@ function EmployeeViewBlock({ tasks, marks, employeeId }) {
               <EmployeeViewCard type="tasks" key={task.id} task={task} />
             ))}
       </ul>
-      {tasks && isEmpty && !viewMarks && (
+      {tasks && !tasks.length && isEmpty && !viewMarks && (
         <div className={styles.employeeViewBlock__empty}>
           <div className={styles.employeeViewBlock__image} />
           <p>Список задач пуст.</p>

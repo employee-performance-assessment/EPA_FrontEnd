@@ -18,6 +18,7 @@ import logo from '../../images/logo.svg';
 
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import { saveToLocalStorage } from '../../utils/localStorageFunctions.js';
 
 function Auth() {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,11 +37,17 @@ function Auth() {
       password: values.password,
     })
       .then((res) => {
+
         localStorage.setItem('token', JSON.stringify(res));
         dispatch(setToken(res.token));
         getUserData(res.token).then((res) => {
+          const isAdmin = res.role === "ROLE_ADMIN";
+          const userDataWithAdmin = { ...res, isAdmin };
+          saveToLocalStorage('user', userDataWithAdmin);
           dispatch(setUser(res));
-          res.role === 'ROLE_ADMIN' ? navigate(personalArea) : navigate(userArea);
+          res.role === 'ROLE_ADMIN'
+            ? navigate(personalArea)
+            : navigate(userArea);
         });
       })
       .catch((err) => {

@@ -19,7 +19,6 @@ import './Kanban.scss';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
-
 function Kanban() {
   const user = useSelector((state) => state.user);
   const [isNoProject, setIsNoProject] = useState(true);
