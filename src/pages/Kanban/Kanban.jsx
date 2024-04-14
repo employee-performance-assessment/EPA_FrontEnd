@@ -44,7 +44,6 @@ function Kanban() {
   }, [projects]);
 
   useEffect(() => {
-    console.log(currenProject);
     if (tasks.length > 0) {
       setIsNoTask(false);
       setCurrentTasks(
@@ -77,10 +76,8 @@ function Kanban() {
   }, [user]);
 
   function getNewTasks(taskId, statusTask) {
-    console.log(taskId, statusTask);
     patchUserTask(taskId, statusTask)
       .then(() => {
-        console.log(taskId, statusTask);
         (user.isAdmin ? getAdminTask() : getUserTask())
           .then((res) => setTasks(res))
           .catch((err) => handleError(err));
