@@ -43,8 +43,14 @@ function Kanban() {
   }, [projects]);
 
   useEffect(() => {
+    console.log(tasks, currenProject);
     if (tasks.length > 0) {
       setIsNoTask(false);
+      setCurrentTasks(
+        currenProject === 'all'
+          ? tasks
+          : tasks.filter((item) => item.project.name === currenProject)
+      );
     } else {
       setIsNoTask(true);
     }
@@ -60,7 +66,7 @@ function Kanban() {
         .then((res) => {
           setProjects(res[0]);
           setTasks(res[2]);
-          setCurrentTasks(res[2]);
+          //  setCurrentTasks(res[2]);
           if (res[2].length > 0) {
             setIsNoTask(false);
           }
@@ -79,14 +85,14 @@ function Kanban() {
       ? getAdminTask()
           .then((res) => {
             setTasks(res);
-            setCurrentTasks(res);
+            // setCurrentTasks(res);
             setCurrentProject('all');
           })
           .catch((err) => handleError(err))
       : getUserTask()
           .then((res) => {
             setTasks(res);
-            setCurrentTasks(res);
+            //  setCurrentTasks(res);
             setCurrentProject('all');
           })
           .catch((err) => handleError(err));
@@ -214,7 +220,7 @@ function Kanban() {
             title="Создать здачу"
             projects={projects}
             setTasks={setTasks}
-            setCurrentTasks={setCurrentTasks}
+            // setCurrentTasks={setCurrentTasks}
           />
         )}
         {isPopupOpen && (

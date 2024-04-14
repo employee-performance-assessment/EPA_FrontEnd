@@ -23,6 +23,7 @@ import {
   ADMIN_STAT_POINTS,
   USER_STAT_POINTS,
   USER_QUESTIONNAIRE_LIST,
+  USER_EMPLOYEE_ME,
 } from '../constants/constantAPI.js';
 
 function getToken() {
@@ -208,4 +209,4 @@ export const getAdminTask = () => request(ADMIN_TASK, 'GET'); // взять вс
 export const patchAdminTask = (taskId, requestBody) =>
   request(`${ADMIN_TASK}/${taskId}`, 'PATCH', requestBody);
 
-export const getUserTask = () => request(USER_TASK, 'GET');
+export const getUserTask = () => request(USER_EMPLOYEE_ME, 'GET');

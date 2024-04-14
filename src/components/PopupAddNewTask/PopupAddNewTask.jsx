@@ -6,13 +6,7 @@ import { getAllUsers, setNewTask, getAdminTask } from '../../utils/mainApi.js';
 import InfoPopup from '../InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
-function PopupAddTask({
-  setIsOpenPopup,
-  title,
-  projects,
-  setTasks,
-  setCurrentTasks,
-}) {
+function PopupAddTask({ setIsOpenPopup, title, projects, setTasks }) {
   const [startDate, setStartDate] = useState(null);
   const [taskName, setTaskName] = useState('');
   const [project, setProject] = useState({ name: '', id: 0 });
@@ -40,7 +34,6 @@ function PopupAddTask({
       .then(() => {
         setIsOpenPopup(false);
         getAdminTask().then((res) => {
-          setCurrentTasks(res);
           setTasks(res);
         });
       })

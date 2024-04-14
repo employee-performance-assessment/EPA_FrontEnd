@@ -2,14 +2,10 @@ import './Board.scss';
 import TimerDeadline from '../TimerDeadline/TimerDeadline.jsx';
 
 function Board({
-  currentBoard,
   setCurrentBoard,
-  setCardsLists,
-  cardsLists,
   board,
   dropCard,
   setDropCard,
-  startBoard,
   setStartBoard,
 }) {
   // События, возникающие в перемещаемом объекте (исходный элемент):
@@ -38,35 +34,10 @@ function Board({
     setStartBoard(board);
   }
 
-  function rebuildArr(arr, card) {
-    return arr.map((c) => {
-      if (c.id === card.id) {
-        return { ...c, order: dropCard.order };
-      }
-      if (c.id === dropCard.id) {
-        return { ...c, order: card.order };
-      }
-      return c;
-    });
-  }
-
   function dropHandler(e, board, card) {
     e.preventDefault();
-    const updateBoard = cardsLists.map((i) => i);
-    if (currentBoard.id === startBoard.id) {
-      const newArrCards = rebuildArr(cardsLists[board.id - 1].items, card);
-      startBoard.items = newArrCards;
-      setCardsLists(updateBoard);
-    } else {
-      const currentIndex = startBoard.items.indexOf(dropCard);
-      startBoard.items.splice(currentIndex, 1);
-      const dropIndex = board.items.indexOf(card);
-      currentBoard.items.splice(dropIndex + 1, 0, dropCard);
-      const boards = cardsLists.map((i) => i);
-      boards[startBoard.id - 1] = startBoard;
-      boards[currentBoard.id - 1] = currentBoard;
-      setCardsLists(boards);
-    }
+    console.log(e, board, card, dropCard);
+
     e.currentTarget.classList.remove('boardDnD__card_OverHandler');
   }
 
