@@ -19,6 +19,7 @@ import logo from '../../images/logo.svg';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import { saveToLocalStorage } from '../../utils/localStorageFunctions.js';
+import { VALIDATION_MESSAGES } from '../../utils/validationConstants.js';
 
 function Auth() {
   const [isOpen, setIsOpen] = useState(false);
@@ -92,7 +93,7 @@ function Auth() {
                 autoComplete="off"
                 required
               />
-              <span>{errors.email}</span>
+              <span>{errors.email && VALIDATION_MESSAGES.invalidEmail}</span>
             </label>
             <label>
               <input
@@ -106,8 +107,9 @@ function Auth() {
                 placeholder="Пароль"
                 autoComplete="off"
                 required
+                pattern="^(?=.*[A-Z])[A-Za-z0-9.,:;?!*+%\-<>@\[\]\/\\_\{\}\$\#]{8,14}$"
               />
-              <span>{errors.password} </span>
+              <span>{errors.password && VALIDATION_MESSAGES.invalidPassword} </span>
               <span
                 className={styles.eye}
                 onClick={togglePassword}

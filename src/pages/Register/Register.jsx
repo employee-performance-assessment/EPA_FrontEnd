@@ -6,7 +6,7 @@ import { setUser } from '../../store/slices/userSlice.js';
 import { useFormValidation } from '../../hooks/useFormValidation.js';
 import { register } from '../../utils/auth.js';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
-import { isValidPassword } from '../../utils/validationConstants.js';
+import { VALIDATION_MESSAGES } from '../../utils/validationConstants.js';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
@@ -24,7 +24,6 @@ function Register() {
     useFormValidation({});
   const dispatch = useDispatch();
   const { login } = ENDPOINT_ROUTES;
-  const [errorPassword, setErrorPassword] = useState(null);
   const [errorName, setErrorName] = useState(null);
   const [errorEmail, setErrorEmail] = useState(null);
 
@@ -32,7 +31,7 @@ function Register() {
     e.preventDefault();
 
     register({
-      fullName: values.name,
+      fullName: values.name.trim(),
       email: values.email,
       password: values.password,
     })
@@ -57,18 +56,6 @@ function Register() {
     }
     return false;
   };
-
-  useEffect(() => {
-    const hasError = isValidPassword(values.password);
-    if (!hasError && values.password) {
-      setIsValid(false);
-      setErrorPassword(
-        'Допускается латинский алфавит и минимум одна заглавная буква'
-      );
-    } else {
-      setErrorPassword(null);
-    }
-  }, [values.password]);
 
   useEffect(() => {
     if (values.name && values.name.trim().length === 0) {
@@ -108,10 +95,10 @@ function Register() {
               value={values.name || ''}
               onChange={handleChange}
               placeholder="Имя Фамилия"
-              pattern="^[а-яА-Яa-zA-Z\s\-]+$"
+              pattern="^[a-zA-Zа-яА-ЯёЁ\s\-]{1,255}$"
               required
             />
-            <span>{errors.name || errorName}</span>
+            <span>{errors.name && VALIDATION_MESSAGES.invalidNameOrPosition || errorName}</span>
           </label>
           <label>
             <input
@@ -124,7 +111,7 @@ function Register() {
               autoComplete="off"
               required
             />
-            <span>{errors.email || errorEmail}</span>
+            <span>{errors.email && VALIDATION_MESSAGES.invalidEmail || errorEmail}</span>
           </label>
           <label>
             <input
@@ -138,8 +125,9 @@ function Register() {
               placeholder="Пароль"
               autoComplete="off"
               required
+              pattern="^(?=.*[A-Z])[A-Za-z0-9.,:;?!*+%\-<>@\[\]\/\\_\{\}\$\#]{8,14}$"
             />
-            <span>{errors.password || errorPassword}</span>
+            <span>{errors.password && VALIDATION_MESSAGES.invalidPassword}</span>
             <span
               className={styles.eye}
               onClick={togglePassword}
