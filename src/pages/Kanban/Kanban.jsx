@@ -65,7 +65,7 @@ function Kanban() {
         getProjectsName(),
         getInfoOwnerJWT(),
         user.isAdmin ? getAdminTask() : getUserTask(),
-        !user.isAdmin && getStatPointsByUser()
+  
       ])
         .then((res) => {
           setProjects(res[0]);
