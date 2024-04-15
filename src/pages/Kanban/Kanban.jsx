@@ -35,8 +35,7 @@ function Kanban() {
   const [isLoad, setIsLoad] = useState(true);
   const [currenProject, setCurrentProject] = useState('all');
   const [points, setPoints] = useState(0);
-  const { popupText, isPopupOpen, handleError, closePopup } =
-    useErrorHandler();
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
 
   useEffect(() => {
     if (projects.length > 0) {
@@ -65,7 +64,7 @@ function Kanban() {
         getProjectsName(),
         getInfoOwnerJWT(),
         user.isAdmin ? getAdminTask() : getUserTask(),
-        !user.isAdmin && getStatPointsByUser()
+        !user.isAdmin && getStatPointsByUser(),
       ])
         .then((res) => {
           setProjects(res[0]);
@@ -73,6 +72,7 @@ function Kanban() {
           if (res[2].length > 0) {
             setIsNoTask(false);
           }
+          console.log(res[3]);
           setPoints(res[3]);
         })
         .catch((err) => handleError(err))
@@ -97,17 +97,17 @@ function Kanban() {
   function handleClickViewAllTask() {
     user.isAdmin
       ? getAdminTask()
-        .then((res) => {
-          setTasks(res);
-          setCurrentProject('all');
-        })
-        .catch((err) => handleError(err))
+          .then((res) => {
+            setTasks(res);
+            setCurrentProject('all');
+          })
+          .catch((err) => handleError(err))
       : getUserTask()
-        .then((res) => {
-          setTasks(res);
-          setCurrentProject('all');
-        })
-        .catch((err) => handleError(err));
+          .then((res) => {
+            setTasks(res);
+            setCurrentProject('all');
+          })
+          .catch((err) => handleError(err));
   }
 
   function moveElementByNameToStart(array, name) {
@@ -186,7 +186,9 @@ function Kanban() {
                 )}
               </div>
             </div>
-            <div className="kanban__container-project">
+            <div
+              className={`kanban__container-project ${!user.isAdmin && 'kanban__container-project_points'}`}
+            >
               {!isLoad && user.isAdmin ? (
                 <>
                   <button
@@ -212,7 +214,9 @@ function Kanban() {
                   </button>
                 </>
               ) : (
-                <div className="kanban-header__point">{points || '10000000'} {formPointsText(points)}</div>
+                <div className="kanban-header__point">
+                  {points} {formPointsText(points)}
+                </div>
               )}
             </div>
           </nav>
@@ -236,14 +240,10 @@ function Kanban() {
             title="Создать здачу"
             projects={projects}
             setTasks={setTasks}
-
           />
         )}
         {isPopupOpen && (
-          <InfoPopup
-            text={popupText}
-            handleClosePopup={closePopup}
-          />
+          <InfoPopup text={popupText} handleClosePopup={closePopup} />
         )}
       </section>
     )

@@ -143,15 +143,18 @@
   grid-template-columns: 380px 1fr;
 }
 
+.kanban__container-project_points {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 472px;
+  height: 108px;
+}
+
 .kanban__container-projects {
   display: flex;
   align-items: center;
 }
 .kanban-header__point {
-  position: absolute;
-  top: -52px;
-  right: -13px;
-  width: 187px;
   height: 60px;
   background: $wrapper;
   border-radius: 28px;
@@ -163,4 +166,5 @@
   text-align: center;
   width: min-content;
   white-space: nowrap;
+  justify-self: end;
 }
