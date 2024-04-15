@@ -97,17 +97,17 @@ function Kanban() {
   function handleClickViewAllTask() {
     user.isAdmin
       ? getAdminTask()
-          .then((res) => {
-            setTasks(res);
-            setCurrentProject('all');
-          })
-          .catch((err) => handleError(err))
+        .then((res) => {
+          setTasks(res);
+          setCurrentProject('all');
+        })
+        .catch((err) => handleError(err))
       : getUserTask()
-          .then((res) => {
-            setTasks(res);
-            setCurrentProject('all');
-          })
-          .catch((err) => handleError(err));
+        .then((res) => {
+          setTasks(res);
+          setCurrentProject('all');
+        })
+        .catch((err) => handleError(err));
   }
 
   function moveElementByNameToStart(array, name) {
@@ -208,7 +208,7 @@ function Kanban() {
                   </button>
                 </>
               ) : (
-                <div className="kanban-header__point">{points || '0'} {formPointsText(points)}</div>
+                <div className="kanban-header__point">{points || '10000000'} {formPointsText(points)}</div>
               )}
             </div>
           </nav>
@@ -232,7 +232,7 @@ function Kanban() {
             title="Создать здачу"
             projects={projects}
             setTasks={setTasks}
-            // setCurrentTasks={setCurrentTasks}
+
           />
         )}
         {isPopupOpen && (
