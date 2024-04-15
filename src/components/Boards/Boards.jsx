@@ -34,6 +34,7 @@ function Boards({ tasks, getNewTasks }) {
           currentBoard={currentBoard}
           setCurrentBoard={setCurrentBoard}
           getNewTasks={getNewTasks}
+          taskLength={tasks.length === 0}
         />
       ))}
     </div>

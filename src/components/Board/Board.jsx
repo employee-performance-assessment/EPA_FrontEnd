@@ -8,6 +8,7 @@ function Board({
   setDropCard,
   setStartBoard,
   getNewTasks,
+  taskLength,
 }) {
   // События, возникающие в перемещаемом объекте (исходный элемент):
   // ondragstart – возникает, когда пользователь начинает перемещать элемент
@@ -36,10 +37,23 @@ function Board({
   }
 
   function dropHandler(e, board) {
-    console.log(e, board);
     e.preventDefault();
-    getNewTasks(dropCard.id, board.status);
+    if (dropCard.status !== 'DONE') {
+      getNewTasks(dropCard.id, board.status);
+    }
     e.currentTarget.classList.remove('boardDnD__card_OverHandler');
+  }
+
+  function dropBoardHandler(e, board) {
+    e.preventDefault();
+    if (dropCard.status !== 'DONE') {
+      getNewTasks(dropCard.id, board.status);
+    }
+  }
+
+  function dragOverBoardHandler(e, board) {
+    e.preventDefault();
+    setCurrentBoard(board);
   }
 
   // функция сортировки применяемая для упорядочивания карт для отрисовки после перетпскивания
@@ -66,13 +80,10 @@ function Board({
     <div className="boardDnD">
       <h1 className="boardDnD__title">{board.title}</h1>
       <div
-        className="boardDnD__cards"
+        className={`boardDnD__cards ${taskLength && 'boardDnD__cards_empty'}`}
         draggable
-        onDragEnd={(e) => dragEndHandler(e)}
-        onDragLeave={(e) => dragEndHandler(e)}
-        onDragOver={(e) => dragOverHandler(e, board)}
-        onDragStart={(e) => dragStartHandler(e, board)}
-        onDrop={(e) => dropHandler(e, board)}
+        onDragOver={(e) => dragOverBoardHandler(e, board)}
+        onDrop={(e) => dropBoardHandler(e, board)}
       >
         {/* сначала сортируем карты по порядку (order), затем перебираем массив для отрисовки карточек */}
         {board.items.sort(sortCard).map((card) => (

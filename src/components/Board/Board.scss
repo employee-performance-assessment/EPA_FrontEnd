@@ -6,7 +6,12 @@
   align-items: flex-start;
 }
 .boardDnD__cards {
-  min-height: 100%;
+  min-height: 800px;
+  width: 280px;
+}
+
+.boardDnD__cards_empty {
+  min-height: 20px;
 }
 
 .boardDnD__title {
