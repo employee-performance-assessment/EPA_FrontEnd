@@ -14,7 +14,7 @@ import {
   getInfoOwnerJWT,
   getAdminTask,
   getUserTask,
-  patchUserTask,
+  updateTaskStatusByUser,
 } from '../../utils/mainApi.js';
 import './Kanban.scss';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
@@ -76,7 +76,7 @@ function Kanban() {
   }, [user]);
 
   function getNewTasks(taskId, statusTask) {
-    patchUserTask(taskId, statusTask)
+    updateTaskStatusByUser(taskId, statusTask)
       .then(() => {
         (user.isAdmin ? getAdminTask() : getUserTask())
           .then((res) => setTasks(res))
