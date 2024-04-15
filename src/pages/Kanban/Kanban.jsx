@@ -133,54 +133,58 @@ function Kanban() {
       <section className="kanban_page">
         <div className="kanban__main">
           <nav className="kanban__nav">
-            <div className="kanban__container-project">
-              <p className="kanban__label">Проект:</p>
-              {projects[0] && (
+            <div className="kanban__container-project kanban__container-project_first">
+              <div className="kanban__container-projects">
+                <p className="kanban__label">Проект:</p>
+                {projects[0] && (
+                  <button
+                    type="button"
+                    className={`kanban__button ${currenProject === projects[0].name ? 'kanban__button_border' : 'kanban__button_non-border'}`}
+                    onClick={() => handleClickProject(projects[0])}
+                  >
+                    <p className="kanban__button-title">{projects[0].name} </p>
+                  </button>
+                )}
+                {projects[1] && (
+                  <button
+                    type="button"
+                    className={`kanban__button ${currenProject === projects[1].name ? 'kanban__button_border' : 'kanban__button_non-border'}`}
+                    onClick={() => handleClickProject(projects[1])}
+                  >
+                    <p className="kanban__button-title">{projects[1].name} </p>
+                  </button>
+                )}
+              </div>
+              <div className="kanban__container-projects">
                 <button
                   type="button"
-                  className={`kanban__button ${currenProject === projects[0].name ? 'kanban__button_border' : 'kanban__button_non-border'}`}
-                  onClick={() => handleClickProject(projects[0])}
+                  className="kanban__button kanban__button_more"
+                  onClick={() => {
+                    setIsOpenPopupProject(true);
+                  }}
+                  disabled={projects.length < 3}
                 >
-                  <p className="kanban__button-title">{projects[0].name} </p>
+                  <p className="kanban__button-title">
+                    ...ещё {projects.length > 2 && projects.length - 2}
+                  </p>
+                  <img src={caretDown} alt="Раскрыть список проектов" />
                 </button>
-              )}
-              {projects[1] && (
                 <button
                   type="button"
-                  className={`kanban__button ${currenProject === projects[1].name ? 'kanban__button_border' : 'kanban__button_non-border'}`}
-                  onClick={() => handleClickProject(projects[1])}
+                  className={`kanban__button ${projects.length < 1 ? 'kanban__button_grey' : currenProject === 'all' ? 'kanban__button_purple' : 'kanban__button_grey'} kanban__button_all`}
+                  onClick={handleClickViewAllTask}
+                  disabled={projects.length < 1}
                 >
-                  <p className="kanban__button-title">{projects[1].name} </p>
+                  <p className="kanban__button-title_all">Все</p>
                 </button>
-              )}
-              <button
-                type="button"
-                className="kanban__button kanban__button_more"
-                onClick={() => {
-                  setIsOpenPopupProject(true);
-                }}
-                disabled={projects.length < 3}
-              >
-                <p className="kanban__button-title">
-                  ...ещё {projects.length > 2 && projects.length - 2}
-                </p>
-                <img src={caretDown} alt="Раскрыть список проектов" />
-              </button>
-              <button
-                type="button"
-                className={`kanban__button ${projects.length < 1 ? 'kanban__button_grey' : currenProject === 'all' ? 'kanban__button_purple' : 'kanban__button_grey'} kanban__button_all`}
-                onClick={handleClickViewAllTask}
-                disabled={projects.length < 1}
-              >
-                <p className="kanban__button-title_all">Все</p>
-              </button>
-              {isOpenPopupProject && (
-                <PopupProject
-                  projects={projects}
-                  setIsOpenPopupProject={setIsOpenPopupProject}
-                  handleClickProject={handleClickProject}
-                />
-              )}
+                {isOpenPopupProject && (
+                  <PopupProject
+                    projects={projects}
+                    setIsOpenPopupProject={setIsOpenPopupProject}
+                    handleClickProject={handleClickProject}
+                  />
+                )}
+              </div>
             </div>
             <div className="kanban__container-project">
               {!isLoad && user.isAdmin ? (
@@ -190,7 +194,7 @@ function Kanban() {
                     className="kanban__button kanban__button_project"
                     onClick={handleClickOpenPopup}
                   >
-                    <p className="kanban__button-title_make">Проекты</p>{' '}
+                    <p className="kanban__button-title_make">Проекты</p>
                     <img src={edit} alt="Редактировать проект" />
                   </button>
                   <button
