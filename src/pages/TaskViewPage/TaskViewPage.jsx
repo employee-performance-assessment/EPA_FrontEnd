@@ -21,7 +21,7 @@ function TaskViewPage() {
   const [isTaskEdited, setIsTaskEdited] = useState(false);
   const { id: taskId } = useParams();
   const navigate = useNavigate();
-  const user = getFromLocalStorage('user')
+  const user = getFromLocalStorage('user');
   const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
@@ -65,6 +65,7 @@ function TaskViewPage() {
                 executorName: res.executor.fullName,
                 admin: res.owner.fullName,
                 projectName: res.project.name,
+                status: res.status,
               });
           }
         }

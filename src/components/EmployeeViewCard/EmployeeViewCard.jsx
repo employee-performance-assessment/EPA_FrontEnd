@@ -22,7 +22,7 @@ function EmployeeViewCard({
   return type === 'tasks' ? (
     <div
       className={styles.employeeViewCard__container}
-      role='button'
+      role="button"
       onClick={() => navigate(`${ENDPOINT_ROUTES.taskCards}/${task.id}`)}
       tabIndex={0}
     >
@@ -38,14 +38,21 @@ function EmployeeViewCard({
       <div className={styles.employeeViewCard__rating}>
         {task.basicPoints} баллов
       </div>
-      <button
-        className={styles.employeeViewCard__button}
-      >
-        Подробнее
-      </button>
+      <button className={styles.employeeViewCard__button}>Подробнее</button>
     </div>
   ) : (
-    <div className={styles.employeeViewCard__container}>
+    <div
+      className={styles.employeeViewCard__container}
+      role="button"
+      onClick={() =>
+        navigate(
+          employeeId
+            ? `${ENDPOINT_ROUTES.ratingCards}/${employeeId}/${idQuestionnaire}`
+            : `${ENDPOINT_ROUTES.ratingCards}/${idQuestionnaire}`
+        )
+      }
+      tabIndex={0}
+    >
       <h2 className={styles.employeeViewCard__title}>
         Дата анкетирования: <p>{currentDate}</p>
       </h2>
@@ -56,19 +63,7 @@ function EmployeeViewCard({
           starIn={styles.cardRating__star_in}
         />
       </div>
-      <button
-        type="button"
-        className={styles.employeeViewCard__button}
-        onClick={() =>
-          navigate(
-            employeeId
-              ? `${ENDPOINT_ROUTES.ratingCards}/${employeeId}/${idQuestionnaire}`
-              : `${ENDPOINT_ROUTES.ratingCards}/${idQuestionnaire}`
-          )
-        }
-      >
-        Подробнее
-      </button>
+      <div className={styles.employeeViewCard__button}>Подробнее</div>
     </div>
   );
 }

@@ -14,6 +14,7 @@ import {
   getInfoOwnerJWT,
   getAdminTask,
   getUserTask,
+  patchUserTask,
 } from '../../utils/mainApi.js';
 import './Kanban.scss';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
@@ -23,7 +24,7 @@ function Kanban() {
   const user = useSelector((state) => state.user);
   const [isNoProject, setIsNoProject] = useState(true);
   const [isNoTask, setIsNoTask] = useState(true);
-  const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [isOpenPopupKanban, setIsOpenPopupKanban] = useState(false);
   const [projects, setProjects] = useState([]);
   const [isOpenPopupAddTask, setIsOpenPopupAddTask] = useState(false);
   const [isOpenPopupProject, setIsOpenPopupProject] = useState(false);
@@ -45,13 +46,18 @@ function Kanban() {
   useEffect(() => {
     if (tasks.length > 0) {
       setIsNoTask(false);
+      setCurrentTasks(
+        currenProject === 'all'
+          ? tasks
+          : tasks.filter((item) => item.project.name === currenProject)
+      );
     } else {
       setIsNoTask(true);
     }
   }, [tasks]);
 
   useEffect(() => {
-    if (user) {
+    if (Object.keys(user).length > 0) {
       Promise.all([
         getProjectsName(),
         getInfoOwnerJWT(),
@@ -60,7 +66,6 @@ function Kanban() {
         .then((res) => {
           setProjects(res[0]);
           setTasks(res[2]);
-          setCurrentTasks(res[2]);
           if (res[2].length > 0) {
             setIsNoTask(false);
           }
@@ -70,8 +75,18 @@ function Kanban() {
     }
   }, [user]);
 
+  function getNewTasks(taskId, statusTask) {
+    patchUserTask(taskId, statusTask)
+      .then(() => {
+        (user.isAdmin ? getAdminTask() : getUserTask())
+          .then((res) => setTasks(res))
+          .catch((err) => handleError(err));
+      })
+      .catch((err) => handleError(err));
+  }
+
   function handleClickOpenPopup() {
-    setIsOpenPopup(true);
+    setIsOpenPopupKanban(true);
   }
 
   function handleClickViewAllTask() {
@@ -79,14 +94,12 @@ function Kanban() {
       ? getAdminTask()
           .then((res) => {
             setTasks(res);
-            setCurrentTasks(res);
             setCurrentProject('all');
           })
           .catch((err) => handleError(err))
       : getUserTask()
           .then((res) => {
             setTasks(res);
-            setCurrentTasks(res);
             setCurrentProject('all');
           })
           .catch((err) => handleError(err));
@@ -194,16 +207,16 @@ function Kanban() {
               )}
             </div>
           </nav>
-          {!isLoad && <Boards tasks={currentTasks} />}
+          {!isLoad && <Boards tasks={currentTasks} getNewTasks={getNewTasks} />}
           {isNoProject ? (
             <NotProject setProjects={setProjects} />
           ) : (
             isNoTask === true && <NotFoundTask />
           )}
         </div>
-        {isOpenPopup && (
+        {isOpenPopupKanban && (
           <PopupKanban
-            setIsOpenPopup={setIsOpenPopup}
+            setIsOpenPopup={setIsOpenPopupKanban}
             projects={projects}
             setProjects={setProjects}
           />
@@ -214,7 +227,7 @@ function Kanban() {
             title="Создать здачу"
             projects={projects}
             setTasks={setTasks}
-            setCurrentTasks={setCurrentTasks}
+            // setCurrentTasks={setCurrentTasks}
           />
         )}
         {isPopupOpen && (
