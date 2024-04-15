@@ -7,12 +7,12 @@ import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import './PersonalArea.scss';
 
 function PersonalArea() {
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const { criteria } = ENDPOINT_ROUTES;
 
   return (
     <section className="personal-area">
-      {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
+      {isPopupOpen && <InfoPopup text={popupText} handleClosePopup={closePopup} />}
       <PersonalAreaHeader />
       <div className="personal-area__section">
         <PersonalAreaForm handleError={handleError} />

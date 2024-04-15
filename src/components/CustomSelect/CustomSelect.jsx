@@ -11,7 +11,7 @@ import { useErrorHandler } from '../../hooks/useErrorHandler';
 
 function CustomSelect({ task }) {
   const [selectedOption, setSelectedOption] = useState(null);
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+  const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
   const { isAdmin } = useSelector((state) => state.user);
@@ -126,7 +126,6 @@ function CustomSelect({ task }) {
     <>
       {isPopupOpen && (
         <InfoPopup
-          title={popupTitle}
           text={popupText}
           handleClosePopup={closePopup}
         />

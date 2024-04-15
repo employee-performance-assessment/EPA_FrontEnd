@@ -20,7 +20,7 @@ import {
 import './AssessmentCriteria.scss';
 
 function AssessmentCriteria() {
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const [criteria, setCriteria] = useState([]);
   const [isCheckedEditing, setIsCheckedEditing] = useState(false);
   const [isOpenPopup, setIsOpenPopup] = useState(false);
@@ -130,7 +130,7 @@ function AssessmentCriteria() {
 
   return (
     <section className="assessment-criteria">
-      {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
+      {isPopupOpen && <InfoPopup text={popupText} handleClosePopup={closePopup} />}
       <div className="assessment-criteria__header">
         <Link to={personalArea} className="assessment-criteria__link">
           <div className="assessment-criteria__link-arroy" />

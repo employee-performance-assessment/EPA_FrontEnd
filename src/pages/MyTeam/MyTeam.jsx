@@ -15,7 +15,7 @@ function MyTeam() {
   const [isAddEmployeePopupOpen, setIsAddEmployeePopupOpen] = useState(false);
   const [isEditEmployeePopupOpen, setIsEditEmployeePopupOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+  const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
   const handleOpenAddEmployeeForm = () => {
@@ -61,7 +61,6 @@ function MyTeam() {
     <>
       {isPopupOpen && (
         <InfoPopup
-          title={popupTitle}
           text={popupText}
           handleClosePopup={closePopup}
         />

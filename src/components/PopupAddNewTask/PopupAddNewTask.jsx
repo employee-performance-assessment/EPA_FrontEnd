@@ -17,7 +17,7 @@ function PopupAddTask({ setIsOpenPopup, title, projects, setTasks }) {
   const [employees, setEmployees] = useState([]);
   const [isOpenDropMenuProjects, setIsOpenDropMenuProjects] = useState(false);
   const [isOpenDropMenuEmployees, setIsOpenDropMenuEmployees] = useState(false);
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+  const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
   function handleClickSubmit() {
@@ -172,7 +172,6 @@ function PopupAddTask({ setIsOpenPopup, title, projects, setTasks }) {
       </div>
       {isPopupOpen && (
         <InfoPopup
-          title={popupTitle}
           text={popupText}
           handleClosePopup={closePopup}
         />

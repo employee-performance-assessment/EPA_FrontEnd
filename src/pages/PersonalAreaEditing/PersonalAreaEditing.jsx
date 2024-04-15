@@ -5,11 +5,11 @@ import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import '../PersonalArea/PersonalArea.scss';
 
 function PersonalAreaEditing() {
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
 
   return (
     <section className="personal-area">
-      {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
+      {isPopupOpen && <InfoPopup text={popupText} handleClosePopup={closePopup} />}
       <PersonalAreaHeader />
       <div className="personal-area__section">
         <PersonalAreaForm handleError={handleError} />
