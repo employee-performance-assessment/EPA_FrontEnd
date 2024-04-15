@@ -14,11 +14,13 @@ import {
   getInfoOwnerJWT,
   getAdminTask,
   getUserTask,
-  patchUserTask,
+  updateTaskStatusByUser,
+  getStatPointsByUser,
 } from '../../utils/mainApi.js';
 import './Kanban.scss';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import { formPointsText } from '../../utils/utils.js';
 
 function Kanban() {
   const user = useSelector((state) => state.user);
@@ -32,6 +34,7 @@ function Kanban() {
   const [currentTasks, setCurrentTasks] = useState([]);
   const [isLoad, setIsLoad] = useState(true);
   const [currenProject, setCurrentProject] = useState('all');
+  const [points, setPoints] = useState(0);
   const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
@@ -62,6 +65,7 @@ function Kanban() {
         getProjectsName(),
         getInfoOwnerJWT(),
         user.isAdmin ? getAdminTask() : getUserTask(),
+        !user.isAdmin && getStatPointsByUser()
       ])
         .then((res) => {
           setProjects(res[0]);
@@ -69,6 +73,7 @@ function Kanban() {
           if (res[2].length > 0) {
             setIsNoTask(false);
           }
+          setPoints(res[3]);
         })
         .catch((err) => handleError(err))
         .finally(() => setIsLoad(false));
@@ -76,7 +81,7 @@ function Kanban() {
   }, [user]);
 
   function getNewTasks(taskId, statusTask) {
-    patchUserTask(taskId, statusTask)
+    updateTaskStatusByUser(taskId, statusTask)
       .then(() => {
         (user.isAdmin ? getAdminTask() : getUserTask())
           .then((res) => setTasks(res))
@@ -203,7 +208,7 @@ function Kanban() {
                   </button>
                 </>
               ) : (
-                <div className="kanban-header__point">0 Баллов</div>
+                <div className="kanban-header__point">{points || '0'} {formPointsText(points)}</div>
               )}
             </div>
           </nav>
