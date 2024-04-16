@@ -100,6 +100,7 @@
   display: flex;
   gap: 45px;
   max-height: 658px;
+  overflow-y: hidden;
 }
 
 .taskViewPage__tasks {
@@ -108,7 +109,6 @@
   padding-right: 47px;
   padding-left: 60px;
   border-right: solid 1px $black-base-color;
-  overflow-y: hidden;
 
   h3 {
     font-size: 26px;
@@ -116,6 +116,7 @@
     line-height: 31.47px;
     color: $black-base-color;
     margin-bottom: 24px;
+    max-width: 567px;
   }
 
   li {
