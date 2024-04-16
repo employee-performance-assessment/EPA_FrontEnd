@@ -20,7 +20,7 @@ function AssessmentCard({
   }
 
   return (
-    <div className={styles.assessmentCard} onClick={handleClick}>
+    <div className={styles.assessmentCard} onClick={handleClick} role="button" tabIndex={0}>
       <p className={styles.assessmentCard__name}>{fullName}</p>
       <p className={styles.assessmentCard__job}>&frasl; {position}</p>
       <div className={styles.assessmentCard__rating}>

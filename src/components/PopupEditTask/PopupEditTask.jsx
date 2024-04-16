@@ -69,7 +69,7 @@ function PopupEditTask({
           <div className="popup-edit-task__input-container">
             <input
               type="text"
-              className="popup-edit-task__input "
+              className="popup-edit-task__input"
               placeholder="Название задачи"
               onChange={(e) => setTaskName(e.target.value)}
               value={taskName}

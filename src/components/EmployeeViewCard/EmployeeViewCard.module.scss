@@ -30,6 +30,9 @@
   font-size: 22px;
   font-weight: $fw-semibold;
   line-height: 26.63px;
+  max-height: 54px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .employeeViewCard__deadline {

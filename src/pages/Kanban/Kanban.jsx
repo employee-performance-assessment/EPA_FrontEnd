@@ -240,7 +240,7 @@ function Kanban() {
         {isOpenPopupAddTask && (
           <PopupAddNewTask
             setIsOpenPopup={setIsOpenPopupAddTask}
-            title="Создать здачу"
+            title="Создать задачу"
             projects={projects}
             setTasks={setTasks}
           />
