@@ -57,24 +57,24 @@
   }
 
   &__buttonAppreciated {
-      background: #ffffff;
-      width: 217px;
-      height: 52px;
-      border-radius: 20px;
-      padding: 14px 40px;
-      border: none;
-      @include text($font-size: 20px, $line-height: 24px);
-      text-align: center;
-    }
+    background: #ffffff;
+    width: 217px;
+    height: 52px;
+    border-radius: 20px;
+    padding: 14px 40px;
+    border: none;
+    @include text($font-size: 20px, $line-height: 24px);
+    text-align: center;
+  }
 
-    &__buttonNotAppreciated {
-      background-color: rgba(197, 182, 241, 1);
-      width: 217px;
-      height: 52px;
-      border-radius: 20px;
-      padding: 14px 40px;
-      border: none;
-      @include text($font-size: 20px, $line-height: 24px);
-      text-align: center;
-    }
+  &__buttonNotAppreciated {
+    background-color: rgba(197, 182, 241, 1);
+    width: 217px;
+    height: 52px;
+    border-radius: 20px;
+    padding: 14px 40px;
+    border: none;
+    @include text($font-size: 20px, $line-height: 24px);
+    text-align: center;
+  }
 }
