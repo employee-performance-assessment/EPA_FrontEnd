@@ -7,6 +7,8 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { jwtDecode } from 'jwt-decode';
 import UserRoutes from '../UserRoutes/UserRoutes.jsx';
 import AdminRoutes from '../AdminRoutes/AdminRoutes.jsx';
 
@@ -33,8 +35,7 @@ import InfoPopup from '../InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 function App() {
-  const { popupText, isPopupOpen, handleError, closePopup } =
-    useErrorHandler();
+  const { popupText, isPopupOpen, closePopup, handleError } = useErrorHandler();
   const {
     login,
     register,
@@ -60,19 +61,28 @@ function App() {
     if (localStorage.getItem('token')) {
       const { token } = JSON.parse(localStorage.getItem('token'));
       if (token) {
-        getUserData()
-          .then((res) => {
-            if (res) {
-              navigate(location.pathname);
-              dispatch(setUser(res));
-            }
-          })
-          .catch((err) => handleError(err));
+        const decodedToken = jwtDecode(token);
+        const expirationTime = decodedToken.exp * 1000;
+        const currentTime = Date.now();
+        if (currentTime < expirationTime) {
+          getUserData()
+            .then((res) => {
+              if (res) {
+                navigate(location.pathname);
+                dispatch(setUser(res));
+              }
+            })
+            .catch((err) => handleError(err));
+        } else {
+          localStorage.removeItem('token');
+          navigate(login);
+        }
       }
     } else {
       navigate(login);
     }
   };
+
   useEffect(() => {
     tokenCheck();
   }, []);
@@ -80,10 +90,7 @@ function App() {
   return (
     <div className="page">
       {isPopupOpen && (
-        <InfoPopup
-          text={popupText}
-          handleClosePopup={closePopup}
-        />
+        <InfoPopup text={popupText} handleClosePopup={closePopup} />
       )}
       <Routes>
         <Route path="/" element={<Navigate to={login} />} />
