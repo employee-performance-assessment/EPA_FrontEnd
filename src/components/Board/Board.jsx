@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import './Board.scss';
 import TimerDeadline from '../TimerDeadline/TimerDeadline.jsx';
 
@@ -10,6 +12,7 @@ function Board({
   getNewTasks,
   taskLength,
 }) {
+  const navigate = useNavigate();
   // События, возникающие в перемещаемом объекте (исходный элемент):
   // ondragstart – возникает, когда пользователь начинает перемещать элемент
   // ondrag – возникает во время перемещения элемента
@@ -87,6 +90,7 @@ function Board({
       >
         {/* сначала сортируем карты по порядку (order), затем перебираем массив для отрисовки карточек */}
         {board.items.sort(sortCard).map((card) => (
+          // eslint-disable-next-line jsx-a11y/no-static-element-interactions
           <div
             className="boardDnD__card"
             draggable
@@ -96,6 +100,9 @@ function Board({
             onDragStart={(e) => dragStartHandler(e, board, card)}
             onDrop={(e) => dropHandler(e, board, card)}
             key={card.id}
+            onClick={() => navigate(`${ENDPOINT_ROUTES.taskCards}/${card.id}`)}
+            // role="button"
+            // tabIndex={0}
           >
             <p className="boardDnD__card-number">{card.id}</p>
             <p className={`boardDnD__card-points ${getCollor(board.title)}`}>
