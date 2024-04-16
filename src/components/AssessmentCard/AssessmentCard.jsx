@@ -22,15 +22,20 @@ function AssessmentCard({
   return (
     <div className={styles.assessmentCard} onClick={handleClick} role="button" tabIndex={0}>
       <p className={styles.assessmentCard__name}>{fullName}</p>
-      <p className={styles.assessmentCard__job}>&frasl; {position}</p>
-      <div className={styles.assessmentCard__rating}>
+      <div className={styles.assessmentCard__jobContainer}>
+        <p className={styles.assessmentCard__delimiter}>/</p>
+        <p className={styles.assessmentCard__job}>{position}</p>
+      </div>
+      <div>
         <p className={styles.assessmentCard__date}>Дата анкетирования:</p>
         <p className={styles.assessmentCard__date}>{currentDate}</p>
       </div>
-      <div className={isAppreciated ? styles.assessmentCard_appreciated : styles.assessmentCard_notAppreciated}>
+      <div className={isAppreciated ?
+        styles.assessmentCard__buttonAppreciated :
+        styles.assessmentCard__buttonNotAppreciated}>
         {isAppreciated ? 'Оценить' : 'Отправлено'}
       </div>
-    </div>
+    </div >
   );
 }
 
