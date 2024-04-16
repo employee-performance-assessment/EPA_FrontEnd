@@ -56,6 +56,10 @@ function Kanban() {
     } else {
       setIsNoTask(true);
     }
+    !user.isAdmin &&
+      getStatPointsByUser()
+        .then((res) => setPoints(res))
+        .catch((err) => handleError(err));
   }, [tasks]);
 
   useEffect(() => {
