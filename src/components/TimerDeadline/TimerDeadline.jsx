@@ -3,7 +3,18 @@ import { LinearProgress } from '@mui/material';
 import styles from './TimerDeadline.module.scss';
 
 function TimerDeadline({ card }) {
-  const [progress, setProgress] = useState(card.status === 'NEW' ? 0 : 50); // дождаться даты создания задичи от бэк
+  const progesTask =
+    100 -
+    calculateDaysBetweenDates(new Date(), new Date(card.deadLine)) /
+      (calculateDaysBetweenDates(
+        new Date(card.createDate),
+        new Date(card.deadLine)
+      ) /
+        100);
+
+  const [progress, setProgress] = useState(
+    card.status === 'NEW' ? 0 : progesTask
+  ); // дождаться даты создания задичи от бэк
   const [colorButton, setColorButton] = useState('');
   const [textButton, setTextButton] = useState('');
   // Функция для вычисления количества дней между двумя датами
@@ -16,7 +27,6 @@ function TimerDeadline({ card }) {
       ? 0
       : Math.floor(diffDays);
   }
-
   const taskData = {
     dateValue: calculateDaysBetweenDates(new Date(), new Date(card.deadLine)),
     progressValue: progress,
