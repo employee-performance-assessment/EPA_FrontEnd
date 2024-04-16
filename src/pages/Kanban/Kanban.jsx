@@ -67,7 +67,7 @@ function Kanban() {
       Promise.all([
         getProjectsName(),
         getInfoOwnerJWT(),
-        user.isAdmin ? getAdminTask() : getUserTask(),  
+        user.isAdmin ? getAdminTask() : getUserTask(),
         !user.isAdmin && getStatPointsByUser(),
       ])
         .then((res) => {
@@ -76,7 +76,6 @@ function Kanban() {
           if (res[2].length > 0) {
             setIsNoTask(false);
           }
-          console.log(res[3]);
           setPoints(res[3]);
         })
         .catch((err) => handleError(err))
@@ -101,17 +100,17 @@ function Kanban() {
   function handleClickViewAllTask() {
     user.isAdmin
       ? getAdminTask()
-          .then((res) => {
-            setTasks(res);
-            setCurrentProject('all');
-          })
-          .catch((err) => handleError(err))
+        .then((res) => {
+          setTasks(res);
+          setCurrentProject('all');
+        })
+        .catch((err) => handleError(err))
       : getUserTask()
-          .then((res) => {
-            setTasks(res);
-            setCurrentProject('all');
-          })
-          .catch((err) => handleError(err));
+        .then((res) => {
+          setTasks(res);
+          setCurrentProject('all');
+        })
+        .catch((err) => handleError(err));
   }
 
   function moveElementByNameToStart(array, name) {
