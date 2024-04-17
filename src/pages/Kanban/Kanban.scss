@@ -14,12 +14,10 @@
 }
 
 .kanban__nav {
-  width: 100%;
+  width: 1163px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding-left: 24px;
-  padding-right: 24px;
+  gap: 20px;
   background-color: $light-gray-base-color;
   border-radius: 40px;
   height: 120px;
@@ -36,7 +34,6 @@
   font-size: 29px;
   line-height: 31.47%;
   font-weight: 500;
-  margin: auto;
 }
 
 .kanban__button-title_all {
@@ -46,6 +43,7 @@
   display: inline;
   margin-right: 10px;
   width: 80px;
+  height: 22px;
 }
 
 .kanban__button-title_make {
@@ -57,7 +55,6 @@
 .kanban__button {
   border: none;
   padding: 16px 20px;
-  margin-left: 20px;
   font-size: 20px;
   line-height: 121%;
   font-weight: $fw-semibold;
@@ -90,7 +87,6 @@
   width: min-content;
   font-size: 18px;
   padding-left: 5px;
-  margin: auto;
   display: flex;
 }
 
@@ -136,15 +132,30 @@
 }
 
 .kanban__container-project {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   position: relative;
 }
 
+.kanban__container-project_first {
+  margin-left: 34px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 380px 1fr;
+}
+
+.kanban__container-project_points {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 472px;
+  height: 108px;
+}
+
+.kanban__container-projects {
+  display: flex;
+  align-items: center;
+}
 .kanban-header__point {
-  position: absolute;
-  top: -52px;
-  right: -13px;
-  width: 187px;
   height: 60px;
   background: $wrapper;
   border-radius: 28px;
@@ -154,4 +165,7 @@
   line-height: 24.2px;
   color: $black-base-color;
   text-align: center;
+  width: min-content;
+  white-space: nowrap;
+  justify-self: end;
 }

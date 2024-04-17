@@ -9,7 +9,7 @@ import { VALIDATION_MESSAGES } from '../../utils/validationConstants.js';
 import './PersonalAreaForm.scss';
 
 function PersonalAreaForm({ handleError }) {
-  const { personalAreaEditing } = ENDPOINT_ROUTES;
+  const { personalArea, personalAreaEditing } = ENDPOINT_ROUTES;
   const [editing, setEditing] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [isDisabledButton, setIsDisabledButton] = useState(false);
@@ -51,9 +51,9 @@ function PersonalAreaForm({ handleError }) {
     e.preventDefault();
 
     const newUserData = {
-      fullName: values.name || null,
-      position: values.job || null,
-      email: values.email || null,
+      fullName: values.name.trim() || null,
+      position: values.job.trim() || null,
+      email: values.email.trim() || null,
     };
 
     const newUserDataForServer = {
@@ -63,7 +63,7 @@ function PersonalAreaForm({ handleError }) {
 
     updateAdminData(admin.id, newUserDataForServer)
       .then(() => {
-        setEditing(false);
+        navigate(personalArea);
         dispatch(setUser({ ...admin, ...newUserData }));
         values.repeatPassword = '';
         values.newPassword = '';
@@ -156,7 +156,7 @@ function PersonalAreaForm({ handleError }) {
             onClick={handlePasswordVisibility}
           />
           <span className="personal-area-form__input-error">
-            {errors.newPassword && VALIDATION_MESSAGES.invalidPassword}
+            {VALIDATION_MESSAGES.invalidPassword}
           </span>
           <input
             className={`personal-area-form__input ${errors.repeatPassword ? 'personal-area-form__input_type-error' : ''}`}
@@ -181,7 +181,9 @@ function PersonalAreaForm({ handleError }) {
             onClick={handlePasswordVisibility}
           />
           <span className="personal-area-form__input-error">
-            {values.repeatPassword && isDisabledButton && 'Пароли не совпадают'}
+            {values.repeatPassword && isDisabledButton ?
+            VALIDATION_MESSAGES.passwordsNotMatch :
+            VALIDATION_MESSAGES.invalidPassword}
           </span>
         </>
       )}

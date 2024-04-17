@@ -13,11 +13,11 @@ import {
 import './AssessmentBlock.scss';
 
 function AssessmentBlock() {
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const isAppreciated = useSelector((state) => state.isAppreciated.isAppreciated);
   const isAdmin = useSelector((state) => state.user.isAdmin);
   const [users, setUsers] = useState([]);
-  const [isActivitySurveyButton, setIsActivitySurveyButton] = useState(false);
+  const [isActivitySurveyButton, setIsActivitySurveyButton] = useState(true);
   const [visiblePictureBoy, setVisiblePictureBoy] = useState(false);
   const [visiblePictureGirl, setVisiblePictureGirl] = useState(false);
   const dispatch = useDispatch();
@@ -30,41 +30,41 @@ function AssessmentBlock() {
         })
         .catch((err) => handleError(err));
     }
-  }, []);
+  }, [isAdmin]);
+
+  useEffect(() => {
+    users.length === 0 && isActivitySurveyButton ?
+      setVisiblePictureBoy(true) :
+      setVisiblePictureBoy(false);
+    users.length === 0 && !isActivitySurveyButton ?
+      setVisiblePictureGirl(true) :
+      setVisiblePictureGirl(false);
+  }, [users, isActivitySurveyButton]);
+
+  function filterListByDate(array) {
+    return array.sort((a, b) =>
+      Date.parse(b.questionnaireCreated) - Date.parse(a.questionnaireCreated));
+  }
 
   useEffect(() => {
     if (isAppreciated) {
       getListNewQuestionnaires()
         .then((res) => {
-          setUsers(res);
-          showPictureEmptyList(res);
+          setUsers(filterListByDate(res));
         })
         .catch((err) => handleError(err));
     } else {
       getListComplitedQuestionnaires()
         .then((res) => {
-          setUsers(res);
-          showPictureEmptyList(res);
+            setUsers(filterListByDate(res));
         })
         .catch((err) => handleError(err));
     }
   }, [isAppreciated])
 
-  function showPictureEmptyList(arrayUsers) {
-    arrayUsers.length === 0 && isActivitySurveyButton ?
-      setVisiblePictureBoy(true) :
-      setVisiblePictureBoy(false);
-    arrayUsers.length === 0 && !isActivitySurveyButton ?
-      setVisiblePictureGirl(true) :
-      setVisiblePictureGirl(false);
-  }
-
   function handleChangeFilterState(e) {
-    setVisiblePictureBoy(false);
-    setVisiblePictureGirl(false);
-
     if (e.target.id === 'isAppreciated') {
-      localStorage.setItem('isAppreciated', true)
+      localStorage.setItem('isAppreciated', true);
       dispatch(setIsAppreciated(true));
       setUsers([]);
     } else {
@@ -79,7 +79,7 @@ function AssessmentBlock() {
       .then(() => {
         getListNewQuestionnaires()
           .then((res) => {
-            showPictureEmptyList(res);
+            setIsActivitySurveyButton(false);
             setUsers(res);
           })
           .catch((err) => handleError(err));
@@ -89,7 +89,7 @@ function AssessmentBlock() {
 
   return (
     <section className="assessment-block">
-      {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
+      {isPopupOpen && <InfoPopup text={popupText} handleClosePopup={closePopup} />}
       <div className="assessment-block__container">
         <div className={`assessment-block__header ${!isAdmin && "assessment-block__header_is-user"}`}>
           <div className="header__wrapper">
@@ -103,7 +103,7 @@ function AssessmentBlock() {
               Анкеты анонимные. Постарайся быть объективным и внимательным при оценке коллег.
             </p>}
           {isAdmin && <button
-            className={`header__button ${!isActivitySurveyButton && 'header__button_inactive'}`}
+            className={`header__button ${isActivitySurveyButton && 'header__button_active'}`}
             onClick={handleClickSurveyButton}
             disabled={!isActivitySurveyButton}
           >

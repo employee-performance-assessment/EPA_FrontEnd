@@ -1,5 +1,4 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import { ENDPOINT_ROUTES } from '../../../constants/constantsEndpointRoute';
 import './MenuAdmin.scss';
 
@@ -18,33 +17,17 @@ function MenuAdmin() {
   } = ENDPOINT_ROUTES;
 
   const { pathname } = useLocation();
-  const [isPersonalArea, setIsPersonalArea] = useState(false);
-  const [isMyTeam, setIsMyTeam] = useState(false);
-  const [isBoard, setIsBoard] = useState(false);
-  const [isEstimate, setIsEstimate] = useState(false);
-  const [isAnalytics, setIsAnalytics] = useState(false);
 
-  useEffect(() => {
-    pathname.includes(personalArea) ||
-      pathname.includes(criteria) ?
-      setIsPersonalArea(true) : setIsPersonalArea(false);
-
-    pathname.includes(myTeam) ||
-      pathname.includes(cardsEmployees) ||
-      pathname.includes(taskCards) ||
-      pathname.includes(ratingCards) ?
-      setIsMyTeam(true) : setIsMyTeam(false);
-
-    pathname.includes(board) ?
-      setIsBoard(true) : setIsBoard(false);
-
-    pathname.includes(estimate) ||
-      pathname.includes(questionnaire) ?
-      setIsEstimate(true) : setIsEstimate(false);
-
-    pathname.includes(analytics) ?
-      setIsAnalytics(true) : setIsAnalytics(false);
-  }, [pathname]);
+  const isPersonalArea = pathname.includes(personalArea) ||
+    pathname.includes(criteria);
+  const isMyTeam = pathname.includes(myTeam) ||
+    pathname.includes(cardsEmployees) ||
+    pathname.includes(taskCards) ||
+    pathname.includes(ratingCards);
+  const isBoard = pathname.includes(board);
+  const isEstimate = pathname.includes(estimate) ||
+    pathname.includes(questionnaire);
+  const isAnalytics = pathname.includes(analytics);
 
   return (
     <ul className="menu">

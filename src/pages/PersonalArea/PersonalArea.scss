@@ -15,6 +15,7 @@
     gap: 40px;
     padding: 0 80px 90px;
     width: 1163px;
+    min-height: calc(100vh - 264px);
   }
 
   &__questionnaire-title {

@@ -24,7 +24,7 @@ import './Questionnaire.scss';
 
 export default function Questionnaire() {
   const isAdmin = useSelector((state) => state.user.isAdmin);
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const isAppreciated = useSelector((state) => state.isAppreciated.isAppreciated);
   const [criteria, setCriteria] = useState([]);
   const [isActiveButton, setIsActiveButton] = useState(false);
@@ -137,21 +137,25 @@ export default function Questionnaire() {
 
   return (
     <div className="questionnaire">
-      {isPopupOpen && <InfoPopup title={popupTitle} text={popupText} handleClosePopup={closePopup} />}
+      {isPopupOpen && <InfoPopup text={popupText} handleClosePopup={closePopup} />}
       <div className="questionnaire__wrapper">
         <div className="questionnaire__header">
-          <button
-            type="button"
-            className="questionnaire-header__back-button"
-            onClick={GoBack}
-          >
-            Назад к списку
-          </button>
-          <span className="questionnaire-header__data">{date}</span>
-          <div className="questionnaire-header__icon" />
-          <span className="questionnaire-header__underscribe">{user.fullName}</span>
-          <span className="questionnaire-header__underscribe">&frasl;</span>
-          <span className="questionnaire-header__underscribe">{user.position}</span>
+          <div className="questionnaire-header__container">
+            <button
+              type="button"
+              className="questionnaire-header__back-button"
+              onClick={GoBack}
+            >
+              Назад к списку
+            </button>
+            <span className="questionnaire-header__data">{date}</span>
+          </div>
+          <div className="questionnaire-header__container-underscribe">
+            <div className="questionnaire-header__icon" />
+            <span className="questionnaire-header__underscribe">{user.fullName}</span>
+            <span className="questionnaire-header__underscribe">/</span>
+            <span className="questionnaire-header__underscribe">{user.position}</span>
+          </div>
         </div>
         <div className="questionnaire-titles">
           <span className="questionnaire-titles__text">Критерии</span>

@@ -14,7 +14,6 @@
 .not-project__title {
   margin-top: 23px;
   width: 400px;
-  // text-align: center;
 }
 
 .not-project__subtitle {
@@ -47,12 +46,6 @@
   width: 400px;
 }
 
-.not-project__button_purple {
-  width: 335px;
-  background-color: $purple-base-color;
-  margin-top: 40px;
-}
-
 .not-project__input-conteiner {
   display: flex;
   align-items: center;
@@ -78,4 +71,15 @@
   border: none;
   background-color: white;
   cursor: pointer;
+}
+
+.not-project__button_purple {
+  width: 335px;
+  height: 56px;
+  background-color: $purple-base-color;
+  margin-top: 40px;
+  margin-left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -8,7 +8,7 @@ import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 export default function PopupKanban({ setIsOpenPopup, projects, setProjects }) {
   const [isNewProject, setIsNewProject] = useState(false);
   const [nameProject, setProjectName] = useState('');
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+  const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
   function handleClickClose() {
@@ -83,7 +83,6 @@ export default function PopupKanban({ setIsOpenPopup, projects, setProjects }) {
       </div>
       {isPopupOpen && (
         <InfoPopup
-          title={popupTitle}
           text={popupText}
           handleClosePopup={closePopup}
         />

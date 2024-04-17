@@ -1,5 +1,4 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import { ENDPOINT_ROUTES } from '../../../constants/constantsEndpointRoute';
 import '../MenuAdmin/MenuAdmin.scss';
 
@@ -15,27 +14,14 @@ function MenuEmployee() {
   } = ENDPOINT_ROUTES;
 
   const { pathname } = useLocation();
-  const [isPersonalArea, setIsPersonalArea] = useState(false);
-  const [isBoard, setIsBoard] = useState(false);
-  const [isEstimate, setIsEstimate] = useState(false);
-  const [isAnalytics, setIsAnalytics] = useState(false);
 
-  useEffect(() => {
-    pathname.includes(userArea) ||
-      pathname.includes(taskCards) ||
-      pathname.includes(ratingCards) ?
-      setIsPersonalArea(true) : setIsPersonalArea(false);
-
-    pathname.includes(board) ?
-      setIsBoard(true) : setIsBoard(false);
-
-    pathname.includes(estimate) ||
-      pathname.includes(questionnaire) ?
-      setIsEstimate(true) : setIsEstimate(false);
-
-    pathname.includes(analytics) ?
-      setIsAnalytics(true) : setIsAnalytics(false);
-  }, [pathname]);
+  const isPersonalArea = pathname.includes(userArea) ||
+    pathname.includes(taskCards) ||
+    pathname.includes(ratingCards);
+  const isBoard = pathname.includes(board);
+  const isEstimate = pathname.includes(estimate) ||
+    pathname.includes(questionnaire);
+  const isAnalytics = pathname.includes(analytics);
 
   return (
     <ul className="menu">
@@ -52,7 +38,7 @@ function MenuEmployee() {
       <Link to={estimate} className="menu__item">
         <div className={`menu__icon menu__icon-assessments
           ${isEstimate && 'menu__icon-assessments_active'}`} />
-        <p className={`menu__text ${isEstimate && 'menu__text_active'}`}>Оценки коллегу</p>
+        <p className={`menu__text ${isEstimate && 'menu__text_active'}`}>Оцени коллегу</p>
       </Link>
       <Link to={analytics} className="menu__item">
         <div className={`menu__icon menu__icon-analytics

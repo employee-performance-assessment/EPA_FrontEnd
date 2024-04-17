@@ -107,7 +107,8 @@
   position: absolute;
   top: 8px;
   right: 8px;
-  width: 187px;
+  width: min-content;
+  max-width: 229px;
   height: 60px;
   background: $wrapper;
   border-radius: 28px;
@@ -117,4 +118,5 @@
   line-height: 24.2px;
   color: $black-base-color;
   text-align: center;
+  white-space: nowrap;
 }

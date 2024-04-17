@@ -8,7 +8,7 @@ import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 export function NotProject({ setProjects }) {
   const [nameProject, setProjectName] = useState('');
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+  const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
   function handleClickNewProject() {
@@ -56,7 +56,6 @@ export function NotProject({ setProjects }) {
       </button>
       {isPopupOpen && (
         <InfoPopup
-          title={popupTitle}
           text={popupText}
           handleClosePopup={closePopup}
         />

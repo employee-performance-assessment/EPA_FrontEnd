@@ -23,6 +23,7 @@ import {
   ADMIN_STAT_POINTS,
   USER_STAT_POINTS,
   USER_QUESTIONNAIRE_LIST,
+  USER_EMPLOYEE_ME,
 } from '../constants/constantAPI.js';
 
 function getToken() {
@@ -44,6 +45,7 @@ const request = (url, method, body) => {
   return fetch(url, options).then((res) => checkResponse(res));
 };
 
+// USER DATA
 export const getUserData = () => request(`${USERS}/me`, 'GET');
 
 export const updateAdminData = (id, data) =>
@@ -54,9 +56,10 @@ export const updateAdminData = (id, data) =>
     password: data.password,
   });
 
-export const getAllUsers = () => request(ADMIN_USERS, 'GET');
+export const getInfoOwnerJWT = () => request(EMPLOYEE_ME, 'GET');
 
-export const getCurrentUser = (id) => request(`${USERS}/${id}`, 'GET');
+// ADMIN USERS
+export const getAllUsers = () => request(ADMIN_USERS, 'GET');
 
 export const addNewUser = ({ fullName, position, email, password }) =>
   request(ADMIN_USERS, 'POST', {
@@ -66,28 +69,6 @@ export const addNewUser = ({ fullName, position, email, password }) =>
     password,
   });
 
-export const getAllCriterion = () => request(ADMIN_CRITERIA, 'GET');
-
-export const getQuestionnaireLast = () =>
-  request(ADMIN_QUESTIONNAIRE_LAST, 'GET');
-
-export const getQuestionnaire = (questionnaireId) =>
-  request(`${USER_QUESTIONNAIRE}/${questionnaireId}`, 'GET');
-
-export const updateQuestionnaireLast = (questionnaire) =>
-  request(ADMIN_QUESTIONNAIRE_LAST, 'PATCH', questionnaire);
-
-export const resetToDefaultQuestionnaire = () =>
-  request(ADMIN_RESET_TO_DEFAULT_QUESTIONNAIRE, 'PATCH');
-
-export const checkActivitySurveyButton = () =>
-  request(ADMIN_QUESTIONNAIRE_PASSED, 'GET');
-
-export const doQuestionnaireSurvey = () =>
-  request(ADMIN_QUESTIONNAIRE_LAST, 'PUT');
-
-export const getDefaultCriterion = () => request(ADMIN_CRITERIA_DEFAULT, 'GET');
-
 export const updateUserData = ({ id, fullName, position, email, password }) => {
   const requestBody = { fullName, position, email };
   if (password) requestBody.password = password;
@@ -96,6 +77,11 @@ export const updateUserData = ({ id, fullName, position, email, password }) => {
 
 export const deleteUser = (id) => request(`${ADMIN_USERS}/${id}`, 'DELETE');
 
+export const getCurrentUser = (id) => request(`${USERS}/${id}`, 'GET');
+
+export const getAllCriterion = () => request(ADMIN_CRITERIA, 'GET');
+
+// ADMIN PROJECTS
 export const getProjectsName = () => request(PROJECTS, 'GET');
 
 export const setProjectsNewName = (nameProject, id) => {
@@ -138,13 +124,73 @@ export const updateTaskStatusByAdmin = (task) => {
   request(`${ADMIN_TASK}/${task.id}`, 'PATCH', requestBody);
 };
 
+export const setNewTask = (requestBody) =>
+  request(ADMIN_TASK, 'POST', requestBody);
+
+export const getAdminTask = () => request(ADMIN_TASK, 'GET');
+
+export const patchAdminTask = (taskId, requestBody) =>
+  request(`${ADMIN_TASK}/${taskId}`, 'PATCH', requestBody);
+
 // USER TASKS
 export const getTasksWithStatusByUser = (status) =>
   request(`${USER_TASK}?status=${status}`, 'GET');
+
 export const getTaskDetailsByUser = (taskId) =>
   request(`${USER_TASK}/${taskId}`, 'GET');
+
 export const updateTaskStatusByUser = (taskId, status) =>
   request(`${USER_TASK}/${taskId}?status=${status}`, 'PATCH');
+
+export const getUserTask = () => request(USER_EMPLOYEE_ME, 'GET');
+
+// ADMIN QUESTIONNAIRE
+export const getQuestionnaireLast = () =>
+  request(ADMIN_QUESTIONNAIRE_LAST, 'GET');
+
+export const getQuestionnaire = (questionnaireId) =>
+  request(`${USER_QUESTIONNAIRE}/${questionnaireId}`, 'GET');
+
+export const updateQuestionnaireLast = (questionnaire) =>
+  request(ADMIN_QUESTIONNAIRE_LAST, 'PATCH', questionnaire);
+
+export const resetToDefaultQuestionnaire = () =>
+  request(ADMIN_RESET_TO_DEFAULT_QUESTIONNAIRE, 'PATCH');
+
+export const checkActivitySurveyButton = () =>
+  request(ADMIN_QUESTIONNAIRE_PASSED, 'GET');
+
+export const doQuestionnaireSurvey = () =>
+  request(ADMIN_QUESTIONNAIRE_LAST, 'PUT');
+
+// ADMIN CRITERIA
+export const getDefaultCriterion = () => request(ADMIN_CRITERIA_DEFAULT, 'GET');
+
+// EVALUATION & RATING
+// Получение подробных результатов анкеты админом и сотрудником
+export const getEvaluationsByAdmin = (evaluatedId, questionnaireId) =>
+  request(
+    `${ADMIN_EVALUATIONS}?evaluatedId=${evaluatedId}&questionnaireId=${questionnaireId}`,
+    'GET'
+  );
+
+export const getAdminEvaluation = () => request(ADMIN_EVALUATIONS, 'GET');
+
+export const getEvaluationsByUser = (questionnaireId) =>
+  request(`${EVALUATIONS}?questionnaireId=${questionnaireId}`, 'GET');
+
+// Получение списка заполненных анкет по конкретному сотруднику админом и сотрудником
+export const getQuestionnaireListByAdmin = (evaluatedId) =>
+  request(`${ADMIN_USER_QUESTIONNAIRE_LIST}?evaluatedId=${evaluatedId}`, 'GET');
+
+export const getQuestionnaireListByUser = () =>
+  request(USER_QUESTIONNAIRE_LIST, 'GET');
+
+// Получение рейтинга за месяц по конкретному сотруднику админом и сотрудником
+export const getRatingByAdmin = (employeeId) =>
+  request(`${ADMIN_RATING}/${employeeId}`, 'GET');
+
+export const getRatingByUser = () => request(USER_RATING, 'GET');
 
 export const getColleaguesEvaluation = () => request(EVALUATIONS, 'GET');
 
@@ -167,45 +213,9 @@ export const getEvaluationsList = (path, questionnaireId, evaluatedId) =>
     'GET'
   );
 
-// Получение подробных результатов анкеты админом и сотрудником
-export const getEvaluationsByAdmin = (evaluatedId, questionnaireId) =>
-  request(
-    `${ADMIN_EVALUATIONS}?evaluatedId=${evaluatedId}&questionnaireId=${questionnaireId}`,
-    'GET'
-  );
-
-export const getEvaluationsByUser = (questionnaireId) =>
-  request(`${EVALUATIONS}?questionnaireId=${questionnaireId}`, 'GET');
-
-// Получение списка заполненных анкет по конкретному сотруднику админом и сотрудником
-export const getQuestionnaireListByAdmin = (evaluatedId) =>
-  request(`${ADMIN_USER_QUESTIONNAIRE_LIST}?evaluatedId=${evaluatedId}`, 'GET');
-
-export const getQuestionnaireListByUser = () =>
-  request(USER_QUESTIONNAIRE_LIST, 'GET');
-
-// Получение рейтинга за месяц по конкретному сотруднику админом и сотрудником
-export const getRatingByAdmin = (employeeId) =>
-  request(`${ADMIN_RATING}/${employeeId}`, 'GET');
-
-export const getRatingByUser = () => request(USER_RATING, 'GET');
-
+// STATISTICS
 // Получение баллов за выполненные задачи в текущем месяце по конкретному сотруднику админом и сотрудником
 export const getStatPointsByAdmin = (employeeId) =>
   request(`${ADMIN_STAT_POINTS}/${employeeId}`, 'GET');
 
 export const getStatPointsByUser = () => request(USER_STAT_POINTS, 'GET');
-
-export const getAdminEvaluation = () => request(ADMIN_EVALUATIONS, 'GET');
-
-export const getInfoOwnerJWT = () => request(EMPLOYEE_ME, 'GET');
-
-export const setNewTask = (requestBody) =>
-  request(ADMIN_TASK, 'POST', requestBody);
-
-export const getAdminTask = () => request(ADMIN_TASK, 'GET'); // взять все задачи админа
-
-export const patchAdminTask = (taskId, requestBody) =>
-  request(`${ADMIN_TASK}/${taskId}`, 'PATCH', requestBody);
-
-export const getUserTask = () => request(USER_TASK, 'GET');

@@ -61,14 +61,14 @@
 .header__button {
   width: 307px;
   height: 56px;
-  background: $yellow-base-color;
+  background: $grey-base-color;
   border-radius: 20px;
   border: none;
   @include text($font-size: 20px, $font-weight: 600, $line-height: 24px);
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: all;
+  pointer-events: none;
   cursor: pointer;
 
   &:hover {
@@ -80,9 +80,9 @@
   }
 }
 
-.header__button_inactive {
-  background-color: rgba(218, 214, 214, 1);
-  pointer-events: none;
+.header__button_active {
+  background-color: $yellow-base-color;
+  pointer-events: all;
 }
 
 .assessment-block__filters {

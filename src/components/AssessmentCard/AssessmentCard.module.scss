@@ -1,4 +1,5 @@
 @import '../../styles/vars';
+@import '../../styles/mixins';
 
 .assessmentCard {
   width: 100%;
@@ -20,71 +21,60 @@
     box-shadow: 0px 4px 20px rgba(166, 166, 166, .4);
   }
 
-  &_asses {
-    width: 217px;
-    height: 52px;
-    background: #ffffff;
-    border-radius: 20px;
-    padding: 14px 40px;
-    border: none;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 24.2px;
-    text-align: center;
-  }
-
-  &_notAsses {
-    width: 217px;
-    height: 52px;
-    border-radius: 20px;
-    padding: 14px 40px;
-    border: none;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 24.2px;
-    text-align: center;
-    background-color: rgba(197, 182, 241, 1);
-    pointer-events: none;
-  }
-
-  &__button {
-    width: 217px;
-    height: 52px;
-    background: $white-base-color;
-    border-radius: 20px;
-    padding: 14px 40px;
-    border: none;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 24.2px;
-    text-align: center;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  &__raiting {
-    font-size: 22px;
-    font-weight: 600;
-    line-height: 26.63px;
-  }
-
   &__name {
+    @include text($font-size: 20px, $line-height: 24px);
     width: 222px;
+    max-height: 48px;
+    text-overflow: ellipsis;
+    overflow: hidden;
     margin-right: 12px;
   }
 
+  &__jobContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
   &__job {
+    @include text($font-size: 20px, $line-height: 24px);
     width: 217px;
-    margin-right: 123px;
+    max-height: 48px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-right: 92px;
+  }
+
+  &__delimiter {
+    @include text($font-size: 20px, $line-height: 24px);
+    margin-right: 10px;
   }
 
   &__date {
-    width: 280px;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 19.36px;
+    @include text($font-size: 16px, $line-height: 19px);
+    width: 216px;
     margin-right: 28px;
+  }
+
+  &__buttonAppreciated {
+    background: #ffffff;
+    width: 217px;
+    height: 52px;
+    border-radius: 20px;
+    padding: 14px 40px;
+    border: none;
+    @include text($font-size: 20px, $line-height: 24px);
+    text-align: center;
+  }
+
+  &__buttonNotAppreciated {
+    background-color: rgba(197, 182, 241, 1);
+    width: 217px;
+    height: 52px;
+    border-radius: 20px;
+    padding: 14px 40px;
+    border: none;
+    @include text($font-size: 20px, $line-height: 24px);
+    text-align: center;
   }
 }

@@ -13,27 +13,8 @@ function PopupEditTask({
   taskOldContent,
   setIsTaskEdited,
 }) {
-  /* так должны выглядеть пропсы.
-<PopupEditTask
-          setIsOpenPopup={setIsOpenPopupAddTask}
-          idProject={currentProgect.id}
-          title="Редактировать здачу"
-          projects={projects}
-          taskOldContent={{
-            name: "fp8JzvbDEU4OA",
-            description: "Jzj5tXmoFRO1",
-            project: { name: 'projectfdsfsf', id: 9 },
-            employee: { name: 'employeedfssfs', id: 133 },
-            deadLine: "2024-04-08",
-            status: "NEW",
-            basicPoints: 11110,
-            penaltyPoints: 10,
-            taskId: 48
-          }
-          }
-        />
-       */
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+
+  const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
   const [startDate, setStartDate] = useState(taskOldContent.deadLine);
   const [taskName, setTaskName] = useState(taskOldContent.name);
@@ -88,7 +69,7 @@ function PopupEditTask({
           <div className="popup-edit-task__input-container">
             <input
               type="text"
-              className="popup-edit-task__input "
+              className="popup-edit-task__input"
               placeholder="Название задачи"
               onChange={(e) => setTaskName(e.target.value)}
               value={taskName}
@@ -200,7 +181,6 @@ function PopupEditTask({
       </div>
       {isPopupOpen && (
         <InfoPopup
-          title={popupTitle}
           text={popupText}
           handleClosePopup={closePopup}
         />

@@ -18,6 +18,8 @@ import logo from '../../images/logo.svg';
 
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import { saveToLocalStorage } from '../../utils/localStorageFunctions.js';
+import { VALIDATION_MESSAGES } from '../../utils/validationConstants.js';
 
 function Auth() {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +28,7 @@ function Auth() {
   const { personalArea, userArea } = ENDPOINT_ROUTES;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { popupTitle, popupText, isPopupOpen, handleError, closePopup } =
+  const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
 
   const handleSubmit = (e) => {
@@ -36,11 +38,17 @@ function Auth() {
       password: values.password,
     })
       .then((res) => {
+
         localStorage.setItem('token', JSON.stringify(res));
         dispatch(setToken(res.token));
         getUserData(res.token).then((res) => {
+          const isAdmin = res.role === "ROLE_ADMIN";
+          const userDataWithAdmin = { ...res, isAdmin };
+          saveToLocalStorage('user', userDataWithAdmin);
           dispatch(setUser(res));
-          res.role === 'ROLE_ADMIN' ? navigate(personalArea) : navigate(userArea);
+          res.role === 'ROLE_ADMIN'
+            ? navigate(personalArea)
+            : navigate(userArea);
         });
       })
       .catch((err) => {
@@ -65,7 +73,6 @@ function Auth() {
     <>
       {isPopupOpen && (
         <InfoPopup
-          title={popupTitle}
           text={popupText}
           handleClosePopup={closePopup}
         />
@@ -86,7 +93,7 @@ function Auth() {
                 autoComplete="off"
                 required
               />
-              <span>{errors.email}</span>
+              <span>{errors.email && VALIDATION_MESSAGES.invalidEmail}</span>
             </label>
             <label>
               <input
@@ -100,8 +107,9 @@ function Auth() {
                 placeholder="Пароль"
                 autoComplete="off"
                 required
+                pattern="^(?=.*[A-Z])[A-Za-z0-9.,:;?!*+%\-<>@\[\]\/\\_\{\}\$\#]{8,14}$"
               />
-              <span>{errors.password} </span>
+              <span>{errors.password && VALIDATION_MESSAGES.invalidPassword} </span>
               <span
                 className={styles.eye}
                 onClick={togglePassword}
