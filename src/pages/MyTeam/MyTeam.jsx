@@ -8,7 +8,6 @@ import AddEmployeeForm from '../../components/AddEmployeeForm/AddEmployeeForm.js
 import EmployeeList from '../../components/EmployeeList/EmployeeList.jsx';
 import EditEmployeeForm from '../../components/EditEmployeeForm/EditEmployeeForm.jsx';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
-// import Loader from '../../components/Loader/Loader.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 function MyTeam() {
