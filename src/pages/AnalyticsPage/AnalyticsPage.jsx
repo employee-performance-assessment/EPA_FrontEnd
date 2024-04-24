@@ -3,22 +3,38 @@ import { useSelector } from 'react-redux';
 import Switch from '../../components/Switch/Switch.jsx';
 import Select from '../../components/Select/Select.jsx';
 import SetStars from '../../components/SetStars/SetStars.js';
-
-import { getAllUsers } from '../../utils/mainApi.js';
+import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
+import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import { getAllUsers, getListYears } from '../../utils/mainApi.js';
 import data from './data.json';
-
 import flyMan from '../../images/fly-man.svg';
-
 import styles from './AnalyticsPage.module.scss';
 
 function AnalyticsPage() {
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const user = useSelector((state) => state.user);
   const [isPrivate, setIsPrivate] = useState(false);
   const [isEstimate, setIsEstimate] = useState(false);
   const [users, setUsers] = useState([]);
+  const [listYears, setListYears] = useState([]);
+
+  // GET /user/evaluations/rating/command Получение командного рейтинга по месяцам указанного года.
+  // GET /user/stat/task/team Получения командной статистики сотрудником
+  // GET /user/stat/task/individual Получения индивидуальной статистики сотрудником
+  // GET /admin/rating/personal получения руководителем персонального рейтинга сотрудника за каждый месяц указанного года
 
   useEffect(() => {
-    getAllUsers().then((data) => setUsers(data));
+    getAllUsers()
+      .then((users) => {
+        setUsers(users)
+      })
+      .catch((err) => handleError(err));
+
+    getListYears()
+      .then((res) => {
+        setListYears(res);
+      })
+      .catch((err) => handleError(err));
   }, []);
 
   const handleSubmitYear = () => {
@@ -31,6 +47,7 @@ function AnalyticsPage() {
 
   return user ? (
     <section className={styles.page}>
+      {isPopupOpen && <InfoPopup text={popupText} handleClosePopup={closePopup} />}
       <div
         style={isEstimate ? { background: 'white' } : null}
         className={styles.container}
@@ -69,7 +86,7 @@ function AnalyticsPage() {
           {!isEstimate && (
             <Select
               typeSelect="year"
-              list={['2023', '2024', '2025', '2026']}
+              list={listYears}
               buttonText="Год"
               query={handleSubmitYear}
               selectStyle={styles.select_year}
