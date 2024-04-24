@@ -113,4 +113,15 @@
       height: 100%;
     }
   }
+
+  .link {
+    @include text(
+      $font-size: 16px,
+      $line-height: 19px,
+      $font-weight: 400,
+      $color: $dark-green-base-color
+    );
+    margin-top: 15px;
+    cursor: pointer;
+  }
 }
