@@ -17,7 +17,7 @@ function AnalyticsPage() {
   const [isEstimate, setIsEstimate] = useState(false);
   const [users, setUsers] = useState([]);
   const [listYears, setListYears] = useState([]);
-  
+
   const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const { isLoading, setLoading } = useLoading();
 
@@ -27,7 +27,7 @@ function AnalyticsPage() {
   // GET /admin/rating/personal получения руководителем персонального рейтинга сотрудника за каждый месяц указанного года
 
   useEffect(() => {
-     setLoading(true);
+    setLoading(true);
     getAllUsers()
       .then((users) => {
         setUsers(users)

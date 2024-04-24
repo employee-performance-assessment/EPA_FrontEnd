@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../store/slices/userSlice.js';
 
@@ -154,6 +154,9 @@ function Register() {
           <button type="submit" disabled={!isValid}>
             Подтвердить
           </button>
+          <Link to="/login" className={styles.link}>
+            У меня уже есть аккаунт
+          </Link>
         </form>
         <img
           src={registerImg}
