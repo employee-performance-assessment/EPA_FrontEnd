@@ -1,0 +1,57 @@
+@import '../../styles/vars';
+@import '../../styles/mixins';
+
+.loader {
+  background-color: rgba(28, 28, 28, 0.5);
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  @include positioning;
+}
+
+.loader__item {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+  border-radius: 10px;
+  background-color: $purple-base-color;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.loader__item:last-child {
+  margin-right: 0;
+}
+
+.loader__item:nth-child(1) {
+  animation-delay: -0.3s;
+}
+
+.loader__item:nth-child(2) {
+  animation-delay: -0.1s;
+}
+
+.loader__item:nth-child(3) {
+  animation-delay: 0.1s;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    background-color: $purple-base-color;
+    box-shadow: 0 0 0 0 rgba(197, 182, 241, 0.7);
+  }
+
+  50% {
+    transform: scale(1.2);
+    background-color: $purple-base-color;
+    box-shadow: 0 0 0 10px rgba(197, 182, 241, 0);
+  }
+
+  100% {
+    transform: scale(0.8);
+    background-color: $purple-base-color;
+    box-shadow: 0 0 0 0 rgba(197, 182, 241, 0.7);
+  }
+}

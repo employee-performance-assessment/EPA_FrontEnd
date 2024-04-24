@@ -1,4 +1,4 @@
-const BASE_URL = 'http://158.160.121.57:60606';
+const BASE_URL = 'http://62.113.110.149:60606';
 
 export const ADMIN_TECHNOLOGY = `${BASE_URL}/admin/technology`;
 

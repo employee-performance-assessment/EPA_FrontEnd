@@ -8,6 +8,7 @@ import AddEmployeeForm from '../../components/AddEmployeeForm/AddEmployeeForm.js
 import EmployeeList from '../../components/EmployeeList/EmployeeList.jsx';
 import EditEmployeeForm from '../../components/EditEmployeeForm/EditEmployeeForm.jsx';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
+// import Loader from '../../components/Loader/Loader.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 
 function MyTeam() {
@@ -15,8 +16,7 @@ function MyTeam() {
   const [isAddEmployeePopupOpen, setIsAddEmployeePopupOpen] = useState(false);
   const [isEditEmployeePopupOpen, setIsEditEmployeePopupOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  const { popupText, isPopupOpen, handleError, closePopup } =
-    useErrorHandler();
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
 
   const handleOpenAddEmployeeForm = () => {
     setIsAddEmployeePopupOpen(true);
@@ -53,17 +53,14 @@ function MyTeam() {
             setEmployeeList(res);
           }
         })
-        .catch((err) => handleError(err));
+        .catch((err) => handleError(err))
     }
   }, [setEmployeeList]);
 
   return (
     <>
       {isPopupOpen && (
-        <InfoPopup
-          text={popupText}
-          handleClosePopup={closePopup}
-        />
+        <InfoPopup text={popupText} handleClosePopup={closePopup} />
       )}
       <section className="my-team">
         {isAddEmployeePopupOpen && (
