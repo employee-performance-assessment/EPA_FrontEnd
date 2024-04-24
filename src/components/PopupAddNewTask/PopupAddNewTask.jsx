@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import './PopupAddNewTask.scss';
 import DropdownMenu from '../DropDownMenu/DropDownMenu';
+import Loader from '../Loader/Loader.jsx';
 import OneDatePicker from '../OneDatePicker/OneDatePicker.jsx';
 import { getAllUsers, setNewTask, getAdminTask } from '../../utils/mainApi.js';
 import InfoPopup from '../InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import useLoading from '../../hooks/useLoader.js';
 
 function PopupAddTask({ setIsOpenPopup, title, projects, setTasks }) {
   const [startDate, setStartDate] = useState(null);
@@ -17,10 +19,11 @@ function PopupAddTask({ setIsOpenPopup, title, projects, setTasks }) {
   const [employees, setEmployees] = useState([]);
   const [isOpenDropMenuProjects, setIsOpenDropMenuProjects] = useState(false);
   const [isOpenDropMenuEmployees, setIsOpenDropMenuEmployees] = useState(false);
-  const { popupText, isPopupOpen, handleError, closePopup } =
-    useErrorHandler();
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { isLoading, setLoading } = useLoading();
 
   function handleClickSubmit() {
+    setLoading(true);
     setNewTask({
       name: taskName,
       description: taskContent,
@@ -37,7 +40,8 @@ function PopupAddTask({ setIsOpenPopup, title, projects, setTasks }) {
           setTasks(res);
         });
       })
-      .catch((err) => handleError(err));
+      .catch((err) => handleError(err))
+      .finally(() => setLoading(false));
   }
 
   function convertDate(dateStr) {
@@ -57,126 +61,126 @@ function PopupAddTask({ setIsOpenPopup, title, projects, setTasks }) {
   }, []);
 
   return (
-    <div className="popup-add-task">
-      <div className="popup-add-task__popup">
-        <h1 className="popup-add-task__title">{title}</h1>
-        <form className="popup-add-task__container-inputs">
-          <div className="popup-add-task__input-container">
-            <input
-              type="text"
-              className="popup-add-task__input "
-              placeholder="Название задачи"
-              onChange={(e) => setTaskName(e.target.value)}
-            />
-          </div>
-          <div className="popup-add-task__input-container">
-            <input
-              type="text"
-              className="popup-add-task__input"
-              placeholder="Проект к которому относится задача"
-              onChange={(e) =>
-                setProject({ name: e.target.value, id: project.id })
-              }
-              value={project.name}
-            />
-            <button
-              type="button"
-              className={`
-              popup-add-task__button-input popup-add-task__button-input_arrow-down`}
-              aria-label={'Выбрать проект к которому относится задача"'}
-              onClick={() => {
-                setIsOpenDropMenuProjects(true);
-              }}
-            />
-            {isOpenDropMenuProjects && (
-              <DropdownMenu
-                setIsOpen={setIsOpenDropMenuProjects}
-                items={projects}
-                onSelect={setProject}
+    <>
+      {isLoading && <Loader />}
+      <div className="popup-add-task">
+        <div className="popup-add-task__popup">
+          <h1 className="popup-add-task__title">{title}</h1>
+          <form className="popup-add-task__container-inputs">
+            <div className="popup-add-task__input-container">
+              <input
+                type="text"
+                className="popup-add-task__input "
+                placeholder="Название задачи"
+                onChange={(e) => setTaskName(e.target.value)}
               />
-            )}
-          </div>
-          <OneDatePicker
-            title="Дедлайн"
-            startDate={startDate}
-            setStartDate={setStartDate}
+            </div>
+            <div className="popup-add-task__input-container">
+              <input
+                type="text"
+                className="popup-add-task__input"
+                placeholder="Проект к которому относится задача"
+                onChange={(e) =>
+                  setProject({ name: e.target.value, id: project.id })
+                }
+                value={project.name}
+              />
+              <button
+                type="button"
+                className={`
+              popup-add-task__button-input popup-add-task__button-input_arrow-down`}
+                aria-label={'Выбрать проект к которому относится задача"'}
+                onClick={() => {
+                  setIsOpenDropMenuProjects(true);
+                }}
+              />
+              {isOpenDropMenuProjects && (
+                <DropdownMenu
+                  setIsOpen={setIsOpenDropMenuProjects}
+                  items={projects}
+                  onSelect={setProject}
+                />
+              )}
+            </div>
+            <OneDatePicker
+              title="Дедлайн"
+              startDate={startDate}
+              setStartDate={setStartDate}
+            />
+            <div className="popup-add-task__input-container">
+              <input
+                type="text"
+                className="popup-add-task__input "
+                placeholder="Исполнитель"
+                onChange={(e) =>
+                  setEmployee({ name: e.target.value, id: employee.id })
+                }
+                value={employee.name}
+              />
+              <button
+                type="button"
+                className={`
+              popup-add-task__button-input popup-add-task__button-input_arrow-down`}
+                aria-label='редактировать поле "Исполнитель"'
+                onClick={() => {
+                  setIsOpenDropMenuEmployees(true);
+                }}
+              />
+              {isOpenDropMenuEmployees && (
+                <DropdownMenu
+                  setIsOpen={setIsOpenDropMenuEmployees}
+                  items={employees}
+                  onSelect={setEmployee}
+                />
+              )}
+            </div>
+            <div className="popup-add-task__input-container">
+              <input
+                type="number"
+                className="popup-add-task__input "
+                placeholder="Баллы за задачу"
+                onChange={(e) => setPointTask(e.target.value)}
+              />
+            </div>
+            <div className="popup-add-task__input-container">
+              <input
+                type="number"
+                className="popup-add-task__input "
+                placeholder="Бонусные и штрафные баллы"
+                onChange={(e) => setPointsPenalty(e.target.value)}
+              />
+            </div>
+            <div className="popup-add-task__input-container popup-add-task__input-container_big">
+              <span className="popup-add-task__span">
+                Баллы, которые нужно списать за каждый день нарушения дедлайна
+                или начислить за сдачу раньше срока
+              </span>
+              <textarea
+                type="text"
+                className="popup-add-task__input_textarea"
+                placeholder="Описание задачи"
+                onChange={(e) => setTaskContent(e.target.value)}
+              />
+            </div>
+          </form>
+          <button
+            className="popup-add-task__button popup-add-task__button_purple"
+            aria-label="Подтвердить"
+            onClick={handleClickSubmit}
+          >
+            Подтвердить
+          </button>
+          <button
+            className="popup-add-task__button popup-add-task__button_close"
+            aria-label="закрыть модальное окно"
+            onClick={() => setIsOpenPopup(false)}
           />
-          <div className="popup-add-task__input-container">
-            <input
-              type="text"
-              className="popup-add-task__input "
-              placeholder="Исполнитель"
-              onChange={(e) =>
-                setEmployee({ name: e.target.value, id: employee.id })
-              }
-              value={employee.name}
-            />
-            <button
-              type="button"
-              className={`
-              popup-add-task__button-input popup-add-task__button-input_arrow-down`}
-              aria-label='редактировать поле "Исполнитель"'
-              onClick={() => {
-                setIsOpenDropMenuEmployees(true);
-              }}
-            />
-            {isOpenDropMenuEmployees && (
-              <DropdownMenu
-                setIsOpen={setIsOpenDropMenuEmployees}
-                items={employees}
-                onSelect={setEmployee}
-              />
-            )}
-          </div>
-          <div className="popup-add-task__input-container">
-            <input
-              type="text"
-              className="popup-add-task__input "
-              placeholder="Баллы за задачу"
-              onChange={(e) => setPointTask(e.target.value)}
-            />
-          </div>
-          <div className="popup-add-task__input-container">
-            <input
-              type="text"
-              className="popup-add-task__input "
-              placeholder="Бонусные и штрафные баллы"
-              onChange={(e) => setPointsPenalty(e.target.value)}
-            />
-          </div>
-          <div className="popup-add-task__input-container popup-add-task__input-container_big">
-            <span className="popup-add-task__span">
-              Баллы, которые нужно списать за каждый день нарушения дедлайна или
-              начислить за сдачу раньше срока
-            </span>
-            <textarea
-              type="text"
-              className="popup-add-task__input_textarea"
-              placeholder="Описание задачи"
-              onChange={(e) => setTaskContent(e.target.value)}
-            />
-          </div>
-        </form>
-        <button
-          className="popup-add-task__button popup-add-task__button_purple"
-          aria-label="Подтвердить"
-          onClick={handleClickSubmit}
-        >
-          Подтвердить
-        </button>
-        <button
-          className="popup-add-task__button popup-add-task__button_close"
-          aria-label="закрыть модальное окно"
-          onClick={() => setIsOpenPopup(false)}
-        />
+        </div>
+        {isPopupOpen && (
+          <InfoPopup text={popupText} handleClosePopup={closePopup} />
+        )}
       </div>
-      {isPopupOpen && (
-        <InfoPopup
-          text={popupText}
-          handleClosePopup={closePopup}
-        />
-      )}
-    </div>
+    </>
   );
 }
 
