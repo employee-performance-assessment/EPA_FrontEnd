@@ -119,11 +119,17 @@ function EmployeeViewPage() {
   }
 
   async function getTasksByStatus(status) {
-    const tasks = user.isAdmin
-      ? await getUserTasksWithStatusByAdmin(employeeId, status)
-      : await getTasksWithStatusByUser(status);
+    setLoading(true);
+    try {
+      const tasks = user.isAdmin
+        ? await getUserTasksWithStatusByAdmin(employeeId, status)
+        : await getTasksWithStatusByUser(status);
 
-    setCurrentTasks(tasks);
+      setCurrentTasks(tasks);
+    } catch (err) {
+      handleError(err);
+    }
+    setLoading(false);
   }
 
   return (
