@@ -8,6 +8,9 @@ function EmployeeViewFilter({
   showAllCards,
   version,
   getTasksByStatus,
+  handleSearch,
+  searchQuery,
+  setSearchQuery
 }) {
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
   const [selectedStatus, setSelectedStatus] = useState('NEW');
@@ -15,6 +18,12 @@ function EmployeeViewFilter({
   const handleStatusChange = (status) => {
     setSelectedStatus(status);
     getTasksByStatus(status);
+    setSearchQuery('');
+  };
+
+  const handleSearchChange = async(evt) => {
+    setSearchQuery(evt.target.value);
+    handleSearch(evt.target.value.trim());
   };
 
   return viewMarks ? (
@@ -116,8 +125,11 @@ function EmployeeViewFilter({
       </div>
       <input
         type="text"
+        name="search"
         className={styles.employeeViewFilter__input}
         placeholder="Поиск"
+        value={searchQuery}
+        onChange={handleSearchChange}
       />
     </form>
   );

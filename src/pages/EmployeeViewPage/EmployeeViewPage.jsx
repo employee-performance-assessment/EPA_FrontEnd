@@ -6,6 +6,7 @@ import Switch from '../../components/Switch/Switch.jsx';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import EmployeeViewFilter from '../../components/EmployeeViewFilter/EmployeeViewFilter.jsx';
 import EmployeeViewBlock from '../../components/EmployeeViewBlock/EmployeeViewBlock.jsx';
+import SearchedTasks from '../../components/SearchedTasks/SearchedTasks.jsx';
 import Loader from '../../components/Loader/Loader.jsx';
 import { useFormValidation } from '../../hooks/useFormValidation';
 import { setViewMarks } from '../../store/slices/viewMarksSlices.js';
@@ -20,6 +21,7 @@ import {
   getRatingByUser,
   getStatPointsByAdmin,
   getStatPointsByUser,
+  getUserTasksWithSearchByAdmin,
 } from '../../utils/mainApi.js';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import useLoading from '../../hooks/useLoader.js';
@@ -36,6 +38,9 @@ function EmployeeViewPage() {
 
   const [rating, setRating] = useState(0);
   const [points, setPoints] = useState(0);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchedTasks, setSearchedTasks] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const { id: employeeId } = useParams();
   const dispatch = useDispatch();
@@ -126,10 +131,33 @@ function EmployeeViewPage() {
         : await getTasksWithStatusByUser(status);
 
       setCurrentTasks(tasks);
+      setIsSearching(false);
+    } catch (err) {
+      handleError(err);
+      setIsSearching(false);
+    }
+    setLoading(false);
+  }
+
+  async function handleSearch(searchQuery) {
+    setLoading(true);
+    setIsSearching(true);
+    try {
+      const searchTasks = await getUserTasksWithSearchByAdmin(
+        employeeId,
+        searchQuery
+      );
+      setSearchedTasks(searchTasks);
     } catch (err) {
       handleError(err);
     }
     setLoading(false);
+  }
+
+  function handleSwitch() {
+    setViewTask(!viewTask);
+    setSearchQuery('');
+    setIsSearching(false);
   }
 
   return (
@@ -148,19 +176,26 @@ function EmployeeViewPage() {
           labelLeft="Задачи"
           labelRight="Оценки"
           isChecked={viewTask}
-          setIsChecked={setViewTask}
+          handleChange={handleSwitch}
         />
         <EmployeeViewFilter
           handleChange={handleChange}
           showAllCards={showAllCards}
           version={version}
           getTasksByStatus={getTasksByStatus}
+          handleSearch={handleSearch}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
         />
-        <EmployeeViewBlock
-          tasks={currentTasks}
-          marks={currentMarks}
-          employeeId={employeeId}
-        />
+        {isSearching ? (
+          <SearchedTasks tasks={searchedTasks} />
+        ) : (
+          <EmployeeViewBlock
+            tasks={currentTasks}
+            marks={currentMarks}
+            employeeId={employeeId}
+          />
+        )}
       </section>
     </>
   );
