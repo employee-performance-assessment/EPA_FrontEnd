@@ -7,7 +7,6 @@ import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import { getAllUsers, getListYears } from '../../utils/mainApi.js';
 import data from './data.json';
-import flyMan from '../../images/fly-man.svg';
 import styles from './AnalyticsPage.module.scss';
 
 function AnalyticsPage() {
@@ -37,15 +36,11 @@ function AnalyticsPage() {
       .catch((err) => handleError(err));
   }, []);
 
-  const handleSubmitYear = () => {
-    console.log('andleSubmitYear');
-  };
+  const handleSubmitYear = () => {};
 
-  const handleSubmitUser = () => {
-    console.log('handleSubmitUser');
-  };
+  const handleSubmitUser = () => {};
 
-  return user ? (
+  return (
     <section className={styles.page}>
       {isPopupOpen && <InfoPopup text={popupText} handleClosePopup={closePopup} />}
       <div
@@ -145,15 +140,13 @@ function AnalyticsPage() {
             ))
           ) : (
             <div className={styles.img_block}>
-              <img className={styles.flyMan} src={flyMan} alt="Список пуст" />
+              <div className={styles.flyMan} />
               <span>Данных для аналитики ещё нет.</span>
             </div>
           )}
         </article>
       </div>
     </section>
-  ) : (
-    ''
   );
 }
 
