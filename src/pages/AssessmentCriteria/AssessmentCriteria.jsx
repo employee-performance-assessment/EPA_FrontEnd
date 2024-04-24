@@ -3,9 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useFormValidation } from '../../hooks/useFormValidation';
 import CriterionInput from '../../components/CriterionInput/CriterionInput.jsx';
 import Switch from '../../components/Switch/Switch.jsx';
+import Loader from '../../components/Loader/Loader.jsx';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import useLoading from '../../hooks/useLoader.js';
 import { VALIDATION_MESSAGES } from '../../utils/validationConstants.js';
 import {
   getQuestionnaireLast,
@@ -20,14 +22,15 @@ import {
 import './AssessmentCriteria.scss';
 
 function AssessmentCriteria() {
-  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const [criteria, setCriteria] = useState([]);
   const [isCheckedEditing, setIsCheckedEditing] = useState(false);
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const [disabledButton, setDisabledButton] = useState(false);
   const { personalArea } = ENDPOINT_ROUTES;
-  const { values, handleChange, errors, isValid, setIsValid } = useFormValidation();
   const navigate = useNavigate();
+  const { values, handleChange, errors, isValid, setIsValid } = useFormValidation();
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { isLoading, setLoading } = useLoading();
   const dataForServer = { criterias: [] };
 
   useEffect(() => {
@@ -39,12 +42,14 @@ function AssessmentCriteria() {
         })
         .catch((err) => handleError(err));
     } else {
+      setLoading(true);
       getDefaultCriterion()
         .then((res) => {
           setCriteria(res);
           insertCriteriaNames(res);
         })
-        .catch((err) => handleError(err));
+        .catch((err) => handleError(err))
+        .finally(() => setLoading(false));
     }
   }, [isCheckedEditing]);
 
@@ -107,19 +112,22 @@ function AssessmentCriteria() {
 
   function handleSubmit(evt) {
     evt.preventDefault();
+    setLoading(true);
     if (isCheckedEditing) {
       updateQuestionnaireLast(createDataForServer())
         .then(() => {
           setIsOpenPopup(!isOpenPopup);
           dataForServer.criterias = [];
         })
-        .catch((err) => handleError(err));
+        .catch((err) => handleError(err))
+        .finally(() => setLoading(false));
     } else {
       resetToDefaultQuestionnaire()
         .then(() => {
           setIsOpenPopup(!isOpenPopup);
         })
-        .catch((err) => handleError(err));
+        .catch((err) => handleError(err))
+        .finally(() => setLoading(false));
     }
   }
 
@@ -130,6 +138,7 @@ function AssessmentCriteria() {
 
   return (
     <section className="assessment-criteria">
+      {isLoading && <Loader />}
       {isPopupOpen && <InfoPopup text={popupText} handleClosePopup={closePopup} />}
       <div className="assessment-criteria__header">
         <Link to={personalArea} className="assessment-criteria__link">

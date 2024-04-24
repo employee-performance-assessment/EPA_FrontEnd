@@ -24,18 +24,24 @@ import EmployeeViewPage from '../../pages/EmployeeViewPage/EmployeeViewPage.jsx'
 import EmployeeRatingPage from '../../pages/EmployeeRatingPage/EmployeeRatingPage.jsx';
 import TaskViewPage from '../../pages/TaskViewPage/TaskViewPage.jsx';
 import PersonalAreaEditing from '../../pages/PersonalAreaEditing/PersonalAreaEditing.jsx';
+import AssessmentBlock from '../../pages/AssesmentBlock/AssessmentBlock.jsx';
+import Questionnaire from '../Questionnaire/Questionnaire.jsx';
+import InfoPopup from '../InfoPopup/InfoPopup.jsx';
+import Loader from '../Loader/Loader.jsx';
 
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
 import { getUserData } from '../../utils/mainApi.js';
 import { setUser } from '../../store/slices/userSlice.js';
-import AssessmentBlock from '../../pages/AssesmentBlock/AssessmentBlock.jsx';
-import Questionnaire from '../Questionnaire/Questionnaire.jsx';
-import InfoPopup from '../InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import useLoading from '../../hooks/useLoader.js';
 
 function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
   const { popupText, isPopupOpen, closePopup, handleError } = useErrorHandler();
+  const { isLoading, setLoading } = useLoading();
   const {
     login,
     register,
@@ -53,11 +59,9 @@ function App() {
     estimate,
     questionnaire,
   } = ENDPOINT_ROUTES;
-  const navigate = useNavigate();
-  const location = useLocation();
-  const dispatch = useDispatch();
 
   const tokenCheck = () => {
+    setLoading(true);
     if (localStorage.getItem('token')) {
       const { token } = JSON.parse(localStorage.getItem('token'));
       if (token) {
@@ -72,7 +76,8 @@ function App() {
                 dispatch(setUser(res));
               }
             })
-            .catch((err) => handleError(err));
+            .catch((err) => handleError(err))
+            .finally(() => setLoading(false));
         } else {
           localStorage.removeItem('token');
           navigate(login);
@@ -80,6 +85,7 @@ function App() {
       }
     } else {
       navigate(login);
+      setLoading(false);
     }
   };
 
@@ -89,6 +95,7 @@ function App() {
 
   return (
     <div className="page">
+      {isLoading && <Loader />}
       {isPopupOpen && (
         <InfoPopup text={popupText} handleClosePopup={closePopup} />
       )}

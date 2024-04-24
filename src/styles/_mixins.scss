@@ -52,6 +52,13 @@
   z-index: 10;
 }
 
+@mixin top_positioning {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+}
+
 @mixin button_delete {
   background-image: url(../../images/TrashSimple.svg);
 }

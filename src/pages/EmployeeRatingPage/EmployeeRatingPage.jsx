@@ -3,28 +3,28 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router';
 import EmployeeViewCriteria from '../../components/EmployeeViewCriteria/EmployeeViewCriteria.jsx';
 import SetStars from '../../components/SetStars/SetStars.js';
-import styles from './EmployeeRatingPage.module.scss';
+import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
+import Loader from '../../components/Loader/Loader.jsx';
 import {
   getEvaluationsByAdmin,
   getEvaluationsByUser,
 } from '../../utils/mainApi.js';
-import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import useLoading from '../../hooks/useLoader.js';
 import { getFromLocalStorage } from '../../utils/localStorageFunctions.js';
+import styles from './EmployeeRatingPage.module.scss';
 
 function EmployeeRatingPage() {
-  const navigate = useNavigate();
-  const { employeeId, questionnaireId } = useParams();
-
-  const user = getFromLocalStorage('user');
-
   const [recommendation, setRecommendation] = useState('');
   const [rating, setRating] = useState(0);
   const [date, setDate] = useState('');
   const [criteria, setCriteria] = useState([]);
 
-  const { popupText, isPopupOpen, handleError, closePopup } =
-    useErrorHandler();
+  const navigate = useNavigate();
+  const { employeeId, questionnaireId } = useParams();
+  const user = getFromLocalStorage('user');
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { isLoading, setLoading } = useLoading();
 
   function handleClickBack() {
     navigate(-1);
@@ -33,6 +33,7 @@ function EmployeeRatingPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         let data;
 
         if (employeeId && user.isAdmin) {
@@ -63,6 +64,8 @@ function EmployeeRatingPage() {
         );
       } catch (error) {
         handleError(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
@@ -70,11 +73,9 @@ function EmployeeRatingPage() {
 
   return (
     <>
+      {isLoading && <Loader />}
       {isPopupOpen && (
-        <InfoPopup
-          text={popupText}
-          handleClosePopup={closePopup}
-        />
+        <InfoPopup text={popupText} handleClosePopup={closePopup} />
       )}
       <section className={styles.employeeRatingPage__container}>
         <div className={styles.employeeRatingPage__header}>

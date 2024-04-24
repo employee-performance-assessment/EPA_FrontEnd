@@ -6,6 +6,7 @@ import Switch from '../../components/Switch/Switch.jsx';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import EmployeeViewFilter from '../../components/EmployeeViewFilter/EmployeeViewFilter.jsx';
 import EmployeeViewBlock from '../../components/EmployeeViewBlock/EmployeeViewBlock.jsx';
+import Loader from '../../components/Loader/Loader.jsx';
 import { useFormValidation } from '../../hooks/useFormValidation';
 import { setViewMarks } from '../../store/slices/viewMarksSlices.js';
 import styles from './EmployeeViewPage.module.scss';
@@ -21,16 +22,11 @@ import {
   getStatPointsByUser,
 } from '../../utils/mainApi.js';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import useLoading from '../../hooks/useLoader.js';
 import { getFromLocalStorage } from '../../utils/localStorageFunctions.js';
 
 function EmployeeViewPage() {
-  const dispatch = useDispatch();
-  const { id: employeeId } = useParams();
-
-  const user = getFromLocalStorage('user');
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
-
-  const { values, handleChange, setValues } = useFormValidation();
   const [viewTask, setViewTask] = useState(viewMarks);
   const [allMarks, setAllMarks] = useState([]);
   const [currentMarks, setCurrentMarks] = useState([]);
@@ -41,12 +37,19 @@ function EmployeeViewPage() {
   const [rating, setRating] = useState(0);
   const [points, setPoints] = useState(0);
 
-  const { popupText, isPopupOpen, handleError, closePopup } =
-    useErrorHandler();
+  const { id: employeeId } = useParams();
+  const dispatch = useDispatch();
+
+  const user = getFromLocalStorage('user');
+
+  const { values, handleChange, setValues } = useFormValidation();
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { isLoading, setLoading } = useLoading();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         let userData;
         let tasksData;
         let ratingData;
@@ -75,6 +78,7 @@ function EmployeeViewPage() {
       } catch (error) {
         handleError(error);
       }
+      setLoading(false);
     };
 
     fetchData();
@@ -115,20 +119,24 @@ function EmployeeViewPage() {
   }
 
   async function getTasksByStatus(status) {
-    const tasks = user.isAdmin
-      ? await getUserTasksWithStatusByAdmin(employeeId, status)
-      : await getTasksWithStatusByUser(status);
+    setLoading(true);
+    try {
+      const tasks = user.isAdmin
+        ? await getUserTasksWithStatusByAdmin(employeeId, status)
+        : await getTasksWithStatusByUser(status);
 
-    setCurrentTasks(tasks);
+      setCurrentTasks(tasks);
+    } catch (err) {
+      handleError(err);
+    }
+    setLoading(false);
   }
 
   return (
     <>
+      {isLoading && <Loader />}
       {isPopupOpen && (
-        <InfoPopup
-          text={popupText}
-          handleClosePopup={closePopup}
-        />
+        <InfoPopup text={popupText} handleClosePopup={closePopup} />
       )}
       <section className={styles.employeeViewPage__container}>
         <EmployeeViewHeader

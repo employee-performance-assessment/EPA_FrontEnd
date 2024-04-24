@@ -4,18 +4,22 @@ import Switch from '../../components/Switch/Switch.jsx';
 import Select from '../../components/Select/Select.jsx';
 import SetStars from '../../components/SetStars/SetStars.js';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
+import Loader from '../../components/Loader/Loader.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import useLoading from '../../hooks/useLoader.js';
 import { getAllUsers, getListYears } from '../../utils/mainApi.js';
 import data from './data.json';
 import styles from './AnalyticsPage.module.scss';
 
 function AnalyticsPage() {
-  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const user = useSelector((state) => state.user);
   const [isPrivate, setIsPrivate] = useState(false);
   const [isEstimate, setIsEstimate] = useState(false);
   const [users, setUsers] = useState([]);
   const [listYears, setListYears] = useState([]);
+  
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { isLoading, setLoading } = useLoading();
 
   // GET /user/evaluations/rating/command Получение командного рейтинга по месяцам указанного года.
   // GET /user/stat/task/team Получения командной статистики сотрудником
@@ -23,17 +27,20 @@ function AnalyticsPage() {
   // GET /admin/rating/personal получения руководителем персонального рейтинга сотрудника за каждый месяц указанного года
 
   useEffect(() => {
+     setLoading(true);
     getAllUsers()
       .then((users) => {
         setUsers(users)
       })
-      .catch((err) => handleError(err));
+      .catch((err) => handleError(err))
+      .finally(() => setLoading(false));
 
     getListYears()
       .then((res) => {
         setListYears(res);
       })
-      .catch((err) => handleError(err));
+      .catch((err) => handleError(err))
+      .finally(() => setLoading(false));
   }, []);
 
   const handleSubmitYear = () => {};
@@ -42,6 +49,7 @@ function AnalyticsPage() {
 
   return (
     <section className={styles.page}>
+      {isLoading && <Loader />}
       {isPopupOpen && <InfoPopup text={popupText} handleClosePopup={closePopup} />}
       <div
         style={isEstimate ? { background: 'white' } : null}

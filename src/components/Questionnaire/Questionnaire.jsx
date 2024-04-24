@@ -2,18 +2,20 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import InputStars from '../InputStars/InputStars.js';
-import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
+import SetStars from '../SetStars/SetStars.js';
+import InfoPopup from "../InfoPopup/InfoPopup.jsx";
+import Loader from '../Loader/Loader.jsx';
 import { useFormValidation } from '../../hooks/useFormValidation';
 import { setIsAppreciated } from '../../store/slices/isAppreciatedSlices.js';
-import InfoPopup from "../InfoPopup/InfoPopup.jsx";
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
-import SetStars from '../SetStars/SetStars.js';
+import useLoading from '../../hooks/useLoader.js';
 import {
   getCurrentUser,
   getEvaluationsList,
   getQuestionnaire,
   postEvaluationsList
 } from '../../utils/mainApi.js';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import {
   ADMIN_ASSESSED,
   ADMIN_EVALUATIONS,
@@ -23,13 +25,16 @@ import {
 import './Questionnaire.scss';
 
 export default function Questionnaire() {
-  const isAdmin = useSelector((state) => state.user.isAdmin);
-  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
-  const isAppreciated = useSelector((state) => state.isAppreciated.isAppreciated);
   const [criteria, setCriteria] = useState([]);
   const [isActiveButton, setIsActiveButton] = useState(false);
-  const { values, handleChange, } = useFormValidation();
   const [user, setUser] = useState({ fullName: '', position: '' });
+
+  const isAdmin = useSelector((state) => state.user.isAdmin);
+  const isAppreciated = useSelector((state) => state.isAppreciated.isAppreciated);
+  const { values, handleChange, } = useFormValidation();
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { isLoading, setLoading } = useLoading();
+
   const { estimate } = ENDPOINT_ROUTES;
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -46,12 +51,14 @@ export default function Questionnaire() {
   }, [values, criteria])
 
   useEffect(() => {
+    setLoading(true);
     if (isAppreciated) {
       getQuestionnaire(questionnaireId)
         .then((res) => {
           setCriteria(res.criterias);
         })
-        .catch((err) => handleError(err));
+        .catch((err) => handleError(err))
+        .finally(() => setLoading(false));
     } else {
       const path = isAdmin ? ADMIN_ASSESSED : USER_EVALUATIONS_ASSESSED;
 
@@ -60,11 +67,13 @@ export default function Questionnaire() {
           setCriteria(isAdmin ? res.adminEvaluations : res);
           values['recommendation'] = res.recommendation;
         })
-        .catch((err) => handleError(err));
+        .catch((err) => handleError(err))
+        .finally(() => setLoading(false));
     }
   }, [])
 
   useEffect(() => {
+    setLoading(true);
     getCurrentUser(employeeId)
       .then((res) => {
         setUser({
@@ -72,7 +81,8 @@ export default function Questionnaire() {
           position: res.position
         });
       })
-      .catch((err) => handleError(err));
+      .catch((err) => handleError(err))
+      .finally(() => setLoading(false));
   }, []);
 
   function handleActiveButtonSubmit() {
@@ -111,6 +121,7 @@ export default function Questionnaire() {
 
   function handleSubmit(evt) {
     evt.preventDefault();
+    setLoading(true);
     const recommendationValue = evt.target[0].value;
     const path = isAdmin ? ADMIN_EVALUATIONS : USER_EVALUATIONS;
 
@@ -132,11 +143,13 @@ export default function Questionnaire() {
       .then(() => {
         navigate(estimate);
       })
-      .catch((err) => handleError(err));
+      .catch((err) => handleError(err))
+      .finally(() => setLoading(false));
   }
 
   return (
     <div className="questionnaire">
+      {isLoading && <Loader />}
       {isPopupOpen && <InfoPopup text={popupText} handleClosePopup={closePopup} />}
       <div className="questionnaire__wrapper">
         <div className="questionnaire__header">

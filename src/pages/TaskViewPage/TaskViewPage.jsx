@@ -9,8 +9,10 @@ import {
 } from '../../utils/mainApi.js';
 import { formatDate } from '../../utils/utils.js';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
+import Loader from '../../components/Loader/Loader.jsx';
 import PopupEditTask from '../../components/PopupEditTask/PopupEditTask.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import useLoading from '../../hooks/useLoader.js';
 import styles from './TaskViewPage.module.scss';
 import { getFromLocalStorage } from '../../utils/localStorageFunctions.js';
 
@@ -24,10 +26,12 @@ function TaskViewPage() {
   const user = getFromLocalStorage('user');
   const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
+  const { isLoading, setLoading } = useLoading();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         if (taskId) {
           if (user.isAdmin) {
             const res = await getTaskDetailsByAdmin(taskId);
@@ -71,19 +75,23 @@ function TaskViewPage() {
         }
       } catch (err) {
         handleError(err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
   }, [taskId, user.isAdmin, isTaskEdited]);
 
   function handleDeleteTask() {
+    setLoading(true);
     deleteTaskByAdmin(taskId)
       .then(() => {
         navigate(-1);
       })
       .catch((err) => {
         handleError(err);
-      });
+      })
+      .finally(() => setLoading(false));
   }
 
   if (!task) {
@@ -92,6 +100,7 @@ function TaskViewPage() {
 
   return (
     <>
+      {isLoading && <Loader />}
       {isPopupOpen && (
         <InfoPopup
           text={popupText}

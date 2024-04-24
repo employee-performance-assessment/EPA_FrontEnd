@@ -12,10 +12,10 @@ function PopupProject({ projects, setIsOpenPopupProject, handleClickProject }) {
     <div className="popup-project">
       <ul className="popup-project__popup">
         {projectsName.map((project) => (
-          <button 
-          type="button"
-           key={project.id}
-           className='popup-project__button-project'
+          <button
+            type="button"
+            key={project.id}
+            className="popup-project__button-project"
             onClick={() => handleClickProject(project)}
           >
             <li className="popup-project__item" onClick={handkeClickProject}>
