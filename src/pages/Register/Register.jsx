@@ -8,7 +8,9 @@ import { register } from '../../utils/auth.js';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 import { VALIDATION_MESSAGES } from '../../utils/validationConstants.js';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
+import Loader from '../../components/Loader/Loader.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import useLoading from '../../hooks/useLoader.js';
 
 import styles from './Register.module.scss';
 import registerImg from '../../images/register-img.png';
@@ -17,19 +19,23 @@ import eyeOpen from '../../images/eye-open.svg';
 import logo from '../../images/logo.svg';
 
 function Register() {
-  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
+
   const { errors, values, isValid, handleChange, setIsValid, resetForm } =
     useFormValidation({});
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { isLoading, setLoading } = useLoading();
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const { login } = ENDPOINT_ROUTES;
   const [errorName, setErrorName] = useState(null);
   const [errorEmail, setErrorEmail] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setLoading(true);
     register({
       fullName: values.name.trim(),
       email: values.email,
@@ -42,7 +48,8 @@ function Register() {
       .catch((err) => {
         handleError(err);
         resetForm();
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   const togglePassword = () => {
@@ -80,7 +87,10 @@ function Register() {
 
   return (
     <section className={styles.wrapper}>
-      {isPopupOpen && <InfoPopup text={popupText} handleClosePopup={closePopup} />}
+      {isLoading && <Loader />}
+      {isPopupOpen && (
+        <InfoPopup text={popupText} handleClosePopup={closePopup} />
+      )}
       <div className={styles.container}>
         <form id="register" onSubmit={handleSubmit}>
           <img className={styles.logo} src={logo} alt="Логотип" />
@@ -98,7 +108,10 @@ function Register() {
               pattern="^[a-zA-Zа-яА-ЯёЁ\s\-]{1,255}$"
               required
             />
-            <span>{errors.name && VALIDATION_MESSAGES.invalidNameOrPosition || errorName}</span>
+            <span>
+              {(errors.name && VALIDATION_MESSAGES.invalidNameOrPosition) ||
+                errorName}
+            </span>
           </label>
           <label>
             <input
@@ -111,7 +124,9 @@ function Register() {
               autoComplete="off"
               required
             />
-            <span>{errors.email && VALIDATION_MESSAGES.invalidEmail || errorEmail}</span>
+            <span>
+              {(errors.email && VALIDATION_MESSAGES.invalidEmail) || errorEmail}
+            </span>
           </label>
           <label>
             <input
@@ -127,7 +142,9 @@ function Register() {
               required
               pattern="^(?=.*[A-Z])[A-Za-z0-9.,:;?!*+%\-<>@\[\]\/\\_\{\}\$\#]{8,14}$"
             />
-            <span>{errors.password && VALIDATION_MESSAGES.invalidPassword}</span>
+            <span>
+              {errors.password && VALIDATION_MESSAGES.invalidPassword}
+            </span>
             <span
               className={styles.eye}
               onClick={togglePassword}

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import UserForm from '../UserForm/UserForm.jsx';
 import InfoPopup from '../InfoPopup/InfoPopup.jsx';
 import Input from '../Input/Input.jsx';
+import Loader from '../Loader/Loader.jsx';
 import OpenEyeIcon from '../../images/eye-open.svg';
 import CloseEyeIcon from '../../images/eye-close.svg';
 import { useFormValidation } from '../../hooks/useFormValidation.js';
@@ -16,6 +17,7 @@ import {
 import './EditEmployeeForm.scss';
 import { updateUserData } from '../../utils/mainApi.js';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import useLoading from '../../hooks/useLoader.js';
 
 function EditEmployeeForm({
   setIsEditEmployeePopupOpen,
@@ -26,6 +28,7 @@ function EditEmployeeForm({
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { popupText, isPopupOpen, handleError, closePopup } =
     useErrorHandler();
+    const { isLoading, setLoading } = useLoading();
 
   const {
     values,
@@ -95,6 +98,7 @@ function EditEmployeeForm({
 
   const editEmployeeData = (e) => {
     e.preventDefault();
+    setLoading(true);
     const { name, position, email, password } = values;
 
     updateUserData({
@@ -110,11 +114,13 @@ function EditEmployeeForm({
       })
       .catch((error) => {
         handleError(error);
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
     <>
+      {isLoading && <Loader />}
       {isPopupOpen && (
         <InfoPopup
           text={popupText}

@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import styles from './Auth.module.scss';
 
 import { useFormValidation } from '../../hooks/useFormValidation.js';
+import useLoading from '../../hooks/useLoader.js';
 import { authorize } from '../../utils/auth.js';
 import { getUserData } from '../../utils/mainApi.js';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
@@ -17,32 +18,33 @@ import eyeOpen from '../../images/eye-open.svg';
 import logo from '../../images/logo.svg';
 
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
+import Loader from '../../components/Loader/Loader.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import { saveToLocalStorage } from '../../utils/localStorageFunctions.js';
 import { VALIDATION_MESSAGES } from '../../utils/validationConstants.js';
 
 function Auth() {
   const [isOpen, setIsOpen] = useState(false);
-  const { errors, values, isValid, handleChange, resetForm } =
-    useFormValidation();
-  const { personalArea, userArea } = ENDPOINT_ROUTES;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { popupText, isPopupOpen, handleError, closePopup } =
-    useErrorHandler();
+  const { personalArea, userArea } = ENDPOINT_ROUTES;
+  const { errors, values, isValid, handleChange, resetForm } =
+  useFormValidation();
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { isLoading, setLoading } = useLoading();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     authorize({
       email: values.email,
       password: values.password,
     })
       .then((res) => {
-
         localStorage.setItem('token', JSON.stringify(res));
         dispatch(setToken(res.token));
         getUserData(res.token).then((res) => {
-          const isAdmin = res.role === "ROLE_ADMIN";
+          const isAdmin = res.role === 'ROLE_ADMIN';
           const userDataWithAdmin = { ...res, isAdmin };
           saveToLocalStorage('user', userDataWithAdmin);
           dispatch(setUser(res));
@@ -54,7 +56,8 @@ function Auth() {
       .catch((err) => {
         handleError(err);
         resetForm();
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   const togglePassword = () => {
@@ -71,11 +74,9 @@ function Auth() {
 
   return (
     <>
+      {isLoading && <Loader />}
       {isPopupOpen && (
-        <InfoPopup
-          text={popupText}
-          handleClosePopup={closePopup}
-        />
+        <InfoPopup text={popupText} handleClosePopup={closePopup} />
       )}
       <section className={styles.wrapper}>
         <div className={styles.container}>
@@ -109,7 +110,9 @@ function Auth() {
                 required
                 pattern="^(?=.*[A-Z])[A-Za-z0-9.,:;?!*+%\-<>@\[\]\/\\_\{\}\$\#]{8,14}$"
               />
-              <span>{errors.password && VALIDATION_MESSAGES.invalidPassword} </span>
+              <span>
+                {errors.password && VALIDATION_MESSAGES.invalidPassword}{' '}
+              </span>
               <span
                 className={styles.eye}
                 onClick={togglePassword}

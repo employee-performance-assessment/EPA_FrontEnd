@@ -8,7 +8,9 @@ import AddEmployeeForm from '../../components/AddEmployeeForm/AddEmployeeForm.js
 import EmployeeList from '../../components/EmployeeList/EmployeeList.jsx';
 import EditEmployeeForm from '../../components/EditEmployeeForm/EditEmployeeForm.jsx';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
+import Loader from '../../components/Loader/Loader.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import useLoading from '../../hooks/useLoader.js';
 
 function MyTeam() {
   const [employeeList, setEmployeeList] = useState([]);
@@ -16,6 +18,7 @@ function MyTeam() {
   const [isEditEmployeePopupOpen, setIsEditEmployeePopupOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { isLoading, setLoading } = useLoading();
 
   const handleOpenAddEmployeeForm = () => {
     setIsAddEmployeePopupOpen(true);
@@ -33,9 +36,15 @@ function MyTeam() {
   };
 
   const handleDeleteEmployee = (id) => {
-    deleteUser(id).then(() => {
-      setEmployeeList((prevList) => prevList.filter((user) => user.id !== id));
-    });
+    setLoading(true);
+    deleteUser(id)
+      .then(() => {
+        setEmployeeList((prevList) =>
+          prevList.filter((user) => user.id !== id)
+        );
+      })
+      .catch((err) => handleError(err))
+      .finally(() => setLoading(false));
   };
 
   const handleAddNewEmployee = (user) => {
@@ -44,6 +53,7 @@ function MyTeam() {
   };
 
   useEffect(() => {
+    setLoading(true);
     const { token } = JSON.parse(localStorage.getItem('token'));
     if (token) {
       getAllUsers()
@@ -53,11 +63,13 @@ function MyTeam() {
           }
         })
         .catch((err) => handleError(err))
+        .finally(() => setLoading(false));
     }
   }, [setEmployeeList]);
 
   return (
     <>
+      {isLoading && <Loader />}
       {isPopupOpen && (
         <InfoPopup text={popupText} handleClosePopup={closePopup} />
       )}

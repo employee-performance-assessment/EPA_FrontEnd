@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import UserForm from '../UserForm/UserForm.jsx';
 import Input from '../Input/Input.jsx';
 import Loader from '../Loader/Loader.jsx';
+import InfoPopup from '../InfoPopup/InfoPopup.jsx';
 import OpenEyeIcon from '../../images/eye-open.svg';
 import CloseEyeIcon from '../../images/eye-close.svg';
 import { addNewUser } from '../../utils/mainApi.js';
@@ -14,14 +15,15 @@ import {
   isValidName,
   isValidPassword,
 } from '../../utils/validationConstants.js';
-import './AddEmployeeForm.scss';
-import InfoPopup from '../InfoPopup/InfoPopup.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import useLoading from '../../hooks/useLoader.js';
+import './AddEmployeeForm.scss';
 
 function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const { isLoading, setLoading } = useLoading();
 
   const { values, handleChange, errors, setErrors, isValid, setIsValid } =
     useFormValidation({
@@ -57,6 +59,7 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
 
   const registerEmployee = (e) => {
     e.preventDefault();
+    setLoading(true);
     const { name, position, email, password } = values;
     addNewUser({ fullName: name, position, email, password })
       .then((user) => {
@@ -64,7 +67,8 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
       })
       .catch((error) => {
         handleError(error);
-      });
+      })
+      .finally(() => setLoading(false))
   };
 
   const handleCloseAddEmployeePopup = () => {
@@ -74,6 +78,7 @@ function AddEmployeeForm({ setIsAddEmployeePopupOpen, handleAddNewEmployee }) {
 
   return (
     <>
+      {isLoading && <Loader />}
       {isPopupOpen && (
         <InfoPopup text={popupText} handleClosePopup={closePopup} />
       )}
