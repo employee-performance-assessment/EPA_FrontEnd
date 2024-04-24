@@ -3,16 +3,12 @@ import { useSelector } from 'react-redux';
 import Switch from '../../components/Switch/Switch.jsx';
 import Select from '../../components/Select/Select.jsx';
 import SetStars from '../../components/SetStars/SetStars.js';
-import Loader from '../../components/Loader/Loader.jsx';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
-
-import { getAllUsers } from '../../utils/mainApi.js';
-import useLoading from '../../hooks/useLoader.js';
+import Loader from '../../components/Loader/Loader.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
+import useLoading from '../../hooks/useLoader.js';
+import { getAllUsers, getListYears } from '../../utils/mainApi.js';
 import data from './data.json';
-
-import flyMan from '../../images/fly-man.svg';
-
 import styles from './AnalyticsPage.module.scss';
 
 function AnalyticsPage() {
@@ -20,139 +16,145 @@ function AnalyticsPage() {
   const [isPrivate, setIsPrivate] = useState(false);
   const [isEstimate, setIsEstimate] = useState(false);
   const [users, setUsers] = useState([]);
+  const [listYears, setListYears] = useState([]);
+  
   const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const { isLoading, setLoading } = useLoading();
 
+  // GET /user/evaluations/rating/command Получение командного рейтинга по месяцам указанного года.
+  // GET /user/stat/task/team Получения командной статистики сотрудником
+  // GET /user/stat/task/individual Получения индивидуальной статистики сотрудником
+  // GET /admin/rating/personal получения руководителем персонального рейтинга сотрудника за каждый месяц указанного года
+
   useEffect(() => {
-    setLoading(true);
+     setLoading(true);
     getAllUsers()
-      .then((data) => setUsers(data))
+      .then((users) => {
+        setUsers(users)
+      })
+      .catch((err) => handleError(err))
+      .finally(() => setLoading(false));
+
+    getListYears()
+      .then((res) => {
+        setListYears(res);
+      })
       .catch((err) => handleError(err))
       .finally(() => setLoading(false));
   }, []);
 
-  const handleSubmitYear = () => {
-    console.log('andleSubmitYear');
-  };
+  const handleSubmitYear = () => {};
 
-  const handleSubmitUser = () => {
-    console.log('handleSubmitUser');
-  };
+  const handleSubmitUser = () => {};
 
-  return user ? (
-    <>
+  return (
+    <section className={styles.page}>
       {isLoading && <Loader />}
-      {isPopupOpen && (
-        <InfoPopup text={popupText} handleClosePopup={closePopup} />
-      )}
-      <section className={styles.page}>
-        <div
-          style={isEstimate ? { background: 'white' } : null}
-          className={styles.container}
-        >
-          <header className={styles.header}>
-            <div className={styles.analytic}>
-              <span>Аналитика</span>
-            </div>
-            <Switch
-              shadow="none"
-              labelLeft="Командная"
-              labelRight="Индивидуальная"
-              isChecked={isPrivate}
-              setIsChecked={setIsPrivate}
+      {isPopupOpen && <InfoPopup text={popupText} handleClosePopup={closePopup} />}
+      <div
+        style={isEstimate ? { background: 'white' } : null}
+        className={styles.container}
+      >
+        <header className={styles.header}>
+          <div className={styles.analytic}>
+            <span>Аналитика</span>
+          </div>
+          <Switch
+            shadow="none"
+            labelLeft="Командная"
+            labelRight="Индивидуальная"
+            isChecked={isPrivate}
+            setIsChecked={setIsPrivate}
+          />
+        </header>
+        <div className={styles.filter_block}>
+          <Switch
+            labelLeft="Оценки"
+            labelRight="Дедлайны"
+            isChecked={isEstimate}
+            setIsChecked={setIsEstimate}
+          />
+          {isPrivate && !isEstimate && (
+            <Select
+              typeSelect="users"
+              list={users}
+              buttonText="Исполнитель"
+              query={handleSubmitUser}
+              selectStyle={styles.user_select}
+              buttonStyle={styles.user_button}
+              listStyle={styles.users_ul}
+              optionStyle={styles.users_list}
             />
-          </header>
-          <div className={styles.filter_block}>
-            <Switch
-              labelLeft="Оценки"
-              labelRight="Дедлайны"
-              isChecked={isEstimate}
-              setIsChecked={setIsEstimate}
+          )}
+          {!isEstimate && (
+            <Select
+              typeSelect="year"
+              list={listYears}
+              buttonText="Год"
+              query={handleSubmitYear}
+              selectStyle={styles.select_year}
+              buttonStyle={styles.year_button}
+              listStyle={styles.year_ul}
+              optionStyle={styles.year_list}
             />
-            {isPrivate && !isEstimate && (
+          )}
+          {isEstimate && (
+            <div className={styles.deadline_filter}>
               <Select
-                typeSelect="users"
-                list={users}
-                buttonText="Исполнитель"
-                query={handleSubmitUser}
-                selectStyle={styles.user_select}
-                buttonStyle={styles.user_button}
-                listStyle={styles.users_ul}
-                optionStyle={styles.users_list}
+                typeSelect="month"
+                list={['Январь', 'Февраль', 'Март', 'Апрель']}
+                buttonText="Февраль"
+                selectStyle={styles.month_select}
+                buttonStyle={styles.month_button}
+                listStyle={styles.month_ul}
+                optionStyle={styles.month_list}
               />
-            )}
-            {!isEstimate && (
               <Select
                 typeSelect="year"
                 list={['2023', '2024', '2025', '2026']}
-                buttonText="Год"
+                buttonText="2024"
+                selectStyle={styles.deadline_select}
+                buttonStyle={styles.deadline_button}
+                listStyle={styles.deadline_ul}
+                optionStyle={styles.deadline_list}
                 query={handleSubmitYear}
-                selectStyle={styles.select_year}
-                buttonStyle={styles.year_button}
-                listStyle={styles.year_ul}
-                optionStyle={styles.year_list}
               />
-            )}
-            {isEstimate && (
-              <div className={styles.deadline_filter}>
-                <Select
-                  typeSelect="month"
-                  list={['Январь', 'Февраль', 'Март', 'Апрель']}
-                  buttonText="Февраль"
-                  selectStyle={styles.month_select}
-                  buttonStyle={styles.month_button}
-                  listStyle={styles.month_ul}
-                  optionStyle={styles.month_list}
-                />
-                <Select
-                  typeSelect="year"
-                  list={['2023', '2024', '2025', '2026']}
-                  buttonText="2024"
-                  selectStyle={styles.deadline_select}
-                  buttonStyle={styles.deadline_button}
-                  listStyle={styles.deadline_ul}
-                  optionStyle={styles.deadline_list}
-                  query={handleSubmitYear}
-                />
-                <button className={styles.deadline_submit}>Показать</button>
-              </div>
-            )}
-          </div>
-          <article
-            style={
-              isEstimate
-                ? { boxShadow: '0px 4px 20px 0px rgba(166, 166, 166, 0.4)' }
-                : null
-            }
-            className={styles.info_block}
-          >
-            {data && !isEstimate ? (
-              data.map((item) => (
-                <div className={styles.rating_block} key={item.id}>
-                  <div className={styles.date}>
-                    <span>
-                      {item.month} {item.year}
-                    </span>
-                  </div>
-                  <SetStars
-                    rating={item.rating}
-                    starOut={styles.starOut}
-                    starIn={styles.starIn}
-                  />
-                </div>
-              ))
-            ) : (
-              <div className={styles.img_block}>
-                <img className={styles.flyMan} src={flyMan} alt="Список пуст" />
-                <span>Данных для аналитики ещё нет.</span>
-              </div>
-            )}
-          </article>
+              <button className={styles.deadline_submit}>Показать</button>
+            </div>
+          )}
         </div>
-      </section>
-    </>
-  ) : (
-    ''
+        <article
+          style={
+            isEstimate
+              ? { boxShadow: '0px 4px 20px 0px rgba(166, 166, 166, 0.4)' }
+              : null
+          }
+          className={styles.info_block}
+        >
+          {data && !isEstimate ? (
+            data.map((item) => (
+              <div className={styles.rating_block} key={item.id}>
+                <div className={styles.date}>
+                  <span>
+                    {item.month} {item.year}
+                  </span>
+                </div>
+                <SetStars
+                  rating={item.rating}
+                  starOut={styles.starOut}
+                  starIn={styles.starIn}
+                />
+              </div>
+            ))
+          ) : (
+            <div className={styles.img_block}>
+              <div className={styles.flyMan} />
+              <span>Данных для аналитики ещё нет.</span>
+            </div>
+          )}
+        </article>
+      </div>
+    </section>
   );
 }
 

@@ -11,10 +11,9 @@
     display: flex;
     flex-direction: column;
     width: 1163px;
-    height: 100vh;
+    height: calc(100vh - 84px);
     border-radius: 40px;
     background: $light-gray-base-color;
-    overflow: hidden;
 
     .header {
       display: flex;
@@ -22,11 +21,12 @@
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      height: 120px;
+      min-height: 120px;
       padding: 0 27px 0 32px;
       box-shadow: 0px 4px 20px 0px rgba(166, 166, 166, 0.4);
       background: $light-gray-base-color;
       border-radius: 40px;
+      z-index: 2;
 
       .analytic {
         display: flex;
@@ -44,17 +44,17 @@
         }
       }
     }
+
     .filter_block {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      height: 134px;
+      min-height: 134px;
       width: 100%;
 
       .select_year {
         position: relative;
-
         width: 134px;
         height: 54px;
         border-radius: 40px;
@@ -67,69 +67,68 @@
           &:first-child {
             margin-top: 12px;
           }
+
           &:last-child {
             margin-bottom: 12px;
           }
         }
 
         .year_button {
-        text-decoration: none;
-        width: 134px;
-        height: 54px;
-        border-radius: 40px;
-        background: $purple-base-color;
-        appearance: none;
-        background-image: url(../../images/select-arrow.svg);
-        background-position-x: calc(100% - 26px);
-        background-position-y: center;
-        background-repeat: no-repeat;
-        padding: 14px 26px;
-        @include text($black-base-color, 20px, 500, 1.2);
-        text-align: start;
-        cursor: pointer;
-        border: none;
-      }
-
-      .year_list {
-        @include text($black-base-color, 16px, 500, 22px);
-        height: 38px;
-        margin: 0;
-        padding: 8px;
-        z-index: 1;
-        text-align: center;
-
-        cursor: pointer;
-
-        &:first-child {
-          margin-top: 12px;
+          text-decoration: none;
+          width: 134px;
+          height: 54px;
+          border-radius: 40px;
+          background: $purple-base-color;
+          appearance: none;
+          background-image: url(../../images/select-arrow.svg);
+          background-position-x: calc(100% - 26px);
+          background-position-y: center;
+          background-repeat: no-repeat;
+          padding: 14px 26px;
+          @include text($black-base-color, 20px, 500, 1.2);
+          text-align: start;
+          cursor: pointer;
+          border: none;
         }
 
-        &:last-child {
-          margin-bottom: 12px;
+        .year_list {
+          @include text($black-base-color, 16px, 500, 22px);
+          height: 38px;
+          margin: 0;
+          padding: 8px;
+          z-index: 1;
+          text-align: center;
+
+          cursor: pointer;
+
+          &:first-child {
+            margin-top: 12px;
+          }
+
+          &:last-child {
+            margin-bottom: 12px;
+          }
+
+          &:hover {
+            background: $white-base-color;
+          }
         }
 
-        &:hover {
-          background: $white-base-color;
+        .year_ul {
+          position: absolute;
+          display: none;
+          top: 54px;
+          left: 0;
+          margin-top: 4px;
+          padding: 0;
+          list-style: none;
+          background-color: $purple-base-color;
+          width: 134px;
+          border-radius: 18px;
+          z-index: 3;
+          align-items: center;
         }
       }
-
-      .year_ul {
-        position: absolute;
-        display: none;
-        top: 54px;
-        left: 0;
-        margin-top: 4px;
-        padding: 0;
-        list-style: none;
-        background-color: $purple-base-color;
-        width: 134px;
-        border-radius: 18px;
-        z-index: 3;
-        align-items: center;
-      }
-      }
-
-
 
       .users_ul {
         position: absolute;
@@ -170,10 +169,14 @@
         list-style: none;
         height: 38px;
         margin: 0;
-        padding: 11px 16px;
+        padding: 0 16px;
         z-index: 1;
         text-align: start;
         cursor: pointer;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: flex;
+        align-items: center;
 
         &:first-child {
           margin-top: 12px;
@@ -204,6 +207,7 @@
           &:first-child {
             margin-top: 12px;
           }
+
           &:last-child {
             margin-bottom: 12px;
           }
@@ -214,28 +218,30 @@
     .info_block {
       display: flex;
       align-items: center;
-      justify-content: center;
       flex-direction: column;
       width: 100%;
-      height: 100%;
+      height: calc(100% - 254px);
       min-height: 622px;
-      padding: 40px;
-      border-radius: 28px;
+      padding: 0 0 40px 0;
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
       overflow-y: auto;
       overflow-x: hidden;
+      background: $light-gray-base-color;
 
       .img_block {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 40px;
-        width: 410px;
-        height: 479px;
 
         .flyMan {
           width: 320px;
           height: 332px;
-          margin-bottom: 40px;
+          margin: 80px 0 40px;
+          background-image: url(../../images/fly-man.svg);
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-position: center
         }
 
         span {
@@ -247,9 +253,10 @@
       .rating_block {
         display: flex;
         width: 100%;
-        height: 120px;
-        background: transparent;
+        min-height: 120px;
+        background: $light-gray-base-color;
         align-items: center;
+        padding: 0 32px;
         border-top: 1px solid rgb(218, 214, 214);
 
         &:last-child {
@@ -267,7 +274,7 @@
         .starOut {
           position: relative;
           z-index: 1;
-          background-image: url(../../images/rating-star-empty.svg);
+          background-image: url(../../images/star-questionnaire-empty.svg);
           width: 74px;
           height: 71px;
           background-repeat: no-repeat;
@@ -276,7 +283,7 @@
         }
 
         .starIn {
-          background-image: url(../../images/rating-star-full.svg);
+          background-image: url(../../images/star-questionnaire-full.svg);
           position: absolute;
           z-index: 2;
           overflow: hidden;
@@ -295,6 +302,7 @@
       width: 576px;
       height: 54px;
       border-radius: 20px;
+      overflow: hidden;
 
       .month_select {
         position: relative;
@@ -309,6 +317,7 @@
           &:first-child {
             margin-top: 12px;
           }
+
           &:last-child {
             margin-bottom: 12px;
           }
@@ -386,6 +395,7 @@
           &:first-child {
             margin-top: 12px;
           }
+
           &:last-child {
             margin-bottom: 12px;
           }
@@ -457,7 +467,7 @@
         width: 240px;
         height: 54px;
         background: $purple-base-color;
-        border-radius: 0 20px 20px 0 ;
+        border-radius: 0 20px 20px 0;
 
         &:hover {
           background: $wrapper;
