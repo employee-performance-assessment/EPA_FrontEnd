@@ -87,8 +87,47 @@ function EmployeeViewPage() {
       setLoading(false);
     };
 
-    !isSearching && fetchData();
-  }, [employeeId]);
+    !searchKeyword && fetchData();
+  }, [employeeId, searchKeyword, isSearching]);
+
+  useEffect(() => {
+    const getSearchResults = async () => {
+      try {
+        setLoading(true);
+        let userData;
+        let tasksData;
+        let ratingData;
+        let pointsData;
+        let questionnaireList;
+
+        if (employeeId && searchKeyword && user.isAdmin) {
+          userData = await getCurrentUser(employeeId);
+          tasksData = await getUserTasksWithSearchByAdmin(employeeId, searchKeyword);
+          ratingData = await getRatingByAdmin(employeeId);
+          pointsData = await getStatPointsByAdmin(employeeId);
+          questionnaireList = await getQuestionnaireListByAdmin(employeeId);
+        } else {
+          userData = await getCurrentUser(user.id);
+          // tasksData = await getTasksWithStatusByUser('NEW');
+          ratingData = await getRatingByUser();
+          pointsData = await getStatPointsByUser();
+          questionnaireList = await getQuestionnaireListByUser();
+        }
+        setEmployee(userData);
+        setCurrentTasks(tasksData);
+        setRating(ratingData);
+        setPoints(pointsData);
+        setAllMarks(questionnaireList);
+        setCurrentMarks(questionnaireList);
+
+      } catch (error) {
+        handleError(error);
+      }
+      setLoading(false);
+    }
+
+    searchKeyword && getSearchResults();
+  }, [searchKeyword, employeeId, isSearching])
 
   // Сортировка анкет по дате
   useEffect(() => {

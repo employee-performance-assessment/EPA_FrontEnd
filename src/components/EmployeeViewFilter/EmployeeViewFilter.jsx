@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute';
@@ -19,7 +19,11 @@ function EmployeeViewFilter({
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
   const [selectedStatus, setSelectedStatus] = useState('NEW');
   const navigate = useNavigate();
-  const { id: employeeId } = useParams();
+  const { id: employeeId, keyword: searchKeyword } = useParams();
+
+  useEffect(() => {
+    searchKeyword && setSearchQuery(searchKeyword);
+  }, [searchKeyword])
 
   const handleStatusChange = (status) => {
     setSelectedStatus(status);
@@ -28,13 +32,14 @@ function EmployeeViewFilter({
   };
 
   const handleSearchChange = async (evt) => {
-    const request = evt.target.value.trim();
-    navigate(`/search/${request}`);
-    navigate(
-      `${ENDPOINT_ROUTES.cardsEmployees}/${employeeId}/search/${request}`
-    );
-    setSearchQuery(request);
-    handleSearch(request);
+    const request = evt.target.value;
+    if (request) {
+      navigate(
+        `${ENDPOINT_ROUTES.cardsEmployees}/${employeeId}/search/${request}`
+      );
+      setSearchQuery(request);
+      handleSearch(request);
+    }
   };
 
   return viewMarks ? (
@@ -103,7 +108,7 @@ function EmployeeViewFilter({
           onClick={() => handleStatusChange('NEW')}
         />
         <label
-          className={`${styles.employeeViewFilter__label} ${selectedStatus === 'NEW' && !searchQuery ? styles.selected : ''}`}
+          className={`${styles.employeeViewFilter__label} ${(selectedStatus === 'NEW' && !searchQuery) ? styles.selected : ''}`}
           htmlFor="new"
         >
           К выполнению
