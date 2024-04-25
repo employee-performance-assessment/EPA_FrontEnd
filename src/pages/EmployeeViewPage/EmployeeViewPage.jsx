@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import EmployeeViewHeader from '../../components/EmployeeViewHeader/EmployeeViewHeader.jsx';
 import Switch from '../../components/Switch/Switch.jsx';
@@ -42,8 +42,9 @@ function EmployeeViewPage() {
   const [searchedTasks, setSearchedTasks] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { id: employeeId } = useParams();
+  const { id: employeeId, keyword: searchKeyword } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const user = getFromLocalStorage('user');
 
@@ -86,7 +87,7 @@ function EmployeeViewPage() {
       setLoading(false);
     };
 
-    fetchData();
+    !isSearching && fetchData();
   }, [employeeId]);
 
   // Сортировка анкет по дате
@@ -154,6 +155,12 @@ function EmployeeViewPage() {
     setLoading(false);
   }
 
+  function handleCloseSearchForm () {
+    setSearchQuery('');
+    setIsSearching(false);
+    navigate(`/cards-employees/${employeeId}`)
+  }
+
   function handleSwitch() {
     setViewTask(!viewTask);
     setSearchQuery('');
@@ -186,6 +193,7 @@ function EmployeeViewPage() {
           handleSearch={handleSearch}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
+          handleCloseSearchForm={handleCloseSearchForm}
         />
         {isSearching ? (
           <SearchedTasks tasks={searchedTasks} />

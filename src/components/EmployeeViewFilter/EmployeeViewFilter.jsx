@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute';
 import InputStars from '../InputStars/InputStars';
+import CloseIcon from '../../images/closeIcon.png';
 import styles from './EmployeeViewFilter.module.scss';
 
 function EmployeeViewFilter({
@@ -10,10 +13,13 @@ function EmployeeViewFilter({
   getTasksByStatus,
   handleSearch,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  handleCloseSearchForm,
 }) {
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
   const [selectedStatus, setSelectedStatus] = useState('NEW');
+  const navigate = useNavigate();
+  const { id: employeeId } = useParams();
 
   const handleStatusChange = (status) => {
     setSelectedStatus(status);
@@ -21,9 +27,14 @@ function EmployeeViewFilter({
     setSearchQuery('');
   };
 
-  const handleSearchChange = async(evt) => {
-    setSearchQuery(evt.target.value);
-    handleSearch(evt.target.value.trim());
+  const handleSearchChange = async (evt) => {
+    const request = evt.target.value.trim();
+    navigate(`/search/${request}`);
+    navigate(
+      `${ENDPOINT_ROUTES.cardsEmployees}/${employeeId}/search/${request}`
+    );
+    setSearchQuery(request);
+    handleSearch(request);
   };
 
   return viewMarks ? (
@@ -56,7 +67,27 @@ function EmployeeViewFilter({
     </div>
   ) : (
     <form className={styles.employeeViewFilter__container}>
-      <h3 className={styles.employeeViewFilter__title}>Фильтры:</h3>
+      {searchQuery ? (
+        <>
+          <input
+            className={styles.employeeViewFilter__input_task}
+            type="radio"
+            name="filterTask"
+            id="all"
+            value="all"
+            aria-label="Все"
+            defaultChecked={searchQuery}
+          />
+          <label
+            className={`${styles.employeeViewFilter__label} ${styles.selected}`}
+            htmlFor="new"
+          >
+            Все
+          </label>
+        </>
+      ) : (
+        <h3 className={styles.employeeViewFilter__title}>Фильтры:</h3>
+      )}
       <div
         className={styles.employeeViewFilter__inputs}
         onChange={handleChange}
@@ -68,11 +99,11 @@ function EmployeeViewFilter({
           id="new"
           value="new"
           aria-label="К выполнению"
-          defaultChecked
+          defaultChecked={!searchQuery}
           onClick={() => handleStatusChange('NEW')}
         />
         <label
-          className={`${styles.employeeViewFilter__label} ${selectedStatus === 'NEW' ? styles.selected : ''}`}
+          className={`${styles.employeeViewFilter__label} ${selectedStatus === 'NEW' && !searchQuery ? styles.selected : ''}`}
           htmlFor="new"
         >
           К выполнению
@@ -88,7 +119,7 @@ function EmployeeViewFilter({
         />
         <label
           htmlFor="inProgress"
-          className={`${styles.employeeViewFilter__label} ${selectedStatus === 'IN_PROGRESS' ? styles.selected : ''}`}
+          className={`${styles.employeeViewFilter__label} ${selectedStatus === 'IN_PROGRESS' && !searchQuery ? styles.selected : ''}`}
         >
           В работе
         </label>
@@ -103,7 +134,7 @@ function EmployeeViewFilter({
         />
         <label
           htmlFor="review"
-          className={`${styles.employeeViewFilter__label} ${selectedStatus === 'REVIEW' ? styles.selected : ''}`}
+          className={`${styles.employeeViewFilter__label} ${selectedStatus === 'REVIEW' && !searchQuery ? styles.selected : ''}`}
         >
           На ревью
         </label>
@@ -118,19 +149,31 @@ function EmployeeViewFilter({
         />
         <label
           htmlFor="done"
-          className={`${styles.employeeViewFilter__label} ${selectedStatus === 'DONE' ? styles.selected : ''}`}
+          className={`${styles.employeeViewFilter__label} ${selectedStatus === 'DONE' && !searchQuery ? styles.selected : ''}`}
         >
           Выполнено
         </label>
       </div>
-      <input
-        type="text"
-        name="search"
-        className={styles.employeeViewFilter__input}
-        placeholder="Поиск"
-        value={searchQuery}
-        onChange={handleSearchChange}
-      />
+      <form className={styles.employeeViewFilter__searchForm}>
+        <input
+          type="text"
+          name="search"
+          className={styles.employeeViewFilter__input}
+          placeholder="Поиск"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+        <button
+          className={styles.employeeViewFilter__searchForm_button}
+          type="button"
+          onClick={handleCloseSearchForm}
+        >
+          <span
+            style={{ backgroundImage: `url(${CloseIcon})` }}
+            className={styles.employeeViewFilter__searchForm_icon}
+          />
+        </button>
+      </form>
     </form>
   );
 }
