@@ -22,6 +22,7 @@ import {
   getStatPointsByAdmin,
   getStatPointsByUser,
   getUserTasksWithSearchByAdmin,
+  getUserTasksWithSearchAndStatusByAdmin
 } from '../../utils/mainApi.js';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import useLoading from '../../hooks/useLoader.js';
@@ -179,6 +180,15 @@ function EmployeeViewPage() {
     setLoading(false);
   }
 
+  async function getTasksByStatusAndKeyword(status, keyword) {
+    try {
+      const tasksByStatusAndKeyword = await getUserTasksWithSearchAndStatusByAdmin(employeeId, status, keyword);
+      setSearchedTasks(tasksByStatusAndKeyword);
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
   async function handleSearch(searchQuery) {
     setLoading(true);
     setIsSearching(true);
@@ -230,11 +240,11 @@ function EmployeeViewPage() {
           version={version}
           getTasksByStatus={getTasksByStatus}
           handleSearch={handleSearch}
-          searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           handleCloseSearchForm={handleCloseSearchForm}
+          getTasksByStatusAndKeyword={getTasksByStatusAndKeyword}
         />
-        {isSearching ? (
+        {searchKeyword ? (
           <SearchedTasks tasks={searchedTasks} />
         ) : (
           <EmployeeViewBlock

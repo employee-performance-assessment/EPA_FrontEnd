@@ -12,26 +12,36 @@ function EmployeeViewFilter({
   version,
   getTasksByStatus,
   handleSearch,
-  searchQuery,
   setSearchQuery,
   handleCloseSearchForm,
+  getTasksByStatusAndKeyword
 }) {
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
-  const [selectedStatus, setSelectedStatus] = useState('NEW');
+
   const navigate = useNavigate();
   const { id: employeeId, keyword: searchKeyword } = useParams();
+  const [selectedStatus, setSelectedStatus] = useState(searchKeyword ? '' : "NEW");
 
   useEffect(() => {
-    searchKeyword && setSearchQuery(searchKeyword);
+    if(searchKeyword) {
+      setSearchQuery(searchKeyword);
+      setSelectedStatus('');
+    } else {
+      setSelectedStatus('NEW');
+    }
   }, [searchKeyword])
 
   const handleStatusChange = (status) => {
-    setSelectedStatus(status);
-    getTasksByStatus(status);
-    setSearchQuery('');
+    if(status) {
+      setSelectedStatus(status);
+      searchKeyword ? getTasksByStatusAndKeyword(status, searchKeyword) : getTasksByStatus(status);
+    } else {
+      setSelectedStatus('');
+      handleSearch(searchKeyword);
+    }
   };
 
-  const handleSearchChange = async (evt) => {
+  const handleSearchChange = (evt) => {
     const request = evt.target.value;
     if (request) {
       navigate(
@@ -39,8 +49,17 @@ function EmployeeViewFilter({
       );
       setSearchQuery(request);
       handleSearch(request);
+      setSelectedStatus('');
+    } else {
+      navigate(`${ENDPOINT_ROUTES.cardsEmployees}/${employeeId}`);
+      setSelectedStatus('');
     }
   };
+
+  const clearSearchForm = () => {
+    handleCloseSearchForm();
+    setSelectedStatus('NEW');
+  }
 
   return viewMarks ? (
     <div className={styles.employeeViewFilter__container}>
@@ -72,7 +91,7 @@ function EmployeeViewFilter({
     </div>
   ) : (
     <form className={styles.employeeViewFilter__container}>
-      {searchQuery ? (
+      {searchKeyword ? (
         <>
           <input
             className={styles.employeeViewFilter__input_task}
@@ -81,11 +100,12 @@ function EmployeeViewFilter({
             id="all"
             value="all"
             aria-label="Все"
-            defaultChecked={searchQuery}
+            defaultChecked={searchKeyword}
           />
           <label
-            className={`${styles.employeeViewFilter__label} ${styles.selected}`}
-            htmlFor="new"
+            className={`${styles.employeeViewFilter__label} ${selectedStatus === '' ? styles.selected : ''}`}
+            htmlFor="all"
+            onClick={() => handleStatusChange('')}
           >
             Все
           </label>
@@ -104,11 +124,11 @@ function EmployeeViewFilter({
           id="new"
           value="new"
           aria-label="К выполнению"
-          defaultChecked={!searchQuery}
+          defaultChecked={selectedStatus === 'NEW'}
           onClick={() => handleStatusChange('NEW')}
         />
         <label
-          className={`${styles.employeeViewFilter__label} ${(selectedStatus === 'NEW' && !searchQuery) ? styles.selected : ''}`}
+          className={`${styles.employeeViewFilter__label} ${selectedStatus === 'NEW' ? styles.selected : ''}`}
           htmlFor="new"
         >
           К выполнению
@@ -124,7 +144,7 @@ function EmployeeViewFilter({
         />
         <label
           htmlFor="inProgress"
-          className={`${styles.employeeViewFilter__label} ${selectedStatus === 'IN_PROGRESS' && !searchQuery ? styles.selected : ''}`}
+          className={`${styles.employeeViewFilter__label} ${selectedStatus === 'IN_PROGRESS' ? styles.selected : ''}`}
         >
           В работе
         </label>
@@ -139,7 +159,7 @@ function EmployeeViewFilter({
         />
         <label
           htmlFor="review"
-          className={`${styles.employeeViewFilter__label} ${selectedStatus === 'REVIEW' && !searchQuery ? styles.selected : ''}`}
+          className={`${styles.employeeViewFilter__label} ${selectedStatus === 'REVIEW' ? styles.selected : ''}`}
         >
           На ревью
         </label>
@@ -154,31 +174,31 @@ function EmployeeViewFilter({
         />
         <label
           htmlFor="done"
-          className={`${styles.employeeViewFilter__label} ${selectedStatus === 'DONE' && !searchQuery ? styles.selected : ''}`}
+          className={`${styles.employeeViewFilter__label} ${selectedStatus === 'DONE' ? styles.selected : ''}`}
         >
           Выполнено
         </label>
       </div>
-      <form className={styles.employeeViewFilter__searchForm}>
+      <div className={styles.employeeViewFilter__searchForm}>
         <input
           type="text"
           name="search"
           className={styles.employeeViewFilter__input}
           placeholder="Поиск"
-          value={searchQuery}
+          value={searchKeyword || ''}
           onChange={handleSearchChange}
         />
         <button
           className={styles.employeeViewFilter__searchForm_button}
           type="button"
-          onClick={handleCloseSearchForm}
+          onClick={clearSearchForm}
         >
           <span
             style={{ backgroundImage: `url(${CloseIcon})` }}
             className={styles.employeeViewFilter__searchForm_icon}
           />
         </button>
-      </form>
+      </div>
     </form>
   );
 }
