@@ -21,6 +21,7 @@ import {
   ADMIN_USERS,
   USER_RATING,
   LIST_YEARS,
+  LIST_MONTH,
   ADMIN_TASK,
   USER_TASK,
   PROJECTS,
@@ -223,3 +224,4 @@ export const getStatPointsByUser = () => request(USER_STAT_POINTS, 'GET');
 
 // ANALYTICS
 export const getListYears = () => request(LIST_YEARS, 'GET');
+export const getListMonth = (year) => request(`${LIST_MONTH}?year=${year}`, 'GET');

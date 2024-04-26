@@ -38,7 +38,7 @@ function Select({
       setValueMonth(e.target.id);
     }
     dispatch(hiddenOverlay());
-    typeSelect === 'year' || typeSelect === 'users' ? query() : null;
+    typeSelect === 'year' || typeSelect === 'users' ? query(e) : null;
   };
 
   return (

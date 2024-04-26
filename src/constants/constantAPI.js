@@ -45,3 +45,4 @@ export const EMPLOYEE_ME = `${BASE_URL}/user/employee/me`;
 export const USER_EMPLOYEE_ME = `${BASE_URL}/user/task/all-employees`;
 
 export const LIST_YEARS = `${BASE_URL}/user/employee/list-of-years`;
+export const LIST_MONTH = `${BASE_URL}/user/evaluations/rating/command`;
