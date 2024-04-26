@@ -274,8 +274,8 @@
         .starOut {
           position: relative;
           z-index: 1;
-          background-image: url(../../images/star-questionnaire-empty.svg);
-          width: 74px;
+          background-image: url(../../images/star-analytics-empty.svg);
+          width: 74.5px;
           height: 71px;
           background-repeat: no-repeat;
           background-size: cover;
@@ -283,12 +283,12 @@
         }
 
         .starIn {
-          background-image: url(../../images/star-questionnaire-full.svg);
+          background-image: url(../../images/star-analytics-full.svg);
           position: absolute;
           z-index: 2;
           overflow: hidden;
           width: 0;
-          width: 74px;
+          width: 74.5px;
           height: 71px;
           background-repeat: no-repeat;
           background-size: cover;

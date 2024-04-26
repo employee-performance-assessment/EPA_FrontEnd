@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import Switch from '../../components/Switch/Switch.jsx';
 import Select from '../../components/Select/Select.jsx';
 import SetStars from '../../components/SetStars/SetStars.js';
@@ -7,45 +7,72 @@ import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import Loader from '../../components/Loader/Loader.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import useLoading from '../../hooks/useLoader.js';
-import { getAllUsers, getListYears } from '../../utils/mainApi.js';
-import data from './data.json';
+import { getAllUsers, getListMonth, getListYears } from '../../utils/mainApi.js';
 import styles from './AnalyticsPage.module.scss';
 
 function AnalyticsPage() {
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
+  const currentYear = new Date().getFullYear();
   const [isPrivate, setIsPrivate] = useState(false);
   const [isEstimate, setIsEstimate] = useState(false);
   const [users, setUsers] = useState([]);
   const [listYears, setListYears] = useState([]);
-
-  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
+  const [listMonth, setListMonth] = useState([]);
+  const [selectedListYear, setSelectedListYear] = useState(currentYear);
   const { isLoading, setLoading } = useLoading();
+  const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
 
-  // GET /user/evaluations/rating/command Получение командного рейтинга по месяцам указанного года.
   // GET /user/stat/task/team Получения командной статистики сотрудником
   // GET /user/stat/task/individual Получения индивидуальной статистики сотрудником
   // GET /admin/rating/personal получения руководителем персонального рейтинга сотрудника за каждый месяц указанного года
 
   useEffect(() => {
     setLoading(true);
+
+    getListMonth(selectedListYear)
+      .then((res) => {
+        setListMonth(res);
+      })
+      .catch((err) => handleError(err))
+      .finally(() => setLoading(false));
+
     getAllUsers()
-      .then((users) => {
-        setUsers(users)
+      .then((res) => {
+        setUsers(res);
       })
       .catch((err) => handleError(err))
       .finally(() => setLoading(false));
 
     getListYears()
       .then((res) => {
-        setListYears(res);
+        setListYears(res.reverse());
       })
       .catch((err) => handleError(err))
       .finally(() => setLoading(false));
   }, []);
 
-  const handleSubmitYear = () => {};
+  function getNameMonth(number) {
+    const date = new Date(String(number));
+    let monthName = date.toLocaleString('default', { month: 'long' });
+    monthName = monthName[0].toLocaleUpperCase() + monthName.slice(1);
 
-  const handleSubmitUser = () => {};
+    return `${monthName} ${selectedListYear}`;
+  }
+
+  const handleSubmitYear = (evt) => {
+    setLoading(true);
+    const selectedYear = evt.target.value;
+    setSelectedListYear(selectedYear);
+
+    getListMonth(selectedYear)
+      .then((res) => {
+        setListMonth(res);
+      })
+      .catch((err) => handleError(err))
+      .finally(() => setLoading(false));
+  };
+
+  const handleSubmitUser = () => { };
 
   return (
     <section className={styles.page}>
@@ -90,7 +117,7 @@ function AnalyticsPage() {
             <Select
               typeSelect="year"
               list={listYears}
-              buttonText="Год"
+              buttonText={selectedListYear}
               query={handleSubmitYear}
               selectStyle={styles.select_year}
               buttonStyle={styles.year_button}
@@ -124,19 +151,18 @@ function AnalyticsPage() {
           )}
         </div>
         <article
-          style={
-            isEstimate
-              ? { boxShadow: '0px 4px 20px 0px rgba(166, 166, 166, 0.4)' }
-              : null
+          style={isEstimate ?
+            { boxShadow: '0px 4px 20px 0px rgba(166, 166, 166, 0.4)' } :
+            null
           }
           className={styles.info_block}
         >
-          {data && !isEstimate ? (
-            data.map((item) => (
-              <div className={styles.rating_block} key={item.id}>
+          {listMonth && !isEstimate ? (
+            listMonth.map((item) => (
+              <div className={styles.rating_block} key={item.monthNumber}>
                 <div className={styles.date}>
                   <span>
-                    {item.month} {item.year}
+                    {getNameMonth(item.monthNumber)} {item.year}
                   </span>
                 </div>
                 <SetStars
