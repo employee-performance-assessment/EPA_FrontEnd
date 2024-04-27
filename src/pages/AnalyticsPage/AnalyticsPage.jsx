@@ -7,7 +7,7 @@ import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import Loader from '../../components/Loader/Loader.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import useLoading from '../../hooks/useLoader.js';
-import { getAllUsers, getListMonth, getListYears } from '../../utils/mainApi.js';
+import { getAllUsers, getListMonth, getListMonthUser, getListYears } from '../../utils/mainApi.js';
 import styles from './AnalyticsPage.module.scss';
 
 function AnalyticsPage() {
@@ -21,10 +21,6 @@ function AnalyticsPage() {
   const [selectedListYear, setSelectedListYear] = useState(currentYear);
   const { isLoading, setLoading } = useLoading();
   const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
-
-  // GET /user/stat/task/team Получения командной статистики сотрудником
-  // GET /user/stat/task/individual Получения индивидуальной статистики сотрудником
-  // GET /admin/rating/personal получения руководителем персонального рейтинга сотрудника за каждый месяц указанного года
 
   useEffect(() => {
     setLoading(true);
@@ -51,6 +47,19 @@ function AnalyticsPage() {
       .finally(() => setLoading(false));
   }, []);
 
+  useEffect(() => {
+    if (!isPrivate) {
+      setLoading(true);
+
+      getListMonth(selectedListYear)
+        .then((res) => {
+          setListMonth(res);
+        })
+        .catch((err) => handleError(err))
+        .finally(() => setLoading(false));
+    }
+  }, [isPrivate]);
+
   function getNameMonth(number) {
     const date = new Date(String(number));
     let monthName = date.toLocaleString('default', { month: 'long' });
@@ -72,7 +81,17 @@ function AnalyticsPage() {
       .finally(() => setLoading(false));
   };
 
-  const handleSubmitUser = () => { };
+  const handleSubmitUser = (evt) => {
+    setLoading(true);
+    const selectedUser = evt.target.value;
+
+    getListMonthUser(selectedUser, selectedListYear)
+      .then((res) => {
+        setListMonth(res);
+      })
+      .catch((err) => handleError(err))
+      .finally(() => setLoading(false));
+  };
 
   return (
     <section className={styles.page}>

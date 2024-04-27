@@ -13,6 +13,7 @@ import {
   ADMIN_STAT_POINTS,
   USER_EMPLOYEE_ME,
   USER_STAT_POINTS,
+  LIST_MONTH_USER,
   ADMIN_PROJECTS,
   ADMIN_CRITERIA,
   ADMIN_RATING,
@@ -225,3 +226,5 @@ export const getStatPointsByUser = () => request(USER_STAT_POINTS, 'GET');
 // ANALYTICS
 export const getListYears = () => request(LIST_YEARS, 'GET');
 export const getListMonth = (year) => request(`${LIST_MONTH}?year=${year}`, 'GET');
+export const getListMonthUser = (evaluatedId, year) =>
+  request(`${LIST_MONTH_USER}?evaluatedId=${evaluatedId}&year=${year}`, 'GET');

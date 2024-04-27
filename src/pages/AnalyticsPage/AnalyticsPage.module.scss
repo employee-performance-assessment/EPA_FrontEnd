@@ -156,11 +156,14 @@
         background-position-x: calc(100% - 24px);
         background-position-y: center;
         background-repeat: no-repeat;
-        padding: 15px 24px;
+        padding: 15px 50px 15px 24px;
         @include text($black-base-color, 20px, 500, 1.2);
         text-align: start;
         cursor: pointer;
         border: none;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-wrap: nowrap;
       }
 
       .users_list {
@@ -173,10 +176,12 @@
         z-index: 1;
         text-align: start;
         cursor: pointer;
-        overflow: hidden;
-        text-overflow: ellipsis;
         display: flex;
         align-items: center;
+        text-wrap: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 322px;
 
         &:first-child {
           margin-top: 12px;
