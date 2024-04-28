@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute';
 import InputStars from '../InputStars/InputStars';
+import CloseIcon from '../../images/closeIcon.png';
 import styles from './EmployeeViewFilter.module.scss';
 
 function EmployeeViewFilter({
@@ -8,14 +11,55 @@ function EmployeeViewFilter({
   showAllCards,
   version,
   getTasksByStatus,
+  handleSearch,
+  setSearchQuery,
+  handleCloseSearchForm,
+  getTasksByStatusAndKeyword
 }) {
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
-  const [selectedStatus, setSelectedStatus] = useState('NEW');
+
+  const navigate = useNavigate();
+  const { id: employeeId, keyword: searchKeyword } = useParams();
+  const [selectedStatus, setSelectedStatus] = useState(searchKeyword ? '' : "NEW");
+
+  useEffect(() => {
+    if(searchKeyword) {
+      setSearchQuery(searchKeyword);
+      setSelectedStatus('');
+    } else {
+      setSelectedStatus('NEW');
+    }
+  }, [searchKeyword])
 
   const handleStatusChange = (status) => {
-    setSelectedStatus(status);
-    getTasksByStatus(status);
+    if(status) {
+      setSelectedStatus(status);
+      searchKeyword ? getTasksByStatusAndKeyword(status, searchKeyword) : getTasksByStatus(status);
+    } else {
+      setSelectedStatus('');
+      handleSearch(searchKeyword);
+    }
   };
+
+  const handleSearchChange = (evt) => {
+    const request = evt.target.value;
+    if (request) {
+      navigate(
+        `${ENDPOINT_ROUTES.cardsEmployees}/${employeeId}/search/${request}`
+      );
+      setSearchQuery(request);
+      handleSearch(request);
+      setSelectedStatus('');
+    } else {
+      navigate(`${ENDPOINT_ROUTES.cardsEmployees}/${employeeId}`);
+      setSelectedStatus('');
+    }
+  };
+
+  const clearSearchForm = () => {
+    handleCloseSearchForm();
+    setSelectedStatus('NEW');
+  }
 
   return viewMarks ? (
     <div className={styles.employeeViewFilter__container}>
@@ -47,7 +91,28 @@ function EmployeeViewFilter({
     </div>
   ) : (
     <form className={styles.employeeViewFilter__container}>
-      <h3 className={styles.employeeViewFilter__title}>Фильтры:</h3>
+      {searchKeyword ? (
+        <>
+          <input
+            className={styles.employeeViewFilter__input_task}
+            type="radio"
+            name="filterTask"
+            id="all"
+            value="all"
+            aria-label="Все"
+            defaultChecked={searchKeyword}
+          />
+          <label
+            className={`${styles.employeeViewFilter__label} ${selectedStatus === '' ? styles.selected : ''}`}
+            htmlFor="all"
+            onClick={() => handleStatusChange('')}
+          >
+            Все
+          </label>
+        </>
+      ) : (
+        <h3 className={styles.employeeViewFilter__title}>Фильтры:</h3>
+      )}
       <div
         className={styles.employeeViewFilter__inputs}
         onChange={handleChange}
@@ -59,7 +124,7 @@ function EmployeeViewFilter({
           id="new"
           value="new"
           aria-label="К выполнению"
-          defaultChecked
+          defaultChecked={selectedStatus === 'NEW'}
           onClick={() => handleStatusChange('NEW')}
         />
         <label
@@ -114,11 +179,26 @@ function EmployeeViewFilter({
           Выполнено
         </label>
       </div>
-      <input
-        type="text"
-        className={styles.employeeViewFilter__input}
-        placeholder="Поиск"
-      />
+      <div className={styles.employeeViewFilter__searchForm}>
+        <input
+          type="text"
+          name="search"
+          className={styles.employeeViewFilter__input}
+          placeholder="Поиск"
+          value={searchKeyword || ''}
+          onChange={handleSearchChange}
+        />
+        <button
+          className={styles.employeeViewFilter__searchForm_button}
+          type="button"
+          onClick={clearSearchForm}
+        >
+          <span
+            style={{ backgroundImage: `url(${CloseIcon})` }}
+            className={styles.employeeViewFilter__searchForm_icon}
+          />
+        </button>
+      </div>
     </form>
   );
 }

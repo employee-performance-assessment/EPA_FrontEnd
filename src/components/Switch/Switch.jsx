@@ -1,6 +1,12 @@
 import './Switch.scss';
 
-function Switch({ labelLeft, labelRight, isChecked, setIsChecked, shadow }) {
+function Switch({
+  labelLeft,
+  labelRight,
+  isChecked,
+  handleChange,
+  shadow,
+}) {
   return (
     <label
       style={{ boxShadow: shadow }}
@@ -9,7 +15,7 @@ function Switch({ labelLeft, labelRight, isChecked, setIsChecked, shadow }) {
       <input
         type="checkbox"
         checked={isChecked}
-        onChange={() => setIsChecked(!isChecked)}
+        onChange={handleChange}
         className="checkbox-input"
       />
       <div className="left-side">

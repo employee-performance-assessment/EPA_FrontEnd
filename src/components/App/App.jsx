@@ -110,9 +110,11 @@ function App() {
           <Route path={analytics} element={<AnalyticsPage />} />
           <Route path={criteria} element={<AssessmentCriteria />} />
           <Route
+            index="true"
             path={`${cardsEmployees}/:id`}
             element={<EmployeeViewPage />}
           />
+          <Route path={`${cardsEmployees}/:id/search/:keyword`} element={<EmployeeViewPage />} />
           <Route
             path={`${ratingCards}/:employeeId/:questionnaireId`}
             element={<EmployeeRatingPage />}
@@ -125,7 +127,13 @@ function App() {
             element={<EmployeeRatingPage />}
           />
           <Route path={board} element={<Kanban />} />
-          <Route path={`${taskCards}/:id`} element={<TaskViewPage />} />
+          <Route
+            index="true"
+            path={`${taskCards}/:id`}
+            element={<TaskViewPage />}
+          />
+          <Route path="/search/:keyword" element={<TaskViewPage />} />
+          {/* <Route path={`${taskCards}/:id/search/:keyword`} element={<TaskViewPage />} /> */}
           <Route path={estimate} element={<AssessmentBlock />} />
           <Route
             path={`${questionnaire}/:date/:questionnaireId/:employeeId`}
