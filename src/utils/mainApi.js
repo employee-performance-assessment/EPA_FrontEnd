@@ -107,6 +107,18 @@ export const getUserTasksWithStatusByAdmin = (employeeId, status) =>
     'GET'
   );
 
+  export const getUserTasksWithSearchByAdmin = (employeeId, searchQuery) =>
+  request(
+    `${ADMIN_TASK}/find?employeeId=${employeeId}&text=${searchQuery}`,
+    'GET'
+  );
+
+  export const getUserTasksWithSearchAndStatusByAdmin = (employeeId, status, searchQuery) =>
+  request(
+    `${ADMIN_TASK}/find?employeeId=${employeeId}&status=${status}&text=${searchQuery}`,
+    'GET'
+  );
+
 export const getTaskDetailsByAdmin = (taskId) =>
   request(`${ADMIN_TASK}/${taskId}`, 'GET');
 

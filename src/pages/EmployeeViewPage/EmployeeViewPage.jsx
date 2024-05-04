@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import EmployeeViewHeader from '../../components/EmployeeViewHeader/EmployeeViewHeader.jsx';
 import Switch from '../../components/Switch/Switch.jsx';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import EmployeeViewFilter from '../../components/EmployeeViewFilter/EmployeeViewFilter.jsx';
 import EmployeeViewBlock from '../../components/EmployeeViewBlock/EmployeeViewBlock.jsx';
+import SearchedTasks from '../../components/SearchedTasks/SearchedTasks.jsx';
 import Loader from '../../components/Loader/Loader.jsx';
 import { useFormValidation } from '../../hooks/useFormValidation';
 import { setViewMarks } from '../../store/slices/viewMarksSlices.js';
@@ -20,6 +21,8 @@ import {
   getRatingByUser,
   getStatPointsByAdmin,
   getStatPointsByUser,
+  getUserTasksWithSearchByAdmin,
+  getUserTasksWithSearchAndStatusByAdmin
 } from '../../utils/mainApi.js';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import useLoading from '../../hooks/useLoader.js';
@@ -36,9 +39,13 @@ function EmployeeViewPage() {
 
   const [rating, setRating] = useState(0);
   const [points, setPoints] = useState(0);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchedTasks, setSearchedTasks] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const { id: employeeId } = useParams();
+  const { id: employeeId, keyword: searchKeyword } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const user = getFromLocalStorage('user');
 
@@ -81,8 +88,47 @@ function EmployeeViewPage() {
       setLoading(false);
     };
 
-    fetchData();
-  }, [employeeId]);
+    !searchKeyword && fetchData();
+  }, [employeeId, searchKeyword, isSearching]);
+
+  useEffect(() => {
+    const getSearchResults = async () => {
+      try {
+        setLoading(true);
+        let userData;
+        let tasksData;
+        let ratingData;
+        let pointsData;
+        let questionnaireList;
+
+        if (employeeId && searchKeyword && user.isAdmin) {
+          userData = await getCurrentUser(employeeId);
+          tasksData = await getUserTasksWithSearchByAdmin(employeeId, searchKeyword);
+          ratingData = await getRatingByAdmin(employeeId);
+          pointsData = await getStatPointsByAdmin(employeeId);
+          questionnaireList = await getQuestionnaireListByAdmin(employeeId);
+        } else {
+          userData = await getCurrentUser(user.id);
+          // tasksData = await getTasksWithStatusByUser('NEW');
+          ratingData = await getRatingByUser();
+          pointsData = await getStatPointsByUser();
+          questionnaireList = await getQuestionnaireListByUser();
+        }
+        setEmployee(userData);
+        setCurrentTasks(tasksData);
+        setRating(ratingData);
+        setPoints(pointsData);
+        setAllMarks(questionnaireList);
+        setCurrentMarks(questionnaireList);
+
+      } catch (error) {
+        handleError(error);
+      }
+      setLoading(false);
+    }
+
+    searchKeyword && getSearchResults();
+  }, [searchKeyword, employeeId, isSearching])
 
   // Сортировка анкет по дате
   useEffect(() => {
@@ -126,10 +172,48 @@ function EmployeeViewPage() {
         : await getTasksWithStatusByUser(status);
 
       setCurrentTasks(tasks);
+      setIsSearching(false);
+    } catch (err) {
+      handleError(err);
+      setIsSearching(false);
+    }
+    setLoading(false);
+  }
+
+  async function getTasksByStatusAndKeyword(status, keyword) {
+    try {
+      const tasksByStatusAndKeyword = await getUserTasksWithSearchAndStatusByAdmin(employeeId, status, keyword);
+      setSearchedTasks(tasksByStatusAndKeyword);
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  async function handleSearch(searchQuery) {
+    setLoading(true);
+    setIsSearching(true);
+    try {
+      const searchTasks = await getUserTasksWithSearchByAdmin(
+        employeeId,
+        searchQuery
+      );
+      setSearchedTasks(searchTasks);
     } catch (err) {
       handleError(err);
     }
     setLoading(false);
+  }
+
+  function handleCloseSearchForm () {
+    setSearchQuery('');
+    setIsSearching(false);
+    navigate(`/cards-employees/${employeeId}`)
+  }
+
+  function handleSwitch() {
+    setViewTask(!viewTask);
+    setSearchQuery('');
+    setIsSearching(false);
   }
 
   return (
@@ -148,19 +232,27 @@ function EmployeeViewPage() {
           labelLeft="Задачи"
           labelRight="Оценки"
           isChecked={viewTask}
-          setIsChecked={setViewTask}
+          handleChange={handleSwitch}
         />
         <EmployeeViewFilter
           handleChange={handleChange}
           showAllCards={showAllCards}
           version={version}
           getTasksByStatus={getTasksByStatus}
+          handleSearch={handleSearch}
+          setSearchQuery={setSearchQuery}
+          handleCloseSearchForm={handleCloseSearchForm}
+          getTasksByStatusAndKeyword={getTasksByStatusAndKeyword}
         />
-        <EmployeeViewBlock
-          tasks={currentTasks}
-          marks={currentMarks}
-          employeeId={employeeId}
-        />
+        {searchKeyword ? (
+          <SearchedTasks tasks={searchedTasks} />
+        ) : (
+          <EmployeeViewBlock
+            tasks={currentTasks}
+            marks={currentMarks}
+            employeeId={employeeId}
+          />
+        )}
       </section>
     </>
   );
