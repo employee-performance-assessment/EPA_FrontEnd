@@ -29,7 +29,7 @@ function Auth() {
   const dispatch = useDispatch();
   const { personalArea, userArea } = ENDPOINT_ROUTES;
   const { errors, values, isValid, handleChange, resetForm } =
-  useFormValidation();
+    useFormValidation();
   const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
   const { isLoading, setLoading } = useLoading();
 
@@ -121,11 +121,13 @@ function Auth() {
                 }}
               />
             </label>
-            <button type="submit" disabled={!isValid}>
+            <button type="submit" disabled={!isValid} className={styles.loginButton}>
               Войти
             </button>
             <Link to="/signup" className={styles.link}>
-              Зарегистрироваться
+              <button type="button" className={styles.registerButton}>
+                Зарегистрироваться
+              </button>
             </Link>
           </form>
           <img
