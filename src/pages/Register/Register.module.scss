@@ -97,6 +97,10 @@
           background: $wrapper;
         }
 
+        &:active {
+          background: $yellow-base-color;
+        }
+
         &:disabled {
           background: rgb(197, 182, 241);
           opacity: 0.8;
@@ -113,6 +117,14 @@
         cursor: pointer;
         border: 2px solid $purple-base-color;
         background-color: transparent;
+
+        &:hover {
+          background: $wrapper;
+        }
+
+        &:active {
+          background: $yellow-base-color;
+        }
       }
     }
 
