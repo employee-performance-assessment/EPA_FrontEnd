@@ -22,11 +22,14 @@ import {
   getStatPointsByAdmin,
   getStatPointsByUser,
   getUserTasksWithSearchByAdmin,
-  getUserTasksWithSearchAndStatusByAdmin
+  getUserTasksWithSearchAndStatusByAdmin,
+  getTasksWithSearchByUser,
+  getTasksWithSearchAndStatusByUser,
 } from '../../utils/mainApi.js';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import useLoading from '../../hooks/useLoader.js';
 import { getFromLocalStorage } from '../../utils/localStorageFunctions.js';
+import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute.js';
 
 function EmployeeViewPage() {
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
@@ -103,13 +106,16 @@ function EmployeeViewPage() {
 
         if (employeeId && searchKeyword && user.isAdmin) {
           userData = await getCurrentUser(employeeId);
-          tasksData = await getUserTasksWithSearchByAdmin(employeeId, searchKeyword);
+          tasksData = await getUserTasksWithSearchByAdmin(
+            employeeId,
+            searchKeyword
+          );
           ratingData = await getRatingByAdmin(employeeId);
           pointsData = await getStatPointsByAdmin(employeeId);
           questionnaireList = await getQuestionnaireListByAdmin(employeeId);
-        } else {
+        } else if (searchKeyword && !user.isAdmin) {
           userData = await getCurrentUser(user.id);
-          // tasksData = await getTasksWithStatusByUser('NEW');
+          tasksData = await getTasksWithSearchByUser(searchKeyword); // ??
           ratingData = await getRatingByUser();
           pointsData = await getStatPointsByUser();
           questionnaireList = await getQuestionnaireListByUser();
@@ -120,15 +126,14 @@ function EmployeeViewPage() {
         setPoints(pointsData);
         setAllMarks(questionnaireList);
         setCurrentMarks(questionnaireList);
-
       } catch (error) {
         handleError(error);
       }
       setLoading(false);
-    }
+    };
 
     searchKeyword && getSearchResults();
-  }, [searchKeyword, employeeId, isSearching])
+  }, [searchKeyword, employeeId, isSearching]);
 
   // Сортировка анкет по дате
   useEffect(() => {
@@ -172,17 +177,31 @@ function EmployeeViewPage() {
         : await getTasksWithStatusByUser(status);
 
       setCurrentTasks(tasks);
-      setIsSearching(false);
     } catch (err) {
       handleError(err);
+    } finally {
       setIsSearching(false);
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   async function getTasksByStatusAndKeyword(status, keyword) {
     try {
-      const tasksByStatusAndKeyword = await getUserTasksWithSearchAndStatusByAdmin(employeeId, status, keyword);
+      let tasksByStatusAndKeyword;
+
+      if (user.isAdmin) {
+        tasksByStatusAndKeyword = await getUserTasksWithSearchAndStatusByAdmin(
+          employeeId,
+          status,
+          keyword
+        );
+      } else {
+        tasksByStatusAndKeyword = await getTasksWithSearchAndStatusByUser(
+          status,
+          keyword
+        );
+      }
+
       setSearchedTasks(tasksByStatusAndKeyword);
     } catch (err) {
       handleError(err);
@@ -193,10 +212,15 @@ function EmployeeViewPage() {
     setLoading(true);
     setIsSearching(true);
     try {
-      const searchTasks = await getUserTasksWithSearchByAdmin(
-        employeeId,
-        searchQuery
-      );
+      let searchTasks;
+      if (user.isAdmin) {
+        searchTasks = await getUserTasksWithSearchByAdmin(
+          employeeId,
+          searchQuery
+        );
+      } else {
+        searchTasks = await getTasksWithSearchByUser(searchQuery);
+      }
       setSearchedTasks(searchTasks);
     } catch (err) {
       handleError(err);
@@ -204,10 +228,14 @@ function EmployeeViewPage() {
     setLoading(false);
   }
 
-  function handleCloseSearchForm () {
+  function handleCloseSearchForm() {
     setSearchQuery('');
     setIsSearching(false);
-    navigate(`/cards-employees/${employeeId}`)
+    const redirectPath = user.isAdmin
+    ? `${ENDPOINT_ROUTES.cardsEmployees}/${employeeId}`
+    : ENDPOINT_ROUTES.userArea;
+
+  navigate(redirectPath);
   }
 
   function handleSwitch() {
