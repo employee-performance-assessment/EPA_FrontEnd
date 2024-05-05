@@ -209,7 +209,6 @@ function EmployeeViewPage() {
   }
 
   async function handleSearch(searchQuery) {
-    setLoading(true);
     setIsSearching(true);
     try {
       let searchTasks;
@@ -225,7 +224,6 @@ function EmployeeViewPage() {
     } catch (err) {
       handleError(err);
     }
-    setLoading(false);
   }
 
   function handleCloseSearchForm() {

@@ -24,14 +24,18 @@ function EmployeeViewFilter({
   const [selectedStatus, setSelectedStatus] = useState(
     searchKeyword ? '' : 'NEW'
   );
+  const [isValid, setIsValid] = useState(false);
   const user = getFromLocalStorage('user');
 
   useEffect(() => {
     if (searchKeyword) {
       setSearchQuery(searchKeyword);
       setSelectedStatus('');
+      handleSearch(searchKeyword);
+      setIsValid(true);
     } else {
       setSelectedStatus('NEW');
+      setIsValid(false);
     }
   }, [searchKeyword]);
 
@@ -61,6 +65,7 @@ function EmployeeViewFilter({
         ? `${ENDPOINT_ROUTES.cardsEmployees}/${employeeId}`
         : `${ENDPOINT_ROUTES.userArea}`;
       navigate(route);
+      setIsValid(false);
     }
     setSelectedStatus('');
   };
@@ -68,6 +73,7 @@ function EmployeeViewFilter({
   const clearSearchForm = () => {
     handleCloseSearchForm();
     setSelectedStatus('NEW');
+    setIsValid(false);
   };
 
   return viewMarks ? (
@@ -201,6 +207,7 @@ function EmployeeViewFilter({
           className={styles.employeeViewFilter__searchForm_button}
           type="button"
           onClick={clearSearchForm}
+          disabled={!isValid}
         >
           <span
             style={{ backgroundImage: `url(${CloseIcon})` }}
