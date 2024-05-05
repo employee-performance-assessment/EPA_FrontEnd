@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute';
+import { getFromLocalStorage } from '../../utils/localStorageFunctions';
 import InputStars from '../InputStars/InputStars';
 import CloseIcon from '../../images/closeIcon.png';
 import styles from './EmployeeViewFilter.module.scss';
@@ -14,27 +15,36 @@ function EmployeeViewFilter({
   handleSearch,
   setSearchQuery,
   handleCloseSearchForm,
-  getTasksByStatusAndKeyword
+  getTasksByStatusAndKeyword,
 }) {
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
 
   const navigate = useNavigate();
   const { id: employeeId, keyword: searchKeyword } = useParams();
-  const [selectedStatus, setSelectedStatus] = useState(searchKeyword ? '' : "NEW");
+  const [selectedStatus, setSelectedStatus] = useState(
+    searchKeyword ? '' : 'NEW'
+  );
+  const [isValid, setIsValid] = useState(false);
+  const user = getFromLocalStorage('user');
 
   useEffect(() => {
-    if(searchKeyword) {
+    if (searchKeyword) {
       setSearchQuery(searchKeyword);
       setSelectedStatus('');
+      handleSearch(searchKeyword);
+      setIsValid(true);
     } else {
       setSelectedStatus('NEW');
+      setIsValid(false);
     }
-  }, [searchKeyword])
+  }, [searchKeyword]);
 
   const handleStatusChange = (status) => {
-    if(status) {
+    if (status) {
       setSelectedStatus(status);
-      searchKeyword ? getTasksByStatusAndKeyword(status, searchKeyword) : getTasksByStatus(status);
+      searchKeyword
+        ? getTasksByStatusAndKeyword(status, searchKeyword)
+        : getTasksByStatus(status);
     } else {
       setSelectedStatus('');
       handleSearch(searchKeyword);
@@ -44,22 +54,27 @@ function EmployeeViewFilter({
   const handleSearchChange = (evt) => {
     const request = evt.target.value;
     if (request) {
-      navigate(
-        `${ENDPOINT_ROUTES.cardsEmployees}/${employeeId}/search/${request}`
-      );
+      const route = user.isAdmin
+        ? `${ENDPOINT_ROUTES.cardsEmployees}/${employeeId}/search/${request}`
+        : `${ENDPOINT_ROUTES.userArea}/search/${request}`;
+      navigate(route);
       setSearchQuery(request);
       handleSearch(request);
-      setSelectedStatus('');
     } else {
-      navigate(`${ENDPOINT_ROUTES.cardsEmployees}/${employeeId}`);
-      setSelectedStatus('');
+      const route = user.isAdmin
+        ? `${ENDPOINT_ROUTES.cardsEmployees}/${employeeId}`
+        : `${ENDPOINT_ROUTES.userArea}`;
+      navigate(route);
+      setIsValid(false);
     }
+    setSelectedStatus('');
   };
 
   const clearSearchForm = () => {
     handleCloseSearchForm();
     setSelectedStatus('NEW');
-  }
+    setIsValid(false);
+  };
 
   return viewMarks ? (
     <div className={styles.employeeViewFilter__container}>
@@ -192,6 +207,7 @@ function EmployeeViewFilter({
           className={styles.employeeViewFilter__searchForm_button}
           type="button"
           onClick={clearSearchForm}
+          disabled={!isValid}
         >
           <span
             style={{ backgroundImage: `url(${CloseIcon})` }}

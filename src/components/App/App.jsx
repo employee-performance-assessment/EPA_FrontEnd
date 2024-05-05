@@ -121,19 +121,17 @@ function App() {
           />
         </Route>
         <Route path="" element={<UserRoutes />}>
-          <Route path={userArea} element={<EmployeeViewPage />} />
+          <Route index="true" path={userArea} element={<EmployeeViewPage />} />
+          <Route path={`${userArea}/search/:keyword`} element={<EmployeeViewPage />} />
           <Route
             path={`${ratingCards}/:questionnaireId`}
             element={<EmployeeRatingPage />}
           />
           <Route path={board} element={<Kanban />} />
           <Route
-            index="true"
             path={`${taskCards}/:id`}
             element={<TaskViewPage />}
           />
-          <Route path="/search/:keyword" element={<TaskViewPage />} />
-          {/* <Route path={`${taskCards}/:id/search/:keyword`} element={<TaskViewPage />} /> */}
           <Route path={estimate} element={<AssessmentBlock />} />
           <Route
             path={`${questionnaire}/:date/:questionnaireId/:employeeId`}
