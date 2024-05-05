@@ -107,7 +107,6 @@ function App() {
           <Route path={personalArea} element={<PersonalArea />} />
           <Route path={personalAreaEditing} element={<PersonalAreaEditing />} />
           <Route path={myTeam} element={<MyTeam />} />
-          <Route path={analytics} element={<AnalyticsPage />} />
           <Route path={criteria} element={<AssessmentCriteria />} />
           <Route
             index="true"
@@ -139,7 +138,7 @@ function App() {
             path={`${questionnaire}/:date/:questionnaireId/:employeeId`}
             element={<Questionnaire />}
           />
-          <Route path={anyPage} element={<NotFound />} />
+          <Route path={analytics} element={<AnalyticsPage />} />
         </Route>
         <Route path={anyPage} element={<NotFound />} />
       </Routes>

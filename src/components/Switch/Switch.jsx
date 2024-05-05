@@ -4,7 +4,7 @@ function Switch({
   labelLeft,
   labelRight,
   isChecked,
-  handleChange,
+  setIsChecked,
   shadow,
 }) {
   return (
@@ -15,7 +15,7 @@ function Switch({
       <input
         type="checkbox"
         checked={isChecked}
-        onChange={handleChange}
+        onChange={() => setIsChecked(!isChecked)}
         className="checkbox-input"
       />
       <div className="left-side">
