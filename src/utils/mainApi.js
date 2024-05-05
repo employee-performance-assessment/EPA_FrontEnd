@@ -7,13 +7,15 @@ import {
   ADMIN_QUESTIONNAIRE_LAST,
   USER_QUESTIONNAIRE_LIST,
   EVALUATIONS_LIST_ASSESS,
+  LIST_OF_MONTHS_PERSONAL,
   ADMIN_CRITERIA_DEFAULT,
+  LIST_OF_MONTHS_COMMAND,
+  LIST_OF_MONTH_USERS,
   USER_QUESTIONNAIRE,
   ADMIN_EVALUATIONS,
   ADMIN_STAT_POINTS,
   USER_EMPLOYEE_ME,
   USER_STAT_POINTS,
-  LIST_MONTH_USER,
   ADMIN_PROJECTS,
   ADMIN_CRITERIA,
   ADMIN_RATING,
@@ -22,7 +24,6 @@ import {
   ADMIN_USERS,
   USER_RATING,
   LIST_YEARS,
-  LIST_MONTH,
   ADMIN_TASK,
   USER_TASK,
   PROJECTS,
@@ -249,6 +250,7 @@ export const getStatPointsByUser = () => request(USER_STAT_POINTS, 'GET');
 
 // ANALYTICS
 export const getListYears = () => request(LIST_YEARS, 'GET');
-export const getListMonth = (year) => request(`${LIST_MONTH}?year=${year}`, 'GET');
+export const getListMonthsCommand = (year) => request(`${LIST_OF_MONTHS_COMMAND}?year=${year}`, 'GET');
+export const getListMonthsPersonal = (year) => request(`${LIST_OF_MONTHS_PERSONAL}?year=${year}`, 'GET');
 export const getListMonthUser = (evaluatedId, year) =>
-  request(`${LIST_MONTH_USER}?evaluatedId=${evaluatedId}&year=${year}`, 'GET');
+  request(`${LIST_OF_MONTH_USERS}?evaluatedId=${evaluatedId}&year=${year}`, 'GET');

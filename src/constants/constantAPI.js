@@ -45,5 +45,6 @@ export const EMPLOYEE_ME = `${BASE_URL}/user/employee/me`;
 export const USER_EMPLOYEE_ME = `${BASE_URL}/user/task/all-employees`;
 
 export const LIST_YEARS = `${BASE_URL}/user/employee/list-of-years`;
-export const LIST_MONTH = `${BASE_URL}/user/evaluations/rating/command`;
-export const LIST_MONTH_USER = `${BASE_URL}/admin/rating/personal`;
+export const LIST_OF_MONTHS_COMMAND = `${BASE_URL}/user/evaluations/rating/command`;
+export const LIST_OF_MONTHS_PERSONAL = `${BASE_URL}/user/evaluations/rating/personal`;
+export const LIST_OF_MONTH_USERS = `${BASE_URL}/admin/rating/personal`;

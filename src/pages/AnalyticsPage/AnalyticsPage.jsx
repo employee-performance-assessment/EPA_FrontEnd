@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Switch from '../../components/Switch/Switch.jsx';
 import Select from '../../components/Select/Select.jsx';
 import SetStars from '../../components/SetStars/SetStars.js';
@@ -7,11 +7,17 @@ import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import Loader from '../../components/Loader/Loader.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import useLoading from '../../hooks/useLoader.js';
-import { getAllUsers, getListMonth, getListMonthUser, getListYears } from '../../utils/mainApi.js';
+import {
+  getAllUsers,
+  getListMonthsCommand,
+  getListMonthsPersonal,
+  getListMonthUser,
+  getListYears
+} from '../../utils/mainApi.js';
 import styles from './AnalyticsPage.module.scss';
 
 function AnalyticsPage() {
-  // const user = useSelector((state) => state.user);
+  const isAdmin = useSelector((state) => state.user.isAdmin);
   const currentYear = new Date().getFullYear();
   const [isPrivate, setIsPrivate] = useState(false);
   const [isEstimate, setIsEstimate] = useState(false);
@@ -19,22 +25,16 @@ function AnalyticsPage() {
   const [listYears, setListYears] = useState([]);
   const [listMonth, setListMonth] = useState([]);
   const [selectedListYear, setSelectedListYear] = useState(currentYear);
+  const [selectedUser, setSelectedUser] = useState(0);
   const { isLoading, setLoading } = useLoading();
   const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
 
   useEffect(() => {
     setLoading(true);
 
-    getListMonth(selectedListYear)
+    getListMonthsCommand(selectedListYear)
       .then((res) => {
         setListMonth(res);
-      })
-      .catch((err) => handleError(err))
-      .finally(() => setLoading(false));
-
-    getAllUsers()
-      .then((res) => {
-        setUsers(res);
       })
       .catch((err) => handleError(err))
       .finally(() => setLoading(false));
@@ -48,15 +48,41 @@ function AnalyticsPage() {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
+
+    if (isAdmin) {
+      getAllUsers()
+        .then((res) => {
+          setUsers(res);
+        })
+        .catch((err) => handleError(err))
+        .finally(() => setLoading(false));
+    }
+  }, [isAdmin]);
+
+  useEffect(() => {
     if (!isPrivate) {
       setLoading(true);
 
-      getListMonth(selectedListYear)
+      getListMonthsCommand(selectedListYear)
         .then((res) => {
           setListMonth(res);
         })
         .catch((err) => handleError(err))
         .finally(() => setLoading(false));
+    }
+
+    if (isPrivate) {
+      if (!isAdmin) {
+        setLoading(true);
+
+        getListMonthsPersonal(selectedListYear)
+          .then((res) => {
+            setListMonth(res);
+          })
+          .catch((err) => handleError(err))
+          .finally(() => setLoading(false));
+      }
     }
   }, [isPrivate]);
 
@@ -69,23 +95,43 @@ function AnalyticsPage() {
   }
 
   const handleSubmitYear = (evt) => {
-    setLoading(true);
     const selectedYear = evt.target.value;
     setSelectedListYear(selectedYear);
 
-    getListMonth(selectedYear)
-      .then((res) => {
-        setListMonth(res);
-      })
-      .catch((err) => handleError(err))
-      .finally(() => setLoading(false));
+    if (isPrivate) {
+      setLoading(true);
+
+      if (isAdmin) {
+        getListMonthUser(selectedUser, selectedYear)
+          .then((res) => {
+            setListMonth(res);
+          })
+          .catch((err) => handleError(err))
+          .finally(() => setLoading(false));
+      } else {
+        getListMonthsPersonal(selectedYear)
+          .then((res) => {
+            setListMonth(res);
+          })
+          .catch((err) => handleError(err))
+          .finally(() => setLoading(false));
+      }
+    } else {
+      getListMonthsCommand(selectedYear)
+        .then((res) => {
+          setListMonth(res);
+        })
+        .catch((err) => handleError(err))
+        .finally(() => setLoading(false));
+    }
   };
 
   const handleSubmitUser = (evt) => {
     setLoading(true);
-    const selectedUser = evt.target.value;
+    const user = evt.target.value;
+    setSelectedUser(user);
 
-    getListMonthUser(selectedUser, selectedListYear)
+    getListMonthUser(user, selectedListYear)
       .then((res) => {
         setListMonth(res);
       })
@@ -120,7 +166,7 @@ function AnalyticsPage() {
             isChecked={isEstimate}
             setIsChecked={setIsEstimate}
           />
-          {isPrivate && !isEstimate && (
+          {isPrivate && !isEstimate && isAdmin && (
             <Select
               typeSelect="users"
               list={users}
@@ -176,7 +222,7 @@ function AnalyticsPage() {
           }
           className={styles.info_block}
         >
-          {listMonth && !isEstimate ? (
+          {listMonth[0] && !isEstimate ? (
             listMonth.map((item) => (
               <div className={styles.rating_block} key={item.monthNumber}>
                 <div className={styles.date}>
