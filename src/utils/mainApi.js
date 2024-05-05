@@ -160,6 +160,18 @@ export const updateTaskStatusByUser = (taskId, status) =>
 
 export const getUserTask = () => request(USER_EMPLOYEE_ME, 'GET');
 
+export const getTasksWithSearchByUser = (searchQuery) =>
+  request(
+    `${USER_TASK}?text=${searchQuery}`,
+    'GET'
+  );
+
+export const getTasksWithSearchAndStatusByUser = (status, searchQuery) =>
+  request(
+    `${USER_TASK}?status=${status}&text=${searchQuery}`,
+    'GET'
+  );
+
 // ADMIN QUESTIONNAIRE
 export const getQuestionnaireLast = () =>
   request(ADMIN_QUESTIONNAIRE_LAST, 'GET');

@@ -151,11 +151,17 @@ function Register() {
               style={{ backgroundImage: `url(${isOpen ? eyeOpen : eyelash})` }}
             />
           </label>
-          <button type="submit" disabled={!isValid}>
+          <button
+            type="submit"
+            disabled={!isValid}
+            className={styles.submitButton}
+          >
             Подтвердить
           </button>
           <Link to="/login" className={styles.link}>
-            У меня уже есть аккаунт
+            <button type="button" className={styles.loginButton}>
+              У меня уже есть аккаунт
+            </button>
           </Link>
         </form>
         <img

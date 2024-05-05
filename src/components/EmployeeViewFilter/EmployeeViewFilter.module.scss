@@ -144,6 +144,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 
   &_icon {
