@@ -5,8 +5,17 @@ function Switch({
   labelRight,
   isChecked,
   setIsChecked,
+  handleChange,
   shadow,
 }) {
+
+  const handleToggle = () => {
+    if (handleChange) {
+      handleChange();
+    } else {
+      setIsChecked(!isChecked);
+    }
+  };
   return (
     <label
       style={{ boxShadow: shadow }}
@@ -15,7 +24,7 @@ function Switch({
       <input
         type="checkbox"
         checked={isChecked}
-        onChange={() => setIsChecked(!isChecked)}
+        onChange={handleToggle}
         className="checkbox-input"
       />
       <div className="left-side">
