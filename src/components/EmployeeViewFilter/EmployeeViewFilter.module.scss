@@ -133,14 +133,14 @@
 
   &_button {
     position: absolute;
-    top: 11px;
+    top: 14px;
     right: 20px;
     padding: 0;
     border: none;
     background-color: transparent;
     cursor: pointer;
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -151,8 +151,8 @@
   }
 
   &_icon {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     display: inline-block;
     background-repeat: no-repeat;
   }
