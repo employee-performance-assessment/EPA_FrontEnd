@@ -42,7 +42,7 @@ function EmployeeViewPage() {
 
   const [rating, setRating] = useState(0);
   const [points, setPoints] = useState(0);
-  const [isSearching, setIsSearching] = useState(false);
+  const [isSearching, setIsSearching] = useState(true);
   const [searchedTasks, setSearchedTasks] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -58,6 +58,7 @@ function EmployeeViewPage() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setSearchQuery(searchKeyword);
       try {
         setLoading(true);
         let userData;
@@ -96,6 +97,7 @@ function EmployeeViewPage() {
 
   useEffect(() => {
     const getSearchResults = async () => {
+      setSearchQuery(searchKeyword);
       try {
         setLoading(true);
         let userData;
@@ -223,6 +225,8 @@ function EmployeeViewPage() {
       setSearchedTasks(searchTasks);
     } catch (err) {
       handleError(err);
+    } finally {
+      setIsSearching(false);
     }
   }
 
@@ -266,9 +270,12 @@ function EmployeeViewPage() {
           version={version}
           getTasksByStatus={getTasksByStatus}
           handleSearch={handleSearch}
+          searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           handleCloseSearchForm={handleCloseSearchForm}
           getTasksByStatusAndKeyword={getTasksByStatusAndKeyword}
+          isSearching={isSearching}
+          setIsSearching={setIsSearching}
         />
         {searchKeyword ? (
           <SearchedTasks tasks={searchedTasks} />

@@ -5,6 +5,7 @@ import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute';
 import { getFromLocalStorage } from '../../utils/localStorageFunctions';
 import InputStars from '../InputStars/InputStars';
 import CloseIcon from '../../images/closeIcon.png';
+import SearchIcon from '../../images/search-icon.png';
 import styles from './EmployeeViewFilter.module.scss';
 
 function EmployeeViewFilter({
@@ -13,9 +14,12 @@ function EmployeeViewFilter({
   version,
   getTasksByStatus,
   handleSearch,
+  searchQuery,
   setSearchQuery,
   handleCloseSearchForm,
   getTasksByStatusAndKeyword,
+  isSearching,
+  setIsSearching
 }) {
   const viewMarks = useSelector((state) => state.viewMarks.viewMarks);
 
@@ -43,23 +47,22 @@ function EmployeeViewFilter({
     if (status) {
       setSelectedStatus(status);
       searchKeyword
-        ? getTasksByStatusAndKeyword(status, searchKeyword)
+        ? getTasksByStatusAndKeyword(status, searchQuery)
         : getTasksByStatus(status);
     } else {
       setSelectedStatus('');
-      handleSearch(searchKeyword);
+      handleSearch(searchQuery);
     }
   };
 
   const handleSearchChange = (evt) => {
-    const request = evt.target.value;
-    if (request) {
+    evt.preventDefault();
+    if (searchQuery) {
       const route = user.isAdmin
-        ? `${ENDPOINT_ROUTES.cardsEmployees}/${employeeId}/search/${request}`
-        : `${ENDPOINT_ROUTES.userArea}/search/${request}`;
+        ? `${ENDPOINT_ROUTES.cardsEmployees}/${employeeId}/search/${searchQuery}`
+        : `${ENDPOINT_ROUTES.userArea}/search/${searchQuery}`;
       navigate(route);
-      setSearchQuery(request);
-      handleSearch(request);
+      handleSearch(searchQuery);
     } else {
       const route = user.isAdmin
         ? `${ENDPOINT_ROUTES.cardsEmployees}/${employeeId}`
@@ -105,7 +108,7 @@ function EmployeeViewFilter({
       </div>
     </div>
   ) : (
-    <form className={styles.employeeViewFilter__container}>
+    <div className={styles.employeeViewFilter__container}>
       {searchKeyword ? (
         <>
           <input
@@ -130,7 +133,6 @@ function EmployeeViewFilter({
       )}
       <div
         className={styles.employeeViewFilter__inputs}
-        onChange={handleChange}
       >
         <input
           className={styles.employeeViewFilter__input_task}
@@ -194,28 +196,43 @@ function EmployeeViewFilter({
           Выполнено
         </label>
       </div>
-      <div className={styles.employeeViewFilter__searchForm}>
+      <form className={styles.employeeViewFilter__searchForm} onSubmit={handleSearchChange}>
         <input
           type="text"
           name="search"
           className={styles.employeeViewFilter__input}
           placeholder="Поиск"
-          value={searchKeyword || ''}
-          onChange={handleSearchChange}
+          value={searchQuery || ""}
+          onChange={(e) => {
+            setSearchQuery(e.target.value);
+            setIsSearching(true);
+          }}
         />
-        <button
-          className={styles.employeeViewFilter__searchForm_button}
-          type="button"
-          onClick={clearSearchForm}
-          disabled={!isValid}
-        >
-          <span
-            style={{ backgroundImage: `url(${CloseIcon})` }}
-            className={styles.employeeViewFilter__searchForm_icon}
-          />
-        </button>
-      </div>
-    </form>
+        {!isSearching ? (
+          <button
+            className={styles.employeeViewFilter__searchForm_button}
+            type="button"
+            onClick={clearSearchForm}
+            disabled={!isValid}
+          >
+            <span
+              style={{ backgroundImage: `url(${CloseIcon})` }}
+              className={styles.employeeViewFilter__searchForm_icon}
+            />
+          </button>
+        ) : (
+          <button
+            className={styles.employeeViewFilter__searchForm_button}
+            type="submit"
+          >
+            <span
+              style={{ backgroundImage: `url(${SearchIcon})` }}
+              className={styles.employeeViewFilter__searchForm_icon}
+            />
+          </button>
+        )}
+      </form>
+    </div>
   );
 }
 
