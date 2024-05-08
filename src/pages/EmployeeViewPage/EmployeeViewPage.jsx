@@ -244,6 +244,7 @@ function EmployeeViewPage() {
     setViewTask(!viewTask);
     setSearchQuery('');
     setIsSearching(false);
+    searchKeyword && setSearchQuery(searchKeyword);
   }
 
   return (
@@ -277,7 +278,7 @@ function EmployeeViewPage() {
           isSearching={isSearching}
           setIsSearching={setIsSearching}
         />
-        {searchKeyword ? (
+        {searchKeyword && !viewTask ? (
           <SearchedTasks tasks={searchedTasks} />
         ) : (
           <EmployeeViewBlock

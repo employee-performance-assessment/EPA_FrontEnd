@@ -45,6 +45,7 @@ function EmployeeViewFilter({
 
   const handleStatusChange = (status) => {
     if (status) {
+      setSearchQuery(searchKeyword);
       setSelectedStatus(status);
       searchKeyword
         ? getTasksByStatusAndKeyword(status, searchQuery)
@@ -224,6 +225,7 @@ function EmployeeViewFilter({
           <button
             className={styles.employeeViewFilter__searchForm_button}
             type="submit"
+            disabled={!searchQuery}
           >
             <span
               style={{ backgroundImage: `url(${SearchIcon})` }}
