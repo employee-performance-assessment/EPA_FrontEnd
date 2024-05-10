@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { ENDPOINT_ROUTES } from '../../constants/constantsEndpointRoute';
 import { getFromLocalStorage } from '../../utils/localStorageFunctions';
 import InputStars from '../InputStars/InputStars';
-import CloseIcon from '../../images/close-icon.svg';
+import CloseIcon from '../../images/search-close-icon.svg';
 import SearchIcon from '../../images/search-icon.svg';
 import styles from './EmployeeViewFilter.module.scss';
 
