@@ -32,7 +32,6 @@
     "lint:fix": "npm run lint -- --fix --color",
     "format": "prettier . --write",
     "cm": "cz",
-    "prepare": "husky",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
