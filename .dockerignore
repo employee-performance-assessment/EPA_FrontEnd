@@ -1,5 +1,8 @@
 node_modules
+build
 .git
+.gitignore
 .husky
 *.log
+*.md
 Dockerfile
