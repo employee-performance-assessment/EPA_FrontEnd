@@ -195,7 +195,7 @@ function AnalyticsPage() {
               <Select
                 typeSelect="month"
                 list={['Январь', 'Февраль', 'Март', 'Апрель']}
-                buttonText="Февраль"
+                buttonText="Месяц"
                 selectStyle={styles.month_select}
                 buttonStyle={styles.month_button}
                 listStyle={styles.month_ul}
@@ -204,7 +204,7 @@ function AnalyticsPage() {
               <Select
                 typeSelect="year"
                 list={['2023', '2024', '2025', '2026']}
-                buttonText="2024"
+                buttonText={selectedListYear}
                 selectStyle={styles.deadline_select}
                 buttonStyle={styles.deadline_button}
                 listStyle={styles.deadline_ul}

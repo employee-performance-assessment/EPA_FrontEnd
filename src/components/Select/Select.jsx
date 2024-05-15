@@ -23,7 +23,7 @@ function Select({
   const [valueMonth, setValueMonth] = useState('');
   const dispatch = useDispatch();
   const { isOverlay, type } = useSelector((state) => state.filter);
-  
+
   const handleShowDroplist = () => {
     dispatch(setType(typeSelect));
     dispatch(showOverlay());
@@ -76,8 +76,8 @@ function Select({
                 (typeSelect === 'year' && item)
               }
               id={
-                typeSelect === 'users' ? item.fullName : '' ||
-              (typeSelect === 'month' ? item : '')
+                (typeSelect === 'users' ? item.fullName : '') ||
+                (typeSelect === 'month' ? item : '')
               }
               onClick={handleChange}
             >
