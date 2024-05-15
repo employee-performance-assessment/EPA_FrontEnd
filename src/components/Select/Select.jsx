@@ -90,6 +90,8 @@ function Select({
       </div>
       <div
         onClick={() => dispatch(hiddenOverlay())}
+        role="button"
+        tabIndex="0"
         className={
           isOverlay && type === typeSelect
             ? `${styles.overlay} ${styles.overlay_active}`
