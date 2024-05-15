@@ -77,15 +77,15 @@
           text-decoration: none;
           width: 134px;
           height: 54px;
-          border-radius: 40px;
+          border-radius: 20px;
           background: $purple-base-color;
           appearance: none;
           background-image: url(../../images/select-arrow.svg);
           background-position-x: calc(100% - 26px);
           background-position-y: center;
           background-repeat: no-repeat;
-          padding: 14px 26px;
-          @include text($black-base-color, 20px, 500, 1.2);
+          padding: 0 26px;
+          @include text($black-base-color, 20px, 500, 24px);
           text-align: start;
           cursor: pointer;
           border: none;
@@ -148,7 +148,7 @@
       .user_button {
         text-decoration: none;
         width: 342px;
-        height: 54px;
+        height: 51px;
         border-radius: 20px;
         background: transparent;
         appearance: none;
@@ -156,8 +156,8 @@
         background-position-x: calc(100% - 24px);
         background-position-y: center;
         background-repeat: no-repeat;
-        padding: 15px 50px 15px 24px;
-        @include text($black-base-color, 20px, 500, 1.2);
+        padding: 0 50px 0 24px;
+        @include text($black-base-color, 20px, 500, 24px);
         text-align: start;
         cursor: pointer;
         border: none;
@@ -167,21 +167,19 @@
       }
 
       .users_list {
-        @include text($black-base-color, 16px, 500, 22px);
+        @include text($black-base-color, 16px, 500, 38px);
         background: $white-base-color;
         list-style: none;
         height: 38px;
         margin: 0;
-        padding: 0 16px;
+        padding: 0 24px;
         z-index: 1;
         text-align: start;
         cursor: pointer;
-        display: flex;
-        align-items: center;
         text-wrap: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        max-width: 322px;
+        width: 342px;
 
         &:first-child {
           margin-top: 12px;
@@ -307,7 +305,6 @@
       width: 576px;
       height: 54px;
       border-radius: 20px;
-      overflow: hidden;
 
       .month_select {
         position: relative;
@@ -339,7 +336,7 @@
         background-position-x: calc(100% - 43px);
         background-position-y: center;
         background-repeat: no-repeat;
-        padding: 15px 43px;
+        padding: 0 43px;
         @include text($black-base-color, 20px, 500, 1.2);
         text-align: start;
         cursor: pointer;
@@ -368,11 +365,12 @@
         list-style: none;
         height: 38px;
         margin: 0;
-        padding: 11px 16px;
+        padding: 0 50px;
         z-index: 1;
         text-align: start;
         cursor: pointer;
-        border: 2px solid $purple-base-color;
+        display: flex;
+        align-items: center;
 
         &:first-child {
           margin-top: 12px;
@@ -417,7 +415,7 @@
         background-position-x: calc(100% - 26px);
         background-position-y: center;
         background-repeat: no-repeat;
-        padding: 14px 26px;
+        padding: 0 26px;
         @include text($black-base-color, 20px, 500, 1.2);
         text-align: start;
         cursor: pointer;
@@ -447,11 +445,12 @@
         list-style: none;
         height: 38px;
         margin: 0;
-        padding: 11px 16px;
         z-index: 1;
         text-align: start;
         cursor: pointer;
-        border: 2px solid $purple-base-color;
+        padding: 0 30px;
+        display: flex;
+        align-items: center;
 
         &:first-child {
           margin-top: 12px;

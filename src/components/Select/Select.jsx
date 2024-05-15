@@ -76,9 +76,8 @@ function Select({
                 (typeSelect === 'year' && item)
               }
               id={
-                typeSelect === 'users'
-                  ? item.fullName
-                  : '' || (typeSelect === 'month' ? item : '')
+                (typeSelect === 'users' ? item.fullName : '') ||
+                (typeSelect === 'month' ? item : '')
               }
               onClick={handleChange}
             >
@@ -98,7 +97,7 @@ function Select({
             ? `${styles.overlay} ${styles.overlay_active}`
             : `${styles.overlay}`
         }
-      />
+       />
     </>
   );
 }
