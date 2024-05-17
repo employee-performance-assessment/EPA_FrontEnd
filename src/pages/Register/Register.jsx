@@ -148,6 +148,8 @@ function Register() {
             <span
               className={styles.eye}
               onClick={togglePassword}
+              role="button"
+              tabIndex="0"
               style={{ backgroundImage: `url(${isOpen ? eyeOpen : eyelash})` }}
             />
           </label>

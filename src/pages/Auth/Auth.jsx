@@ -116,12 +116,18 @@ function Auth() {
               <span
                 className={styles.eye}
                 onClick={togglePassword}
+                role="button"
+                tabIndex="0"
                 style={{
                   backgroundImage: `url(${isOpen ? eyeOpen : eyelash})`,
                 }}
               />
             </label>
-            <button type="submit" disabled={!isValid} className={styles.loginButton}>
+            <button
+              type="submit"
+              disabled={!isValid}
+              className={styles.loginButton}
+            >
               Войти
             </button>
             <Link to="/signup" className={styles.link}>
