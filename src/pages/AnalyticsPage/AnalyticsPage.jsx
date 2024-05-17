@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Switch from '../../components/Switch/Switch.jsx';
 import Select from '../../components/Select/Select.jsx';
-import SetStars from '../../components/SetStars/SetStars.js';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import Loader from '../../components/Loader/Loader.jsx';
+import RatingsAnalytics from '../../components/RatingsAnalytics/RatingsAnalytics.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import useLoading from '../../hooks/useLoader.js';
 import {
@@ -85,14 +85,6 @@ function AnalyticsPage() {
       }
     }
   }, [isPrivate]);
-
-  function getNameMonth(number) {
-    const date = new Date(String(number));
-    let monthName = date.toLocaleString('default', { month: 'long' });
-    monthName = monthName[0].toLocaleUpperCase() + monthName.slice(1);
-
-    return `${monthName} ${selectedListYear}`;
-  }
 
   const handleSubmitYear = (evt) => {
     const selectedYear = evt.target.value;
@@ -215,35 +207,11 @@ function AnalyticsPage() {
             </div>
           )}
         </div>
-        <article
-          style={isEstimate ?
-            { boxShadow: '0px 4px 20px 0px rgba(166, 166, 166, 0.4)' } :
-            null
-          }
-          className={styles.info_block}
-        >
-          {listMonth[0] && !isEstimate ? (
-            listMonth.map((item) => (
-              <div className={styles.rating_block} key={item.monthNumber}>
-                <div className={styles.date}>
-                  <span>
-                    {getNameMonth(item.monthNumber)} {item.year}
-                  </span>
-                </div>
-                <SetStars
-                  rating={item.rating}
-                  starOut={styles.starOut}
-                  starIn={styles.starIn}
-                />
-              </div>
-            ))
-          ) : (
-            <div className={styles.img_block}>
-              <div className={styles.flyMan} />
-              <span>Данных для аналитики ещё нет.</span>
-            </div>
-          )}
-        </article>
+        <RatingsAnalytics
+          selectedListYear={selectedListYear}
+          isEstimate={isEstimate}
+          listMonth={listMonth}
+        />
       </div>
     </section>
   );
