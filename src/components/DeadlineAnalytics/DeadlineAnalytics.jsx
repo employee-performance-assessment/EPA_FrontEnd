@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import DeadlineDesignations from "../DeadlineDesignations/DeadlineDesignations";
 import './DeadlineAnalytics.scss';
 
 function DeadlineAnalytics() {
@@ -21,12 +22,7 @@ function DeadlineAnalytics() {
               <span className='deadline-command__completed-text'>{completedResult}%</span>
               <span className='deadline-command__failure-text'>{failureResult}%</span>
             </div>
-            <div className='deadline-command__designations-container'>
-              <div className='deadline-command__designation deadline-command__designation_completed' />
-              <span className='deadline-command__designation-text'>Выполнено в срок</span>
-              <div className='deadline-command__designation deadline-command__designation_failure' />
-              <span className='deadline-command__designation-text'>Выполнено не в срок</span>
-            </div>
+            <DeadlineDesignations />
           </div>
           <div className='deadline-command__leaders-intruders'>
             <div className='deadline-command__employees-container'>

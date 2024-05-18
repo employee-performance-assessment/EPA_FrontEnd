@@ -1,0 +1,28 @@
+@import '../../styles/vars';
+@import '../../styles/mixins';
+
+.designations {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.designation {
+  width: 30px;
+  height: 16px;
+  border-radius: 30px;
+  margin-right: 5px;
+
+  &_completed {
+    background-color: $dark-green-base-color;
+  }
+
+  &_failure {
+    background-color: $red-base-color;
+    margin-left: 24px;
+  }
+}
+
+.designation-text {
+  @include text($black-base-color, 18px, 22px);
+}
