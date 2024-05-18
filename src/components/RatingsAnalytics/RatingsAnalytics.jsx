@@ -1,7 +1,7 @@
 import SetStars from '../SetStars/SetStars.js';
 import styles from './RatingsAnalytics.module.scss';
 
-function RatingsAnalytics({ selectedListYear, isEstimate, listMonth }) {
+function RatingsAnalytics({ selectedListYear, listMonth }) {
 
   function getNameMonth(number) {
     const date = new Date(String(number));
@@ -15,7 +15,7 @@ function RatingsAnalytics({ selectedListYear, isEstimate, listMonth }) {
     <article
       className={styles.info_block}
     >
-      {listMonth[0] && !isEstimate ? (
+      {listMonth[0] ? (
         listMonth.map((item) => (
           <div className={styles.rating_block} key={item.monthNumber}>
             <div className={styles.date}>
