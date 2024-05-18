@@ -5,6 +5,7 @@ import Select from '../../components/Select/Select.jsx';
 import InfoPopup from '../../components/InfoPopup/InfoPopup.jsx';
 import Loader from '../../components/Loader/Loader.jsx';
 import RatingsAnalytics from '../../components/RatingsAnalytics/RatingsAnalytics.jsx';
+import DeadlineAnalytics from '../../components/DeadlineAnalytics/DeadlineAnalytics.jsx';
 import { useErrorHandler } from '../../hooks/useErrorHandler.js';
 import useLoading from '../../hooks/useLoader.js';
 import {
@@ -20,7 +21,7 @@ function AnalyticsPage() {
   const isAdmin = useSelector((state) => state.user.isAdmin);
   const currentYear = new Date().getFullYear();
   const [isPrivate, setIsPrivate] = useState(false);
-  const [isEstimate, setIsEstimate] = useState(false);
+  const [isEstimate, setIsEstimate] = useState(true);
   const [users, setUsers] = useState([]);
   const [listYears, setListYears] = useState([]);
   const [listMonth, setListMonth] = useState([]);
@@ -207,11 +208,12 @@ function AnalyticsPage() {
             </div>
           )}
         </div>
-        <RatingsAnalytics
-          selectedListYear={selectedListYear}
-          isEstimate={isEstimate}
-          listMonth={listMonth}
-        />
+        {isEstimate ?
+          <DeadlineAnalytics /> :
+          <RatingsAnalytics
+            selectedListYear={selectedListYear}
+            listMonth={listMonth}
+          />}
       </div>
     </section>
   );
