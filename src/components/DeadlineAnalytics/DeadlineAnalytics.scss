@@ -1,11 +1,195 @@
 @import '../../styles/vars';
 @import '../../styles/mixins';
 
-// * {
-//   outline: 1px dashed blue;
-// }
+.deadline-filter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 134px;
+  width: 100%;
 
-.deadline {
+  &__date {
+    display: flex;
+    width: 576px;
+    height: 54px;
+    border-radius: 20px;
+  }
+
+  &__month-select {
+    position: relative;
+    width: 207px;
+    height: 50px;
+    background: $white-base-color;
+    appearance: none;
+
+    .option {
+      width: 207px;
+
+      &:first-child {
+        margin-top: 12px;
+      }
+
+      &:last-child {
+        margin-bottom: 12px;
+      }
+    }
+  }
+
+  &__month-button {
+    text-decoration: none;
+    width: 207px;
+    height: 54px;
+    background: transparent;
+    appearance: none;
+    background-image: url(../../images/select-arrow.svg);
+    background-position-x: calc(100% - 43px);
+    background-position-y: center;
+    background-repeat: no-repeat;
+    padding: 0 43px;
+    @include text($black-base-color, 20px, 500, 1.2);
+    text-align: start;
+    cursor: pointer;
+    border-radius: 20px 0 0 20px;
+    border: 2px solid $purple-base-color;
+  }
+
+  &__month-ul {
+    position: absolute;
+    display: none;
+    top: 54px;
+    left: 0;
+    margin-top: 4px;
+    padding: 0;
+    list-style: none;
+    background-color: $white-base-color;
+    width: 207px;
+    border-radius: 18px;
+    z-index: 3;
+    align-items: center;
+  }
+
+  &__month-list {
+    @include text($black-base-color, 16px, 500, 22px);
+    background: $white-base-color;
+    list-style: none;
+    height: 38px;
+    margin: 0;
+    padding: 0 50px;
+    z-index: 1;
+    text-align: start;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    &:first-child {
+      margin-top: 12px;
+    }
+
+    &:last-child {
+      margin-bottom: 12px;
+    }
+
+    &:hover {
+      background: $purple-base-color;
+    }
+  }
+
+  &__year-select {
+    position: relative;
+    width: 131px;
+    height: 50px;
+    background: $white-base-color;
+    appearance: none;
+
+    .option {
+      width: 131px;
+
+      &:first-child {
+        margin-top: 12px;
+      }
+
+      &:last-child {
+        margin-bottom: 12px;
+      }
+    }
+  }
+
+  &__year-button {
+    text-decoration: none;
+    width: 131px;
+    height: 54px;
+    background: transparent;
+    appearance: none;
+    background-image: url(../../images/select-arrow.svg);
+    background-position-x: calc(100% - 26px);
+    background-position-y: center;
+    background-repeat: no-repeat;
+    padding: 0 26px;
+    @include text($black-base-color, 20px, 500, 1.2);
+    text-align: start;
+    cursor: pointer;
+    border: 2px solid $purple-base-color;
+    border-left: none;
+    border-right: none;
+  }
+
+  &__year-ul {
+    position: absolute;
+    display: none;
+    top: 54px;
+    left: 0;
+    margin-top: 4px;
+    padding: 0;
+    list-style: none;
+    background-color: $white-base-color;
+    width: 131px;
+    border-radius: 18px;
+    z-index: 3;
+    align-items: center;
+  }
+
+  &__year-list {
+    @include text($black-base-color, 16px, 500, 22px);
+    background: $white-base-color;
+    list-style: none;
+    height: 38px;
+    margin: 0;
+    z-index: 1;
+    text-align: start;
+    cursor: pointer;
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+
+    &:first-child {
+      margin-top: 12px;
+    }
+
+    &:last-child {
+      margin-bottom: 12px;
+    }
+
+    &:hover {
+      background: $purple-base-color;
+    }
+  }
+
+  &__submit {
+    @include button;
+    @include text($black-base-color, 20px, 600, 1.2);
+    width: 240px;
+    height: 54px;
+    background: $purple-base-color;
+    border-radius: 0 20px 20px 0;
+
+    &:hover {
+      background: $wrapper;
+    }
+  }
+}
+
+.deadline-data {
   display: flex;
   align-items: center;
   flex-direction: column;
