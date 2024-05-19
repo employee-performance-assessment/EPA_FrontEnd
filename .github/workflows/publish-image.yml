@@ -1,0 +1,44 @@
+name: Docker Build and Push
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    - name: Extract Date and Time for Tag
+      id: vars
+      run: echo "IMAGE_TAG=$(date '+%Y%m%d%H%M%S')" >> $GITHUB_ENV
+
+    - name: Build and push Docker image
+      run: |
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/epa:frontend .
+        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/epa:frontend ${{ secrets.DOCKERHUB_USERNAME }}/epa:${{ env.IMAGE_TAG }}
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/epa:frontend
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/epa:${{ env.IMAGE_TAG }}
