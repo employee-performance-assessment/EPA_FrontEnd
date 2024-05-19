@@ -9,7 +9,7 @@ import useLoading from '../../hooks/useLoader.js';
 import styles from './AnalyticsPage.module.scss';
 
 function AnalyticsPage() {
-  const [isDeadline, setIsDeadline] = useState(false);
+  const [isDeadline, setIsDeadline] = useState(true);
   const { isLoading, setLoading } = useLoading();
   const { popupText, isPopupOpen, handleError, closePopup } = useErrorHandler();
 
