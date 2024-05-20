@@ -30,14 +30,6 @@ export function DeadlineAnalytics() {
           setIsChecked={setIsPrivate} />
         <div className='deadline-filter__date'>
           <Select
-            typeSelect="month"
-            list={['Январь', 'Февраль', 'Март', 'Апрель']}
-            buttonText="Месяц"
-            selectStyle='deadline-filter__month-select'
-            buttonStyle='deadline-filter__month-button'
-            listStyle='deadline-filter__month-ul'
-            optionStyle='deadline-filter__month-list' />
-          <Select
             typeSelect="year"
             list={['2023', '2024', '2025', '2026']}
             buttonText={selectedListYear}
@@ -46,6 +38,14 @@ export function DeadlineAnalytics() {
             listStyle='deadline-filter__year-ul'
             optionStyle='deadline-filter__year-list'
             query={handleSubmitYear} />
+          <Select
+            typeSelect="month"
+            list={['Январь', 'Февраль', 'Март', 'Апрель']}
+            buttonText="Месяц"
+            selectStyle='deadline-filter__month-select'
+            buttonStyle='deadline-filter__month-button'
+            listStyle='deadline-filter__month-ul'
+            optionStyle='deadline-filter__month-list' />
           <button className='deadline-filter__submit'>Показать</button>
         </div>
       </div>
