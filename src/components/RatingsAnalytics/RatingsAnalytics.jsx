@@ -4,6 +4,7 @@ import SetStars from '../SetStars/SetStars.js';
 import Switch from '../Switch/Switch.jsx';
 import Select from '../Select/Select.jsx';
 import getNameMonth from '../../utils/getNameMonth.js';
+import PictureNoData from '../PictureNoData/PictureNoData.jsx';
 import {
   getAllUsers,
   getListMonthsCommand,
@@ -176,10 +177,11 @@ function RatingsAnalytics({ setLoading, handleError }) {
             </div>
           ))
         ) : (
-          <div className={styles.img_block}>
-            <div className={styles.flyMan} />
-            <span>Данных для аналитики ещё нет.</span>
-          </div>
+          <PictureNoData
+            title={`${isPrivate ?
+              'Выберите исполнителя для выдачи аналитики' :
+              'Данных для аналитики ещё нет.'}`}
+          />
         )}
       </div>
     </>

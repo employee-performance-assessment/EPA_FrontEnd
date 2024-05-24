@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import DeadlineDesignations from "../DeadlineDesignations/DeadlineDesignations";
-import EmployeeCardsInTeamDeadlines from '../EmployeeCardsInTeamDeadlines/EmployeesDeadline';
+import EmployeeCardsInTeamDeadlines from '../EmployeeCardsInTeamDeadlines/EmployeeCardsInTeamDeadlines';
 import Switch from '../Switch/Switch';
 import Select from '../Select/Select';
 import BarChart from '../BarChart/BarChart';
+import PictureNoData from '../PictureNoData/PictureNoData';
 import getNameMonth from '../../utils/getNameMonth';
 import {
   getDataTeamDeadlines,
@@ -172,38 +173,47 @@ function DeadlineAnalytics({ setLoading, handleError }) {
           </>
         ) : (
           <div className='deadline-command'>
-            <div className='deadline-command__graph-container'>
-              <h2 className='deadline-command__title'>Команда</h2>
-              <BarChart
-                completed={completedPercent}
-                failure={delayedPercent} />
-              <DeadlineDesignations />
-            </div>
-            {isAdmin &&
-              <div className='deadline-command__leaders-intruders'>
-                <div className='deadline-command__employees-container'>
-                  <p className='deadline-command__employees-header'>Лидеры</p>
-                  <div className='deadline-command__employees'>
-                    {leaders.map((employee) => (
-                      <EmployeeCardsInTeamDeadlines
-                        employee={employee}
-                        iconStyle='deadline-command__employee-icon_leader'
-                      />))
-                    }
-                  </div>
+            {completedPercent || delayedPercent || leaders[0] || violators[0] ? (
+              <>
+                <div className='deadline-command__graph-container'>
+                  <h2 className='deadline-command__title'>Команда</h2>
+                  <BarChart
+                    completed={completedPercent}
+                    failure={delayedPercent} />
+                  <DeadlineDesignations />
                 </div>
-                <div className='deadline-command__employees-container'>
-                  <p className='deadline-command__employees-header'>Нарушители дедлайна</p>
-                  <div className='deadline-command__employees'>
-                    {violators.map((employee) => (
-                      <EmployeeCardsInTeamDeadlines
-                        employee={employee}
-                        iconStyle='deadline-command__employee-icon_intruder'
-                      />))
-                    }
+                {isAdmin &&
+                  <div className='deadline-command__leaders-intruders'>
+                    <div className='deadline-command__employees-container'>
+                      <p className='deadline-command__employees-header'>Лидеры</p>
+                      <div className='deadline-command__employees'>
+                        {leaders.map((employee) => (
+                          <EmployeeCardsInTeamDeadlines
+                            employee={employee}
+                            iconStyle='deadline-command__employee-icon_leader'
+                          />))
+                        }
+                      </div>
+                    </div>
+                    <div className='deadline-command__employees-container'>
+                      <p className='deadline-command__employees-header'>Нарушители дедлайна</p>
+                      <div className='deadline-command__employees'>
+                        {violators.map((employee) => (
+                          <EmployeeCardsInTeamDeadlines
+                            employee={employee}
+                            iconStyle='deadline-command__employee-icon_intruder'
+                          />))
+                        }
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>}
+                }
+              </>
+            ) : (
+              <PictureNoData
+                title='Чтобы просмотреть аналитику, выберите год и месяц, нажмите кнопку “Показать”'
+              />
+            )}
           </div>
         )}
       </div>

@@ -269,7 +269,6 @@
     gap: 40px;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
   }
 
   &__employees-container {
@@ -289,5 +288,6 @@
   &__employees {
     display: flex;
     gap: 20px;
+    overflow: hidden;
   }
 }
