@@ -1,20 +1,20 @@
 import checkResponse from './checkResponse.js';
 import {
   ADMIN_RESET_TO_DEFAULT_QUESTIONNAIRE,
+  DATA_INDIVIDUAL_DEADLINES_ADMIN,
   ADMIN_USER_QUESTIONNAIRE_LIST,
+  LIST_MONTHS_DEADLINE_ADMIN,
   ADMIN_QUESTIONNAIRE_PASSED,
   EVALUATIONS_LIST_ASSESSED,
-  DATA_INDIVIDUAL_DEADLINES,
+  LIST_YEARS_DEADLINE_ADMIN,
+  DATA_TEAM_DEADLINES_ADMIN,
   ADMIN_QUESTIONNAIRE_LAST,
   USER_QUESTIONNAIRE_LIST,
   EVALUATIONS_LIST_ASSESS,
   LIST_OF_MONTHS_PERSONAL,
   ADMIN_CRITERIA_DEFAULT,
   LIST_OF_MONTHS_COMMAND,
-  LIST_MONTHS_DEADLINE,
   LIST_OF_MONTH_USERS,
-  LIST_YEARS_DEADLINE,
-  DATA_TEAM_DEADLINES,
   USER_QUESTIONNAIRE,
   LIST_YEARS_RATINGS,
   ADMIN_EVALUATIONS,
@@ -259,8 +259,11 @@ export const getListMonthsPersonal = (year) => request(`${LIST_OF_MONTHS_PERSONA
 export const getListMonthUser = (evaluatedId, year) =>
   request(`${LIST_OF_MONTH_USERS}?evaluatedId=${evaluatedId}&year=${year}`, 'GET');
 
-// ANALYTICS Deadline
-export const getListYearsDeadlineAdmin = () => request(LIST_YEARS_DEADLINE, 'GET');
-export const getListMonthsDeadlineAdmin = (year) => request(`${LIST_MONTHS_DEADLINE}${year}/months`, 'GET');
-export const getDataTeamDeadlinesAdmin = (year, month) => request(`${DATA_TEAM_DEADLINES}?year=${year}&month=${month}`, 'GET');
-export const getDataIndividualDeadlinesAdmin = (year, month) => request(`${DATA_INDIVIDUAL_DEADLINES}?year=${year}&month=${month}`, 'GET');
+// ANALYTICS Deadline Admin
+export const getListYearsDeadlineAdmin = () => request(LIST_YEARS_DEADLINE_ADMIN, 'GET');
+export const getListMonthsDeadlineAdmin = (year) => request(`${LIST_MONTHS_DEADLINE_ADMIN}${year}/months`, 'GET');
+export const getDataTeamDeadlinesAdmin = (year, month) => request(`${DATA_TEAM_DEADLINES_ADMIN}?year=${year}&month=${month}`, 'GET');
+export const getDataIndividualDeadlinesAdmin = (year, month) => request(`${DATA_INDIVIDUAL_DEADLINES_ADMIN}?year=${year}&month=${month}`, 'GET');
+
+// ANALYTICS Deadline User
+// export const getListYearsUserDeadline = () => request(LIST_YEARS_DEADLINE_ADMIN, 'GET');
