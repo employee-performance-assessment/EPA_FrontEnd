@@ -10,8 +10,12 @@ import {
   LIST_OF_MONTHS_PERSONAL,
   ADMIN_CRITERIA_DEFAULT,
   LIST_OF_MONTHS_COMMAND,
+  LIST_MONTHS_DEADLINE,
   LIST_OF_MONTH_USERS,
+  LIST_YEARS_DEADLINE,
+  DATA_TEAM_DEADLINES,
   USER_QUESTIONNAIRE,
+  LIST_YEARS_RATINGS,
   ADMIN_EVALUATIONS,
   ADMIN_STAT_POINTS,
   USER_EMPLOYEE_ME,
@@ -23,7 +27,6 @@ import {
   EVALUATIONS,
   ADMIN_USERS,
   USER_RATING,
-  LIST_YEARS,
   ADMIN_TASK,
   USER_TASK,
   PROJECTS,
@@ -248,9 +251,14 @@ export const getStatPointsByAdmin = (employeeId) =>
 
 export const getStatPointsByUser = () => request(USER_STAT_POINTS, 'GET');
 
-// ANALYTICS
-export const getListYears = () => request(LIST_YEARS, 'GET');
+// ANALYTICS Ratings
+export const getListYearsRatings = () => request(LIST_YEARS_RATINGS, 'GET');
 export const getListMonthsCommand = (year) => request(`${LIST_OF_MONTHS_COMMAND}?year=${year}`, 'GET');
 export const getListMonthsPersonal = (year) => request(`${LIST_OF_MONTHS_PERSONAL}?year=${year}`, 'GET');
 export const getListMonthUser = (evaluatedId, year) =>
   request(`${LIST_OF_MONTH_USERS}?evaluatedId=${evaluatedId}&year=${year}`, 'GET');
+
+// ANALYTICS Deadline
+export const getListYearsDeadline = () => request(LIST_YEARS_DEADLINE, 'GET');
+export const getListMonthsDeadline = (year) => request(`${LIST_MONTHS_DEADLINE}${year}/months`, 'GET');
+export const getDataTeamDeadlines = (year, month) => request(`${DATA_TEAM_DEADLINES}?year=${year}&month=${month}`, 'GET');

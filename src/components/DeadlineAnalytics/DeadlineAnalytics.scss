@@ -76,6 +76,7 @@
     border-radius: 18px;
     z-index: 3;
     align-items: center;
+    box-shadow: 0px 4px 20px rgba(166, 166, 166, 0.4);
   }
 
   &__year-list {
@@ -134,6 +135,7 @@
     border-radius: 18px;
     z-index: 3;
     align-items: center;
+    box-shadow: 0px 4px 20px rgba(166, 166, 166, 0.4);
   }
 
   &__month-list {
@@ -267,6 +269,7 @@
     gap: 40px;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 
   &__employees-container {
@@ -286,37 +289,5 @@
   &__employees {
     display: flex;
     gap: 20px;
-  }
-
-  &__employee {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100px;
-    height: 100px;
-  }
-
-  &__employee-icon {
-    width: 54px;
-    height: 54px;
-    background-repeat: no-repeat;
-    background-size: contain;
-    margin-bottom: 8px;
-
-    &_leader {
-      background-image: url(../../images/employee-icon-leader.svg);
-    }
-
-    &_intruder {
-      background-image: url(../../images/employee-icon-intruder.svg);
-    }
-  }
-
-  &__employee-name {
-    width: 100px;
-    text-align: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    @include text($black-base-color, 16px, 500, 19px);
   }
 }

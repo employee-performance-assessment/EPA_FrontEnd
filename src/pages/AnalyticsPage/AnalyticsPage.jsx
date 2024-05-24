@@ -34,7 +34,10 @@ function AnalyticsPage() {
           />
         </header>
         {isDeadline ?
-          <DeadlineAnalytics /> :
+          <DeadlineAnalytics
+            setLoading={setLoading}
+            handleError={handleError}
+          /> :
           <RatingsAnalytics
             setLoading={setLoading}
             handleError={handleError}
