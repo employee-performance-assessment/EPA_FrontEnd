@@ -9,10 +9,10 @@ import BarChart from '../BarChart/BarChart';
 import PictureNoData from '../PictureNoData/PictureNoData';
 import getNameMonth from '../../utils/getNameMonth';
 import {
-  getDataIndividualDeadlines,
-  getDataTeamDeadlines,
-  getListMonthsDeadline,
-  getListYearsDeadline
+  getDataIndividualDeadlinesAdmin,
+  getDataTeamDeadlinesAdmin,
+  getListMonthsDeadlineAdmin,
+  getListYearsDeadlineAdmin
 } from '../../utils/mainApi';
 import './DeadlineAnalytics.scss';
 
@@ -33,7 +33,7 @@ function DeadlineAnalytics({ setLoading, handleError }) {
   useEffect(() => {
     if (!listYears[0]) {
       setLoading(true);
-      getListYearsDeadline()
+      getListYearsDeadlineAdmin()
         .then((res) => {
           setListYears(res.reverse());
         })
@@ -53,7 +53,7 @@ function DeadlineAnalytics({ setLoading, handleError }) {
     setSelectedListYear(selectedYear);
     setSelectedListMonth('Месяц');
 
-    getListMonthsDeadline(selectedYear)
+    getListMonthsDeadlineAdmin(selectedYear)
       .then((res) => {
         setListMonths(res.map((item) => getNameMonth(item)).reverse());
       })
@@ -69,7 +69,7 @@ function DeadlineAnalytics({ setLoading, handleError }) {
   const handleSubmitFilter = () => {
     if (!isPrivate) {
       setLoading(true);
-      getDataTeamDeadlines(selectedListYear, getNumberMonth(selectedListMonth))
+      getDataTeamDeadlinesAdmin(selectedListYear, getNumberMonth(selectedListMonth))
         .then((res) => {
           if (res.completedOnTimePercent && res.delayedPercent) {
             setCompletedPercent(res.completedOnTimePercent);
@@ -88,7 +88,7 @@ function DeadlineAnalytics({ setLoading, handleError }) {
         .finally(() => setLoading(false));
     } else {
       setLoading(true);
-      getDataIndividualDeadlines(selectedListYear, getNumberMonth(selectedListMonth))
+      getDataIndividualDeadlinesAdmin(selectedListYear, getNumberMonth(selectedListMonth))
         .then((res) => {
           setEmployees(res);
         })

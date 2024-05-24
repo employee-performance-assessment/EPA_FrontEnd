@@ -260,7 +260,7 @@ export const getListMonthUser = (evaluatedId, year) =>
   request(`${LIST_OF_MONTH_USERS}?evaluatedId=${evaluatedId}&year=${year}`, 'GET');
 
 // ANALYTICS Deadline
-export const getListYearsDeadline = () => request(LIST_YEARS_DEADLINE, 'GET');
-export const getListMonthsDeadline = (year) => request(`${LIST_MONTHS_DEADLINE}${year}/months`, 'GET');
-export const getDataTeamDeadlines = (year, month) => request(`${DATA_TEAM_DEADLINES}?year=${year}&month=${month}`, 'GET');
-export const getDataIndividualDeadlines = (year, month) => request(`${DATA_INDIVIDUAL_DEADLINES}?year=${year}&month=${month}`, 'GET');
+export const getListYearsDeadlineAdmin = () => request(LIST_YEARS_DEADLINE, 'GET');
+export const getListMonthsDeadlineAdmin = (year) => request(`${LIST_MONTHS_DEADLINE}${year}/months`, 'GET');
+export const getDataTeamDeadlinesAdmin = (year, month) => request(`${DATA_TEAM_DEADLINES}?year=${year}&month=${month}`, 'GET');
+export const getDataIndividualDeadlinesAdmin = (year, month) => request(`${DATA_INDIVIDUAL_DEADLINES}?year=${year}&month=${month}`, 'GET');
