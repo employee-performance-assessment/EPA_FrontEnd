@@ -3,12 +3,14 @@ import { useSelector } from 'react-redux';
 import SetStars from '../SetStars/SetStars.js';
 import Switch from '../Switch/Switch.jsx';
 import Select from '../Select/Select.jsx';
+import getNameMonth from '../../utils/getNameMonth.js';
+import PictureNoData from '../PictureNoData/PictureNoData.jsx';
 import {
   getAllUsers,
   getListMonthsCommand,
   getListMonthsPersonal,
   getListMonthUser,
-  getListYears
+  getListYearsRatings
 } from '../../utils/mainApi.js';
 import styles from './RatingsAnalytics.module.scss';
 
@@ -24,26 +26,27 @@ function RatingsAnalytics({ setLoading, handleError }) {
 
   useEffect(() => {
     setLoading(true);
-
     getListMonthsCommand(selectedListYear)
       .then((res) => {
         setListMonth(res);
       })
       .catch((err) => handleError(err))
       .finally(() => setLoading(false));
-
-    getListYears()
-      .then((res) => {
-        setListYears(res.reverse());
-      })
-      .catch((err) => handleError(err))
-      .finally(() => setLoading(false));
+    if (!listYears[0]) {
+      getListYearsRatings()
+        .then((res) => {
+          setListYears(res.reverse());
+        })
+        .catch((err) => handleError(err))
+        .finally(() => setLoading(false));
+    }
   }, []);
 
   useEffect(() => {
-    setLoading(true);
-
-    if (isAdmin) {
+    setListMonth([]);
+    setSelectedUser(0);
+    if (isAdmin && isPrivate && !users[0]) {
+      setLoading(true);
       getAllUsers()
         .then((res) => {
           setUsers(res);
@@ -51,7 +54,7 @@ function RatingsAnalytics({ setLoading, handleError }) {
         .catch((err) => handleError(err))
         .finally(() => setLoading(false));
     }
-  }, [isAdmin]);
+  }, [isAdmin, isPrivate]);
 
   useEffect(() => {
     if (!isPrivate) {
@@ -94,15 +97,14 @@ function RatingsAnalytics({ setLoading, handleError }) {
 
   const handleSubmitYear = (evt) => {
     const selectedYear = evt.target.value;
-    setSelectedListYear(selectedYear);
+    setLoading(true);
 
     if (isPrivate) {
-      setLoading(true);
-
       if (isAdmin) {
         getListMonthUser(selectedUser, selectedYear)
           .then((res) => {
             setListMonth(res);
+            setSelectedListYear(selectedYear);
           })
           .catch((err) => handleError(err))
           .finally(() => setLoading(false));
@@ -110,6 +112,7 @@ function RatingsAnalytics({ setLoading, handleError }) {
         getListMonthsPersonal(selectedYear)
           .then((res) => {
             setListMonth(res);
+            setSelectedListYear(selectedYear);
           })
           .catch((err) => handleError(err))
           .finally(() => setLoading(false));
@@ -118,19 +121,12 @@ function RatingsAnalytics({ setLoading, handleError }) {
       getListMonthsCommand(selectedYear)
         .then((res) => {
           setListMonth(res);
+          setSelectedListYear(selectedYear);
         })
         .catch((err) => handleError(err))
         .finally(() => setLoading(false));
     }
   };
-
-  function getNameMonth(number) {
-    const date = new Date(String(number));
-    let monthName = date.toLocaleString('default', { month: 'long' });
-    monthName = monthName[0].toLocaleUpperCase() + monthName.slice(1);
-
-    return `${monthName} ${selectedListYear}`;
-  }
 
   return (
     <>
@@ -170,7 +166,7 @@ function RatingsAnalytics({ setLoading, handleError }) {
             <div className={styles.rating_block} key={item.monthNumber}>
               <div className={styles.date}>
                 <span>
-                  {getNameMonth(item.monthNumber)} {item.year}
+                  {getNameMonth(item.monthNumber)} {selectedListYear}
                 </span>
               </div>
               <SetStars
@@ -181,10 +177,11 @@ function RatingsAnalytics({ setLoading, handleError }) {
             </div>
           ))
         ) : (
-          <div className={styles.img_block}>
-            <div className={styles.flyMan} />
-            <span>Данных для аналитики ещё нет.</span>
-          </div>
+          <PictureNoData
+            title={`${isPrivate ?
+              'Выберите исполнителя для выдачи аналитики' :
+              'Данных для аналитики ещё нет.'}`}
+          />
         )}
       </div>
     </>

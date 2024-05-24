@@ -16,27 +16,6 @@
   overflow-x: hidden;
   background: $light-gray-base-color;
 
-  .img_block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .flyMan {
-      width: 320px;
-      height: 332px;
-      margin: 80px 0 40px;
-      background-image: url(../../images/fly-man.svg);
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position: center
-    }
-
-    span {
-      @include text($black-base-color, 22px, 400, 27px);
-      text-align: center;
-    }
-  }
-
   .rating_block {
     display: flex;
     width: 100%;
