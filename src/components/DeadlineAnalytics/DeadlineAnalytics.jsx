@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import DeadlineDesignations from "../DeadlineDesignations/DeadlineDesignations";
 import EmployeeCardsInTeamDeadlines from '../EmployeeCardsInTeamDeadlines/EmployeeCardsInTeamDeadlines';
+import EmployeeCardsIndividualDeadlines from '../EmployeeCardsIndividualDeadlines/EmployeeCardsIndividualDeadlines';
 import Switch from '../Switch/Switch';
 import Select from '../Select/Select';
 import BarChart from '../BarChart/BarChart';
 import PictureNoData from '../PictureNoData/PictureNoData';
 import getNameMonth from '../../utils/getNameMonth';
 import {
+  getDataIndividualDeadlines,
   getDataTeamDeadlines,
   getListMonthsDeadline,
   getListYearsDeadline
@@ -25,8 +27,8 @@ function DeadlineAnalytics({ setLoading, handleError }) {
   const [delayedPercent, setDelayedPercent] = useState(0);
   const [leaders, setLeaders] = useState([]);
   const [violators, setViolators] = useState([]);
-  const completedResult = 70;
-  const failureResult = 30;
+  const [employees, setEmployees] = useState([]);
+  const employeesLoaded = employees[0];
 
   useEffect(() => {
     if (!listYears[0]) {
@@ -39,6 +41,12 @@ function DeadlineAnalytics({ setLoading, handleError }) {
         .finally(() => setLoading(false));
     }
   }, [])
+
+  useEffect(() => {
+    if (selectedListYear !== 'Год' || selectedListMonth !== 'Месяц') {
+      handleSubmitFilter();
+    }
+  }, [isPrivate])
 
   const handleSubmitYear = (evt) => {
     const selectedYear = evt.target.value;
@@ -75,6 +83,14 @@ function DeadlineAnalytics({ setLoading, handleError }) {
           if (res.deadlineViolators) {
             setViolators(res.deadlineViolators);
           }
+        })
+        .catch((err) => handleError(err))
+        .finally(() => setLoading(false));
+    } else {
+      setLoading(true);
+      getDataIndividualDeadlines(selectedListYear, getNumberMonth(selectedListMonth))
+        .then((res) => {
+          setEmployees(res);
         })
         .catch((err) => handleError(err))
         .finally(() => setLoading(false));
@@ -133,43 +149,23 @@ function DeadlineAnalytics({ setLoading, handleError }) {
           <button className='deadline-filter__submit' onClick={handleSubmitFilter}>Показать</button>
         </div>
       </div>
-      {isPrivate && <DeadlineDesignations />}
-      <div className={`deadline-data ${isPrivate && 'deadline-data_private'}`}>
+      {isPrivate && employeesLoaded && <DeadlineDesignations />}
+      <div className={`deadline-data ${isPrivate && 'deadline-data_private'} ${!employeesLoaded && 'deadline-data_empty'}`}>
         {isPrivate ? (
           <>
-            <div className='deadline-data__private-item'>
-              <div className='deadline-data__head'>
-                <div className='deadline-data__head-icon' />
-                <span className='deadline-data__head-name'>Vasja Pupkin Frunsuncevich</span>
-                <div className='deadline-data__head-job'>Developer</div>
-              </div>
-              <BarChart
-                completed={completedResult}
-                failure={failureResult}
+            {!employeesLoaded &&
+              <PictureNoData
+                title='Чтобы просмотреть аналитику, выберите год и месяц, нажмите кнопку “Показать”'
+              />}
+            {employees.map((employee) => (
+              <EmployeeCardsIndividualDeadlines
+                key={employee.employeeId}
+                fullName={employee.employeeFullName}
+                position={employee.employeePosition}
+                completed={employee.completedOnTimePercent}
+                delayed={employee.delayedPercent}
               />
-            </div>
-            <div className='deadline-data__private-item'>
-              <div className='deadline-data__head'>
-                <div className='deadline-data__head-icon' />
-                <span className='deadline-data__head-name'>Vasja Pupkin</span>
-                <div className='deadline-data__head-job'>Developer</div>
-              </div>
-              <BarChart
-                completed={completedResult}
-                failure={failureResult}
-              />
-            </div>
-            <div className='deadline-data__private-item'>
-              <div className='deadline-data__head'>
-                <div className='deadline-data__head-icon' />
-                <span className='deadline-data__head-name'>Vasja Pupkin</span>
-                <div className='deadline-data__head-job'>Developer</div>
-              </div>
-              <BarChart
-                completed={completedResult}
-                failure={failureResult}
-              />
-            </div>
+            ))}
           </>
         ) : (
           <div className='deadline-command'>
@@ -189,6 +185,7 @@ function DeadlineAnalytics({ setLoading, handleError }) {
                       <div className='deadline-command__employees'>
                         {leaders.map((employee) => (
                           <EmployeeCardsInTeamDeadlines
+                            key={employee.id}
                             employee={employee}
                             iconStyle='deadline-command__employee-icon_leader'
                           />))
@@ -200,6 +197,7 @@ function DeadlineAnalytics({ setLoading, handleError }) {
                       <div className='deadline-command__employees'>
                         {violators.map((employee) => (
                           <EmployeeCardsInTeamDeadlines
+                            key={employee.id}
                             employee={employee}
                             iconStyle='deadline-command__employee-icon_intruder'
                           />))

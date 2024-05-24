@@ -4,6 +4,7 @@ import {
   ADMIN_USER_QUESTIONNAIRE_LIST,
   ADMIN_QUESTIONNAIRE_PASSED,
   EVALUATIONS_LIST_ASSESSED,
+  DATA_INDIVIDUAL_DEADLINES,
   ADMIN_QUESTIONNAIRE_LAST,
   USER_QUESTIONNAIRE_LIST,
   EVALUATIONS_LIST_ASSESS,
@@ -262,3 +263,4 @@ export const getListMonthUser = (evaluatedId, year) =>
 export const getListYearsDeadline = () => request(LIST_YEARS_DEADLINE, 'GET');
 export const getListMonthsDeadline = (year) => request(`${LIST_MONTHS_DEADLINE}${year}/months`, 'GET');
 export const getDataTeamDeadlines = (year, month) => request(`${DATA_TEAM_DEADLINES}?year=${year}&month=${month}`, 'GET');
+export const getDataIndividualDeadlines = (year, month) => request(`${DATA_INDIVIDUAL_DEADLINES}?year=${year}&month=${month}`, 'GET');

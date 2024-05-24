@@ -200,48 +200,8 @@
     overflow-x: visible;
   }
 
-  &__private-item {
-    box-shadow: 0px 4px 20px rgba(166, 166, 166, 0.4);
-    border-radius: 28px;
+  &_empty {
     display: flex;
-    flex-direction: column;
-    padding: 40px 24px 20px;
-  }
-
-  &__head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  &__head-icon {
-    width: 54px;
-    height: 54px;
-    background-image: url(../../images/employee-icon-leader.svg);
-    background-repeat: no-repeat;
-    background-size: contain;
-    margin-right: 12px;
-  }
-
-  &__head-name {
-    @include text($black-base-color, 20px, 500, 24px);
-    max-height: 24px;
-    width: 220px;
-    text-wrap: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  &__head-job {
-    @include text($black-base-color, 20px, 500, 24px);
-    width: 220px;
-    height: 64px;
-    border-radius: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: $light-gray-base-color;
-    margin-left: auto;
   }
 }
 
