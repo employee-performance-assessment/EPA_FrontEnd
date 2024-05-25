@@ -1,9 +1,7 @@
-function getNameMonth(number) {
-  const date = new Date(String(number));
-  let monthName = date.toLocaleString('default', { month: 'long' });
-  monthName = monthName[0].toLocaleUpperCase() + monthName.slice(1);
+import months from '../constants/months';
 
-  return monthName;
+function getNameMonth(number) {
+  return months[number - 1];
 }
 
 export default getNameMonth;
