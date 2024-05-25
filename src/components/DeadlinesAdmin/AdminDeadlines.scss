@@ -1,0 +1,106 @@
+@import '../../styles/vars';
+@import '../../styles/mixins';
+
+.deadline-data {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100% - 254px);
+  min-height: 622px;
+  border-radius: 40px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: $white-base-color;
+  box-shadow: 0px 4px 20px rgba(166, 166, 166, 0.4);
+
+  &_private {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    box-shadow: none;
+    overflow-y: visible;
+    overflow-x: visible;
+  }
+
+  &_individual {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    box-shadow: 0px 4px 20px rgba(166, 166, 166, 0.4);
+    padding: 40px 40px 20px;
+  }
+
+  &_empty {
+    display: flex;
+    padding: 0;
+  }
+}
+
+.deadline-command {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+
+  &__graph-container {
+    margin: 40px 40px 20px;
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    justify-content: space-between;
+
+    &_user {
+      width: 100%;
+    }
+  }
+
+  &__title {
+    @include text($black-base-color, 36px, 500, 60px);
+  }
+
+  &__leaders-intruders {
+    width: 508px;
+    margin: 40px 40px 40px 0;
+    gap: 40px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__employees-container {
+    width: 100%;
+    height: 200px;
+    background-color: $light-gray-base-color;
+    border-radius: 28px;
+    box-shadow: 0px 4px 20px rgba(166, 166, 166, 0.4);
+    padding: 24px;
+  }
+
+  &__employees-header {
+    @include text($black-base-color, 32px, 500, 39px);
+    margin-bottom: 14px;
+  }
+
+  &__employees {
+    display: flex;
+    gap: 20px;
+    overflow: hidden;
+  }
+}
+.deadline-individual {
+  display: flex;
+  align-items: center;
+
+  &__icon {
+    background-image: url(../../images/employee-icon-leader.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+  }
+
+  &__name {
+    @include text($black-base-color, 36px, 500, 43px);
+  }
+}

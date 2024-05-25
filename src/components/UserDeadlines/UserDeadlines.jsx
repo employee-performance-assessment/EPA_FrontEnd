@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-// import DeadlineDesignations from "../DeadlineDesignations/DeadlineDesignations";
-// import EmployeeCardsInTeamDeadlines from '../EmployeeCardsInTeamDeadlines/EmployeeCardsInTeamDeadlines';
-// import EmployeeCardsIndividualDeadlines from '../EmployeeCardsIndividualDeadlines/EmployeeCardsIndividualDeadlines';
+import DeadlineDesignations from "../DeadlineDesignations/DeadlineDesignations";
+import EmployeeCardsInTeamDeadlines from '../EmployeeCardsInTeamDeadlines/EmployeeCardsInTeamDeadlines';
+import EmployeeCardsIndividualDeadlines from '../EmployeeCardsIndividualDeadlines/EmployeeCardsIndividualDeadlines';
 import Switch from '../Switch/Switch';
 import Select from '../Select/Select';
-// import BarChart from '../BarChart/BarChart';
-// import PictureNoData from '../PictureNoData/PictureNoData';
-import AdminDeadlines from '../DeadlinesAdmin/AdminDeadlines';
-// import UserDeadlines from '../UserDeadlines/UserDeadlines';
+import BarChart from '../BarChart/BarChart';
+import PictureNoData from '../PictureNoData/PictureNoData';
 import getNameMonth from '../../utils/getNameMonth';
 import months from '../../constants/months';
 import {
@@ -21,11 +19,11 @@ import {
   getListYearsDeadlineAdmin,
   getListYearsUserDeadline
 } from '../../utils/mainApi';
-import './DeadlineAnalytics.scss';
+import './UserDeadlines.scss';
 
-function DeadlineAnalytics({ setLoading, handleError }) {
+function UserDeadlines({ setLoading, handleError }) {
   const isAdmin = useSelector((state => state.user.isAdmin));
-  // const user = useSelector((state => state.user));
+  const user = useSelector((state => state.user));
   const [isPrivate, setIsPrivate] = useState(false);
   const [selectedListYear, setSelectedListYear] = useState('Год');
   const [selectedListMonth, setSelectedListMonth] = useState('Месяц');
@@ -198,21 +196,8 @@ function DeadlineAnalytics({ setLoading, handleError }) {
           <button className='deadline-filter__submit' onClick={handleSubmitFilter}>Показать</button>
         </div>
       </div>
-      {/* {isPrivate && employeesLoaded && <DeadlineDesignations />} */}
-      {isAdmin ?
-        <AdminDeadlines
-          isPrivate={isPrivate}
-          employeesLoaded={employeesLoaded}
-          employeeDataLoaded={employeeDataLoaded}
-          employees={employees}
-          completedPercent={completedPercent}
-          delayedPercent={delayedPercent}
-          leaders={leaders}
-          violators={violators}
-        /> :
-        // <UserDeadlines />}
-        <></>}
-      {/* <div className={`deadline-data
+      {isPrivate && employeesLoaded && <DeadlineDesignations />}
+      <div className={`deadline-data
         ${isPrivate && 'deadline-data_private'}
         ${!isAdmin && !employeesLoaded && isPrivate  && 'deadline-data_individual'}
         ${!employeesLoaded && !employeeDataLoaded && 'deadline-data_empty'}`}>
@@ -303,9 +288,9 @@ function DeadlineAnalytics({ setLoading, handleError }) {
             )}
           </div>
         )}
-      </div> */}
+      </div>
     </>
   );
 }
 
-export default DeadlineAnalytics;
+export default UserDeadlines;
