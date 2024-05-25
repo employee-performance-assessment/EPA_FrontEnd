@@ -2,12 +2,16 @@ import checkResponse from './checkResponse.js';
 import {
   ADMIN_RESET_TO_DEFAULT_QUESTIONNAIRE,
   DATA_INDIVIDUAL_DEADLINES_ADMIN,
+  DATA_INDIVIDUAL_DEADLINES_USER,
   ADMIN_USER_QUESTIONNAIRE_LIST,
   LIST_MONTHS_DEADLINE_ADMIN,
   ADMIN_QUESTIONNAIRE_PASSED,
   EVALUATIONS_LIST_ASSESSED,
   LIST_YEARS_DEADLINE_ADMIN,
   DATA_TEAM_DEADLINES_ADMIN,
+  LIST_MONTHS_DEADLINE_USER,
+  DATA_TEAM_DEADLINES_USER,
+  LIST_YEARS_DEADLINE_USER,
   ADMIN_QUESTIONNAIRE_LAST,
   USER_QUESTIONNAIRE_LIST,
   EVALUATIONS_LIST_ASSESS,
@@ -266,4 +270,7 @@ export const getDataTeamDeadlinesAdmin = (year, month) => request(`${DATA_TEAM_D
 export const getDataIndividualDeadlinesAdmin = (year, month) => request(`${DATA_INDIVIDUAL_DEADLINES_ADMIN}?year=${year}&month=${month}`, 'GET');
 
 // ANALYTICS Deadline User
-// export const getListYearsUserDeadline = () => request(LIST_YEARS_DEADLINE_ADMIN, 'GET');
+export const getListYearsUserDeadline = () => request(LIST_YEARS_DEADLINE_USER, 'GET');
+export const getListMonthsUserDeadline = (year) => request(`${LIST_MONTHS_DEADLINE_USER}${year}/months`, 'GET');
+export const getDataTeamUserDeadlines = (year, month) => request(`${DATA_TEAM_DEADLINES_USER}?year=${year}&month=${month}`, 'GET');
+export const getDataIndividualUserDeadlines = (year, month) => request(`${DATA_INDIVIDUAL_DEADLINES_USER}?year=${year}&month=${month}`, 'GET');

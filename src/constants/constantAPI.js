@@ -53,3 +53,8 @@ export const LIST_YEARS_DEADLINE_ADMIN = `${BASE_URL}/user/stat/task/team/years`
 export const LIST_MONTHS_DEADLINE_ADMIN = `${BASE_URL}/user/stat/task/team/`;
 export const DATA_TEAM_DEADLINES_ADMIN = `${BASE_URL}/admin/stat/task/team`;
 export const DATA_INDIVIDUAL_DEADLINES_ADMIN = `${BASE_URL}/admin/stat/task/individual`;
+
+export const LIST_YEARS_DEADLINE_USER = `${BASE_URL}/user/stat/task/individual/years`;
+export const LIST_MONTHS_DEADLINE_USER = `${BASE_URL}/user/stat/task/individual/`;
+export const DATA_TEAM_DEADLINES_USER = `${BASE_URL}/user/stat/task/team`;
+export const DATA_INDIVIDUAL_DEADLINES_USER = `${BASE_URL}/user/stat/task/individual`;
