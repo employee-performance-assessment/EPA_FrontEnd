@@ -9,15 +9,20 @@ import BarChart from '../BarChart/BarChart';
 import PictureNoData from '../PictureNoData/PictureNoData';
 import getNameMonth from '../../utils/getNameMonth';
 import {
-  getDataIndividualDeadlines,
-  getDataTeamDeadlines,
-  getListMonthsDeadline,
-  getListYearsDeadline
+  getDataIndividualDeadlinesAdmin,
+  getDataIndividualUserDeadlines,
+  getDataTeamDeadlinesAdmin,
+  getDataTeamUserDeadlines,
+  getListMonthsDeadlineAdmin,
+  getListMonthsUserDeadline,
+  getListYearsDeadlineAdmin,
+  getListYearsUserDeadline
 } from '../../utils/mainApi';
 import './DeadlineAnalytics.scss';
 
 function DeadlineAnalytics({ setLoading, handleError }) {
   const isAdmin = useSelector((state => state.user.isAdmin));
+  const user = useSelector((state => state.user));
   const [isPrivate, setIsPrivate] = useState(false);
   const [selectedListYear, setSelectedListYear] = useState('Год');
   const [selectedListMonth, setSelectedListMonth] = useState('Месяц');
@@ -29,16 +34,28 @@ function DeadlineAnalytics({ setLoading, handleError }) {
   const [violators, setViolators] = useState([]);
   const [employees, setEmployees] = useState([]);
   const employeesLoaded = employees[0];
+  const employeeDataLoaded = !!completedPercent || !!delayedPercent;
 
+  console.log(employeesLoaded, employeeDataLoaded);
   useEffect(() => {
     if (!listYears[0]) {
-      setLoading(true);
-      getListYearsDeadline()
-        .then((res) => {
-          setListYears(res.reverse());
-        })
-        .catch((err) => handleError(err))
-        .finally(() => setLoading(false));
+      if (isAdmin) {
+        setLoading(true);
+        getListYearsDeadlineAdmin()
+          .then((res) => {
+            setListYears(res.reverse());
+          })
+          .catch((err) => handleError(err))
+          .finally(() => setLoading(false));
+      } else {
+        setLoading(true);
+        getListYearsUserDeadline()
+          .then((res) => {
+            setListYears(res.reverse());
+          })
+          .catch((err) => handleError(err))
+          .finally(() => setLoading(false));
+      }
     }
   }, [])
 
@@ -53,12 +70,21 @@ function DeadlineAnalytics({ setLoading, handleError }) {
     setSelectedListYear(selectedYear);
     setSelectedListMonth('Месяц');
 
-    getListMonthsDeadline(selectedYear)
-      .then((res) => {
-        setListMonths(res.map((item) => getNameMonth(item)).reverse());
-      })
-      .catch((err) => handleError(err))
-      .finally(() => setLoading(false));
+    if (isAdmin) {
+      getListMonthsDeadlineAdmin(selectedYear)
+        .then((res) => {
+          setListMonths(res.map((item) => getNameMonth(item)).reverse());
+        })
+        .catch((err) => handleError(err))
+        .finally(() => setLoading(false));
+    } else {
+      getListMonthsUserDeadline(selectedYear)
+        .then((res) => {
+          setListMonths(res.map((item) => getNameMonth(item)).reverse());
+        })
+        .catch((err) => handleError(err))
+        .finally(() => setLoading(false));
+    }
   };
 
   const handleSubmitMonth = (evt) => {
@@ -67,33 +93,69 @@ function DeadlineAnalytics({ setLoading, handleError }) {
   }
 
   const handleSubmitFilter = () => {
+    if (selectedListYear === 'Год' || selectedListMonth === 'Месяц') return;
+
     if (!isPrivate) {
-      setLoading(true);
-      getDataTeamDeadlines(selectedListYear, getNumberMonth(selectedListMonth))
-        .then((res) => {
-          if (res.completedOnTimePercent && res.delayedPercent) {
+      if (isAdmin) {
+        setLoading(true);
+        getDataTeamDeadlinesAdmin(selectedListYear, getNumberMonth(selectedListMonth))
+          .then((res) => {
+            if (res.completedOnTimePercent && res.delayedPercent) {
+              setCompletedPercent(res.completedOnTimePercent);
+              setDelayedPercent(res.delayedPercent);
+            }
+
+            if (res.leaders) {
+              setLeaders(res.leaders);
+            }
+
+            if (res.deadlineViolators) {
+              setViolators(res.deadlineViolators);
+            }
+          })
+          .catch((err) => handleError(err))
+          .finally(() => setLoading(false));
+      } else {
+        setLoading(true);
+        getDataTeamUserDeadlines(selectedListYear, getNumberMonth(selectedListMonth))
+          .then((res) => {
+            if (res.completedOnTimePercent && res.delayedPercent) {
+              setCompletedPercent(res.completedOnTimePercent);
+              setDelayedPercent(res.delayedPercent);
+            }
+
+            if (res.leaders) {
+              setLeaders(res.leaders);
+            }
+
+            if (res.deadlineViolators) {
+              setViolators(res.deadlineViolators);
+            }
+          })
+          .catch((err) => handleError(err))
+          .finally(() => setLoading(false));
+      }
+    }
+
+    if (isPrivate) {
+      if (isAdmin) {
+        setLoading(true);
+        getDataIndividualDeadlinesAdmin(selectedListYear, getNumberMonth(selectedListMonth))
+          .then((res) => {
+            setEmployees(res);
+          })
+          .catch((err) => handleError(err))
+          .finally(() => setLoading(false));
+      } else {
+        setLoading(true);
+        getDataIndividualUserDeadlines(selectedListYear, getNumberMonth(selectedListMonth))
+          .then((res) => {
             setCompletedPercent(res.completedOnTimePercent);
             setDelayedPercent(res.delayedPercent);
-          }
-
-          if (res.leaders) {
-            setLeaders(res.leaders);
-          }
-
-          if (res.deadlineViolators) {
-            setViolators(res.deadlineViolators);
-          }
-        })
-        .catch((err) => handleError(err))
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(true);
-      getDataIndividualDeadlines(selectedListYear, getNumberMonth(selectedListMonth))
-        .then((res) => {
-          setEmployees(res);
-        })
-        .catch((err) => handleError(err))
-        .finally(() => setLoading(false));
+          })
+          .catch((err) => handleError(err))
+          .finally(() => setLoading(false));
+      }
     }
   }
 
@@ -150,32 +212,59 @@ function DeadlineAnalytics({ setLoading, handleError }) {
         </div>
       </div>
       {isPrivate && employeesLoaded && <DeadlineDesignations />}
-      <div className={`deadline-data ${isPrivate && 'deadline-data_private'} ${!employeesLoaded && 'deadline-data_empty'}`}>
+      <div className={`deadline-data
+        ${isPrivate && 'deadline-data_private'}
+        ${!isAdmin && !employeesLoaded && isPrivate  && 'deadline-data_individual'}
+        ${!employeesLoaded && !employeeDataLoaded && 'deadline-data_empty'}`}>
         {isPrivate ? (
           <>
-            {!employeesLoaded &&
-              <PictureNoData
-                title='Чтобы просмотреть аналитику, выберите год и месяц, нажмите кнопку “Показать”'
-              />}
-            {employees.map((employee) => (
-              <EmployeeCardsIndividualDeadlines
-                key={employee.employeeId}
-                fullName={employee.employeeFullName}
-                position={employee.employeePosition}
-                completed={employee.completedOnTimePercent}
-                delayed={employee.delayedPercent}
-              />
-            ))}
+            {isAdmin ?
+              (employeesLoaded ? (
+                employees.map((employee) => (
+                  <EmployeeCardsIndividualDeadlines
+                    key={employee.employeeId}
+                    fullName={employee.employeeFullName}
+                    position={employee.employeePosition}
+                    completed={employee.completedOnTimePercent}
+                    delayed={employee.delayedPercent}
+                  />
+                ))
+              ) : (
+                <PictureNoData
+                  title='Чтобы просмотреть аналитику, выберите год и месяц, нажмите кнопку “Показать”'
+                />)
+              ) : (
+                <>
+                  {employeeDataLoaded ?
+                    (<>
+                      <div className='deadline-individual'>
+                        <div className='deadline-individual__icon' />
+                        <span className='deadline-individual__name'>{user.fullName}</span>
+                      </div>
+                      <BarChart
+                        completed={completedPercent}
+                        failure={delayedPercent}
+                      />
+                      <DeadlineDesignations />
+                    </>
+                    ) : (
+                      <PictureNoData
+                        title='Чтобы просмотреть аналитику, выберите год и месяц, нажмите кнопку “Показать”'
+                      />)
+                  }
+                </>
+              )}
           </>
         ) : (
           <div className='deadline-command'>
             {completedPercent || delayedPercent || leaders[0] || violators[0] ? (
               <>
-                <div className='deadline-command__graph-container'>
+                <div className={`deadline-command__graph-container ${!isAdmin && 'deadline-command__graph-container_user'}`}>
                   <h2 className='deadline-command__title'>Команда</h2>
                   <BarChart
                     completed={completedPercent}
-                    failure={delayedPercent} />
+                    failure={delayedPercent}
+                  />
                   <DeadlineDesignations />
                 </div>
                 {isAdmin &&
