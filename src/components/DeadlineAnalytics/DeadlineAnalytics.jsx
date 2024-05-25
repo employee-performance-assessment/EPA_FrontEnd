@@ -8,6 +8,7 @@ import Select from '../Select/Select';
 import BarChart from '../BarChart/BarChart';
 import PictureNoData from '../PictureNoData/PictureNoData';
 import getNameMonth from '../../utils/getNameMonth';
+import months from '../../constants/months';
 import {
   getDataIndividualDeadlinesAdmin,
   getDataIndividualUserDeadlines,
@@ -36,7 +37,6 @@ function DeadlineAnalytics({ setLoading, handleError }) {
   const employeesLoaded = employees[0];
   const employeeDataLoaded = !!completedPercent || !!delayedPercent;
 
-  console.log(employeesLoaded, employeeDataLoaded);
   useEffect(() => {
     if (!listYears[0]) {
       if (isAdmin) {
@@ -160,21 +160,6 @@ function DeadlineAnalytics({ setLoading, handleError }) {
   }
 
   function getNumberMonth(name) {
-    const months = [
-      'Январь',
-      'Февраль',
-      'Март',
-      'Апрель',
-      'Май',
-      'Июнь',
-      'Июль',
-      'Август',
-      'Сентябрь',
-      'Октябрь',
-      'Ноябрь',
-      'Декабрь',
-    ];
-
     return months.indexOf(name) + 1;
   }
 
