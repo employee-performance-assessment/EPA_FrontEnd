@@ -97,10 +97,12 @@
 
         &:hover {
           background: $wrapper;
+          border: none;
         }
 
         &:active {
           background: $yellow-base-color;
+          border: none;
         }
 
         &:disabled {
@@ -122,6 +124,7 @@
 
         &:hover {
           background: $wrapper;
+          border: none;
         }
 
         &:active {
