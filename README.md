@@ -11,7 +11,7 @@
 
 ### Ссылки:  
 
-[Ссылка на сайт](http://45.80.69.141)  
+[Ссылка на сайт](http://app-welldone.ru)  
 [Ссылка на макет](https://www.figma.com/file/K502j7fKlFOztB4u6YA2vg/Веб-сервис-для-Оценки-Сотрудников?type=design&node-id=1271-12354&mode=design&t=qCfL0rOl7ok5xA82-0)  
 [Ссылка на Swagger](http://45.80.69.141:60606/swagger-ui/index.html#/)  
 
